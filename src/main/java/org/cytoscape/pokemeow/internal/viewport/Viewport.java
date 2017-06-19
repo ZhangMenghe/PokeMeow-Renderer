@@ -1,7 +1,5 @@
 package main.java.org.cytoscape.pokemeow.internal.viewport;
 
-
-
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.MouseEvent;
@@ -14,10 +12,7 @@ import java.util.HashSet;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 
-import main.java.org.cytoscape.pokemeow.internal.algebra.Plane;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.camera.Camera;
 
 import com.jogamp.nativewindow.NativeSurface;
@@ -25,7 +20,6 @@ import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
@@ -56,6 +50,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	
 	// Mouse handling
 	private Vector2 lastMousePosition;
+
 	private static class MouseStates
 	{
 		public static int IDLE = 0;
@@ -86,10 +81,9 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		
 		if (container instanceof JInternalFrame) 
 		{
-			JInternalFrame frame = (JInternalFrame) container;
-			Container pane = frame.getContentPane();
-			pane.setLayout(new BorderLayout());
-			pane.add(panel, BorderLayout.CENTER);
+			JInternalFrame JInframe = (JInternalFrame) container;
+            JInframe.getContentPane().setLayout(new BorderLayout());
+            JInframe.getContentPane().add(panel, BorderLayout.CENTER);
 		} 
 		else 
 		{
@@ -134,7 +128,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	 * Callback method invoked when the GLJPanel needs to be initialized.
 	 * Sets up permanent GL parameters
 	 * 
-	 * @param GLJPanel handle
+	 * @param drawable GLJPanel handle
 	 */
 	@Override
 	public void init(GLAutoDrawable drawable) 
@@ -361,36 +355,13 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) 
 	{
-		ViewportMouseEvent event = new ViewportMouseEvent(e, scaleDPI, camera);
+		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(),scaleDPI, camera);
 		invokeViewportMouseScrollEvent(event);
 		if (event.handled)
 			return;
 		
 		// Zoom in or out while keeping the same point under the mouse pointer
-		
-		Vector3 fromTarget = Vector3.subtract(camera.getCameraPosition(), camera.getTargetPosition());
-		Plane focalPlane = new Plane(camera.getTargetPosition(), fromTarget.normalize());
-		Vector3 centerPosition = focalPlane.intersect(event.positionRay);
-		
-		Vector4 oldPositionScreen = Vector4.matrixMult(camera.getViewProjectionMatrix(), new Vector4(centerPosition, 1.0f)).homogeneousToCartesian();
-		oldPositionScreen.x *= 0.5f * (float)panel.getWidth();
-		oldPositionScreen.y *= 0.5f * (float)panel.getHeight();
-		
-		if (event.delta > 0)
-			fromTarget = Vector3.scalarMult(1.25f, fromTarget);
-		else if (event.delta < 0)
-			fromTarget = Vector3.scalarMult(1.0f / 1.25f, fromTarget);
-		
-		if (fromTarget.length() > 0.0f)
-			camera.setDistance(fromTarget.length());
-				
-		Vector4 newPositionScreen = Vector4.matrixMult(camera.getViewProjectionMatrix(), new Vector4(centerPosition, 1.0f)).homogeneousToCartesian();
-		newPositionScreen.x *= 0.5f * (float)panel.getWidth();
-		newPositionScreen.y *= 0.5f * (float)panel.getHeight();
-		
-		Vector2 correctionOffset = new Vector2(newPositionScreen.x - oldPositionScreen.x, newPositionScreen.y - oldPositionScreen.y);
-		camera.panByPixels(correctionOffset);
-		
+		camera.zoomBy(event.positionRay, panel.getWidth(),panel.getHeight(),event.delta);
 		panel.repaint();
 	}
 	

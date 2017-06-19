@@ -7,6 +7,7 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Ray3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.camera.Camera;
 
+
 /**
  * Mouse action-related events raised by a viewport.
  */
@@ -20,7 +21,7 @@ public class ViewportMouseEvent
 	public final boolean keyCtrl;	// Ctrl key pressed
 	public final boolean keyAlt;	// Alt key pressed
 	
-	public final Vector2 offsetRaw;		// Mouse movement in raw pixels
+	public final Vector2 offsetRaw;		// Mouse movement in raw pixels, for drag event
 	public final Vector2 offsetScaled;	// Mouse movement considering DPI scaling
 	public final int delta;				// Wheel scrolling
 	
@@ -30,28 +31,6 @@ public class ViewportMouseEvent
 	
 	public boolean handled = false;	// Indicates that the event was handled by one of the subscribers
 
-	public ViewportMouseEvent (boolean m1, boolean m2, boolean m3, 
-							   boolean keyShift, boolean keyCtrl, boolean keyAlt, 
-							   Vector2 offsetRaw, Vector2 offsetScaled, int delta,
-							   Vector2 positionRaw, Vector2 positionScaled, Ray3 positionRay) 
-	{
-		this.m1 = m1;
-		this.m2 = m2;
-		this.m3 = m3;
-		
-		this.keyShift = keyShift;
-		this.keyCtrl = keyCtrl;
-		this.keyAlt = keyAlt;
-		
-		this.offsetRaw = offsetRaw;
-		this.offsetScaled = offsetScaled;
-		this.delta = delta;
-		
-		this.positionRaw = positionRaw;
-		this.positionScaled = positionScaled;
-		this.positionRay = positionRay;
-	}
-	
 	public ViewportMouseEvent (MouseEvent e, Vector2 offset, float scaleDPI, Camera camera)
 	{
 		this.m1 = (e.getButton() & MouseEvent.BUTTON1) > 0;
@@ -62,7 +41,6 @@ public class ViewportMouseEvent
 		this.keyCtrl = e.isControlDown();
 		this.keyAlt = e.isAltDown();
 		
-		
 		this.offsetRaw = offset;
 		this.offsetScaled = Vector2.scalarMult(scaleDPI, offset);
 		this.delta = 0;
@@ -71,24 +49,5 @@ public class ViewportMouseEvent
 		this.positionScaled = Vector2.scalarMult(scaleDPI, positionRaw);
 		this.positionRay = camera.getRayThroughPixel(positionRaw);
 	}
-	
-	public ViewportMouseEvent (MouseWheelEvent e, float scaleDPI, Camera camera)
-	{
-		this.m1 = (e.getButton() & MouseEvent.BUTTON1) > 0;
-		this.m2 = (e.getButton() & MouseEvent.BUTTON2) > 0;
-		this.m3 = (e.getButton() & MouseEvent.BUTTON3) > 0;
-		
-		this.keyShift = e.isShiftDown();
-		this.keyCtrl = e.isControlDown();
-		this.keyAlt = e.isAltDown();
-		
-		
-		this.offsetRaw = new Vector2();
-		this.offsetScaled = new Vector2();
-		this.delta = e.getWheelRotation();
-		
-		this.positionRaw = new Vector2(e.getX(), e.getY());
-		this.positionScaled = Vector2.scalarMult(scaleDPI, positionRaw);
-		this.positionRay = camera.getRayThroughPixel(positionRaw);
-	}
+
 }
