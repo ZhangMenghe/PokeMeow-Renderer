@@ -4,6 +4,7 @@ import java.util.HashSet;
 
 import main.java.org.cytoscape.pokemeow.internal.algebra.*;
 import main.java.org.cytoscape.pokemeow.internal.viewport.*;
+import main.java.org.cytoscape.pokemeow.internal.commonUtil;
 
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.math.FloatUtil;
@@ -32,23 +33,27 @@ public class Camera implements ViewportEventListener
 	private Matrix4 lastProjMatrix;			
 	/** Last calculated (projection * view) matrix **/
 	private Matrix4 lastViewProjMatrix;					
-	/** Last calculated X and Y vectors of the focal plane **/ 
+	/** Last calculated X and Y vectors of the focal plane,right and up vector **/
 	private Vector3[] lastPlanarXY;							
 	/** Last calculated camera position **/
 	private Vector3 lastCameraPos;
 	/** Last calculated camera direction **/
 	private Vector3 lastCameraDir;
 	
-	/** Field of view, default = 60 deg **/
-	private float FOV = FloatUtil.PI * 0.3f;
+	/** Field of view, default = 45 deg **/
+	private float FOV = FloatUtil.HALF_PI;
 	/** Near and far clipping plane distance **/
-	private Vector2 clippingRange = new Vector2(1e-2f, 1e6f);
+	private Vector2 clippingRange = commonUtil.CAM_CLIP_RANGE;
 	/** Viewport (GLJPanel) size in pixels **/
-	private Vector2 viewportSize = new Vector2(100, 100);
-	
+	private Vector2 viewportSize = commonUtil.CAM_VIEWPORT_SIZE;
+
+	/**
+	 * Functions for construction.Extend from viewporteventlistener
+	* */
 	public Camera(Viewport viewport)
 	{
 		viewport.addViewportEventListener(this);
+		reset();
 	}
 	
 	/**
@@ -63,15 +68,16 @@ public class Camera implements ViewportEventListener
 		distance = 100.0f;
 		FOV = FloatUtil.HALF_PI;
 		clippingRange = new Vector2(1e-3f, 1e6f);
-		
+
+		//set previous parameters
 		invalidateMatrices();
 		invokeCameraMoveEvent(new CameraMoveEvent(oldConfig, getConfiguration(), getViewProjectionMatrix(), false));
 	}
-	
+
 	// *******************
 	// Getters and setters
 	// *******************
-	
+
 	/**
 	 * Gets the current camera position.
 	 * 
@@ -98,7 +104,7 @@ public class Camera implements ViewportEventListener
 	{
 		return targetPos;
 	}
-	
+
 	/**
 	 * Sets the camera's field of view.
 	 * 
@@ -115,10 +121,10 @@ public class Camera implements ViewportEventListener
 			invokeCameraMoveEvent(new CameraMoveEvent(oldConfig, getConfiguration(), getViewProjectionMatrix(), false));
 		}
 	}
-	
+
 	/**
 	 * The the camera's current field of view
-	 * 
+	 *
 	 * @return Field of view in radians
 	 */
 	public float getFOV()
@@ -192,7 +198,8 @@ public class Camera implements ViewportEventListener
 	/**
 	 * Pans the camera by moving the camera and target positions within 
 	 * the focal plane, i. e. without changing the camera's rotation.
-	 * 
+	 * Just change the view target by panning camera
+	 *
 	 * @param offset 2D offset within the focal plane in absolute space units
 	 */
 	public void panBy(Vector2 offset)
@@ -216,8 +223,8 @@ public class Camera implements ViewportEventListener
 	 * Pans the camera by moving the camera and target positions within 
 	 * the focal plane, i. e. without changing the camera's rotation.
 	 * The offset is calculated so that it moves an object in the focal
-	 * plane by the specified amount of pixels on the screen, i. e. taking
-	 * the projection matrix and the viewport size into account.
+	 * plane by the specified amount of pixels on the screen,
+	 * i. e. taking the projection matrix and the viewport size into account.
 	 * 
 	 * @param offset 2D offset within the focal plane in screen pixels
 	 */
@@ -269,7 +276,35 @@ public class Camera implements ViewportEventListener
 		invalidateMatrices();
 		invokeCameraMoveEvent(new CameraMoveEvent(oldConfig, getConfiguration(), getViewProjectionMatrix(), false));
 	}
-	
+	/**
+	 * Zoom the camera. Leave camera position/rotation unchanged.But change the distance
+	 *
+	 * @param positionRay: Ray originating at camera position, going through the mouse position, normalized
+	 * @param panelWidth,panelHeight: the current width/height of panel
+	 * @param zoomIn: >0 if zoom in <0 otherwise
+	 */
+	public void zoomBy(Ray3 positionRay, int panelWidth, int panelHeight, int zoomIn){
+		Vector3 fromTarget = Vector3.subtract(getCameraPosition(), getTargetPosition());
+		Plane focalPlane = new Plane(getTargetPosition(), fromTarget.normalize());
+		Vector3 centerPosition = focalPlane.intersect(positionRay);
+		Vector4 oldPositionScreen = Vector4.matrixMult(getViewProjectionMatrix(), new Vector4(centerPosition, 1.0f)).homogeneousToCartesian();
+		oldPositionScreen.x *= 0.5f * panelWidth;
+		oldPositionScreen.y *= 0.5f * panelHeight;
+
+		if(zoomIn > 0)
+			fromTarget = Vector3.scalarMult(commonUtil.CAM_ZOOM_RATE, fromTarget);
+		else if (zoomIn < 0)
+			fromTarget = Vector3.scalarMult(1.0f/commonUtil.CAM_ZOOM_RATE, fromTarget);
+		if (fromTarget.length() > 0.0f)
+			setDistance(fromTarget.length());
+
+		Vector4 newPositionScreen = Vector4.matrixMult(getViewProjectionMatrix(), new Vector4(centerPosition, 1.0f)).homogeneousToCartesian();
+		newPositionScreen.x *= 0.5f * panelWidth;
+		newPositionScreen.y *= 0.5f * panelHeight;
+
+		Vector2 correctionOffset = new Vector2(newPositionScreen.x - oldPositionScreen.x, newPositionScreen.y - oldPositionScreen.y);
+		panByPixels(correctionOffset);
+	}
 	// ****************
 	// Transformations:
 	// ****************
@@ -284,7 +319,7 @@ public class Camera implements ViewportEventListener
 	{
 		if (lastViewMatrix == null)
 		{
-			Vector3 up = calculateUp();
+			Vector3 up = Vector3.quaternionMult(rotation, new Vector3(0, 1, 0));
 			lastViewMatrix = Matrix4.lookAtRH(getCameraPosition(), targetPos, up);
 		}
 		
@@ -380,7 +415,7 @@ public class Camera implements ViewportEventListener
 		Vector3 direction = Vector3.add(Vector3.subtract(targetPos, getCameraPosition()), Vector3.add(planarXY[0], planarXY[1])).normalize();
 		return new Ray3(getCameraPosition(), direction);
 	}
-	
+
 	/**
 	 * Gets the normalized camera direction vector, i. e. pointing from camera to target.
 	 * 
@@ -445,18 +480,7 @@ public class Camera implements ViewportEventListener
 	// ********
 	// Helpers:
 	// ********
-		
-	/**
-	 * Gets the current up vector. As there is no rolling in this implementation,
-	 * the calculation only depends on the camera and target positions.
-	 * 
-	 * @return Up vector in 3D space
-	 */
-	private Vector3 calculateUp()
-	{
-		return Vector3.quaternionMult(rotation, new Vector3(0, 1, 0));	// Facing up is defined as rotation = identity
-	}
-	
+
 	/**
 	 * Invalidates pre-calculated matrices and plane vectors.
 	 */
@@ -470,7 +494,9 @@ public class Camera implements ViewportEventListener
 		lastCameraDir = null;
 	}
 
+	// ********
 	// Viewport event Handling:
+	// ********
 	
 	/**
 	 * Callback method invoked when the viewport is resized. 
