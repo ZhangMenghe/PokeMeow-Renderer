@@ -1,8 +1,10 @@
 package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
-import java.awt.DisplayMode;
+import java.awt.*;
+
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
@@ -140,23 +142,35 @@ public class Cube implements GLEventListener {
         final GLProfile profile = GLProfile.get( GLProfile.GL2 );
         //specifies a set of OpenGL capabilities
         GLCapabilities capabilities = new GLCapabilities( profile );
-
-        // The canvas&GLJpanel
-        //JOGL GUI that implement GLAutoDrawable interface
-        final GLCanvas glcanvas = new GLCanvas( capabilities );
-        //GLJPanel gljpanel = new GLJPanel( glcapabilities );
         Cube cube = new Cube();
+        // The GLcanvas&GLJpanel JOGL GUI that implement GLAutoDrawable interface
 
-        glcanvas.addGLEventListener( cube );
-        glcanvas.setSize( 400, 400 );
-        //Create the frame by instantiating the Frame class Object of JSE AWT frame component.
+        //METHOD 1: GLCanvas
+
+        //final GLCanvas glcanvas = new GLCanvas( capabilities );
+        //glcanvas.addGLEventListener( cube );
+        //glcanvas.setSize( 400, 400 );
+
+
+        //METHOD 2: GLJPanel
+        GLJPanel gljPanel = new GLJPanel(capabilities);
+        gljPanel.addGLEventListener(cube);
+        gljPanel.setSize(400,400);
+
+        //Method1: Frame
+        //final Frame mframe = new Frame("test");
+        //mframe.add(gljPanel);
+        //mframe.setVisible(true);
+
+        //Method2: JFrame
         final JFrame frame = new JFrame ( " Multicolored cube" );
-        frame.getContentPane().add( glcanvas );
+        frame.getContentPane().add( gljPanel );
         frame.setSize( frame.getContentPane().getPreferredSize() );
         frame.setVisible( true );
+
         //glcanvas.display();
         //call display in animation way
-        final FPSAnimator animator = new FPSAnimator(glcanvas, 300,true);
+        final FPSAnimator animator = new FPSAnimator(gljPanel, 300,true);
 
         animator.start();
     }
