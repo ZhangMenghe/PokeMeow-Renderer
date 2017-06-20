@@ -15,6 +15,9 @@ import javax.swing.JInternalFrame;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.camera.Camera;
 
+import main.java.org.cytoscape.pokemeow.internal.SampleUsage.debugDraw;
+import main.java.org.cytoscape.pokemeow.internal.SampleUsage.Demo;
+
 import com.jogamp.nativewindow.NativeSurface;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
@@ -60,6 +63,11 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	}
 	private int mouseState = MouseStates.IDLE;
 
+	/*Parameters for DEBUG*/
+	public Boolean DEBUGMODE = true;
+	public Boolean triggered = false;
+	private Vector2 lastclickPos;
+	private Demo demo = null;
 	public Viewport(JComponent container)
 	{
 		GLProfile profile = GLProfile.getDefault(); // Use the system's default version of OpenGL
@@ -76,11 +84,13 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		panel.addMouseListener(this);
 		panel.addMouseMotionListener(this);
 		panel.addMouseWheelListener(this);
-		
+		//panel.setSize(300,300);
+
 		camera = new Camera(this);
-		
+
 		if (container instanceof JInternalFrame) 
 		{
+			//container.setSize(300,300);
 			JInternalFrame JInframe = (JInternalFrame) container;
             JInframe.getContentPane().setLayout(new BorderLayout());
             JInframe.getContentPane().add(panel, BorderLayout.CENTER);
@@ -90,6 +100,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 			container.setLayout(new BorderLayout());
 			container.add(panel, BorderLayout.CENTER);
 		}
+
 	}
 	
 	/**
@@ -142,7 +153,12 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		gl.glBlendFunc(GL4.GL_SRC_ALPHA, GL4.GL_ONE_MINUS_SRC_ALPHA);
 
 		gl.glViewport(0, 0, drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
-		
+
+		if(demo == null){
+			demo = new debugDraw();
+			demo.create(gl);
+		}
+
 		NativeSurface surface = drawable.getNativeSurface();
 		int[] windowUnits = new int[] {100, 100};
 		windowUnits = surface.convertToPixelUnits(windowUnits);
@@ -167,7 +183,9 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		gl.glClearDepthf(1.0f);
 		gl.glClear(GL4.GL_COLOR_BUFFER_BIT | GL4.GL_DEPTH_BUFFER_BIT);
-		
+
+		demo.render(gl);
+
 		invokeViewportDisplayEvent(drawable);
 		
 		long timeFinish = System.nanoTime();
@@ -191,7 +209,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		gl = drawable.getGL().getGL4();
 		
 		gl.glViewport(x, y, width, height);
-		
+
 		Vector2 newRawSize = new Vector2(width, height);
 		ViewportResizedEvent e = new ViewportResizedEvent(newRawSize, Vector2.scalarMult(scaleDPI, newRawSize));
 		invokeViewportReshapeEvent(drawable, e);

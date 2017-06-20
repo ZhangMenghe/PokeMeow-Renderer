@@ -147,9 +147,9 @@ public class Cube implements GLEventListener {
 
         //METHOD 1: GLCanvas
 
-        //final GLCanvas glcanvas = new GLCanvas( capabilities );
-        //glcanvas.addGLEventListener( cube );
-        //glcanvas.setSize( 400, 400 );
+//        final GLCanvas glcanvas = new GLCanvas( capabilities );
+//        glcanvas.addGLEventListener( cube );
+//        glcanvas.setSize( 400, 400 );
 
 
         //METHOD 2: GLJPanel
@@ -158,21 +158,21 @@ public class Cube implements GLEventListener {
         gljPanel.setSize(400,400);
 
         //Method1: Frame
-        //final Frame mframe = new Frame("test");
-        //mframe.add(gljPanel);
-        //mframe.setVisible(true);
+//        final Frame mframe = new Frame("test");
+//        mframe.add(glcanvas);
+//        mframe.setVisible(true);
 
         //Method2: JFrame
         final JFrame frame = new JFrame ( " Multicolored cube" );
         frame.getContentPane().add( gljPanel );
-        frame.setSize( frame.getContentPane().getPreferredSize() );
+        frame.setSize( 800,800 );
         frame.setVisible( true );
 
         //glcanvas.display();
         //call display in animation way
-        final FPSAnimator animator = new FPSAnimator(gljPanel, 300,true);
+        //final FPSAnimator animator = new FPSAnimator(gljPanel, 300,true);
 
-        animator.start();
+        //animator.start();
     }
 
 }
