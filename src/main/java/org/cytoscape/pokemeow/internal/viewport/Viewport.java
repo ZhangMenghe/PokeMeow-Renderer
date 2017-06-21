@@ -184,7 +184,8 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		gl.glClearDepthf(1.0f);
 		gl.glClear(GL4.GL_COLOR_BUFFER_BIT | GL4.GL_DEPTH_BUFFER_BIT);
 
-		demo.render(gl);
+		if(triggered)
+			demo.render(gl);
 
 		invokeViewportDisplayEvent(drawable);
 		
@@ -240,6 +241,8 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	{
 		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(), scaleDPI, camera);
 		invokeViewportMouseDownEvent(event);
+		triggered = true;
+		System.out.println("click");
 		if (event.handled)
 			return;
 	}
