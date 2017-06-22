@@ -42,6 +42,7 @@ public class debugDraw implements Demo {
 
         triangleNodeList[1].setDefaultTexcoord(gl4);
         triangleNodeList[1].setOrigin(new Vector3(-0.5f,.0f,.0f));
+        triangleNodeList[1].setRotation(90.0f);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package main.java.org.cytoscape.pokemeow.internal.nodeshape;
 
 import com.jogamp.opengl.GL4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 
 /**
@@ -19,8 +18,9 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
             .0f, .0f,.0f,-1.0f
     };
     private int[] colorIndices = {2,8,14};
-    public float[] data;
+    private float[] data;
     public int numOfVertices = 3;
+
     public pmTriangleNodeShape(GL4 gl4){
         super();
         //TODO: Hope to find a better interleave method
@@ -66,6 +66,7 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
         }
         gsthForDraw.initBuiffer(gl4, numOfVertices, data);
     }
+
     public void setDefaultTexcoord(GL4 gl4){
         Vector4 [] coordList = {new Vector4(.0f,.0f,.0f,-1.0f),
                 new Vector4(.0f,1.0f,.0f,-1.0f),
