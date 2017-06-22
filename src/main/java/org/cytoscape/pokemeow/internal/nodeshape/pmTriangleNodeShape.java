@@ -7,50 +7,38 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
  * Created by ZhangMenghe on 2017/6/21.
  */
 public class pmTriangleNodeShape extends pmBasicNodeShape{
-    private static final float[] vertices = {
-            0f, 0.5f,
-            -0.5f, -0.5f,
-            0.5f, -0.5f
-    };
-    private float[] colors = {
-            .0f, .0f,.0f,-1.0f,
-            .0f, .0f,.0f,-1.0f,
-            .0f, .0f,.0f,-1.0f
+    private float[] vertices = {
+            0f, 0.5f,.0f, .0f,.0f,-1.0f,
+            -0.5f, -0.5f,.0f, .0f,.0f,-1.0f,
+            0.5f, -0.5f, .0f, .0f,.0f,-1.0f
     };
     private int[] colorIndices = {2,8,14};
-    private float[] data;
+
     public int numOfVertices = 3;
 
     public pmTriangleNodeShape(GL4 gl4){
         super();
-        //TODO: Hope to find a better interleave method
-        data = new float[18];
-        for(int i = 0, idx = 0;i<numOfVertices;i++){
-            data[idx++] = vertices[2*i];
-            data[idx++] = vertices[2*i+1];
-            data[idx++] = colors[4*i];
-            data[idx++] = colors[4*i+1];
-            data[idx++] = colors[4*i+2];
-            data[idx++] = colors[4*i+3];
-        }
-        gsthForDraw.initBuiffer(gl4, numOfVertices, data);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
 
     public void setColor(GL4 gl4, float[] new_color){
-        for (int i=0;i<numOfVertices;i++)
-            System.arraycopy(new_color,0,colors,i*4,4);
         for(int i:colorIndices){
-            data[i] = new_color[0];
-            data[i+1] = new_color[1];
-            data[i+2] = new_color[2];
-            data[i+3] = new_color[3];
+            vertices[i] = new_color[0];
+            vertices[i+1] = new_color[1];
+            vertices[i+2] = new_color[2];
+            vertices[i+3] = new_color[3];
         }
-        gsthForDraw.initBuiffer(gl4, numOfVertices, data);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
 
     public void setColor(GL4 gl4, Vector4 new_color){
-        float[]new_color_arr = {new_color.x, new_color.y,new_color.z,new_color.w};
-        setColor(gl4,new_color_arr);
+        for(int i:colorIndices){
+            vertices[i] = new_color.x;
+            vertices[i+1] = new_color.y;
+            vertices[i+2] = new_color.z;
+            vertices[i+3] = new_color.w;
+        }
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
 
     public void setColor(GL4 gl4, Vector4 [] colorList){
@@ -59,12 +47,12 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
              int idx = Math.floorDiv(i,6);
              if(idx >=len)
                  idx = 0;
-            data[i] = colorList[idx].x;
-            data[i+1] = colorList[idx].y;
-            data[i+2] = colorList[idx].z;
-            data[i+3] = colorList[idx].w;
+             vertices[i] = colorList[idx].x;
+             vertices[i+1] = colorList[idx].y;
+             vertices[i+2] = colorList[idx].z;
+             vertices[i+3] = colorList[idx].w;
         }
-        gsthForDraw.initBuiffer(gl4, numOfVertices, data);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
 
     public void setDefaultTexcoord(GL4 gl4){

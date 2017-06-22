@@ -61,7 +61,6 @@ public class debugDraw implements Demo {
             gl4.glDrawArrays(GL4.GL_TRIANGLES, 0, triangleNodeList[i].numOfVertices);
             gl4.glBindVertexArray(0);
         }
-
     }
 
     @Override
