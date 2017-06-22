@@ -7,13 +7,10 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmTriangleNodeShape;
+import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 import main.java.org.cytoscape.pokemeow.internal.utils.pmLoadTexture;
 
-import java.io.File;
-
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
-import static com.jogamp.opengl.GL.GL_TEXTURE0;
-import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
 
 public class debugDraw implements Demo {
     private pmShaderParams gshaderParam;
@@ -30,7 +27,10 @@ public class debugDraw implements Demo {
         textureLoader = new pmLoadTexture();
         texture = textureLoader.initialTexture(gl4, debugDraw.class.getResource("Texture.jpg"));
 
-        program = ShaderManager.INSTANCE.buildProgram(gl4, "texture");
+        program = GLSLProgram.CompileProgram(gl4,
+                debugDraw.class.getResource("shader/texture.vert"),
+                null,null,null,
+                debugDraw.class.getResource("shader/texture.frag"));
         gshaderParam = new pmShaderParams(gl4,program);
         for(int i=0;i<numOfTri;i++)
             triangleNodeList[i] = new pmTriangleNodeShape(gl4);
@@ -46,7 +46,6 @@ public class debugDraw implements Demo {
     public void render(GL4 gl4) {
         for(int i=0;i<numOfTri;i++){
             gl4.glActiveTexture(GL4.GL_TEXTURE0);
-//            gl4.glBindTexture(GL_TEXTURE_2D, mTexture);
             texture.enable(gl4);
             texture.bind(gl4);
 
