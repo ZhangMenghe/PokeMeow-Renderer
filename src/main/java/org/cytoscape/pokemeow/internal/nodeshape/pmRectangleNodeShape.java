@@ -4,21 +4,27 @@ import com.jogamp.opengl.GL4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 
 /**
- * Created by ZhangMenghe on 2017/6/21.
+ * Created by ZhangMenghe on 2017/6/22.
  */
-public class pmTriangleNodeShape extends pmBasicNodeShape{
+public class pmRectangleNodeShape extends pmBasicNodeShape{
     private float[] vertices = {
-            0f, 0.5f,.0f, .0f,.0f,-1.0f,
-            -0.5f, -0.5f,.0f, .0f,.0f,-1.0f,
-            0.5f, -0.5f, .0f, .0f,.0f,-1.0f
+        -0.5f,  0.5f, 1.0f,.0f ,0.0f, -1.0f, // Top-left
+        0.5f,  0.5f, 0.0f, 1.0f,.0f , -1.0f, // Top-right
+        0.5f, -0.5f, 0.0f, 0.0f,.0f , -1.0f, // Bottom-right
+        -0.5f, -0.5f, 1.0f, 1.0f,.0f ,-1.0f  // Bottom-left
     };
-    private int[] colorIndices = {2,8,14};
+    private int []elements = {
+            3, 1, 2,
+            3, 0, 1
+    };
+    private int[] colorIndices = {2,8,14,20};
 
-    public pmTriangleNodeShape(GL4 gl4){
+    public pmRectangleNodeShape(GL4 gl4){
         super();
-        numOfVertices = 3;
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
+        numOfVertices = 4;
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices,elements);
     }
+
     @Override
     public void setColor(GL4 gl4, float[] new_color){
         for(int i:colorIndices){
@@ -27,8 +33,9 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
             vertices[i+2] = new_color[2];
             vertices[i+3] = new_color[3];
         }
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices,elements);
     }
+
     @Override
     public void setColor(GL4 gl4, Vector4 new_color){
         for(int i:colorIndices){
@@ -37,21 +44,22 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
             vertices[i+2] = new_color.z;
             vertices[i+3] = new_color.w;
         }
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices,elements);
     }
+
     @Override
     public void setColor(GL4 gl4, Vector4 [] colorList){
         int len = colorList.length;
-         for(int i:colorIndices){
-             int idx = Math.floorDiv(i,6);
-             if(idx >=len)
-                 idx = 0;
-             vertices[i] = colorList[idx].x;
-             vertices[i+1] = colorList[idx].y;
-             vertices[i+2] = colorList[idx].z;
-             vertices[i+3] = colorList[idx].w;
+        for(int i:colorIndices){
+            int idx = Math.floorDiv(i,6);
+            if(idx >=len)
+                idx = 0;
+            vertices[i] = colorList[idx].x;
+            vertices[i+1] = colorList[idx].y;
+            vertices[i+2] = colorList[idx].z;
+            vertices[i+3] = colorList[idx].w;
         }
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices,elements);
     }
     @Override
     public void setDefaultTexcoord(GL4 gl4){
@@ -60,6 +68,7 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
                 new Vector4(1.0f,.0f,.0f,-1.0f),
                 new Vector4(1.0f,1.0f,.0f,-1.0f)
         };
+
         setColor(gl4,coordList);
     }
 }

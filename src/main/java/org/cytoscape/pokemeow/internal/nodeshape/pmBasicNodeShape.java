@@ -1,8 +1,10 @@
 package main.java.org.cytoscape.pokemeow.internal.nodeshape;
 
+import com.jogamp.opengl.GL4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmSthForDraw;
 
 /**
@@ -18,7 +20,7 @@ public class pmBasicNodeShape {
     public Vector3 scale;//scale of node
     public Matrix4 modelMatrix;//translation*scale
     public Matrix4 viewMattrix;
-
+    public int numOfVertices;
     public pmBasicNodeShape(){
         origin = new Vector3(.0f,.0f,.0f);
         scale = new Vector3(1.0f,1.0f,1.0f);
@@ -53,4 +55,8 @@ public class pmBasicNodeShape {
     public void setViewMattrix(Matrix4 new_viewMatrix){
         viewMattrix = new_viewMatrix;
     }
+    public void setColor(GL4 gl4, float[] new_color){}
+    public void setColor(GL4 gl4, Vector4 new_color){}
+    public void setColor(GL4 gl4, Vector4 [] colorList){}
+    public void setDefaultTexcoord(GL4 gl4){}
 }

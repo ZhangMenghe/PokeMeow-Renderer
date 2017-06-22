@@ -25,7 +25,7 @@ public class debugDrawLauncher implements GLEventListener, KeyListener{
         GLCapabilities glCapabilities = new GLCapabilities(glProfile);
         final GLWindow glWindow = GLWindow.create(glCapabilities);
 
-        glWindow.setSize(800, 600);
+        glWindow.setSize(800, 800);
         glWindow.setTitle("gl-scene");
         glWindow.setFullscreen(false);
         glWindow.setVisible(true);
