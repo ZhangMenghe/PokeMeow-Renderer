@@ -35,6 +35,7 @@ public class pmSthForDraw {
         gl.glVertexAttribPointer(0, 2, GL_FLOAT, false, 6*Float.BYTES, 0);
         gl.glEnableVertexAttribArray(1);
         gl.glVertexAttribPointer(1, 4, GL_FLOAT, false, 6*Float.BYTES, 2*Float.BYTES);
+        gl.glBindVertexArray(0);
     }
 
     public void dispose(GL4 gl4){
