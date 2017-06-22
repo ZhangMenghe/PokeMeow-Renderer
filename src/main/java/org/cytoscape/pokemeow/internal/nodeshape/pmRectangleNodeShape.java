@@ -8,10 +8,10 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
  */
 public class pmRectangleNodeShape extends pmBasicNodeShape{
     public float[] vertices = {
-        0.25f,  0.25f, 1.0f,.0f ,0.0f, -1.0f, // Top-left
-        0.25f,  -0.25f, 0.0f, 1.0f,.0f , -1.0f, // Top-right
-        -0.25f, -0.25f, 0.0f, 0.0f,.0f , -1.0f, // Bottom-right
-        -0.25f, 0.25f, 1.0f, 1.0f,.0f ,-1.0f  // Bottom-left
+        0.25f,  0.25f, .0f, .0f, .0f, 1.0f, // Top-left
+        0.25f, -0.25f, .0f, .0f, .0f, 1.0f, // Top-right
+        -0.25f, -0.25f, .0f, .0f, .0f, 1.0f, // Bottom-right
+        -0.25f,  0.25f, .0f, .0f, .0f, 1.0f  // Bottom-left
     };
     public int []elements = {
             3, 0, 1,
@@ -23,6 +23,10 @@ public class pmRectangleNodeShape extends pmBasicNodeShape{
         super();
         numOfVertices = 4;
         gsthForDraw.initBuiffer(gl4, numOfVertices, vertices,elements);
+    }
+    public pmRectangleNodeShape(GL4 gl4, boolean skip){
+        super();
+        numOfVertices = 4;
     }
 
     @Override
