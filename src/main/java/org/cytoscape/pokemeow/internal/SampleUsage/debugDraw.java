@@ -38,7 +38,9 @@ public class debugDraw implements Demo {
         gl4.glUseProgram(program);
 
         Vector4 [] test = {new Vector4(.0f,1.0f,.0f,1.0f),new Vector4(1.0f,.0f,.0f,1.0f)};
-        triangleNodeList[0].setColor(gl4, new Vector4(.0f,1.0f,.0f,1.0f));
+        triangleNodeList[0].setColor(gl4, test);
+
+        triangleNodeList[1].setDefaultTexcoord(gl4);
         triangleNodeList[1].setOrigin(new Vector3(-0.5f,.0f,.0f));
     }
 
