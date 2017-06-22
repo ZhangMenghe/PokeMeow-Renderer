@@ -2,23 +2,35 @@ package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL4;
+import com.jogamp.opengl.util.texture.Texture;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmTriangleNodeShape;
+import main.java.org.cytoscape.pokemeow.internal.utils.pmLoadTexture;
+
+import java.io.File;
 
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
+import static com.jogamp.opengl.GL.GL_TEXTURE0;
+import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
 
 public class debugDraw implements Demo {
     private pmShaderParams gshaderParam;
     private int program;
     private pmTriangleNodeShape[] triangleNodeList;
     private int numOfTri=2;
+    private pmLoadTexture textureLoader;
+    private Texture texture;
+
     @Override
     public void create(GL4 gl4) {
         triangleNodeList = new pmTriangleNodeShape[numOfTri];
 
-        program = ShaderManager.INSTANCE.buildProgram(gl4, "flat");
+        textureLoader = new pmLoadTexture();
+        texture = textureLoader.initialTexture(gl4, debugDraw.class.getResource("Texture.jpg"));
+
+        program = ShaderManager.INSTANCE.buildProgram(gl4, "texture");
         gshaderParam = new pmShaderParams(gl4,program);
         for(int i=0;i<numOfTri;i++)
             triangleNodeList[i] = new pmTriangleNodeShape(gl4);
@@ -33,6 +45,13 @@ public class debugDraw implements Demo {
     @Override
     public void render(GL4 gl4) {
         for(int i=0;i<numOfTri;i++){
+            gl4.glActiveTexture(GL4.GL_TEXTURE0);
+//            gl4.glBindTexture(GL_TEXTURE_2D, mTexture);
+            texture.enable(gl4);
+            texture.bind(gl4);
+
+            gl4.glUniform1i(gshaderParam.sampler_texture,0);
+
             gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(triangleNodeList[i].modelMatrix.asArrayCM()));
             gl4.glUniformMatrix4fv(gshaderParam.mat4_viewMatrix, 1,false, Buffers.newDirectFloatBuffer(triangleNodeList[i].viewMattrix.asArrayCM()));
             gl4.glBindVertexArray(triangleNodeList[i].gsthForDraw.objects[triangleNodeList[i].gsthForDraw.VAO]);
