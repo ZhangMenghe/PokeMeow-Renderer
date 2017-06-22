@@ -10,6 +10,7 @@ import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmTriangleNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmRectangleNodeShape;
+import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmDiamondNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 import main.java.org.cytoscape.pokemeow.internal.utils.pmLoadTexture;
 
@@ -39,7 +40,7 @@ public class debugDraw implements Demo {
         gshaderParam = new pmShaderParams(gl4,program);
 
         NodeList[0] = new pmTriangleNodeShape(gl4);
-        NodeList[1] = new pmRectangleNodeShape(gl4);
+        NodeList[1] = new pmDiamondNodeShape(gl4);
 
         gl4.glUseProgram(program);
 
@@ -47,8 +48,8 @@ public class debugDraw implements Demo {
         NodeList[0].setColor(gl4, test);
 
         NodeList[1].setDefaultTexcoord(gl4);
-        NodeList[1].setOrigin(new Vector3(0.5f,.0f,.0f));
-        NodeList[1].setRotation(90.0f);
+        NodeList[0].setOrigin(new Vector3(0.5f,.0f,.0f));
+//        NodeList[1].setRotation((float) Math.PI/4);
     }
 
     @Override
@@ -68,6 +69,7 @@ public class debugDraw implements Demo {
                 gl4.glDrawArrays(GL4.GL_TRIANGLES, 0, NodeList[i].numOfVertices);
 
             else{
+//                gl4.glDrawArrays(GL4.GL_QUADS,0,4);
                 gl4.glBindBuffer(GL_ARRAY_BUFFER, NodeList[i].gsthForDraw.objects[NodeList[i].gsthForDraw.EBO]);
                 gl4.glDrawElements(GL4.GL_TRIANGLES,6, GL.GL_UNSIGNED_INT,0);
                 gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);

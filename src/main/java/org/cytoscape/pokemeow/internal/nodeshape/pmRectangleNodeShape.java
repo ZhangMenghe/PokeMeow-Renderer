@@ -7,15 +7,15 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
  * Created by ZhangMenghe on 2017/6/22.
  */
 public class pmRectangleNodeShape extends pmBasicNodeShape{
-    private float[] vertices = {
-        -0.5f,  0.5f, 1.0f,.0f ,0.0f, -1.0f, // Top-left
-        0.5f,  0.5f, 0.0f, 1.0f,.0f , -1.0f, // Top-right
-        0.5f, -0.5f, 0.0f, 0.0f,.0f , -1.0f, // Bottom-right
-        -0.5f, -0.5f, 1.0f, 1.0f,.0f ,-1.0f  // Bottom-left
+    public float[] vertices = {
+        0.25f,  0.25f, 1.0f,.0f ,0.0f, -1.0f, // Top-left
+        0.25f,  -0.25f, 0.0f, 1.0f,.0f , -1.0f, // Top-right
+        -0.25f, -0.25f, 0.0f, 0.0f,.0f , -1.0f, // Bottom-right
+        -0.25f, 0.25f, 1.0f, 1.0f,.0f ,-1.0f  // Bottom-left
     };
-    private int []elements = {
-            3, 1, 2,
-            3, 0, 1
+    public int []elements = {
+            3, 0, 1,
+            3, 1, 2
     };
     private int[] colorIndices = {2,8,14,20};
 
@@ -63,10 +63,10 @@ public class pmRectangleNodeShape extends pmBasicNodeShape{
     }
     @Override
     public void setDefaultTexcoord(GL4 gl4){
-        Vector4 [] coordList = {new Vector4(.0f,.0f,.0f,-1.0f),
-                new Vector4(.0f,1.0f,.0f,-1.0f),
+        Vector4 [] coordList = {new Vector4(1.0f,1.0f,.0f,-1.0f),
                 new Vector4(1.0f,.0f,.0f,-1.0f),
-                new Vector4(1.0f,1.0f,.0f,-1.0f)
+                new Vector4(.0f,.0f,.0f,-1.0f),
+                new Vector4(.0f,1.0f,.0f,-1.0f)
         };
 
         setColor(gl4,coordList);

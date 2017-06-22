@@ -8,9 +8,9 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
  */
 public class pmTriangleNodeShape extends pmBasicNodeShape{
     private float[] vertices = {
-            0f, 0.5f,.0f, .0f,.0f,-1.0f,
-            -0.5f, -0.5f,.0f, .0f,.0f,-1.0f,
-            0.5f, -0.5f, .0f, .0f,.0f,-1.0f
+            0f, 0.25f,.0f, .0f,.0f,-1.0f,
+            -0.25f, -0.25f,.0f, .0f,.0f,-1.0f,
+            0.25f, -0.25f, .0f, .0f,.0f,-1.0f
     };
     private int[] colorIndices = {2,8,14};
 
