@@ -7,18 +7,28 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
  * Created by ZhangMenghe on 2017/6/22.
  */
 public class pmCircleNodeShape extends pmBasicNodeShape {
-    private final int CircleSegment = 361;
+    public int CircleSegment = 360;
     public float[] vertices;
     public int[] colorIndices;
-    public float radius;
+    public float radius = 0.125f;
     /*
     High efficient way to draw circle,
     reference:  http://slabode.exofire.net/circle_draw.shtml
     */
     public pmCircleNodeShape(GL4 gl4){
         super();
-        radius = 0.25f;
         numOfVertices = CircleSegment;
+        initCircle(gl4, numOfVertices);
+    }
+
+    public pmCircleNodeShape(GL4 gl4, int new_CircleSegment){
+        super();
+        CircleSegment = new_CircleSegment;
+        numOfVertices = CircleSegment;
+        initCircle(gl4, numOfVertices);
+    }
+
+    private void initCircle(GL4 gl4, int numOfVertices){
         int count = 6*numOfVertices;
         vertices = new float[count];
         colorIndices = new int[numOfVertices];

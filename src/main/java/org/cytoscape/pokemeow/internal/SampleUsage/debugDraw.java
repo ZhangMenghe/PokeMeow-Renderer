@@ -11,15 +11,18 @@ import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmTriangleNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmRectangleNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmDiamondNodeShape;
+import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmEllipseNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmParallelogramNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmCircleNodeShape;
+import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmHexagonNodeShape;
+import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmOctagonNodeShape;
+import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmVeeNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 import main.java.org.cytoscape.pokemeow.internal.utils.pmLoadTexture;
 
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
 
 public class debugDraw implements Demo {
-
     private pmShaderParams gshaderParam;
     private int program;
     private pmBasicNodeShape[] NodeList;
@@ -41,17 +44,17 @@ public class debugDraw implements Demo {
                 debugDraw.class.getResource("shader/texture.frag"));
         gshaderParam = new pmShaderParams(gl4,program);
 
-        NodeList[0] = new pmCircleNodeShape(gl4);
-        NodeList[1] = new pmParallelogramNodeShape(gl4);
+        NodeList[0] = new pmOctagonNodeShape(gl4);
+        NodeList[1] = new pmVeeNodeShape(gl4);
 
         gl4.glUseProgram(program);
 
-        Vector4 [] test = {new Vector4(.0f,1.0f,.0f,1.0f),new Vector4(1.0f,.0f,.0f,1.0f)};
-        NodeList[1].setColor(gl4, test);
+        Vector4 [] test = {new Vector4(1.0f,.0f,.0f,1.0f),new Vector4(1.0f,.0f,.0f,1.0f)};
+        NodeList[0].setColor(gl4, test);
 
-        NodeList[0].setDefaultTexcoord(gl4);
-        NodeList[0].setOrigin(new Vector3(0.5f,.0f,.0f));
-//        NodeList[1].setRotation((float) Math.PI/4);
+        //NodeList[0].setDefaultTexcoord(gl4);
+        NodeList[0].setOrigin(new Vector3(-0.5f,.0f,.0f));
+        //NodeList[0].setRotation((float) Math.PI/8);
     }
 
     @Override

@@ -34,16 +34,19 @@ public class pmBasicNodeShape {
     public void setScale(Vector3 new_scale){
         scale = new_scale;
         modelMatrix = Matrix4.mult(Matrix4.scale((scale)),Matrix4.translation(origin));
+        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
     }
 
     public void setScale(float s_scale){
         scale = new Vector3(s_scale,s_scale,s_scale);
         modelMatrix = Matrix4.mult(Matrix4.scale((scale)),Matrix4.translation(origin));
+        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
     }
 
     public void setOrigin(Vector3 new_origin){
         origin = new_origin;
         modelMatrix = Matrix4.mult(Matrix4.scale((scale)),Matrix4.translation(origin));
+        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
     }
 
     public void setRotation(float radians){

@@ -22,7 +22,7 @@ public class pmRectangleNodeShape extends pmBasicNodeShape{
     public pmRectangleNodeShape(GL4 gl4){
         super();
         numOfVertices = 4;
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices,elements);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, elements);
     }
     public pmRectangleNodeShape(GL4 gl4, boolean skip){
         super();
