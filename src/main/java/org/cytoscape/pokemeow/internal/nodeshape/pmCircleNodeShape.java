@@ -10,7 +10,7 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
     public int CircleSegment = 360;
     public float[] vertices;
     public int[] colorIndices;
-    public float radius = 0.125f;
+    public float radius = 0.25f;
     /*
     High efficient way to draw circle,
     reference:  http://slabode.exofire.net/circle_draw.shtml
@@ -53,7 +53,7 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
             vertices[i+2] = 1.0f;
             vertices[i+3] = .0f;
             vertices[i+4] = .0f;
-            vertices[i+5] = -1.0f;
+            vertices[i+5] = 1.0f;
 
             colorIndices[Math.floorDiv(i,6)] = i+2;
         }

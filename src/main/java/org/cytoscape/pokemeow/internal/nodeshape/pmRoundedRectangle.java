@@ -1,6 +1,7 @@
 package main.java.org.cytoscape.pokemeow.internal.nodeshape;
 
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 
 /**
  * Created by ZhangMenghe on 2017/6/22.
@@ -8,12 +9,13 @@ import com.jogamp.opengl.GL4;
 public class pmRoundedRectangle extends pmRectangleNodeShape  {
     public int CircleSegment;
     public float radius;
-
+    public float halfLength;
     public pmRoundedRectangle(GL4 gl4){
         super(gl4,true);
         CircleSegment = 10;
         numOfVertices = 4*CircleSegment + 4;
         radius = 0.125f/2;
+        halfLength = 0.25f;
 
         int count = 6*CircleSegment;
         vertices = new float[numOfVertices * 6];
@@ -27,35 +29,35 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
         for (int i = 0; i < count; i += 6) {
             x += singleStep;
             y = (float) Math.sqrt(radius_sqr - x * x + 0.0000001);//add a bias to avoid NAN
-            vertices[i] = x+0.25f-radius;
-            vertices[i + 1] = radius-y-0.25f;
+            vertices[i] = x+halfLength-radius;
+            vertices[i + 1] = radius-y-halfLength;
         }
         //1st - quadrant
         y = .0f;
         for (int i = count; i < 2*count; i += 6) {
             y += singleStep;
             x = (float) Math.sqrt(radius_sqr - y * y + 0.0000001);
-            vertices[i] = x+0.25f-radius;
-            vertices[i + 1] = y+0.25f-radius;
+            vertices[i] = x+halfLength-radius;
+            vertices[i + 1] = y+halfLength-radius;
         }
         //4rd - quadrant
         x = .0f;
         for (int i = 2*count; i < 3*count; i += 6) {
             x += singleStep;
             y = (float) Math.sqrt(radius_sqr - x * x + 0.0000001);
-            vertices[i] = radius-x-0.25f;
-            vertices[i + 1] = y + 0.25f - radius;
+            vertices[i] = radius-x-halfLength;
+            vertices[i + 1] = y + halfLength - radius;
         }
         //3rd - quadrant
         y = .0f;
         for (int i = 3*count; i < 4*count; i += 6) {
             y += singleStep;
             x = (float) Math.sqrt(radius_sqr - y * y + 0.0000001);
-            vertices[i] = radius-x-0.25f;
-            vertices[i + 1] = radius-y-0.25f;
+            vertices[i] = radius-x-halfLength;
+            vertices[i + 1] = radius-y-halfLength;
         }
         int baseP = 4*count;
-        float baseValue = 0.25f-radius;
+        float baseValue = halfLength-radius;
         //set 4 middle points
         vertices[baseP] = baseValue;
         vertices[baseP + 1] = -baseValue;
@@ -105,5 +107,15 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
         gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, elements);
     }
 
-
+    @Override
+    public void setDefaultTexcoord(GL4 gl4){
+        Vector4[] coordList = new Vector4[numOfVertices];
+        float factor = 1.0f/(2*halfLength);
+        for(int i=0;i<numOfVertices;i++){
+            float x = vertices[6*i] * factor + 0.5f;
+            float y = vertices[6*i+1] * factor + 0.5f;
+            coordList[i] = new Vector4(x,y,.0f,-1.0f);
+        }
+        setColor(gl4,coordList);
+    }
 }

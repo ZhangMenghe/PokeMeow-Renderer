@@ -13,7 +13,7 @@ import main.java.org.cytoscape.pokemeow.internal.rendering.pmSthForDraw;
  * Created by ZhangMenghe on 2017/6/21.
  *
  */
-public class pmBasicNodeShape {
+public class pmBasicNodeShape{
     public pmSthForDraw gsthForDraw;//stuff to draw using gl4,VAO&VBO included
     public Vector3 origin;//origin of node
     public Matrix4 rotMatrix;
@@ -21,9 +21,11 @@ public class pmBasicNodeShape {
     public Matrix4 modelMatrix;//translation*scale
     public Matrix4 viewMattrix;
     public int numOfVertices;
+    public boolean useTexture = false;
+
     public pmBasicNodeShape(){
         origin = new Vector3(.0f,.0f,.0f);
-        scale = new Vector3(1.0f,1.0f,1.0f);
+        scale = new Vector3(0.5f,0.5f,0.5f);
         rotMatrix = Matrix4.identity();
         modelMatrix = Matrix4.mult(Matrix4.scale((scale)),Matrix4.translation(origin));
         modelMatrix = Matrix4.mult(modelMatrix,rotMatrix);
@@ -32,26 +34,30 @@ public class pmBasicNodeShape {
     }
 
     public void setScale(Vector3 new_scale){
-        scale = new_scale;
-        modelMatrix = Matrix4.mult(Matrix4.scale((scale)),Matrix4.translation(origin));
+        scale.x *= new_scale.x;
+        scale.y *= new_scale.y;
+        scale.z *= new_scale.z;
+        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
         modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
     }
 
     public void setScale(float s_scale){
-        scale = new Vector3(s_scale,s_scale,s_scale);
-        modelMatrix = Matrix4.mult(Matrix4.scale((scale)),Matrix4.translation(origin));
+        scale.x *= s_scale;
+        scale.y *= s_scale;
+        scale.z *= s_scale;
+        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
         modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
     }
 
     public void setOrigin(Vector3 new_origin){
         origin = new_origin;
-        modelMatrix = Matrix4.mult(Matrix4.scale((scale)),Matrix4.translation(origin));
+        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
         modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
     }
 
     public void setRotation(float radians){
         rotMatrix = Matrix4.rotationZ(radians);
-        modelMatrix = Matrix4.mult(Matrix4.scale((scale)),Matrix4.translation(origin));
+        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
         modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
     }
 

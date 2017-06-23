@@ -13,6 +13,7 @@ public class pmParallelogramNodeShape extends pmRectangleNodeShape {
         vertices[6] = .0f;
         vertices[18] = .0f;
         setScale(new Vector3(1.0f,0.5f,1.0f));
+        setScale(1.5f);
         gsthForDraw.initBuiffer(gl4, numOfVertices, vertices,elements);
     }
 }
