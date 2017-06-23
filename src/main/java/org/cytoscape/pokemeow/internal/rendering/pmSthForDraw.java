@@ -40,6 +40,7 @@ public class pmSthForDraw {
 
     public void initBuiffer(GL4 gl, int numVertices,float[] vertices, int[] indices){
         numOfVertices = numVertices;
+        numOfIndices = indices.length;
         FloatBuffer data_buff = Buffers.newDirectFloatBuffer(vertices);
         IntBuffer indice_buff = Buffers.newDirectIntBuffer(indices);
         gl.glGenVertexArrays(1,objects,VAO);

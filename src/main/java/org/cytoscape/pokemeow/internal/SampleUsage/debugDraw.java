@@ -17,6 +17,7 @@ import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmCircleNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmHexagonNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmOctagonNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmVeeNodeShape;
+import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmRoundedRectangle;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 import main.java.org.cytoscape.pokemeow.internal.utils.pmLoadTexture;
 
@@ -44,7 +45,7 @@ public class debugDraw implements Demo {
                 debugDraw.class.getResource("shader/texture.frag"));
         gshaderParam = new pmShaderParams(gl4,program);
 
-        NodeList[0] = new pmOctagonNodeShape(gl4);
+        NodeList[0] = new pmRoundedRectangle(gl4);
         NodeList[1] = new pmVeeNodeShape(gl4);
 
         gl4.glUseProgram(program);
@@ -52,8 +53,8 @@ public class debugDraw implements Demo {
         Vector4 [] test = {new Vector4(1.0f,.0f,.0f,1.0f),new Vector4(1.0f,.0f,.0f,1.0f)};
         NodeList[0].setColor(gl4, test);
 
-        //NodeList[0].setDefaultTexcoord(gl4);
-        NodeList[0].setOrigin(new Vector3(-0.5f,.0f,.0f));
+        NodeList[1].setDefaultTexcoord(gl4);
+        NodeList[1].setOrigin(new Vector3(1.5f,.0f,.0f));
         //NodeList[0].setRotation((float) Math.PI/8);
     }
 
@@ -70,13 +71,13 @@ public class debugDraw implements Demo {
             gl4.glUniformMatrix4fv(gshaderParam.mat4_viewMatrix, 1,false, Buffers.newDirectFloatBuffer(NodeList[i].viewMattrix.asArrayCM()));
             gl4.glBindVertexArray(NodeList[i].gsthForDraw.objects[NodeList[i].gsthForDraw.VAO]);
             gl4.glBindBuffer(GL_ARRAY_BUFFER, NodeList[i].gsthForDraw.objects[NodeList[i].gsthForDraw.VBO]);
-            if(i==0)
-                gl4.glDrawArrays(GL4.GL_TRIANGLE_FAN, 0, NodeList[i].numOfVertices);
+            if(i==3)
+                gl4.glDrawArrays(GL4.GL_TRIANGLES, 0, NodeList[i].numOfVertices);
 
             else{
 //                gl4.glDrawArrays(GL4.GL_QUADS,0,4);
                 gl4.glBindBuffer(GL_ARRAY_BUFFER, NodeList[i].gsthForDraw.objects[NodeList[i].gsthForDraw.EBO]);
-                gl4.glDrawElements(GL4.GL_TRIANGLES,6, GL.GL_UNSIGNED_INT,0);
+                gl4.glDrawElements(GL4.GL_TRIANGLES,NodeList[i].gsthForDraw.numOfIndices, GL.GL_UNSIGNED_INT,0);
                 gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
             }
             gl4.glBindVertexArray(0);

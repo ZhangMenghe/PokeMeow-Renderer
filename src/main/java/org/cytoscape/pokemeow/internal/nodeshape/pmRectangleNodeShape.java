@@ -17,7 +17,7 @@ public class pmRectangleNodeShape extends pmBasicNodeShape{
             3, 0, 1,
             3, 1, 2
     };
-    private int[] colorIndices = {2,8,14,20};
+    public int[] colorIndices = {2,8,14,20};
 
     public pmRectangleNodeShape(GL4 gl4){
         super();
