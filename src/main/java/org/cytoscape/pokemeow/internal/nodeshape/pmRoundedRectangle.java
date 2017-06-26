@@ -17,8 +17,8 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
         radius = 0.125f/2;
         halfLength = 0.25f;
 
-        int count = 6*CircleSegment;
-        vertices = new float[numOfVertices * 6];
+        int count = 7*CircleSegment;
+        vertices = new float[numOfVertices * 7];
         int[] new_colorIndices = new int[numOfVertices];
         colorIndices = new_colorIndices;
         float singleStep = radius / CircleSegment;
@@ -26,35 +26,39 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
         float x = .0f;
         float y = .0f;
         //2nd -quadrant
-        for (int i = 0; i < count; i += 6) {
+        for (int i = 0; i < count; i += 7) {
             x += singleStep;
             y = (float) Math.sqrt(radius_sqr - x * x + 0.0000001);//add a bias to avoid NAN
             vertices[i] = x+halfLength-radius;
             vertices[i + 1] = radius-y-halfLength;
+            vertices[i + 2] = .0f;
         }
         //1st - quadrant
         y = .0f;
-        for (int i = count; i < 2*count; i += 6) {
+        for (int i = count; i < 2*count; i += 7) {
             y += singleStep;
             x = (float) Math.sqrt(radius_sqr - y * y + 0.0000001);
             vertices[i] = x+halfLength-radius;
             vertices[i + 1] = y+halfLength-radius;
+            vertices[i + 2] = .0f;
         }
         //4rd - quadrant
         x = .0f;
-        for (int i = 2*count; i < 3*count; i += 6) {
+        for (int i = 2*count; i < 3*count; i += 7) {
             x += singleStep;
             y = (float) Math.sqrt(radius_sqr - x * x + 0.0000001);
             vertices[i] = radius-x-halfLength;
             vertices[i + 1] = y + halfLength - radius;
+            vertices[i + 2] = .0f;
         }
         //3rd - quadrant
         y = .0f;
-        for (int i = 3*count; i < 4*count; i += 6) {
+        for (int i = 3*count; i < 4*count; i += 7) {
             y += singleStep;
             x = (float) Math.sqrt(radius_sqr - y * y + 0.0000001);
             vertices[i] = radius-x-halfLength;
             vertices[i + 1] = radius-y-halfLength;
+            vertices[i + 2] = .0f;
         }
         int baseP = 4*count;
         float baseValue = halfLength-radius;
@@ -62,21 +66,21 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
         vertices[baseP] = baseValue;
         vertices[baseP + 1] = -baseValue;
 
-        vertices[baseP+6] = baseValue;
-        vertices[baseP + 7] = baseValue;
+        vertices[baseP+7] = baseValue;
+        vertices[baseP + 8] = baseValue;
 
-        vertices[baseP+ 12] = -baseValue;
-        vertices[baseP + 13] = baseValue;
+        vertices[baseP+ 14] = -baseValue;
+        vertices[baseP + 15] = baseValue;
 
-        vertices[baseP +18] = -baseValue;
-        vertices[baseP + 19] = -baseValue;
+        vertices[baseP +21] = -baseValue;
+        vertices[baseP + 22] = -baseValue;
 
         for(int i=0;i<numOfVertices;i++){
-            vertices[i*6 + 2] = 1.0f;
-            vertices[i*6 + 3] = .0f;
-            vertices[i*6 + 4] = .0f;
-            vertices[i*6 + 5] = -1.0f;
-            colorIndices[i] = i*6+2;
+            vertices[i*7 + 2] = 1.0f;
+            vertices[i*7 + 3] = .0f;
+            vertices[i*7 + 4] = .0f;
+            vertices[i*7 + 5] = -1.0f;
+            colorIndices[i] = i*7+3;
         }
         int baseIdx = numOfVertices-4;
 
@@ -112,8 +116,8 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
         Vector4[] coordList = new Vector4[numOfVertices];
         float factor = 1.0f/(2*halfLength);
         for(int i=0;i<numOfVertices;i++){
-            float x = vertices[6*i] * factor + 0.5f;
-            float y = vertices[6*i+1] * factor + 0.5f;
+            float x = vertices[7*i] * factor + 0.5f;
+            float y = vertices[7*i+1] * factor + 0.5f;
             coordList[i] = new Vector4(x,y,.0f,-1.0f);
         }
         setColor(gl4,coordList);

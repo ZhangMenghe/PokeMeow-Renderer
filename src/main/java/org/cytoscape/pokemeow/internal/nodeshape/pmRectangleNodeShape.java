@@ -8,16 +8,16 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
  */
 public class pmRectangleNodeShape extends pmBasicNodeShape{
     public float[] vertices = {
-        0.25f,  0.25f, .0f, .0f, .0f, 1.0f, // Top-left
-        0.25f, -0.25f, .0f, .0f, .0f, 1.0f, // Top-right
-        -0.25f, -0.25f, .0f, .0f, .0f, 1.0f, // Bottom-right
-        -0.25f,  0.25f, .0f, .0f, .0f, 1.0f  // Bottom-left
+        0.25f,  0.25f, .0f,.0f, .0f, .0f, 1.0f, // Top-left
+        0.25f, -0.25f, .0f,.0f, .0f, .0f, 1.0f, // Top-right
+        -0.25f, -0.25f, .0f,.0f, .0f, .0f, 1.0f, // Bottom-right
+        -0.25f,  0.25f, .0f,.0f, .0f, .0f, 1.0f  // Bottom-left
     };
     public int []elements = {
             3, 0, 1,
             3, 1, 2
     };
-    public int[] colorIndices = {2,8,14,20};
+    public int[] colorIndices = {3,10,17,24};
 
     public pmRectangleNodeShape(GL4 gl4){
         super();
@@ -55,7 +55,7 @@ public class pmRectangleNodeShape extends pmBasicNodeShape{
     public void setColor(GL4 gl4, Vector4 [] colorList){
         int len = colorList.length;
         for(int i:colorIndices){
-            int idx = Math.floorDiv(i,6);
+            int idx = Math.floorDiv(i,7);
             if(idx >=len)
                 idx = 0;
             vertices[i] = colorList[idx].x;

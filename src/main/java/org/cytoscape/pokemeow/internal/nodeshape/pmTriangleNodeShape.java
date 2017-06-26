@@ -8,11 +8,11 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
  */
 public class pmTriangleNodeShape extends pmBasicNodeShape{
     private float[] vertices = {
-               .0f,  0.25f, .0f, .0f, .0f, 1.0f,
-            -0.25f, -0.25f, .0f, .0f, .0f, 1.0f,
-             0.25f, -0.25f, .0f, .0f, .0f, 1.0f
+               .0f,  0.25f, .0f,.0f, .0f, .0f, 1.0f,
+            -0.25f, -0.25f, .0f,.0f, .0f, .0f, 1.0f,
+             0.25f, -0.25f, .0f,.0f, .0f, .0f, 1.0f
     };
-    private int[] colorIndices = {2, 8, 14};
+    private int[] colorIndices = {3, 10, 17};
 
     public pmTriangleNodeShape(GL4 gl4){
         super();
@@ -43,7 +43,7 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
     public void setColor(GL4 gl4, Vector4 [] colorList){
         int len = colorList.length;
          for(int i:colorIndices){
-             int idx = Math.floorDiv(i,6);
+             int idx = Math.floorDiv(i,7);
              if(idx >=len)
                  idx = 0;
              vertices[i] = colorList[idx].x;

@@ -29,7 +29,7 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
     }
 
     private void initCircle(GL4 gl4, int numOfVertices){
-        int count = 6*numOfVertices;
+        int count = 7*numOfVertices;
         vertices = new float[count];
         colorIndices = new int[numOfVertices];
 
@@ -39,10 +39,10 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
         float x = radius;
         float y = .0f;
 
-        for(int i=0; i<count; i+=6){
+        for(int i=0; i<count; i+=7){
             vertices[i] = x;//radius * (float)Math.cos(i * doublePi / CircleSegment);
             vertices[i+1] = y; //radius * (float)Math.sin( i * doublePi / CircleSegment);
-
+            vertices[i+2]=.0f;
             float tx = -y;
             float ty = x;
             x += tx*tangetial_factor;
@@ -50,12 +50,12 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
             x *= radial_factor;
             y *= radial_factor;
 
-            vertices[i+2] = 1.0f;
-            vertices[i+3] = .0f;
+            vertices[i+3] = 1.0f;
             vertices[i+4] = .0f;
-            vertices[i+5] = 1.0f;
+            vertices[i+5] = .0f;
+            vertices[i+6] = 1.0f;
 
-            colorIndices[Math.floorDiv(i,6)] = i+2;
+            colorIndices[Math.floorDiv(i,7)] = i+3;
         }
         gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
@@ -85,7 +85,7 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
     public void setColor(GL4 gl4, Vector4 [] colorList){
         int len = colorList.length;
         for(int i:colorIndices){
-            int idx = Math.floorDiv(i,6);
+            int idx = Math.floorDiv(i,7);
             if(idx >=len)
                 idx = 0;
             vertices[i] = colorList[idx].x;
@@ -100,8 +100,8 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
         Vector4 [] coordList = new Vector4[CircleSegment];
         float factor = 1.0f/(2*radius);
         for(int i=0;i<CircleSegment;i++){
-            float x = vertices[6*i] * factor + 0.5f;
-            float y = vertices[6*i+1] * factor + 0.5f;
+            float x = vertices[7*i] * factor + 0.5f;
+            float y = vertices[7*i+1] * factor + 0.5f;
             coordList[i] = new Vector4(x,y,.0f,-1.0f);
         }
         setColor(gl4,coordList);
