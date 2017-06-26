@@ -59,9 +59,13 @@ public class pmNodeShapeFactory {
         nodeShapeCollector.put(SHAPE_PARALLELOGRAM, new pmParallelogramNodeShape(gl4));
         nodeShapeCollector.put(SHAPE_TRIANGLE, new pmTriangleNodeShape(gl4));
         nodeShapeCollector.put(SHAPE_VEE, new pmVeeNodeShape(gl4));
+
+        gl4.glEnable( GL4.GL_DEPTH_TEST );
+        gl4.glDepthFunc( GL4.GL_LEQUAL );
     }
 
     public pmBasicNodeShape createNode(GL4 gl4, Byte type){
+
         return nodeShapeCollector.get(type);
     }
 

@@ -30,7 +30,7 @@ public class pmSthForDraw {
         gl.glBufferData(GL.GL_ARRAY_BUFFER, data_buff.capacity() * Float.BYTES,data_buff, GL.GL_STATIC_DRAW);
 
         gl.glEnableVertexAttribArray(0);
-        gl.glVertexAttribPointer(0, 2, GL.GL_FLOAT, false, 7*Float.BYTES, 0);
+        gl.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 7*Float.BYTES, 0);
 
         gl.glEnableVertexAttribArray(1);
         gl.glVertexAttribPointer(1, 4, GL.GL_FLOAT, false, 7*Float.BYTES, 3*Float.BYTES);
@@ -52,7 +52,7 @@ public class pmSthForDraw {
         gl.glBufferData(GL.GL_ARRAY_BUFFER, data_buff.capacity() * Float.BYTES,data_buff, GL.GL_STATIC_DRAW);
 
         gl.glEnableVertexAttribArray(0);
-        gl.glVertexAttribPointer(0, 2, GL.GL_FLOAT, false, 7*Float.BYTES, 0);
+        gl.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 7*Float.BYTES, 0);
 
         gl.glEnableVertexAttribArray(1);
         gl.glVertexAttribPointer(1, 4, GL.GL_FLOAT, false, 7*Float.BYTES, 3*Float.BYTES);

@@ -1,6 +1,7 @@
 package main.java.org.cytoscape.pokemeow.internal.nodeshape;
 
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 
 /**
@@ -37,7 +38,7 @@ public class pmRectangleNodeShape extends pmBasicNodeShape{
             vertices[i+2] = new_color[2];
             vertices[i+3] = new_color[3];
         }
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices,elements);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, elements);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class pmRectangleNodeShape extends pmBasicNodeShape{
             vertices[i+2] = new_color.z;
             vertices[i+3] = new_color.w;
         }
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices,elements);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, elements);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class pmRectangleNodeShape extends pmBasicNodeShape{
             vertices[i+2] = colorList[idx].z;
             vertices[i+3] = colorList[idx].w;
         }
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices,elements);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, elements);
     }
     @Override
     public void setDefaultTexcoord(GL4 gl4){
@@ -74,5 +75,12 @@ public class pmRectangleNodeShape extends pmBasicNodeShape{
         };
 
         setColor(gl4,coordList);
+    }
+    @Override
+    public void setZorder(GL4 gl4, int new_z) {
+        zorder = new_z;
+        for(int i:colorIndices)
+            vertices[i-1] = new_z;
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, elements);
     }
 }

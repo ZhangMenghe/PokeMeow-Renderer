@@ -21,6 +21,7 @@ public class pmBasicNodeShape{
     public Matrix4 modelMatrix;//translation*scale
     public Matrix4 viewMattrix;
     public int numOfVertices;
+    public int zorder = 0;
     public boolean useTexture = false;
 
     public pmBasicNodeShape(){
@@ -68,4 +69,5 @@ public class pmBasicNodeShape{
     public void setColor(GL4 gl4, Vector4 new_color){}
     public void setColor(GL4 gl4, Vector4 [] colorList){}
     public void setDefaultTexcoord(GL4 gl4){}
+    public void setZorder(GL4 gl4, int new_z){}
 }

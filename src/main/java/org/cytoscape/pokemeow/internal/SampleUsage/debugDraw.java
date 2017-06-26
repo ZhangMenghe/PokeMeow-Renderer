@@ -46,12 +46,17 @@ public class debugDraw implements Demo {
         gl4.glUseProgram(program);
         for(int x=0;x<3;x++){
             for(int y=0;y<3;y++){
-                float cx = -0.6f +y*0.6f;
-                float cy = -0.6f+ x*0.5f;
+                float cx = -0.6f + y*0.5f;
+                float cy = -0.6f + x*0.5f;
                 int idx = 3*x+y;
-                NodeList[idx].setOrigin(new Vector3(cx,cy,.0f));
+                NodeList[idx].setOrigin(new Vector3(cx, cy, .0f));
             }
         }
+        //test zOrder:the less z value the more front position
+//        NodeList[2].setZorder(gl4,-1);
+//        NodeList[5].setZorder(gl4,1);
+//        NodeList[8].setZorder(gl4,2);
+
         NodeList[9].setOrigin(new Vector3(.0f,0.8f,.0f));
         NodeList[9].setRotation((float) Math.PI/8);
         Vector4 [] test = {new Vector4(1.0f,.0f,.0f,1.0f),new Vector4(.0f,.0f,1.0f,1.0f)};

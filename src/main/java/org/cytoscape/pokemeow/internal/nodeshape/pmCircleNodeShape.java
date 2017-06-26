@@ -106,4 +106,11 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
         }
         setColor(gl4,coordList);
     }
+    @Override
+    public void setZorder(GL4 gl4, int new_z) {
+        zorder = new_z;
+        for(int i:colorIndices)
+            vertices[i-1] = new_z;
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
+    }
 }
