@@ -78,7 +78,7 @@ public class debugDrawLauncher implements GLEventListener, KeyListener{
     public void display(GLAutoDrawable drawable) {
         final GL4 gl4 = getGL4(drawable);
         gl4.glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
-        gl4.glClear(GL_COLOR_BUFFER_BIT);
+//        gl4.glClear(GL_COLOR_BUFFER_BIT);
         demo.render(gl4);
     }
 

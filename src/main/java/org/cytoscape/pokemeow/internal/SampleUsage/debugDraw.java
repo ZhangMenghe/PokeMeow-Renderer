@@ -56,9 +56,15 @@ public class debugDraw implements Demo {
         NodeList[9].setRotation((float) Math.PI/8);
         Vector4 [] test = {new Vector4(1.0f,.0f,.0f,1.0f),new Vector4(.0f,.0f,1.0f,1.0f)};
         NodeList[0].setColor(gl4, test);
-//
+        NodeList[1].setColor(gl4, test);
+        NodeList[2].setColor(gl4, test);
+        NodeList[6].setColor(gl4, new Vector4(0.5f,0.5f,.0f,0.8f));
+        NodeList[7].setColor(gl4, new Vector4(0.5f,0.5f,.0f,0.8f));
+        NodeList[8].setColor(gl4, new Vector4(0.5f,0.5f,.0f,0.8f));
+
         NodeList[3].setDefaultTexcoord(gl4);
         NodeList[4].setDefaultTexcoord(gl4);
+        NodeList[5].setDefaultTexcoord(gl4);
 //        NodeList[1].setOrigin(new Vector3(0.5f,.0f,.0f));
 
     }

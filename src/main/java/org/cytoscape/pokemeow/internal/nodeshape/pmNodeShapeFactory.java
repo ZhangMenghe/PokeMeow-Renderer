@@ -95,6 +95,7 @@ public class pmNodeShapeFactory {
     }
 
     public void drawNodeList(GL4 gl4, pmBasicNodeShape[] NodeList,pmShaderParams gshaderParam, Texture texture){
+        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
         for(pmBasicNodeShape node:NodeList)
             drawNodeWithTexture(gl4, node, gshaderParam, texture);
     }
