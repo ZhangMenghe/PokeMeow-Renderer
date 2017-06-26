@@ -113,6 +113,7 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
 
     @Override
     public void setDefaultTexcoord(GL4 gl4){
+        useTexture = true;
         Vector4[] coordList = new Vector4[numOfVertices];
         float factor = 1.0f/(2*halfLength);
         for(int i=0;i<numOfVertices;i++){

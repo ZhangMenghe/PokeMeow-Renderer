@@ -97,6 +97,7 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
     }
     @Override
     public void setDefaultTexcoord(GL4 gl4){
+        useTexture = true;
         Vector4 [] coordList = new Vector4[CircleSegment];
         float factor = 1.0f/(2*radius);
         for(int i=0;i<CircleSegment;i++){

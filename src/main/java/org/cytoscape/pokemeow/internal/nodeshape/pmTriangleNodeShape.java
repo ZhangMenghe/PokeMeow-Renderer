@@ -55,6 +55,7 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
     }
     @Override
     public void setDefaultTexcoord(GL4 gl4){
+        useTexture = true;
         Vector4 [] coordList = {new Vector4(.0f,.0f,.0f,-1.0f),
                 new Vector4(.0f,1.0f,.0f,-1.0f),
                 new Vector4(1.0f,.0f,.0f,-1.0f),

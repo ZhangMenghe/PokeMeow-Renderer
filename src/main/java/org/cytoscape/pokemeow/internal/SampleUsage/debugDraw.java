@@ -12,38 +12,51 @@ import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 import main.java.org.cytoscape.pokemeow.internal.utils.pmLoadTexture;
 
+import java.nio.IntBuffer;
+import java.util.ArrayList;
+
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
 
 public class debugDraw implements Demo {
     private pmShaderParams gshaderParam;
-    private int program;
+    private pmShaderParams gshaderParam1;
+    private int[] programList;
     private pmBasicNodeShape[] NodeList;
 //    private pmRectangleNodeShape[] triangleNodeList;
     private int numOfNodes = 10;
     private pmLoadTexture textureLoader;
     private Texture texture;
     private pmNodeShapeFactory nodesFactory;
-
+    private ArrayList<Integer>flatNodeIndices = new ArrayList<Integer>();
+    private ArrayList<Integer> textureNodeIndices=new ArrayList<Integer>();
     @Override
     public void create(GL4 gl4) {
+        programList = new int[2];
         NodeList = new pmBasicNodeShape[numOfNodes];
         nodesFactory = new pmNodeShapeFactory(gl4);
 
         textureLoader = new pmLoadTexture();
         texture = textureLoader.initialTexture(gl4, debugDraw.class.getResource("Texture.jpg"));
 
-        program = GLSLProgram.CompileProgram(gl4,
+        programList[0] = GLSLProgram.CompileProgram(gl4,
+                debugDraw.class.getResource("shader/flat.vert"),
+                null,null,null,
+                debugDraw.class.getResource("shader/flat.frag"));
+
+        programList[1] = GLSLProgram.CompileProgram(gl4,
                 debugDraw.class.getResource("shader/texture.vert"),
                 null,null,null,
                 debugDraw.class.getResource("shader/texture.frag"));
-        gshaderParam = new pmShaderParams(gl4,program);
+
+        gshaderParam = new pmShaderParams(gl4, programList[0]);
+        gshaderParam1= new pmShaderParams(gl4, programList[1]);
         int n=0;
         for(Byte idx = 0;idx<10;idx++)
             NodeList[n++] = nodesFactory.createNode(gl4, idx);
 
 //        NodeList[1] = nodesFactory.createNode(gl4, pmNodeShapeFactory.SHAPE_VEE);
 
-        gl4.glUseProgram(program);
+
         for(int x=0;x<3;x++){
             for(int y=0;y<3;y++){
                 float cx = -0.6f + y*0.5f;
@@ -71,12 +84,23 @@ public class debugDraw implements Demo {
         NodeList[4].setDefaultTexcoord(gl4);
         NodeList[5].setDefaultTexcoord(gl4);
 //        NodeList[1].setOrigin(new Vector3(0.5f,.0f,.0f));
+        for(int i=0;i<numOfNodes;i++){
+            if(NodeList[i].useTexture)
+                textureNodeIndices.add(i);
+            else
+                flatNodeIndices.add(i);
+        }
 
     }
 
     @Override
     public void render(GL4 gl4) {
-        nodesFactory.drawNodeList(gl4,NodeList,gshaderParam,texture);
+        nodesFactory.drawNodeList(gl4,NodeList,
+                programList,
+                gshaderParam,
+                texture,
+                flatNodeIndices,
+                textureNodeIndices);
     }
 
     @Override

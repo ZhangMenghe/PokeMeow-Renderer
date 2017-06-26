@@ -1,5 +1,6 @@
 package main.java.org.cytoscape.pokemeow.internal.nodeshape;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,9 +99,15 @@ public class pmNodeShapeFactory {
         gl4.glBindVertexArray(0);
     }
 
-    public void drawNodeList(GL4 gl4, pmBasicNodeShape[] NodeList,pmShaderParams gshaderParam, Texture texture){
+    public void drawNodeList(GL4 gl4, pmBasicNodeShape[] NodeList, int[]programList, pmShaderParams gshaderParam, Texture texture, ArrayList<Integer>flatindices,ArrayList<Integer>textureindices){
         gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
-        for(pmBasicNodeShape node:NodeList)
-            drawNodeWithTexture(gl4, node, gshaderParam, texture);
+        gl4.glUseProgram(programList[0]);
+            for(int i :flatindices)
+                drawNode(gl4, NodeList[i], gshaderParam);
+        gl4.glUseProgram(programList[1]);
+            for(int i :textureindices)
+                drawNodeWithTexture(gl4, NodeList[i], gshaderParam, texture);
+
     }
+
 }
