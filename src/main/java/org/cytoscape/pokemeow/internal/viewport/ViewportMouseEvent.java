@@ -43,8 +43,11 @@ public class ViewportMouseEvent
 		
 		this.offsetRaw = offset;
 		this.offsetScaled = Vector2.scalarMult(scaleDPI, offset);
-		this.delta = 0;
-		
+
+		if(e instanceof MouseWheelEvent)
+			this.delta = ((MouseWheelEvent) e).getWheelRotation();
+		else
+			this.delta = 0;
 		this.positionRaw = new Vector2(e.getX(), e.getY());
 		this.positionScaled = Vector2.scalarMult(scaleDPI, positionRaw);
 		this.positionRay = camera.getRayThroughPixel(positionRaw);

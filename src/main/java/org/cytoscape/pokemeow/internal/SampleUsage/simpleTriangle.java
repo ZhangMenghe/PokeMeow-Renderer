@@ -2,6 +2,7 @@ package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.util.texture.Texture;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by ZhangMenghe on 2017/6/26.
  */
-public class simpleTriangle implements Demo{
+public class simpleTriangle extends Demo{
     private pmShaderParams gshaderParam;
     private int program;
     private pmBasicNodeShape mtriangle;
@@ -35,6 +36,9 @@ public class simpleTriangle implements Demo{
     public void render(GL4 gl4) {
         gl4.glUseProgram(program);
         factory.drawNode(gl4,mtriangle,gshaderParam);
+    }
+    public void reSetMatrix(){
+        mtriangle.setViewMattrix(viewMatrix);
     }
     @Override
     public void dispose(GL4 gl4) {

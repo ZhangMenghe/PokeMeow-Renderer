@@ -1,14 +1,18 @@
 package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 
-public interface Demo {
+public abstract class Demo {
 
-    void create(GL4 gl4);
+    public Matrix4 viewMatrix = null;
 
-    void render(GL4 gl4);
+    public abstract void create(GL4 gl4);
 
-    void dispose(GL4 gl4);
+    public abstract void render(GL4 gl4);
 
-    void resize(GL4 gl4, int x, int y, int width, int height);
+    public abstract void dispose(GL4 gl4);
+
+    public abstract void resize(GL4 gl4, int x, int y, int width, int height);
+    public abstract void reSetMatrix();
 }

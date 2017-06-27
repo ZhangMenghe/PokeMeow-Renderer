@@ -235,4 +235,13 @@ public class Matrix4
 						                     0,                    0, -2.0f / range, (far + near) / range,
 						                     0,                    0,             0,                    1);
 	}
+	public static Matrix4 projectionOrthogonal(float width, float height, float near, float far)
+	{
+		float range = far - near;
+
+		return new Matrix4(2.0f / (float)width,                    0,             0,                    0,
+				0, 2.0f / (float)height,             0,                    0,
+				0,                    0, -2.0f / range, (far + near) / range,
+				0,                    0,             0,                    1);
+	}
 }

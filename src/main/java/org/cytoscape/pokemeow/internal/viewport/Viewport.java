@@ -13,7 +13,9 @@ import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 
 import main.java.org.cytoscape.pokemeow.internal.SampleUsage.simpleTriangle;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.camera.Camera;
 
 import main.java.org.cytoscape.pokemeow.internal.SampleUsage.debugDraw;
@@ -66,9 +68,11 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 
 	/*Parameters for DEBUG*/
 	public Boolean DEBUGMODE = true;
-	public Boolean triggered = false;
+	public Boolean triggered = true;
 	private Vector2 lastclickPos;
 	private Demo demo = null;
+	private float zoomFactor = 2.0f;
+	private float currentAngle = .0f;
 	public Viewport(JComponent container)
 	{
 		GLProfile profile = GLProfile.getDefault(); // Use the system's default version of OpenGL
@@ -85,13 +89,12 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		panel.addMouseListener(this);
 		panel.addMouseMotionListener(this);
 		panel.addMouseWheelListener(this);
-		//panel.setSize(300,300);
 
 		camera = new Camera(this);
 
 		if (container instanceof JInternalFrame) 
 		{
-			//container.setSize(300,300);
+			container.setSize(300,300);
 			JInternalFrame JInframe = (JInternalFrame) container;
             JInframe.getContentPane().setLayout(new BorderLayout());
             JInframe.getContentPane().add(panel, BorderLayout.CENTER);
@@ -185,7 +188,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		gl.glClearDepthf(1.0f);
 		gl.glClear(GL4.GL_COLOR_BUFFER_BIT | GL4.GL_DEPTH_BUFFER_BIT);
 
-		//if(triggered)
+		if(triggered)
 			demo.render(gl);
 
 		invokeViewportDisplayEvent(drawable);
@@ -222,6 +225,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	 */
 	public void redraw()
 	{
+		demo.reSetMatrix();
 		panel.repaint();
 	}
 
@@ -243,7 +247,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(), scaleDPI, camera);
 		invokeViewportMouseDownEvent(event);
 		triggered = true;
-		System.out.println("click");
+		redraw();
 		if (event.handled)
 			return;
 	}
@@ -383,8 +387,18 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 			return;
 		
 		// Zoom in or out while keeping the same point under the mouse pointer
-		camera.zoomBy(event.positionRay, panel.getWidth(),panel.getHeight(),event.delta);
-		panel.repaint();
+		//camera.zoomBy(event.positionRay, panel.getWidth(),panel.getHeight(),event.delta);
+		if(event.delta>0 && zoomFactor<20.0f)
+			zoomFactor+=0.1f;
+		else if(event.delta<0 && zoomFactor>.0f)
+			zoomFactor-=0.1f;
+
+		currentAngle+=3.14f/16.0;
+		if(currentAngle > 3.14)
+			currentAngle-=3.14f;
+		//demo.viewMatrix = Matrix4.rotationZ(currentAngle);
+		demo.viewMatrix = Matrix4.projectionOrthogonal(zoomFactor,zoomFactor,1,-1);
+		redraw();
 	}
 	
 	// General events:

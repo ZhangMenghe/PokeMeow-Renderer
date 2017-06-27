@@ -13,7 +13,7 @@ import main.java.org.cytoscape.pokemeow.internal.utils.pmLoadTexture;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class debugDraw implements Demo {
+public class debugDraw extends Demo {
     private pmShaderParams gshaderParam;
     private int[] programList;
     private pmBasicNodeShape[] NodeList;
@@ -111,7 +111,10 @@ public class debugDraw implements Demo {
         for(int i=0;i<numOfNodes;i++)
             NodeList[i].gsthForDraw.dispose(gl4);
     }
-
+    public void reSetMatrix(){
+        for(int i=0;i<numOfNodes;i++)
+            NodeList[i].setViewMattrix(viewMatrix);
+    }
     @Override
     public void resize(GL4 gl4, int x, int y, int width, int height) {
         gl4.glViewport(x, y, width, height);

@@ -47,7 +47,9 @@ public class ViewportDemo extends JFrame{
         menuItem.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
+
                 createFrame();
+
             }
         });
         menu.add(menuItem);
