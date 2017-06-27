@@ -1,7 +1,5 @@
 package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
-import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.util.texture.Texture;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
@@ -12,18 +10,14 @@ import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 import main.java.org.cytoscape.pokemeow.internal.utils.pmLoadTexture;
 
-import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
-
 public class debugDraw implements Demo {
     private pmShaderParams gshaderParam;
-    private pmShaderParams gshaderParam1;
     private int[] programList;
     private pmBasicNodeShape[] NodeList;
-//    private pmRectangleNodeShape[] triangleNodeList;
+
     private int numOfNodes = 10;
     private pmLoadTexture textureLoader;
     private Texture texture;
@@ -32,6 +26,7 @@ public class debugDraw implements Demo {
     private pmNodeShapeFactory nodesFactory;
     private ArrayList<Integer>flatNodeIndices = new ArrayList<Integer>();
     private ArrayList<Integer> textureNodeIndices=new ArrayList<Integer>();
+
     @Override
     public void create(GL4 gl4) {
         programList = new int[2];
@@ -52,7 +47,6 @@ public class debugDraw implements Demo {
                 debugDraw.class.getResource("shader/texture.frag"));
 
         gshaderParam = new pmShaderParams(gl4, programList[0]);
-        gshaderParam1= new pmShaderParams(gl4, programList[1]);
         int n=0;
         for(Byte idx = 0;idx<10;idx++)
             NodeList[n++] = nodesFactory.createNode(gl4, idx);

@@ -12,6 +12,7 @@ import java.util.HashSet;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 
+import main.java.org.cytoscape.pokemeow.internal.SampleUsage.simpleTriangle;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.camera.Camera;
 
@@ -155,7 +156,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		gl.glViewport(0, 0, drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
 
 		if(demo == null){
-			demo = new debugDraw();
+			demo = new simpleTriangle();
 			demo.create(gl);
 		}
 
@@ -184,7 +185,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		gl.glClearDepthf(1.0f);
 		gl.glClear(GL4.GL_COLOR_BUFFER_BIT | GL4.GL_DEPTH_BUFFER_BIT);
 
-		if(triggered)
+		//if(triggered)
 			demo.render(gl);
 
 		invokeViewportDisplayEvent(drawable);

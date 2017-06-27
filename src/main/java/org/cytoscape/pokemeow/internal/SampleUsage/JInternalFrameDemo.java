@@ -1,5 +1,9 @@
 package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
+import com.jogamp.opengl.*;
+import com.jogamp.opengl.awt.GLJPanel;
+import main.java.org.cytoscape.pokemeow.internal.viewport.Viewport;
+
 import javax.swing.JInternalFrame;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
@@ -9,10 +13,12 @@ import javax.swing.JFrame;
 import java.awt.event.*;
 import java.awt.*;
 
-public class JInternalFrameDemo extends JFrame {
-
+public class JInternalFrameDemo extends JFrame implements GLEventListener {
+    GL4 gl;
     JDesktopPane jdpDesktop;
     static int openFrameCount = 0;
+    private Demo demo = null;
+    private MyInternalFrame frame;
     public JInternalFrameDemo() {
         super("JInternalFrame Usage Demo");
         // Make the main window positioned as 50 pixels from each edge of the
@@ -36,6 +42,15 @@ public class JInternalFrameDemo extends JFrame {
         setJMenuBar(createMenuBar());
         // Make dragging faster by setting drag mode to Outline
         jdpDesktop.putClientProperty("JDesktopPane.dragMode", "outline");
+        //Viewport view = new Viewport(frame);
+        GLProfile profile = GLProfile.getDefault(); // Use the system's default version of OpenGL
+        GLCapabilities capabilities = new GLCapabilities(profile);
+
+        GLJPanel panel = new GLJPanel(capabilities);
+        panel.addGLEventListener(this);
+        JInternalFrame JInframe = (JInternalFrame) frame;
+        JInframe.getContentPane().setLayout(new BorderLayout());
+        JInframe.getContentPane().add(panel, BorderLayout.CENTER);
     }
     protected JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
@@ -54,7 +69,7 @@ public class JInternalFrameDemo extends JFrame {
         return menuBar;
     }
     protected void createFrame() {
-        MyInternalFrame frame = new MyInternalFrame();
+        frame = new MyInternalFrame();
         frame.setVisible(true);
         // Every JInternalFrame must be added to content pane using JDesktopPane
         jdpDesktop.add(frame);
@@ -81,4 +96,20 @@ public class JInternalFrameDemo extends JFrame {
                     * openFrameCount);
         }
     }
+    public void display(GLAutoDrawable drawable){
+        demo.render(gl);
+    }
+    @Override
+    public void dispose( GLAutoDrawable drawable ) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void init( GLAutoDrawable drawable ) {
+        gl = drawable.getGL().getGL4();
+        demo = new simpleTriangle();
+        demo.create(gl);
+    }
+    @Override
+    public void reshape( GLAutoDrawable drawable, int x, int y, int width, int height ) {}
 }
