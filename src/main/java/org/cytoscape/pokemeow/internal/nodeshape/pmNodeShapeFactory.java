@@ -101,13 +101,35 @@ public class pmNodeShapeFactory {
 
     public void drawNodeList(GL4 gl4, pmBasicNodeShape[] NodeList, int[]programList, pmShaderParams gshaderParam, Texture texture, ArrayList<Integer>flatindices,ArrayList<Integer>textureindices){
         gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
-        gl4.glUseProgram(programList[0]);
-            for(int i :flatindices)
+        if(flatindices!=null) {
+            gl4.glUseProgram(programList[0]);
+            for (int i : flatindices)
                 drawNode(gl4, NodeList[i], gshaderParam);
-        gl4.glUseProgram(programList[1]);
+        }
+        if(textureindices != null){
+            gl4.glUseProgram(programList[1]);
             for(int i :textureindices)
                 drawNodeWithTexture(gl4, NodeList[i], gshaderParam, texture);
+        }
+    }
+    public void drawNodeList(GL4 gl4, pmBasicNodeShape[] NodeList, int[]programList, pmShaderParams gshaderParam,
+                             ArrayList<Texture> textureList, ArrayList<Integer>flatindices,ArrayList<Integer>textureindices,
+                             ArrayList<Integer> textureIdx){
+        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
+        if(flatindices!=null) {
+            gl4.glUseProgram(programList[0]);
+            for (int i : flatindices)
+                drawNode(gl4, NodeList[i], gshaderParam);
+        }
+        if(textureindices != null){
+            gl4.glUseProgram(programList[1]);
+            for(int i=0;i<textureindices.size();i++){
+                int nodeId = textureindices.get(i);
+                int texId = textureIdx.get(i);
+                drawNodeWithTexture(gl4, NodeList[nodeId], gshaderParam, textureList.get(texId));
+            }
 
+        }
     }
 
 }

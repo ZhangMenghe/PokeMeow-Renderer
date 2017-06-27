@@ -14,6 +14,7 @@ import main.java.org.cytoscape.pokemeow.internal.utils.pmLoadTexture;
 
 import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
 
@@ -26,6 +27,8 @@ public class debugDraw implements Demo {
     private int numOfNodes = 10;
     private pmLoadTexture textureLoader;
     private Texture texture;
+    private ArrayList<Texture> textureList = new ArrayList<Texture>();
+    private ArrayList<Integer> textureIds;
     private pmNodeShapeFactory nodesFactory;
     private ArrayList<Integer>flatNodeIndices = new ArrayList<Integer>();
     private ArrayList<Integer> textureNodeIndices=new ArrayList<Integer>();
@@ -37,7 +40,7 @@ public class debugDraw implements Demo {
 
         textureLoader = new pmLoadTexture();
         texture = textureLoader.initialTexture(gl4, debugDraw.class.getResource("Texture.jpg"));
-
+        Texture texture2 = textureLoader.initialTexture(gl4, debugDraw.class.getResource("Texture2.jpg"));
         programList[0] = GLSLProgram.CompileProgram(gl4,
                 debugDraw.class.getResource("shader/flat.vert"),
                 null,null,null,
@@ -90,7 +93,12 @@ public class debugDraw implements Demo {
             else
                 flatNodeIndices.add(i);
         }
-
+        textureList.add(texture);
+        textureList.add(texture2);
+        textureIds = new ArrayList<Integer>();
+        Random rand  = new Random();
+        for(int i=0;i<textureNodeIndices.size();i++)
+            textureIds.add(rand.nextInt(2));
     }
 
     @Override
@@ -98,9 +106,10 @@ public class debugDraw implements Demo {
         nodesFactory.drawNodeList(gl4,NodeList,
                 programList,
                 gshaderParam,
-                texture,
+                textureList,
                 flatNodeIndices,
-                textureNodeIndices);
+                textureNodeIndices,
+                textureIds);
     }
 
     @Override
