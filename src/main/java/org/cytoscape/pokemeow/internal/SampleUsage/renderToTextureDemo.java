@@ -48,8 +48,8 @@ public class renderToTextureDemo extends Demo {
 
         renderer_t.RenderToScreen(gl4);
     }
-    public void reSetMatrix(){
-        mtriangle.setViewMattrix(viewMatrix);
+    public void reSetMatrix(boolean viewChanged){
+        mtriangle.setViewMatrix(viewMatrix);
     }
 
     @Override

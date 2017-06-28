@@ -2,6 +2,7 @@ package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.util.texture.Texture;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmRenderToTexture;
@@ -27,7 +28,9 @@ public class debugDraw extends Demo {
     private pmNodeShapeFactory nodesFactory;
     private ArrayList<Integer>flatNodeIndices = new ArrayList<Integer>();
     private ArrayList<Integer> textureNodeIndices=new ArrayList<Integer>();
-    private pmRenderToTexture renderer_t;
+    public pmRenderToTexture renderer_t;
+    private boolean changed = true;
+    private Matrix4 lastViewMatrix = Matrix4.identity();
     @Override
     public void create(GL4 gl4) {
         programList = new int[2];
@@ -99,14 +102,17 @@ public class debugDraw extends Demo {
 
     @Override
     public void render(GL4 gl4) {
-        renderer_t.RenderToTexturePrepare(gl4);
-        nodesFactory.drawNodeList(gl4,NodeList,
-                programList,
-                gshaderParam,
-                textureList,
-                flatNodeIndices,
-                textureNodeIndices,
-                textureIds);
+        if(changed){
+            renderer_t.RenderToTexturePrepare(gl4);
+            nodesFactory.drawNodeList(gl4,NodeList,
+                    programList,
+                    gshaderParam,
+                    textureList,
+                    flatNodeIndices,
+                    textureNodeIndices,
+                    textureIds);
+            changed = false;
+        }
         renderer_t.RenderToScreen(gl4);
     }
 
@@ -116,9 +122,12 @@ public class debugDraw extends Demo {
             NodeList[i].gsthForDraw.dispose(gl4);
     }
 
-    public void reSetMatrix(){
-        for(int i=0;i<numOfNodes;i++)
-            NodeList[i].setViewMattrix(viewMatrix);
+    public void reSetMatrix(boolean viewChanged){
+        if(viewChanged){
+            viewMatrix = Matrix4.mult(lastViewMatrix, viewMatrix);
+            lastViewMatrix = viewMatrix;
+        }
+        renderer_t.canvas.setViewMatrix(Matrix4.mult(lastViewMatrix, zoomMatrix));
     }
 
     @Override
@@ -126,5 +135,6 @@ public class debugDraw extends Demo {
     {
         gl4.glViewport(x, y, width, height);
         renderer_t = new pmRenderToTexture(gl4,width,height);//change to Syn?
+        changed = true;
     }
 }

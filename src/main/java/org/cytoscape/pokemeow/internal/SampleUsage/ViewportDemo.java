@@ -13,7 +13,6 @@ import java.awt.event.*;
 public class ViewportDemo extends JFrame{
     JDesktopPane jdpDesktop;
     static int openFrameCount = 0;
-    private Demo demo = null;
     private MyInternalFrame frame;
     public ViewportDemo() {
         super("ViewportDemo");
@@ -37,6 +36,8 @@ public class ViewportDemo extends JFrame{
         // Make dragging faster by setting drag mode to Outline
         jdpDesktop.putClientProperty("JDesktopPane.dragMode", "outline");
         Viewport view = new Viewport(frame);
+        view.demo = new debugDraw();
+
     }
     protected JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
@@ -78,7 +79,7 @@ public class ViewportDemo extends JFrame{
                     true, // closable
                     true, // maximizable
                     true);// iconifiable
-            setSize(300, 300);
+            setSize(800, 800);
             // Set the window's location.
             setLocation(xPosition * openFrameCount, yPosition
                     * openFrameCount);

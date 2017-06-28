@@ -84,7 +84,7 @@ public class pmRenderToTexture {
     public void RenderToScreen(GL4 gl4){
         gl4.glBindFramebuffer(GL4.GL_FRAMEBUFFER, 0);
         gl4.glUseProgram(programTexture);
-        gl4.glClearColor(.0f,1.0f,.0f,1.0f);
+        gl4.glClearColor(1.0f,1.0f,1.0f,1.0f);
         gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
         //texture
         gl4.glActiveTexture(GL4.GL_TEXTURE0);
@@ -92,7 +92,7 @@ public class pmRenderToTexture {
         //fit uniforms
         gl4.glUniform1i(textureshaderParam.sampler_texture,0);
         gl4.glUniformMatrix4fv(textureshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(canvas.modelMatrix.asArrayCM()));
-        gl4.glUniformMatrix4fv(textureshaderParam.mat4_viewMatrix, 1,false, Buffers.newDirectFloatBuffer(canvas.viewMattrix.asArrayCM()));
+        gl4.glUniformMatrix4fv(textureshaderParam.mat4_viewMatrix, 1,false, Buffers.newDirectFloatBuffer(canvas.viewMatrix.asArrayCM()));
         //bind buffer
         gl4.glBindVertexArray(canvas.gsthForDraw.objects[canvas.gsthForDraw.VAO]);
         gl4.glBindBuffer(GL_ARRAY_BUFFER, canvas.gsthForDraw.objects[canvas.gsthForDraw.VBO]);

@@ -37,8 +37,8 @@ public class simpleTriangle extends Demo{
         gl4.glUseProgram(program);
         factory.drawNode(gl4,mtriangle,gshaderParam);
     }
-    public void reSetMatrix(){
-        mtriangle.setViewMattrix(viewMatrix);
+    public void reSetMatrix(boolean viewChanged){
+        mtriangle.setViewMatrix(viewMatrix);
     }
     @Override
     public void dispose(GL4 gl4) {

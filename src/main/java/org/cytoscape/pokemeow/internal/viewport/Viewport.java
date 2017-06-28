@@ -70,7 +70,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	public Boolean DEBUGMODE = true;
 	public Boolean triggered = true;
 	private Vector2 lastclickPos;
-	private Demo demo = null;
+	public Demo demo = null;
 	private float zoomFactor = 2.0f;
 	private float currentAngle = .0f;
 	public Viewport(JComponent container)
@@ -157,17 +157,11 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		gl.glBlendFunc(GL4.GL_SRC_ALPHA, GL4.GL_ONE_MINUS_SRC_ALPHA);
 
 		gl.glViewport(0, 0, drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
-
-		if(demo == null){
-			demo = new simpleTriangle();
-			demo.create(gl);
-		}
-
 		NativeSurface surface = drawable.getNativeSurface();
 		int[] windowUnits = new int[] {100, 100};
 		windowUnits = surface.convertToPixelUnits(windowUnits);
 		scaleDPI = (float)windowUnits[0] / 100.0f;
-		
+		demo.create(gl);
 		invokeViewportInitializeEvent(drawable);
 	}
 	
@@ -223,9 +217,9 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	/**
 	 * Forces the viewport to redraw its contents.
 	 */
-	public void redraw()
+	public void redraw(boolean viewChanged)
 	{
-		demo.reSetMatrix();
+		demo.reSetMatrix(viewChanged);
 		panel.repaint();
 	}
 
@@ -240,14 +234,16 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	}
 	
 	// Handle mouse events from GLJPanel:
-
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
+		System.out.println("click");
 		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(), scaleDPI, camera);
 		invokeViewportMouseDownEvent(event);
-		triggered = true;
-		redraw();
+		if(!triggered){
+			triggered = true;
+			redraw(false);
+		}
 		if (event.handled)
 			return;
 	}
@@ -336,18 +332,26 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		
 		if (mouseState == MouseStates.PAN)
 		{
-			camera.panByPixels(new Vector2(-diff.x, -diff.y));
-			panel.repaint();
+			System.out.println("PAN");
+			demo.viewMatrix = Matrix4.translation(new Vector3(diff.x/100,diff.y/100,.0f));
+			//camera.panByPixels(new Vector2(-diff.x, -diff.y));
+			redraw(true);
 		}
 		else if (mouseState == MouseStates.ROTATE)
 		{
-			Vector2 angles = new Vector2(-diff.x, -diff.y);
-            //Angles.Y = 0;
-            angles = Vector2.scalarMult(1.0f / 180f / 4f * FloatUtil.PI, angles);
-            angles.x = -angles.x;
-            
-			camera.orbitBy(angles);
-			panel.repaint();
+//			currentAngle+=3.14f/16.0;
+//			if(currentAngle > 6.28)
+//				currentAngle-=6.28f;
+			currentAngle =(float) Math.atan(diff.x/diff.y);
+			demo.viewMatrix = Matrix4.rotationZ(currentAngle);
+//
+//			Vector2 angles = new Vector2(-diff.x, -diff.y);
+//
+//            angles = Vector2.scalarMult(1.0f / 180f / 4f * FloatUtil.PI, angles);
+//            angles.x = -angles.x;
+//
+//			camera.orbitBy(angles);
+			redraw(true);
 		}
 	}
 
@@ -389,16 +393,11 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		// Zoom in or out while keeping the same point under the mouse pointer
 		//camera.zoomBy(event.positionRay, panel.getWidth(),panel.getHeight(),event.delta);
 		if(event.delta>0 && zoomFactor<20.0f)
-			zoomFactor+=0.1f;
+			zoomFactor+=0.05f;
 		else if(event.delta<0 && zoomFactor>.0f)
-			zoomFactor-=0.1f;
-
-		currentAngle+=3.14f/16.0;
-		if(currentAngle > 3.14)
-			currentAngle-=3.14f;
-		//demo.viewMatrix = Matrix4.rotationZ(currentAngle);
-		demo.viewMatrix = Matrix4.projectionOrthogonal(zoomFactor,zoomFactor,1,-1);
-		redraw();
+			zoomFactor-=0.05f;
+		demo.zoomMatrix = Matrix4.projectionOrthogonal(zoomFactor,zoomFactor,1,-1);
+		redraw(false);
 	}
 	
 	// General events:

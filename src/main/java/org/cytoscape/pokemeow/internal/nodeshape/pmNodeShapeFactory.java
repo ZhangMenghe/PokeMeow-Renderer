@@ -84,7 +84,7 @@ public class pmNodeShapeFactory {
     //Currently support only single texture
     public void drawNode(GL4 gl4, pmBasicNodeShape node, pmShaderParams gshaderParam){
         gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(node.modelMatrix.asArrayCM()));
-        gl4.glUniformMatrix4fv(gshaderParam.mat4_viewMatrix, 1,false, Buffers.newDirectFloatBuffer(node.viewMattrix.asArrayCM()));
+        gl4.glUniformMatrix4fv(gshaderParam.mat4_viewMatrix, 1,false, Buffers.newDirectFloatBuffer(node.viewMatrix.asArrayCM()));
         gl4.glBindVertexArray(node.gsthForDraw.objects[node.gsthForDraw.VAO]);
         gl4.glBindBuffer(GL_ARRAY_BUFFER, node.gsthForDraw.objects[node.gsthForDraw.VBO]);
 

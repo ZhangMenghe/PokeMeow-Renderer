@@ -19,7 +19,7 @@ public class pmBasicNodeShape{
     public Matrix4 rotMatrix;
     public Vector3 scale;//scale of node
     public Matrix4 modelMatrix;//translation*scale
-    public Matrix4 viewMattrix;
+    public Matrix4 viewMatrix;
     public int numOfVertices;
     public int zorder = 0;
     public boolean useTexture = false;
@@ -30,7 +30,7 @@ public class pmBasicNodeShape{
         rotMatrix = Matrix4.identity();
         modelMatrix = Matrix4.mult(Matrix4.scale((scale)),Matrix4.translation(origin));
         modelMatrix = Matrix4.mult(modelMatrix,rotMatrix);
-        viewMattrix = Matrix4.identity();
+        viewMatrix = Matrix4.identity();
         gsthForDraw = new pmSthForDraw();
     }
 
@@ -62,8 +62,8 @@ public class pmBasicNodeShape{
         modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
     }
 
-    public void setViewMattrix(Matrix4 new_viewMatrix){
-        viewMattrix = new_viewMatrix;
+    public void setViewMatrix(Matrix4 new_viewMatrix){
+        viewMatrix = new_viewMatrix;
     }
     public void setColor(GL4 gl4, float[] new_color){}
     public void setColor(GL4 gl4, Vector4 new_color){}
