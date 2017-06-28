@@ -16,7 +16,6 @@ import main.java.org.cytoscape.pokemeow.internal.SampleUsage.simpleTriangle;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.camera.Camera;
 
 import main.java.org.cytoscape.pokemeow.internal.SampleUsage.debugDraw;
 import main.java.org.cytoscape.pokemeow.internal.SampleUsage.Demo;
@@ -47,11 +46,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	
 	// Panel that presents GL's frame buffer
 	private GLJPanel panel;
-	
-	// Camera object that is controlled by user actions in this viewport
-	// and that determines the viewport's view and projection matrices
-	private Camera camera;
-	
+
 	private float scaleDPI;
 	
 	// Mouse handling
@@ -67,12 +62,10 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	private int mouseState = MouseStates.IDLE;
 
 	/*Parameters for DEBUG*/
-	public Boolean DEBUGMODE = true;
-	public Boolean triggered = true;
-	private Vector2 lastclickPos;
 	public Demo demo = null;
 	private float zoomFactor = 2.0f;
 	private float currentAngle = .0f;
+
 	public Viewport(JComponent container)
 	{
 		GLProfile profile = GLProfile.getDefault(); // Use the system's default version of OpenGL
@@ -90,9 +83,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		panel.addMouseMotionListener(this);
 		panel.addMouseWheelListener(this);
 
-		camera = new Camera(this);
-
-		if (container instanceof JInternalFrame) 
+		if (container instanceof JInternalFrame)
 		{
 			container.setSize(300,300);
 			JInternalFrame JInframe = (JInternalFrame) container;
@@ -125,16 +116,6 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	public GLJPanel getPanel()
 	{
 		return panel;
-	}
-	
-	/**
-	 * Gets the camera managed by this viewport
-	 * 
-	 * @return Camera object
-	 */
-	public Camera getCamera()
-	{
-		return camera;
 	}
 	
 	// GLEventListener methods:
@@ -182,8 +163,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		gl.glClearDepthf(1.0f);
 		gl.glClear(GL4.GL_COLOR_BUFFER_BIT | GL4.GL_DEPTH_BUFFER_BIT);
 
-		if(triggered)
-			demo.render(gl);
+		demo.render(gl);
 
 		invokeViewportDisplayEvent(drawable);
 		
@@ -238,40 +218,24 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	public void mouseClicked(MouseEvent e)
 	{
 		System.out.println("click");
-		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(), scaleDPI, camera);
-		invokeViewportMouseDownEvent(event);
-		if(!triggered){
-			triggered = true;
-			redraw(false);
-		}
-		if (event.handled)
-			return;
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) 
 	{
 		lastMousePosition = new Vector2(e.getX(), e.getY());
-		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(), scaleDPI, camera);
-		invokeViewportMouseEnterEvent(event);
-		if (event.handled)
-			return;
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) 
 	{
 		lastMousePosition = null;
-		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(), scaleDPI, camera);
-		invokeViewportMouseLeaveEvent(event);
-		if (event.handled)
-			return;
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) 
 	{
-		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(), scaleDPI, camera);
+		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(), scaleDPI);
 		invokeViewportMouseDownEvent(event);
 		if (event.handled)
 			return;
@@ -288,11 +252,6 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	@Override
 	public void mouseReleased(MouseEvent e) 
 	{
-		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(), scaleDPI, camera);
-		invokeViewportMouseUpEvent(event);
-		if (event.handled)
-			return;
-		
 		if (mouseState == MouseStates.SELECT)
 		{
 			// Selection handling
@@ -324,33 +283,16 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 			diff.y *= -1.0f;
 			lastMousePosition = newPosition;
 		}
-		
-		ViewportMouseEvent event = new ViewportMouseEvent(e, diff, scaleDPI, camera);
-		invokeViewportMouseMoveEvent(event);
-		if (event.handled)
-			return;
-		
+
 		if (mouseState == MouseStates.PAN)
 		{
-			System.out.println("PAN");
 			demo.viewMatrix = Matrix4.translation(new Vector3(diff.x/100,diff.y/100,.0f));
-			//camera.panByPixels(new Vector2(-diff.x, -diff.y));
 			redraw(true);
 		}
 		else if (mouseState == MouseStates.ROTATE)
 		{
-//			currentAngle+=3.14f/16.0;
-//			if(currentAngle > 6.28)
-//				currentAngle-=6.28f;
-			currentAngle =(float) Math.atan(diff.x/diff.y);
+			currentAngle =(float) Math.atan(diff.x/diff.y)/10;
 			demo.viewMatrix = Matrix4.rotationZ(currentAngle);
-//
-//			Vector2 angles = new Vector2(-diff.x, -diff.y);
-//
-//            angles = Vector2.scalarMult(1.0f / 180f / 4f * FloatUtil.PI, angles);
-//            angles.x = -angles.x;
-//
-//			camera.orbitBy(angles);
 			redraw(true);
 		}
 	}
@@ -370,11 +312,6 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 			diff = Vector2.subtract(newPosition, lastMousePosition);
 			lastMousePosition = newPosition;
 		}
-		
-		ViewportMouseEvent event = new ViewportMouseEvent(e, diff, scaleDPI, camera);
-		invokeViewportMouseDragEvent(event);
-		if (event.handled)
-			return;
 	}
 
 	/**
@@ -385,13 +322,12 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) 
 	{
-		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(),scaleDPI, camera);
+		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(),scaleDPI);
 		invokeViewportMouseScrollEvent(event);
 		if (event.handled)
 			return;
 		
 		// Zoom in or out while keeping the same point under the mouse pointer
-		//camera.zoomBy(event.positionRay, panel.getWidth(),panel.getHeight(),event.delta);
 		if(event.delta>0 && zoomFactor<20.0f)
 			zoomFactor+=0.05f;
 		else if(event.delta<0 && zoomFactor>.0f)

@@ -53,4 +53,26 @@ public class ViewportMouseEvent
 		this.positionRay = camera.getRayThroughPixel(positionRaw);
 	}
 
+	public ViewportMouseEvent (MouseEvent e, Vector2 offset, float scaleDPI)
+	{
+		this.m1 = (e.getButton() & MouseEvent.BUTTON1) > 0;
+		this.m2 = (e.getButton() & MouseEvent.BUTTON2) > 0;
+		this.m3 = (e.getButton() & MouseEvent.BUTTON3) > 0;
+
+		this.keyShift = e.isShiftDown();
+		this.keyCtrl = e.isControlDown();
+		this.keyAlt = e.isAltDown();
+
+		this.offsetRaw = offset;
+		this.offsetScaled = Vector2.scalarMult(scaleDPI, offset);
+
+		if(e instanceof MouseWheelEvent)
+			this.delta = ((MouseWheelEvent) e).getWheelRotation();
+		else
+			this.delta = 0;
+		this.positionRaw = new Vector2(e.getX(), e.getY());
+		this.positionScaled = Vector2.scalarMult(scaleDPI, positionRaw);
+		this.positionRay = null;
+	}
+
 }
