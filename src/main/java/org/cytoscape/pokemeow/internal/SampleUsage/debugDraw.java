@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.util.texture.Texture;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
+import main.java.org.cytoscape.pokemeow.internal.rendering.pmRenderToTexture;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape. pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
@@ -26,7 +27,7 @@ public class debugDraw extends Demo {
     private pmNodeShapeFactory nodesFactory;
     private ArrayList<Integer>flatNodeIndices = new ArrayList<Integer>();
     private ArrayList<Integer> textureNodeIndices=new ArrayList<Integer>();
-
+    private pmRenderToTexture renderer_t;
     @Override
     public void create(GL4 gl4) {
         programList = new int[2];
@@ -93,10 +94,12 @@ public class debugDraw extends Demo {
         Random rand  = new Random();
         for(int i=0;i<textureNodeIndices.size();i++)
             textureIds.add(rand.nextInt(2));
+        renderer_t = new pmRenderToTexture(gl4);
     }
 
     @Override
     public void render(GL4 gl4) {
+        renderer_t.RenderToTexturePrepare(gl4);
         nodesFactory.drawNodeList(gl4,NodeList,
                 programList,
                 gshaderParam,
@@ -104,6 +107,7 @@ public class debugDraw extends Demo {
                 flatNodeIndices,
                 textureNodeIndices,
                 textureIds);
+        renderer_t.RenderToScreen(gl4);
     }
 
     @Override
@@ -111,12 +115,16 @@ public class debugDraw extends Demo {
         for(int i=0;i<numOfNodes;i++)
             NodeList[i].gsthForDraw.dispose(gl4);
     }
+
     public void reSetMatrix(){
         for(int i=0;i<numOfNodes;i++)
             NodeList[i].setViewMattrix(viewMatrix);
     }
+
     @Override
-    public void resize(GL4 gl4, int x, int y, int width, int height) {
+    public void resize(GL4 gl4, int x, int y, int width, int height)
+    {
         gl4.glViewport(x, y, width, height);
+        renderer_t = new pmRenderToTexture(gl4,width,height);//change to Syn?
     }
 }

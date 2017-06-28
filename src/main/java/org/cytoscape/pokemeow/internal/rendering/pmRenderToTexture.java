@@ -8,16 +8,19 @@ import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 
 import main.java.org.cytoscape.pokemeow.internal.SampleUsage.debugDraw;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
+
+import java.nio.IntBuffer;
 
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
 
 public class pmRenderToTexture {
     public pmBasicNodeShape canvas;
-    public int textureWidth = 600;
-    public int textureHeight = 600;
+    public int textureWidth;
+    public int textureHeight;
 
     private int programTexture;
     private pmNodeShapeFactory factory;
@@ -26,7 +29,22 @@ public class pmRenderToTexture {
     private int textureID;
     private int frameBufferID;
 
+    public pmRenderToTexture(GL4 gl4, int width, int height){
+        textureHeight = height;
+        textureWidth = width;
+        createRenderer(gl4);
+    }
+
     public pmRenderToTexture(GL4 gl4){
+        int [] tmp = new int[4];
+        IntBuffer viewport_size = Buffers.newDirectIntBuffer(tmp);
+        gl4.glGetIntegerv(GL4.GL_VIEWPORT, viewport_size);
+        textureWidth = viewport_size.get(2);
+        textureHeight = viewport_size.get(3);
+        createRenderer(gl4);
+    }
+
+    private void createRenderer(GL4 gl4){
         programTexture =  GLSLProgram.CompileProgram(gl4,
                 debugDraw.class.getResource("shader/texture.vert"),
                 null,null,null,
@@ -35,6 +53,8 @@ public class pmRenderToTexture {
         factory = new pmNodeShapeFactory(gl4);
         canvas = factory.createNode(gl4, pmNodeShapeFactory.SHAPE_RECTANGLE);
         canvas.setDefaultTexcoord(gl4);
+        canvas.setScale(8.0f);
+        canvas.setOrigin(new Vector3(0,0,0));
         int[] tmpHandle = new int[1];
 
         gl4.glGenFramebuffers(1,tmpHandle,0);

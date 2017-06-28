@@ -38,6 +38,7 @@ public class renderToTextureDemo extends Demo {
         mtriangle.setColor(gl4, new Vector4(1.0f,.0f,.0f,1.0f));
         renderer_t = new pmRenderToTexture(gl4);
     }
+
     @Override
     public void render(GL4 gl4) {
         renderer_t.RenderToTexturePrepare(gl4);
@@ -50,10 +51,12 @@ public class renderToTextureDemo extends Demo {
     public void reSetMatrix(){
         mtriangle.setViewMattrix(viewMatrix);
     }
+
     @Override
     public void dispose(GL4 gl4) {
         mtriangle.gsthForDraw.dispose(gl4);
     }
+
     @Override
     public void resize(GL4 gl4, int x, int y, int width, int height) {
         gl4.glViewport(x, y, width, height);
