@@ -13,13 +13,15 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
 import javax.swing.JFrame;//lightweight graphical frame
 import com.jogamp.opengl.util.FPSAnimator;
+import com.jogamp.opengl.util.awt.TextRenderer;
+import com.jogamp.opengl.util.gl2.GLUT;
 
 public class Cube implements GLEventListener {
 
     public static DisplayMode dm, dm_old;
     private GLU glu = new GLU();
     private float rquad = 0.0f;
-
+    private TextRenderer renderer;
     /**********************************************/
     /*GLEventListener Interface Method*/
     /*display: draw elements using OpenGL*/
@@ -35,7 +37,7 @@ public class Cube implements GLEventListener {
     /**********************************************/
     @Override
     public void display( GLAutoDrawable drawable ) {
-
+        final GLUT glut = new GLUT();
         final GL2 gl = drawable.getGL().getGL2();
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT );
         gl.glLoadIdentity();//replace the current matrix with the identity matrix
@@ -98,6 +100,14 @@ public class Cube implements GLEventListener {
         float[] diffuseLight = { 1f,2f,1f,0f };
         gl.glLightfv( GL2.GL_LIGHT0, GL2.GL_DIFFUSE, diffuseLight, 0 );
 
+        renderer.beginRendering(800, 800);
+        // optionally set the color
+        renderer.setColor(1.0f, 0.2f, 0.2f, 0.8f);
+        renderer.draw("Text to draw", 0, 0);
+        // ... more draw commands, color changes, etc.
+        renderer.endRendering();
+
+        glut.glutBitmapString(GLUT.BITMAP_TIMES_ROMAN_24,"glut string");
     }
 
     @Override
@@ -115,6 +125,8 @@ public class Cube implements GLEventListener {
         gl.glEnable( GL2.GL_DEPTH_TEST );
         gl.glDepthFunc( GL2.GL_LEQUAL );
         gl.glHint( GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL2.GL_NICEST );
+
+        renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 36));
     }
 
     @Override
