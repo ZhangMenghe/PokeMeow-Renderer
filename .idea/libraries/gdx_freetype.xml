@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="gdx-freetype">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/gdx-freetype.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/gdx.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
