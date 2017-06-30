@@ -74,19 +74,12 @@ public class TextRendererDemo extends Demo{
         ft_face.setPixelSizes(0,48);
         gl4.glPixelStorei(GL4.GL_UNPACK_ALIGNMENT, 1);
 
-
-
-
         // Load first 128 characters of ASCII set
         for(int i=33;i<127;i++){
             char c = (char) i;
             ft_face.loadChar(c,FT_LOAD_RENDER);
 
             ft_glyph = ft_face.getGlyphSlot();
-
-            // Disable byte-alignment restriction
-
-
             Bitmap bitmap = ft_glyph.getBitmap();
 
             gl4.glGenTextures(1,tmpHandle,0);
@@ -138,9 +131,14 @@ public class TextRendererDemo extends Demo{
         gl4.glBindVertexArray(tmpHandle[fontVAO]);
         gl4.glBindBuffer(GL.GL_ARRAY_BUFFER, tmpHandle[fontVBO]);
 
-        gl4.glBufferData(GL4.GL_ARRAY_BUFFER, Float.BYTES*24, null, GL4.GL_DYNAMIC_DRAW);
+        gl4.glBufferData(GL4.GL_ARRAY_BUFFER, Float.BYTES*30, null, GL4.GL_DYNAMIC_DRAW);
+
         gl4.glEnableVertexAttribArray(0);
-        gl4.glVertexAttribPointer(0, 4, GL4.GL_FLOAT, false, 4 * Float.BYTES, 0);
+        gl4.glVertexAttribPointer(0, 3, GL4.GL_FLOAT, false, 5 * Float.BYTES, 0);
+
+        gl4.glEnableVertexAttribArray(1);
+        gl4.glVertexAttribPointer(1, 2, GL4.GL_FLOAT, false, 5 * Float.BYTES, 3*Float.BYTES);
+
         gl4.glBindBuffer(GL4.GL_ARRAY_BUFFER, 0);
         gl4.glBindVertexArray(0);
     }
@@ -166,8 +164,6 @@ public class TextRendererDemo extends Demo{
         }
         private void renderLabel(GL4 gl4, int program, String text, float x, float y, float scale, Vector4 color){
             gl4.glUseProgram(program);
-//            gl4.glClearColor(1.0f,.0f,.0f,1.0f);
-//            gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
             gl4.glUniform1i(gl4.glGetUniformLocation(program,"texSampler"),0);
             gl4.glUniform3f(gl4.glGetUniformLocation(program,"textColor"), color.x,color.y,color.z);
 
@@ -186,19 +182,22 @@ public class TextRendererDemo extends Demo{
 
                 //update VBO for each character
                 float []vertices = {
-                         xpos,     ypos + h,   0.0f, 0.0f ,
-                        xpos,     ypos,       0.0f, 1.0f ,
-                         xpos + w, ypos,       1.0f, 1.0f ,
+                         xpos,     ypos + h,  0.0f, 0.0f, 0.0f ,
+                        xpos,     ypos,       0.0f,0.0f, 1.0f ,
+                         xpos + w, ypos,     0.0f,  1.0f, 1.0f ,
 
-                         xpos,     ypos + h,   0.0f, 0.0f,
-                         xpos + w, ypos,       1.0f, 1.0f ,
-                         xpos + w, ypos + h,   1.0f, 0.0f
+                         xpos,     ypos + h, 0.0f,  0.0f, 0.0f,
+                         xpos + w, ypos,      0.0f, 1.0f, 1.0f ,
+                         xpos + w, ypos + h, 0.0f,  1.0f, 0.0f
                 };
                 FloatBuffer vertice_buf = Buffers.newDirectFloatBuffer(vertices);
                 gl4.glBindTexture(GL4.GL_TEXTURE_2D, ch.TextureId);
+
                 gl4.glBindBuffer(GL4.GL_ARRAY_BUFFER, tmpHandle[fontVBO]);
-                gl4.glBufferSubData(GL4.GL_ARRAY_BUFFER, 0, Float.BYTES * 24, vertice_buf);
-                gl4.glBindBuffer(GL4.GL_ARRAY_BUFFER, 0);
+                gl4.glBufferSubData(GL4.GL_ARRAY_BUFFER, 0, Float.BYTES * 30, vertice_buf);
+                //gl4.glBufferSubData(GL4.GL_ARRAY_BUFFER, 3*Float.BYTES, Float.BYTES * 30, vertice_buf);
+                //gl4.glBindBuffer(GL4.GL_ARRAY_BUFFER, 0);
+
                 gl4.glDrawArrays(GL4.GL_TRIANGLES, 0, 6);
                 x +=0.4f; //(ch.Advance >>6) * scale;
             }
@@ -206,17 +205,17 @@ public class TextRendererDemo extends Demo{
             gl4.glBindTexture(GL4.GL_TEXTURE_2D, 0);
         }
         public void reSetMatrix(boolean viewChanged){
-            mtriangle.setViewMatrix(viewMatrix);
+            //mtriangle.setViewMatrix(viewMatrix);
         }
 
         @Override
         public void dispose(GL4 gl4) {
-            mtriangle.gsthForDraw.dispose(gl4);
+            //mtriangle.gsthForDraw.dispose(gl4);
         }
 
         @Override
         public void resize(GL4 gl4, int x, int y, int width, int height) {
-            gl4.glViewport(x, y, width, height);
+            //gl4.glViewport(x, y, width, height);
         }
     }
 
