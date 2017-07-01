@@ -11,7 +11,7 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
-
+import main.java.org.cytoscape.pokemeow.internal.commonUtil;
 import java.nio.FloatBuffer;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,8 +35,8 @@ public class pmLabel{
 
     private Vector3 origin = new Vector3();
     private Matrix4 modelMatrix = Matrix4.identity();
-    private int zorder = 0;
-    private float scale = 0.5f;
+    private float zorder = .0f;
+    private Vector3 scale = new Vector3(1.0f);
 
     private Vector4  color = new Vector4(.0f,1.0f,.0f,1.0f);
     public class mCharacter{
@@ -130,23 +130,27 @@ public class pmLabel{
         gl4.glBindVertexArray(tmpHandle[fontVAO]);
 
         char [] charArray = content.toCharArray();
+        float x = origin.x;
+        float y = origin.y;
         for(char c:charArray){
             mCharacter ch = Characters.get(c);
-            float xpos = origin.x; //.0f;//x+ch.Bearing.x*scale;
-            float ypos = .0f;//y-(ch.Size.y - ch.Bearing.y)*scale;
+            float xpos = x + ch.Bearing.x*scale.x;
+            float ypos = y - (ch.Size.y - ch.Bearing.y)*scale.y;
+            Vector2 relPos = commonUtil.getRelativePos(xpos, ypos);
 
-            float w = 0.25f;//ch.Size.x * scale;
-            float h = 0.25f;//ch.Size.y * scale;
+            float w = ch.Size.x * scale.x;
+            float h = ch.Size.y * scale.y;
+            Vector2 relPos_s = commonUtil.getRelativePos(w, h);
 
             //update VBO for each character
             float []vertices = {
-                    xpos,     ypos + h,  0.0f, 0.0f, 0.0f ,
-                    xpos,     ypos,       0.0f,0.0f, 1.0f ,
-                    xpos + w, ypos,     0.0f,  1.0f, 1.0f ,
+                    relPos.x,     relPos.y + relPos_s.y,  zorder, 0.0f, 0.0f ,
+                    relPos.x,     relPos.y,       zorder,0.0f, 1.0f ,
+                    relPos.x + relPos_s.x, relPos.y,     zorder,  1.0f, 1.0f ,
 
-                    xpos,     ypos + h, 0.0f,  0.0f, 0.0f,
-                    xpos + w, ypos,      0.0f, 1.0f, 1.0f ,
-                    xpos + w, ypos + h, 0.0f,  1.0f, 0.0f
+                    relPos.x,     relPos.y + relPos_s.y, zorder,  0.0f, 0.0f,
+                    relPos.x + relPos_s.x, relPos.y,      zorder, 1.0f, 1.0f ,
+                    relPos.x + relPos_s.x, relPos.y + relPos_s.y, zorder,  1.0f, 0.0f
             };
             FloatBuffer vertice_buf = Buffers.newDirectFloatBuffer(vertices);
             gl4.glBindTexture(GL4.GL_TEXTURE_2D, ch.TextureId);
@@ -157,14 +161,41 @@ public class pmLabel{
             //gl4.glBindBuffer(GL4.GL_ARRAY_BUFFER, 0);
 
             gl4.glDrawArrays(GL4.GL_TRIANGLES, 0, 6);
-            //origin.x +=0.4f; //(ch.Advance >>6) * scale;
+            x += (ch.Advance >>6) * scale.x;
         }
         gl4.glBindVertexArray(0);
         gl4.glBindTexture(GL4.GL_TEXTURE_2D, 0);
     }
-    public void setScale(float scale){
-        scale = scale;
+
+    public void setScale(Vector3 new_scale){
+        scale.x *= new_scale.x;
+        scale.y *= new_scale.y;
+        scale.z *= new_scale.z;
+        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
     }
-    public void setColor(GL4 gl4, Vector4 new_color){}
-    public void setColor(GL4 gl4, Vector4 [] colorList){}
+
+    public void setScale(float s_scale){
+        scale.x *= s_scale;
+        scale.y *= s_scale;
+        scale.z *= s_scale;
+        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
+    }
+
+    public void setOrigin(Vector3 new_origin){
+        origin = new_origin;
+        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
+    }
+
+    public void setColor(Vector4 new_color){
+        color = new_color;
+    }
+
+    public void setZorder(float new_z){
+        zorder = new_z;
+    }
+
+    public void dispose(GL4 gl4) {
+        gl4.glDeleteBuffers(2,tmpHandle,0);
+        gl4.glDeleteVertexArrays(1,tmpHandle,fontVAO);
+    }
 }

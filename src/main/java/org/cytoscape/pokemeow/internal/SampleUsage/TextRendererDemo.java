@@ -47,7 +47,7 @@ public class TextRendererDemo extends Demo{
             factory = new pmNodeShapeFactory(gl4);
             mtriangle = factory.createNode(gl4,pmNodeShapeFactory.SHAPE_TRIANGLE);
             mtriangle.setColor(gl4, new Vector4(1.0f,.0f,.0f,1.0f));
-            mtriangle.setOrigin(new Vector3(1.0f,1.0f,.0f));
+            //mtriangle.setOrigin(new Vector3(1.0f,1.0f,.0f));
             label = new pmLabel(gl4,fontPath);
         }
 
@@ -57,21 +57,22 @@ public class TextRendererDemo extends Demo{
             gl4.glUseProgram(program);
             gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
             factory.drawNode(gl4,mtriangle,gshaderParam);
-            label.drawLabel(gl4,"M");
+            label.drawLabel(gl4,"TEST");
 
         }
         public void reSetMatrix(boolean viewChanged){
-            //mtriangle.setViewMatrix(viewMatrix);
+
         }
 
         @Override
         public void dispose(GL4 gl4) {
-            //mtriangle.gsthForDraw.dispose(gl4);
+            mtriangle.gsthForDraw.dispose(gl4);
+            label.dispose(gl4);
         }
 
         @Override
         public void resize(GL4 gl4, int x, int y, int width, int height) {
-            //gl4.glViewport(x, y, width, height);
+            gl4.glViewport(x, y, width, height);
         }
     }
 
