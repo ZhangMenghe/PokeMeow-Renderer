@@ -44,13 +44,14 @@ public class TextRendererDemo extends Demo{
             renderer_t = new pmRenderToTexture(gl4);
         }
 
-
         @Override
         public void render(GL4 gl4) {
+            renderer_t.RenderToTexturePrepare(gl4);
             gl4.glUseProgram(program);
             gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
             factory.drawNode(gl4,mtriangle,gshaderParam);
             label.drawLabel(gl4,"LABEL");
+            renderer_t.RenderToScreen(gl4);
         }
 
     public void reSetMatrix(boolean viewChanged){

@@ -30,6 +30,7 @@ public class pmRenderToTextureAA {
     private int frameBufferID;
     private int screenTexture;
     private int intermediateFBO;
+    private int sampleNum = 4;
 
     public pmRenderToTextureAA(GL4 gl4, int width, int height){
         textureHeight = height;
