@@ -1,28 +1,13 @@
 package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
-import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
-
-import com.pvporbit.freetype.*;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.label.pmLabel;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-
-import java.nio.FloatBuffer;
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.pvporbit.freetype.FreeTypeConstants.*;
 
 /**
  * Created by ZhangMenghe on 2017/6/28.
@@ -46,9 +31,13 @@ public class TextRendererDemo extends Demo{
             gshaderParam = new pmShaderParams(gl4, program);
             factory = new pmNodeShapeFactory(gl4);
             mtriangle = factory.createNode(gl4,pmNodeShapeFactory.SHAPE_TRIANGLE);
-            mtriangle.setColor(gl4, new Vector4(1.0f,.0f,.0f,1.0f));
+            mtriangle.setColor(gl4, new Vector4(.6f,.6f,.2f,1.0f));
             //mtriangle.setOrigin(new Vector3(1.0f,1.0f,.0f));
             label = new pmLabel(gl4,fontPath);
+            //label.setOrigin(new Vector3(0.2f,.0f,.0f));
+            //label.setZorder(1);
+            label.setScale(2);
+            label.setColor(new Vector4(1.0f,0.5f,0.3f,1.0f));
         }
 
 
@@ -57,7 +46,7 @@ public class TextRendererDemo extends Demo{
             gl4.glUseProgram(program);
             gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
             factory.drawNode(gl4,mtriangle,gshaderParam);
-            label.drawLabel(gl4,"TEST");
+            label.drawLabel(gl4,"LABEL");
 
         }
         public void reSetMatrix(boolean viewChanged){

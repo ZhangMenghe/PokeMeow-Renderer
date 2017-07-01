@@ -35,7 +35,7 @@ public class pmLabel{
 
     private Vector3 origin = new Vector3();
     private Matrix4 modelMatrix = Matrix4.identity();
-    private float zorder = .0f;
+    private float zorder = -0.8f;
     private Vector3 scale = new Vector3(1.0f);
 
     private Vector4  color = new Vector4(.0f,1.0f,.0f,1.0f);
@@ -95,6 +95,8 @@ public class pmLabel{
 		/* --- Destroy FreeType --- */
         ft_library.delete();
 
+        gl4.glEnable( GL4.GL_DEPTH_TEST );
+        gl4.glDepthFunc( GL4.GL_LEQUAL );
         gl4.glEnable(GL4.GL_BLEND);
         gl4.glBlendFunc(GL4.GL_SRC_ALPHA, GL4.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -124,14 +126,13 @@ public class pmLabel{
         gl4.glUniform1i(gl4.glGetUniformLocation(fontProgram,"texSampler"),0);
         gl4.glUniform3f(gl4.glGetUniformLocation(fontProgram,"textColor"), color.x,color.y,color.z);
 
-        Matrix4 modelMatrix = Matrix4.translation(new Vector3(.0f,.0f,.0f));
         gl4.glUniformMatrix4fv(gl4.glGetUniformLocation(fontProgram,"modelMatrix"),1,false, Buffers.newDirectFloatBuffer(modelMatrix.asArrayCM()));
         gl4.glActiveTexture(GL4.GL_TEXTURE0);
         gl4.glBindVertexArray(tmpHandle[fontVAO]);
 
         char [] charArray = content.toCharArray();
-        float x = origin.x;
-        float y = origin.y;
+        float x = .0f;
+        float y = .0f;
         for(char c:charArray){
             mCharacter ch = Characters.get(c);
             float xpos = x + ch.Bearing.x*scale.x;
@@ -157,9 +158,6 @@ public class pmLabel{
 
             gl4.glBindBuffer(GL4.GL_ARRAY_BUFFER, tmpHandle[fontVBO]);
             gl4.glBufferSubData(GL4.GL_ARRAY_BUFFER, 0, Float.BYTES * 30, vertice_buf);
-            //gl4.glBufferSubData(GL4.GL_ARRAY_BUFFER, 3*Float.BYTES, Float.BYTES * 30, vertice_buf);
-            //gl4.glBindBuffer(GL4.GL_ARRAY_BUFFER, 0);
-
             gl4.glDrawArrays(GL4.GL_TRIANGLES, 0, 6);
             x += (ch.Advance >>6) * scale.x;
         }
@@ -167,18 +165,14 @@ public class pmLabel{
         gl4.glBindTexture(GL4.GL_TEXTURE_2D, 0);
     }
 
-    public void setScale(Vector3 new_scale){
+    public void setScale(Vector2 new_scale){
         scale.x *= new_scale.x;
         scale.y *= new_scale.y;
-        scale.z *= new_scale.z;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
     }
 
     public void setScale(float s_scale){
         scale.x *= s_scale;
         scale.y *= s_scale;
-        scale.z *= s_scale;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
     }
 
     public void setOrigin(Vector3 new_origin){
