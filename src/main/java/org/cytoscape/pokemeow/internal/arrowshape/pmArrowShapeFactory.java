@@ -18,6 +18,7 @@ import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
 public class pmArrowShapeFactory {
     public static final byte SHAPE_ARROWHEAD = 0;
     public Map<Byte, pmBasicArrowShape> arrowShapeCollector = null;
+
     public pmArrowShapeFactory(GL4 gl4){
         arrowShapeCollector = new HashMap<Byte, pmBasicArrowShape>();
         arrowShapeCollector.put(SHAPE_ARROWHEAD, new pmArrowheadShape(gl4));
@@ -35,9 +36,17 @@ public class pmArrowShapeFactory {
         gl4.glBindVertexArray(arrow.objects[arrow.VAO]);
         gl4.glBindBuffer(GL_ARRAY_BUFFER, arrow.objects[arrow.VBO]);
 
-        gl4.glDrawArrays(GL4.GL_LINE_LOOP, 0, arrow.numOfVertices);
+        if(arrow.numOfIndices == -1)
+            gl4.glDrawArrays(GL4.GL_LINE_LOOP, 0, arrow.numOfVertices);
+        else{
+            gl4.glBindBuffer(GL_ARRAY_BUFFER, arrow.objects[arrow.EBO]);
+            gl4.glDrawElements(GL4.GL_TRIANGLES,arrow.numOfIndices, GL.GL_UNSIGNED_INT,0);
+            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
+        }
+
         gl4.glBindVertexArray(0);
     }
+    
     public void drawArrowList(GL4 gl4, pmBasicArrowShape[] arrowList, pmShaderParams gshaderParam){
         for(pmBasicArrowShape arrow: arrowList){
             drawArrow(gl4, arrow, gshaderParam);
