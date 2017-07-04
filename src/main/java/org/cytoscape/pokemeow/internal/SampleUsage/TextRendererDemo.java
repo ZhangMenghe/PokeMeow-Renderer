@@ -34,13 +34,14 @@ public class TextRendererDemo extends Demo{
             gshaderParam = new pmShaderParams(gl4, program);
             factory = new pmNodeShapeFactory(gl4);
             mtriangle = factory.createNode(gl4,pmNodeShapeFactory.SHAPE_TRIANGLE);
-            mtriangle.setColor(gl4, new Vector4(.6f,.6f,.2f,1.0f));
+            mtriangle.setColor(gl4, new Vector4(205f/255,205f/255,.0f,1.0f));
             //mtriangle.setOrigin(new Vector3(1.0f,1.0f,.0f));
             label = new pmLabel(gl4,fontPath);
             //label.setOrigin(new Vector3(0.2f,.0f,.0f));
             //label.setZorder(1);
             //label.setScale(new Vector2(2.0f,1.0f));
             label.setColor(new Vector4(1.0f,0.5f,0.3f,1.0f));
+            label.setScale(1.5f);
             renderer_t = new pmRenderToTexture(gl4);
         }
 
