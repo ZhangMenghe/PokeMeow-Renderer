@@ -10,11 +10,17 @@ import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
 public class pmArrowheadShape extends pmBasicArrowShape{
     public float[] vertices;
     public int [] elements;
-    private QuadraticBezier curve;
+    protected QuadraticBezier curve = new QuadraticBezier(-0.5f, -0.25f,.0f,.0f,0.5f,.0f);
+    protected QuadraticBezier curve2 = new QuadraticBezier(0.5f,.0f,.0f,.0f,-0.5f, 0.25f);
 
     public pmArrowheadShape(GL4 gl4){
         super();
-        curve = new QuadraticBezier(-1.0f, -0.5f,.0f,.0f,1.0f,.0f);
+        initPoints(gl4);
+    }
+    public pmArrowheadShape(GL4 gl4, boolean skip){
+        super();
+    }
+    protected void initPoints(GL4 gl4){
         Vector2 [] curvePoints = curve.getPointsOnCurves();
         int halfVertices = curve.resolution + 1;
         numOfVertices = halfVertices*2;
@@ -30,8 +36,7 @@ public class pmArrowheadShape extends pmBasicArrowShape{
             tmpHandle[2*k] = k;
         }
 
-        curve = new QuadraticBezier(1.0f,.0f,.0f,.0f,-1.0f, 0.5f);
-        curvePoints = curve.getPointsOnCurves();
+        curvePoints = curve2.getPointsOnCurves();
         int base = 3 * halfVertices;
         for(int k=0;k<halfVertices;k++){
             vertices[3*k+base] = curvePoints[k].x;
@@ -46,7 +51,6 @@ public class pmArrowheadShape extends pmBasicArrowShape{
         }
         this.initBuffer(gl4, vertices, elements);
     }
-
     public void setZorder(GL4 gl4, float new_z){
         int length = vertices.length;
         for(int i =2; i<length; i+=3)

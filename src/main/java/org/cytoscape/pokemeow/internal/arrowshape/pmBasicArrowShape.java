@@ -72,11 +72,13 @@ public abstract class pmBasicArrowShape {
     public void setScale(Vector2 new_scale){
         scale.x *= new_scale.x;
         scale.y *= new_scale.y;
+        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
     }
 
     public void setScale(float s_scale){
         scale.x *= s_scale;
         scale.y *= s_scale;
+        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
     }
 
     public void setOrigin(Vector3 new_origin){
@@ -88,7 +90,7 @@ public abstract class pmBasicArrowShape {
         color = new_color;
     }
 
-    public void setZorder(float new_z){
+    public void setZorder(GL4 gl4, float new_z){
     }
 
     public void dispose(GL4 gl4) {
