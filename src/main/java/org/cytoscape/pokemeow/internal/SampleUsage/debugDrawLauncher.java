@@ -37,7 +37,7 @@ public class debugDrawLauncher implements GLEventListener, KeyListener{
             glWindow.destroy();
         };
 
-        final Demo demo = new drawArrowDemo();
+        final Demo demo = new drawLineDemo();
 
         final debugDrawLauncher newtLauncher = new debugDrawLauncher(demo, onExitHook);
         glWindow.addGLEventListener(newtLauncher);

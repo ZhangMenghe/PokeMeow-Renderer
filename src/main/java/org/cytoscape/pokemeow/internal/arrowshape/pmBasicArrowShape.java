@@ -22,10 +22,10 @@ public abstract class pmBasicArrowShape {
     public int numOfVertices = 0;
     public int numOfIndices = -1;
 
-    protected Vector3 origin = new Vector3();
-    protected Matrix4 modelMatrix = Matrix4.identity();
-    protected Vector3 scale = new Vector3(1.0f,1.0f,1.0f);
-    protected Vector4 color = new Vector4(.0f,1.0f,.0f,1.0f);
+    public Vector3 origin = new Vector3();
+    public Matrix4 modelMatrix = Matrix4.identity();
+    public Vector3 scale = new Vector3(1.0f,1.0f,1.0f);
+    public Vector4 color = new Vector4(.0f,1.0f,.0f,1.0f);
 
     public pmBasicArrowShape(){
         origin = new Vector3(.0f,.0f,.0f);
