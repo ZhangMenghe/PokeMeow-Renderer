@@ -78,7 +78,7 @@ public class pmArrowShapeFactory {
             gl4.glDrawArrays(GL4.GL_TRIANGLE_FAN, 0, arrow.numOfVertices);
         else{
             gl4.glBindBuffer(GL_ARRAY_BUFFER, arrow.objects[arrow.EBO]);
-            gl4.glDrawElements(GL4.GL_TRIANGLES,arrow.numOfIndices, GL.GL_UNSIGNED_INT,0);
+            gl4.glDrawElements(GL4.GL_TRIANGLE_FAN,arrow.numOfIndices, GL.GL_UNSIGNED_INT,0);
             gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         }
 

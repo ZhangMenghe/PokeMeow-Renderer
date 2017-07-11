@@ -22,15 +22,15 @@ public abstract class pmBasicArrowShape {
     public int numOfVertices = 0;
     public int numOfIndices = -1;
 
-    public Vector3 origin = new Vector3();
+    public Vector3 origin = new Vector3(.0f,.0f,.0f);
     public Matrix4 modelMatrix = Matrix4.identity();
+    public Matrix4 rotMatrix = Matrix4.identity();
     public Vector3 scale = new Vector3(1.0f,1.0f,1.0f);
     public Vector4 color = new Vector4(.0f,1.0f,.0f,1.0f);
 
     public pmBasicArrowShape(){
-        origin = new Vector3(.0f,.0f,.0f);
-        scale = new Vector3(0.5f,0.5f,0.5f);
-        modelMatrix = Matrix4.mult(Matrix4.scale((scale)),Matrix4.translation(origin));
+        modelMatrix = Matrix4.mult(Matrix4.scale((scale)), Matrix4.translation(origin));
+        modelMatrix = Matrix4.mult(modelMatrix,rotMatrix);
     }
 
     protected void initBuffer(GL4 gl4, float[] vertices){
@@ -73,19 +73,26 @@ public abstract class pmBasicArrowShape {
         scale.x *= new_scale.x;
         scale.y *= new_scale.y;
         modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
+        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
     }
 
     public void setScale(float s_scale){
         scale.x *= s_scale;
         scale.y *= s_scale;
         modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
+        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
     }
 
     public void setOrigin(Vector3 new_origin){
         origin = new_origin;
         modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
+        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
     }
-
+    public void setRotation(float radians){
+        rotMatrix = Matrix4.rotationZ(radians);
+        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
+        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
+    }
     public void setColor(Vector4 new_color){
         color = new_color;
     }

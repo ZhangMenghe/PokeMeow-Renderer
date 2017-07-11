@@ -1,6 +1,7 @@
 package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
@@ -26,34 +27,28 @@ public class drawLineDemo extends Demo {
                 debugDraw.class.getResource("shader/arrow.frag"));
         gshaderParam = new pmShaderParams(gl4, program);
         factory = new pmLineFactory(gl4);
-        lineList = new pmLineVisual[7];
+        lineList = new pmLineVisual[13];
+//        lineList[0] = factory.createLine_GL(pmLineFactory.LINE_SOLID);
 
         int n = 0;
-        for(Byte i=0;i<7;i++)
+        for(Byte i=0;i<13;i++)
             lineList[n++] = factory.createLine_GL(i);
-        lineList[0].setLineWidth(gl4, 5.0f);
-
-        for(n=0;n<7;n++){
-            float cy = -0.6f + 0.2f*n;
+        for(n=0;n<12;n++){
+            float cy = -0.9f + 0.1f*n;
             lineList[n].setOrigin(new Vector3(.0f, cy, .0f));
+            if(n>5 && n<11)
+                lineList[n].setScale(0.25f);
+            else
+                lineList[n].setScale(0.5f);
         }
-
-//        for(int x=0;x<4;x++){
-//            for(int y=0;y<3;y++){
-//                float cx = -0.5f + y*0.5f;
-//                float cy = -0.6f + x*0.3f;
-//                int idx = 3*x+y;
-//                arrowList[idx].setOrigin(new Vector3(cx, cy, .0f));
-//                arrowList[idx].setColor(colorList[y]);
-//            }
-//        }
-        //arrowList[2].setZorder(gl4, 1);
+        lineList[12].setScale(0.5f);
+        lineList[12].setOrigin(new Vector3(0.5f, .0f, .0f));
     }
     @Override
     public void render(GL4 gl4) {
         gl4.glUseProgram(program);
         gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
-        //factory.drawLine(gl4, lineList[0], gshaderParam);
+//        factory.drawLine(gl4, lineList[0], gshaderParam);
         factory.drawLineList(gl4, lineList, gshaderParam);
     }
     public void reSetMatrix(boolean viewChanged){
