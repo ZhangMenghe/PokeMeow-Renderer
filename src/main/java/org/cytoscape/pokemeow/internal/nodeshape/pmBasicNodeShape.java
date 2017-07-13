@@ -1,10 +1,8 @@
 package main.java.org.cytoscape.pokemeow.internal.nodeshape;
 
 import com.jogamp.opengl.GL4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix3;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.*;
+import main.java.org.cytoscape.pokemeow.internal.commonUtil;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmSthForDraw;
 
 /**
@@ -23,10 +21,12 @@ public class pmBasicNodeShape{
     public int numOfVertices;
     public int zorder = 0;
     public boolean useTexture = false;
+    public float[] vertices;
+    protected float xMin, xMax, yMin, yMax;
 
     public pmBasicNodeShape(){
         origin = new Vector3(.0f,.0f,.0f);
-        scale = new Vector3(0.5f,0.5f,0.5f);
+        scale = new Vector3(1.0f,1.0f,1.0f);
         rotMatrix = Matrix4.identity();
         modelMatrix = Matrix4.mult(Matrix4.scale((scale)),Matrix4.translation(origin));
         modelMatrix = Matrix4.mult(modelMatrix,rotMatrix);
@@ -70,4 +70,33 @@ public class pmBasicNodeShape{
     public void setColor(GL4 gl4, Vector4 [] colorList){}
     public void setDefaultTexcoord(GL4 gl4){}
     public void setZorder(GL4 gl4, int new_z){}
+
+    public boolean isHit(Vector2 pos){
+        float posx = 2*(float) pos.x/commonUtil.DEMO_VIEWPORT_SIZE.x-1;
+        float posy = 1.0f-(2*(float) pos.y/commonUtil.DEMO_VIEWPORT_SIZE.y);
+        if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
+            return false;
+        int nCross = 0;
+        float currPosX, currPosY;
+        float lastPosX = vertices[0];
+        float lastPosY = vertices[1];
+        for(int i=1; i<numOfVertices; i++) {
+            currPosX = vertices[7 * i];
+            currPosY = vertices[7 * i + 1];
+
+            if (lastPosY == currPosY)
+                continue;
+            if (posy < Math.min(lastPosY, currPosY))
+                continue;
+            if (posy > Math.max(lastPosY, currPosY))
+                continue;
+            double x = (double) (posy - lastPosY) * (double) (currPosX - lastPosX) / (double) (currPosY - lastPosY) + lastPosX;
+            if (x > posx)
+                nCross++;
+        }
+        if(nCross%2 == 1)
+            return true;
+        else
+            return false;
+    }
 }

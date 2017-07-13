@@ -8,7 +8,6 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
  */
 public class pmCircleNodeShape extends pmBasicNodeShape {
     public int CircleSegment = 60;
-    public float[] vertices;
     public int[] colorIndices;
     public float radius = 0.25f;
     /*
