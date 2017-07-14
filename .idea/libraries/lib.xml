@@ -1,14 +1,9 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/jogl-all-natives-windows-amd64.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/main/resources/lib/gluegen-rt.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/gdx.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/main/resources/lib/freetype-jni_1.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/gdx-freetype-natives.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/main/resources/lib/jogl-all.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/gdx-freetype.jar!/" />
-      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/gluegen-rt-natives-windows-amd64.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

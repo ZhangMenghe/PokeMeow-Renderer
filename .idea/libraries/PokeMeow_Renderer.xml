@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="PokeMeow-Renderer">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/out/artifacts/PokeMeow_Renderer_jar/PokeMeow-Renderer.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
