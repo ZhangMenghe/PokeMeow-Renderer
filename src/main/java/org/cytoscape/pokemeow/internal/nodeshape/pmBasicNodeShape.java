@@ -5,6 +5,8 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.*;
 import main.java.org.cytoscape.pokemeow.internal.commonUtil;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmSthForDraw;
 
+import java.util.Arrays;
+
 /**
  * This is the basic stuff to draw nodes, you can set origin, scale and viewMatirx for a single node
  *
@@ -23,7 +25,7 @@ public class pmBasicNodeShape{
     public boolean useTexture = false;
     public float[] vertices;
     protected float xMin, xMax, yMin, yMax;
-
+    protected float xMinOri, xMaxOri, yMinOri, yMaxOri;
     public pmBasicNodeShape(){
         origin = new Vector3(.0f,.0f,.0f);
         scale = new Vector3(1.0f,1.0f,1.0f);
@@ -35,31 +37,44 @@ public class pmBasicNodeShape{
     }
 
     public void setScale(Vector3 new_scale){
-        scale.x *= new_scale.x;
-        scale.y *= new_scale.y;
-        scale.z *= new_scale.z;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
+        if(new_scale.x == 1 && new_scale.y == 1)
+            return;
+        if(new_scale.x != 1)
+            scale.x *= new_scale.x;
+        if(new_scale.y != 1)
+            scale.y *= new_scale.y;
+        updateMatrix();
     }
 
     public void setScale(float s_scale){
         scale.x *= s_scale;
         scale.y *= s_scale;
-        scale.z *= s_scale;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
+        updateMatrix();
     }
 
     public void setOrigin(Vector3 new_origin){
         origin = new_origin;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
+        updateMatrix();
     }
 
     public void setRotation(float radians){
         rotMatrix = Matrix4.rotationZ(radians);
+        updateMatrix();
+    }
+
+    private void updateMatrix(){
         modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
         modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
+        float r11 = modelMatrix.e11;float r21 = modelMatrix.e21;
+        float r12 = modelMatrix.e12;float r22 = modelMatrix.e22;
+        float r14 = modelMatrix.e14;float r24 = modelMatrix.e24;
+
+        float[]arr1 = {r11*xMinOri+r12*yMinOri+r14, r11*xMinOri+r12*yMaxOri+r14, r11*xMaxOri+r12*yMinOri+r14, r11*xMaxOri+r12*yMaxOri+r14};
+        float[]arr2 = {r21*xMinOri+r22*yMinOri+r24, r21*xMaxOri+r22*yMaxOri+r24, r21*xMinOri+r22*yMinOri+r24, r21*xMaxOri+r22*yMaxOri+r24};
+        Arrays.sort(arr1);
+        Arrays.sort(arr2);
+        xMin = arr1[0]; xMax = arr1[3];
+        yMin = arr2[0]; yMax = arr2[3];
     }
 
     public void setViewMatrix(Matrix4 new_viewMatrix){
@@ -71,18 +86,28 @@ public class pmBasicNodeShape{
     public void setDefaultTexcoord(GL4 gl4){}
     public void setZorder(GL4 gl4, int new_z){}
 
-    public boolean isHit(Vector2 pos){
-        float posx = 2*(float) pos.x/commonUtil.DEMO_VIEWPORT_SIZE.x-1;
-        float posy = 1.0f-(2*(float) pos.y/commonUtil.DEMO_VIEWPORT_SIZE.y);
-        if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
-            return false;
+    public boolean isHit(float posx, float posy){
         int nCross = 0;
-        float currPosX, currPosY;
-        float lastPosX = vertices[0];
-        float lastPosY = vertices[1];
-        for(int i=1; i<numOfVertices; i++) {
-            currPosX = vertices[7 * i];
-            currPosY = vertices[7 * i + 1];
+        float currPosX, currPosY,lastPosX,lastPosY;
+        Vector4 tmp = new Vector4(vertices[0], vertices[1], .0f, 1.0f);
+        tmp  = Vector4.matrixMult(modelMatrix, tmp);
+        float firstX = tmp.x;
+        float firstY = tmp.y;
+        currPosX = firstX;
+        currPosY = firstY;
+        for(int i=1; i<=numOfVertices; i++) {
+            lastPosX = currPosX;
+            lastPosY = currPosY;
+            if(i==numOfVertices){
+                currPosX = firstX;
+                currPosY = firstY;
+            }
+            else{
+                tmp = new Vector4(vertices[7 * i], vertices[7 * i + 1], .0f, 1.0f);
+                tmp  = Vector4.matrixMult(modelMatrix, tmp);
+                currPosX = tmp.x;
+                currPosY = tmp.y;
+            }
 
             if (lastPosY == currPosY)
                 continue;
@@ -93,10 +118,10 @@ public class pmBasicNodeShape{
             double x = (double) (posy - lastPosY) * (double) (currPosX - lastPosX) / (double) (currPosY - lastPosY) + lastPosX;
             if (x > posx)
                 nCross++;
+
+
+
         }
-        if(nCross%2 == 1)
-            return true;
-        else
-            return false;
+        return (nCross%2 == 1);
     }
 }

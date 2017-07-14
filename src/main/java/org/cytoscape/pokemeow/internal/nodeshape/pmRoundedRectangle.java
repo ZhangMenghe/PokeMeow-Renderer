@@ -7,17 +7,16 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
  * Created by ZhangMenghe on 2017/6/22.
  */
 public class pmRoundedRectangle extends pmRectangleNodeShape  {
-    public int CircleSegment;
-    public float radius;
-    public float halfLength;
+    public int CircleSegment = 10;
+    public float halfLength = 0.25f;
+    public float radius = 0.125f/2;
+    private float[] controlPoints;
     public pmRoundedRectangle(GL4 gl4){
         super(gl4,true);
-        CircleSegment = 10;
+        controlPoints = new float[8];
         numOfVertices = 4*CircleSegment + 4;
-        radius = 0.125f/2;
-        halfLength = 0.25f;
-
         int count = 7*CircleSegment;
+
         vertices = new float[numOfVertices * 7];
         int[] new_colorIndices = new int[numOfVertices];
         colorIndices = new_colorIndices;
@@ -65,15 +64,23 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
         //set 4 middle points
         vertices[baseP] = baseValue;
         vertices[baseP + 1] = -baseValue;
+        controlPoints[0] = baseValue;
+        controlPoints[1] = -baseValue;
 
         vertices[baseP+7] = baseValue;
         vertices[baseP + 8] = baseValue;
+        controlPoints[2] = baseValue;
+        controlPoints[3] = baseValue;
 
         vertices[baseP+ 14] = -baseValue;
         vertices[baseP + 15] = baseValue;
+        controlPoints[4] = -baseValue;
+        controlPoints[5] = baseValue;
 
         vertices[baseP +21] = -baseValue;
         vertices[baseP + 22] = -baseValue;
+        controlPoints[6] = -baseValue;
+        controlPoints[7] = -baseValue;
 
         for(int i=0;i<numOfVertices;i++){
             vertices[i*7 + 2] = 1.0f;
@@ -122,5 +129,16 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
             coordList[i] = new Vector4(x,y,.0f,-1.0f);
         }
         setColor(gl4,coordList);
+    }
+
+    @Override
+    public boolean isHit(float posx, float posy) {
+        if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
+            return false;
+        for(int i=0;i<4;i++){
+            if(((posx-controlPoints[2*i]) * (posy-controlPoints[2*i+1]) + (posx-controlPoints[2*i+1]) * (posy-controlPoints[2*i])) < radius*radius*scale.x*scale.y)
+                return true;
+        }
+        return  false;
     }
 }

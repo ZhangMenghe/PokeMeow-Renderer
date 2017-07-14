@@ -1,7 +1,9 @@
 package main.java.org.cytoscape.pokemeow.internal.nodeshape;
 
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
+import main.java.org.cytoscape.pokemeow.internal.commonUtil;
 
 /**
  * Created by ZhangMenghe on 2017/6/22.
@@ -106,11 +108,21 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
         }
         setColor(gl4,coordList);
     }
+
     @Override
     public void setZorder(GL4 gl4, int new_z) {
         zorder = new_z;
         for(int i:colorIndices)
             vertices[i-1] = new_z;
         gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
+    }
+
+    @Override
+    public boolean isHit(float posx, float posy) {
+        return ((posx - origin.x) *(posx - origin.x) +  (posy - origin.y) *(posy - origin.y) < radius*radius*scale.x*scale.y);
+    }
+
+    public boolean isHit(float posx, float posy, boolean skip){
+        return super.isHit(posx, posy);
     }
 }

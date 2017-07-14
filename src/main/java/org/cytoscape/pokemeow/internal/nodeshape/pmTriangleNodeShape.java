@@ -18,10 +18,8 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
         super();
         vertices = mvertices;
         numOfVertices = 3;
-        xMin = -0.25f;
-        xMax = 0.25f;
-        yMin = -0.25f;
-        yMax = 0.25f;
+        xMinOri = -0.25f;xMaxOri = 0.25f;yMinOri = -0.25f;yMaxOri = 0.25f;
+        xMin= xMinOri;xMax = xMaxOri;yMin = yMinOri;yMax = yMaxOri;
         gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
     @Override
@@ -74,5 +72,12 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
         for(int i:colorIndices)
             vertices[i-1] = new_z;
         gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
+    }
+
+    @Override
+    public boolean isHit(float posx, float posy) {
+        if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
+            return false;
+        return super.isHit(posx, posy);
     }
 }
