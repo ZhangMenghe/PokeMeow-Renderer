@@ -64,7 +64,7 @@ public class debugDrawLauncher implements GLEventListener, KeyListener{
     @Override
     public void init(GLAutoDrawable drawable) {
         final GL4 gl4 = getGL4(drawable);
-        gl4.glViewport(commonUtil.VIEW_PORT_INFO[0], commonUtil.VIEW_PORT_INFO[1], commonUtil.VIEW_PORT_INFO[2], commonUtil.VIEW_PORT_INFO[3]);
+        gl4.glViewport(0, 0, (int)commonUtil.DEMO_VIEWPORT_SIZE.x, (int)commonUtil.DEMO_VIEWPORT_SIZE.y);
         demo.create(gl4);
     }
 
