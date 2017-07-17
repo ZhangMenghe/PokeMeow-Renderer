@@ -7,7 +7,7 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
  * Created by ZhangMenghe on 2017/6/21.
  */
 public class pmTriangleNodeShape extends pmBasicNodeShape{
-    private float[] vertices = {
+    private float[] mvertices = {
                .0f,  0.25f, .0f,.0f, .0f, .0f, 1.0f,
             -0.25f, -0.25f, .0f,.0f, .0f, .0f, 1.0f,
              0.25f, -0.25f, .0f,.0f, .0f, .0f, 1.0f
@@ -16,7 +16,10 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
 
     public pmTriangleNodeShape(GL4 gl4){
         super();
+        vertices = mvertices;
         numOfVertices = 3;
+        xMinOri = -0.25f;xMaxOri = 0.25f;yMinOri = -0.25f;yMaxOri = 0.25f;
+        xMin= xMinOri;xMax = xMaxOri;yMin = yMinOri;yMax = yMaxOri;
         gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
     @Override
@@ -69,5 +72,12 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
         for(int i:colorIndices)
             vertices[i-1] = new_z;
         gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
+    }
+
+    @Override
+    public boolean isHit(float posx, float posy) {
+        if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
+            return false;
+        return super.isHit(posx, posy);
     }
 }

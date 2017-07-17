@@ -1,0 +1,16 @@
+package main.java.org.cytoscape.pokemeow.internal.arrowshape;
+
+import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
+
+/**
+ * Created by ZhangMenghe on 2017/7/5.
+ */
+public class pmShortArrowheadShape extends pmArrowheadShape{
+    public pmShortArrowheadShape(GL4 gl4){
+        super(gl4, true);
+        curve = new QuadraticBezier(-0.1f, -0.2f,.0f,.0f,0.5f,.0f);
+        curve2 = new QuadraticBezier(0.5f,.0f,.0f,.0f,-0.1f, 0.2f);
+        initPoints(gl4);
+    }
+}

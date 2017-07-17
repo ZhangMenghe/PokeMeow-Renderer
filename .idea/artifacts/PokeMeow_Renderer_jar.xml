@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact name="PokeMeow-Renderer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PokeMeow_Renderer_jar</output-path>
+    <root id="root">
+      <element id="archive" name="PokeMeow-Renderer.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="F:/test/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="PokeMeow-Renderer" />
+      </element>
+      <element id="library" level="project" name="lib" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/lib-bin/gluegen-rt.dll" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/lib-bin/jogl_desktop.dll" />
+    </root>
+  </artifact>
+</component>

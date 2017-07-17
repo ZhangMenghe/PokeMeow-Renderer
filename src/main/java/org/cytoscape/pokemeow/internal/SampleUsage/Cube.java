@@ -150,6 +150,8 @@ public class Cube implements GLEventListener {
     }
 
     public static void main( String[] args ) {
+        buildJarUtil loader = new buildJarUtil();
+        loader.loadFromJar();
         //specify the exact version of OpenGL API being used
         final GLProfile profile = GLProfile.get( GLProfile.GL2 );
         //specifies a set of OpenGL capabilities
@@ -182,9 +184,9 @@ public class Cube implements GLEventListener {
 
         //glcanvas.display();
         //call display in animation way
-        //final FPSAnimator animator = new FPSAnimator(gljPanel, 300,true);
+        final FPSAnimator animator = new FPSAnimator(gljPanel, 300,true);
 
-        //animator.start();
+        animator.start();
     }
 
 }
