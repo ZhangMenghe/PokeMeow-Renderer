@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="gluegen-rt" level="project" />
+    <orderEntry type="library" name="freetype-jni_1.0" level="project" />
   </component>
 </module>

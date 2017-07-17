@@ -35,6 +35,7 @@ public class simpleTriangle extends Demo{
     @Override
     public void render(GL4 gl4) {
         gl4.glUseProgram(program);
+        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
         factory.drawNode(gl4,mtriangle,gshaderParam);
     }
     public void reSetMatrix(boolean viewChanged){

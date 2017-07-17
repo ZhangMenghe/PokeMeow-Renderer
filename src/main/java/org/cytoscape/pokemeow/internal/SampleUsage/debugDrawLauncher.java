@@ -4,11 +4,8 @@ import com.jogamp.newt.event.KeyListener;
 import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.util.Animator;
-import main.java.org.cytoscape.pokemeow.internal.SampleUsage.Demo;
-import main.java.org.cytoscape.pokemeow.internal.SampleUsage.debugDraw;
-
-import static com.jogamp.opengl.GL.*;
-import static com.jogamp.opengl.GL2ES2.GL_SHADING_LANGUAGE_VERSION;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
+import main.java.org.cytoscape.pokemeow.internal.commonUtil;
 /**
  * Created by ZhangMenghe on 2017/6/19.
  */
@@ -19,6 +16,8 @@ public class debugDrawLauncher implements GLEventListener, KeyListener{
         this.demo = demo;
         this.onExitHook = onExitHook;
     }
+
+
 
     public static void main(String[] args) {
         final GLProfile glProfile = GLProfile.get(GLProfile.GL4);
@@ -65,6 +64,7 @@ public class debugDrawLauncher implements GLEventListener, KeyListener{
     @Override
     public void init(GLAutoDrawable drawable) {
         final GL4 gl4 = getGL4(drawable);
+        gl4.glViewport(commonUtil.VIEW_PORT_INFO[0], commonUtil.VIEW_PORT_INFO[1], commonUtil.VIEW_PORT_INFO[2], commonUtil.VIEW_PORT_INFO[3]);
         demo.create(gl4);
     }
 
@@ -77,8 +77,7 @@ public class debugDrawLauncher implements GLEventListener, KeyListener{
     @Override
     public void display(GLAutoDrawable drawable) {
         final GL4 gl4 = getGL4(drawable);
-        gl4.glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
-//        gl4.glClear(GL_COLOR_BUFFER_BIT);
+        gl4.glClearColor(0.8f, 0.77f, 0.75f, 1.0f);
         demo.render(gl4);
     }
 

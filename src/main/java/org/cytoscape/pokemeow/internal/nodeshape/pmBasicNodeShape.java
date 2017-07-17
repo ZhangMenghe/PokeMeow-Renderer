@@ -37,7 +37,6 @@ public class pmBasicNodeShape{
     public void setScale(Vector3 new_scale){
         scale.x *= new_scale.x;
         scale.y *= new_scale.y;
-        scale.z *= new_scale.z;
         modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
         modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
     }
@@ -45,7 +44,6 @@ public class pmBasicNodeShape{
     public void setScale(float s_scale){
         scale.x *= s_scale;
         scale.y *= s_scale;
-        scale.z *= s_scale;
         modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
         modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
     }
