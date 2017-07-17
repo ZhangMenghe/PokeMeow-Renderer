@@ -26,7 +26,13 @@ public class Vector3
 		this.y = values[1];
 		this.z = values[2];
 	}
-	
+
+	public Vector3(float value){
+		this.x = value;
+		this.y = value;
+		this.z = value;
+	}
+
 	public Vector3 copy()
 	{
 		return new Vector3(x, y, z);
