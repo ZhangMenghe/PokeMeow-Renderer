@@ -10,7 +10,7 @@ public class pmDashLongLine extends pmLineVisual{
     private int lineSegments = 50;
     private int numOfPoints;
     private float base;
-    public pmDashLongLine(GL4 gl4, Byte mDrawMethod){
+    public pmDashLongLine(GL4 gl4){
         super(gl4);
         numOfPoints = 3*(lineSegments+1);
         float[] pos = new float[numOfPoints];
@@ -27,7 +27,6 @@ public class pmDashLongLine extends pmLineVisual{
             pos[i+2] = .0f;
         }
 
-        drawMethod = mDrawMethod;
         connectMethod = CONNECT_SEGMENTS;
         initLineVisual(gl4, pos);
     }

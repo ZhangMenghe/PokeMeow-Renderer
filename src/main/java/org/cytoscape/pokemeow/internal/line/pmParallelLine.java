@@ -10,9 +10,8 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
  * Created by ZhangMenghe on 2017/7/10.
  */
 public class pmParallelLine extends pmLineVisual {
-    public pmParallelLine(GL4 gl4, Byte mDrawMethod, pmLineVisual line){
+    public pmParallelLine(GL4 gl4, pmLineVisual line){
         super(gl4);
-        drawMethod = mDrawMethod;
         connectMethod = CONNECT_PARALLEL;
         initLineVisual(gl4, line);
     }

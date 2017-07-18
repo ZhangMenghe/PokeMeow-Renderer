@@ -9,7 +9,7 @@ public class pmEqualDashLine extends pmLineVisual{
     private int lineSegments = 50;
     private int numOfPoints;
     private float base;
-    public pmEqualDashLine(GL4 gl4, Byte mDrawMethod){
+    public pmEqualDashLine(GL4 gl4){
         super(gl4);
         numOfPoints = 3*(lineSegments+1);
         float[] pos = new float[numOfPoints];
@@ -20,7 +20,6 @@ public class pmEqualDashLine extends pmLineVisual{
             pos[i+1] = .0f;
             pos[i+2] = .0f;
         }
-        drawMethod = mDrawMethod;
         connectMethod = CONNECT_SEGMENTS;
         initLineVisual(gl4, pos);
     }

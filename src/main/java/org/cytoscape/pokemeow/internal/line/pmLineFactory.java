@@ -29,60 +29,80 @@ public class pmLineFactory {
     public static final byte LINE_PARALLEL = 11;
     public static final byte LINE_SEPARATE_SLASH = 12;
 
-
     private GL4 gl4;
-    private int lineSegments = 50;
-    private int numOfPoints;
+
     public pmLineFactory(GL4 gl){
         gl4 = gl;
+        gl4.glEnable(GL4.GL_LINE_SMOOTH);
         gl4.glEnable( GL4.GL_DEPTH_TEST );
         gl4.glDepthFunc( GL4.GL_LEQUAL );
     }
-
-    public pmLineVisual createLine_GL(Byte type) {
-        float base;
-
-        numOfPoints = 3*(lineSegments+1);
-        float[] pos = new float[numOfPoints];
-        base = 2.0f/lineSegments;
-        int numOfPatterns;
-        int pointsPerPattern;
-        float shrink;
-        float offset = -1.0f;
-        float[] posPattern1;
+    public pmLineVisual createLine(Byte type) {
         switch (type) {
             case 0:
-                return new pmSolidLine(gl4, pmLineVisual.DRAWMETHOD_GL);
+                return new pmSolidLine(gl4);
             case 1:
-                return new pmEqualDashLine(gl4, pmLineVisual.DRAWMETHOD_GL);
+                return new pmEqualDashLine(gl4);
             case 2:
-                return new pmDashLongLine(gl4, pmLineVisual.DRAWMETHOD_GL);
+                return new pmDashLongLine(gl4);
             case 3:
-                return new pmDashDotLine(gl4, pmLineVisual.DRAWMETHOD_GL);
+                return new pmDashDotLine(gl4);
             case 4:
-                return new pmDotLine(gl4, pmLineVisual.DRAWMETHOD_GL);
+                return new pmDotLine(gl4);
             case 5:
-                return new pmSineWaveLine(gl4, pmLineVisual.DRAWMETHOD_GL);
+                return new pmSineWaveLine(gl4);
             case 6:
-                return new pmZigZagLine(gl4, pmLineVisual.DRAWMETHOD_GL);
+                return new pmZigZagLine(gl4);
             case 7:
-                return new pmVerticalSlashLine(gl4, pmLineVisual.DRAWMETHOD_GL);
+                return new pmVerticalSlashLine(gl4);
             case 8:
-                return new pmForwardSlashLine(gl4, pmLineVisual.DRAWMETHOD_GL);
+                return new pmForwardSlashLine(gl4);
             case 9:
-                return new pmBackwardSlashLine(gl4, pmLineVisual.DRAWMETHOD_GL);
+                return new pmBackwardSlashLine(gl4);
             case 10:
-                return new pmContiguousArrowLine(gl4, pmLineVisual.DRAWMETHOD_GL);
+                return new pmContiguousArrowLine(gl4);
             case 11:
-                return new pmParallelLine(gl4, pmLineVisual.DRAWMETHOD_GL, new pmEqualDashLine(gl4, pmLineVisual.DRAWMETHOD_GL));
+                return new pmParallelLine(gl4, new pmEqualDashLine(gl4));
             case 12:
-                return new pmSeparateArrowLine(gl4, pmLineVisual.DRAWMETHOD_GL);
+                return new pmSeparateArrowLine(gl4);
             default:
-                return new pmSolidLine(gl4, pmLineVisual.DRAWMETHOD_GL);
+                return new pmSolidLine(gl4);
+        }
+    }
+    public pmLineVisual createLine(Byte type, float srcx, float srcy, float destx, float desty) {
+        switch (type) {
+            case 0:
+                return new pmSolidLine(gl4, srcx, srcy, destx, desty);
+            case 1:
+                return new pmEqualDashLine(gl4);
+            case 2:
+                return new pmDashLongLine(gl4);
+            case 3:
+                return new pmDashDotLine(gl4);
+            case 4:
+                return new pmDotLine(gl4);
+            case 5:
+                return new pmSineWaveLine(gl4);
+            case 6:
+                return new pmZigZagLine(gl4);
+            case 7:
+                return new pmVerticalSlashLine(gl4);
+            case 8:
+                return new pmForwardSlashLine(gl4);
+            case 9:
+                return new pmBackwardSlashLine(gl4);
+            case 10:
+                return new pmContiguousArrowLine(gl4);
+            case 11:
+                return new pmParallelLine(gl4, new pmEqualDashLine(gl4));
+            case 12:
+                return new pmSeparateArrowLine(gl4);
+            default:
+                return new pmSolidLine(gl4);
         }
     }
 
-    public void drawLine_GL(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam){
+    private void drawLine_GL(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam){
         switch (line.connectMethod){
             case pmLineVisual.CONNECT_STRIP:
                 gl4.glDrawArrays(GL4.GL_LINE_STRIP, 0, line.numOfVertices);
@@ -120,24 +140,14 @@ public class pmLineFactory {
                     gl4.glBindVertexArray(mline.objects[mline.VAO]);
                     gl4.glBindBuffer(GL_ARRAY_BUFFER, mline.objects[mline.VBO]);
                     drawLine_GL(gl4, mline, gshaderParam);
+                    gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
+                    gl4.glBindVertexArray(0);
                 }
                 break;
             default:
                 gl4.glDrawArrays(GL4.GL_LINE_STRIP, 0, line.numOfVertices);
                 break;
         }
-        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
-        gl4.glBindVertexArray(0);
-    }
-
-    public void drawLine_AGG(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam){
-            if(line.numOfIndices == -1)
-                gl4.glDrawArrays(GL4.GL_LINE_STRIP, 0, line.numOfVertices);
-            else{
-                gl4.glBindBuffer(GL_ARRAY_BUFFER, line.objects[line.EBO]);
-                gl4.glDrawElements(GL4.GL_LINE,line.numOfIndices, GL.GL_UNSIGNED_INT,0);
-                gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
-            }
     }
 
     public void drawLine(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam){
@@ -145,11 +155,11 @@ public class pmLineFactory {
         gl4.glUniform4f(gshaderParam.vec4_color, line.color.x, line.color.y, line.color.z,line.color.w);
         gl4.glBindVertexArray(line.objects[line.VAO]);
         gl4.glBindBuffer(GL_ARRAY_BUFFER, line.objects[line.VBO]);
-        if(line.drawMethod == pmLineVisual.DRAWMETHOD_GL)
-            drawLine_GL(gl4, line, gshaderParam);
-        else
-            drawLine_AGG(gl4, line, gshaderParam);
+
+        drawLine_GL(gl4, line, gshaderParam);
+        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl4.glBindVertexArray(0);
+
     }
 
     public void drawLineList(GL4 gl4, pmLineVisual[] lineList, pmShaderParams gshaderParam){

@@ -12,7 +12,7 @@ public class pmSineWaveLine extends pmLineVisual{
     private int numOfPoints;
     private float base;
 
-    public pmSineWaveLine(GL4 gl4, Byte mDrawMethod){
+    public pmSineWaveLine(GL4 gl4){
         super(gl4);
         numOfPoints = 3*(lineSegments+1);
         float[] pos = new float[numOfPoints];
@@ -25,7 +25,6 @@ public class pmSineWaveLine extends pmLineVisual{
             pos[i+1] = (float) Math.sin(exampleX*n)/20;
             pos[i+2] = .0f;
         }
-        drawMethod = mDrawMethod;
         connectMethod = CONNECT_STRIP;
         initLineVisual(gl4, pos);
     }

@@ -17,12 +17,14 @@ public class pmArrowheadShape extends pmBasicArrowShape{
         super();
         initPoints(gl4);
     }
+
     public pmArrowheadShape(GL4 gl4, boolean skip){
         super();
     }
+
     protected void initPoints(GL4 gl4){
         Vector2 [] curvePoints = curve.getPointsOnCurves();
-        int halfVertices = curve.resolution + 1;
+        int halfVertices = curve.resolution + 1;//include both first and last point
         numOfVertices = halfVertices*2;
         numOfIndices = 3*(numOfVertices-2);
         vertices = new float[6 * halfVertices];
@@ -51,6 +53,7 @@ public class pmArrowheadShape extends pmBasicArrowShape{
         }
         this.initBuffer(gl4, vertices, elements);
     }
+
     public void setZorder(GL4 gl4, float new_z){
         int length = vertices.length;
         for(int i =2; i<length; i+=3)

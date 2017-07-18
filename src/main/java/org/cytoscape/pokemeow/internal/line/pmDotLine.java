@@ -10,7 +10,7 @@ public class pmDotLine extends pmLineVisual{
     private int lineSegments = 50;
     private int numOfPoints;
     private float base;
-    public pmDotLine(GL4 gl4, Byte mDrawMethod){
+    public pmDotLine(GL4 gl4){
         super(gl4);
         numOfPoints = 3*(lineSegments+1);
         float[] pos = new float[numOfPoints];
@@ -20,7 +20,6 @@ public class pmDotLine extends pmLineVisual{
             pos[i+1] = .0f;
             pos[i+2] = .0f;
         }
-        drawMethod = mDrawMethod;
         connectMethod = CONNECT_DOTS;
         initLineVisual(gl4, pos);
     }

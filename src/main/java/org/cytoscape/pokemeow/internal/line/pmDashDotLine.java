@@ -10,13 +10,13 @@ public class pmDashDotLine extends pmLineVisual{
     private int numOfPoints;
     private float base;
 
-    public pmDashDotLine(GL4 gl4, Byte mDrawMethod){
+    public pmDashDotLine(GL4 gl4){
         super(gl4);
         numOfPoints = 3*(lineSegments+1);
         float[] pos = new float[numOfPoints];
-        base = 2.0f/lineSegments;
+        base = 2.0f / lineSegments;
         pos[0] = -1.0f; pos[1] = .0f; pos[2] = .0f;
-        base/=2;
+        base /= 2;
         for(int i=3, n = 1;i<numOfPoints;i+=3,n++){
             if(n%4==1)
                 pos[i] = pos[i-3] + 5*base;
@@ -25,7 +25,6 @@ public class pmDashDotLine extends pmLineVisual{
             pos[i+1] = .0f;
             pos[i+2] = .0f;
         }
-        drawMethod = mDrawMethod;
         connectMethod = CONNECT_SEGMENTS;
         initLineVisual(gl4, pos);
     }

@@ -6,8 +6,8 @@ import com.jogamp.opengl.GL4;
  * Created by ZhangMenghe on 2017/7/10.
  */
 public class pmVerticalSlashLine extends pmPatternLineBasic{
-    public pmVerticalSlashLine(GL4 gl4, Byte mDrawMethod){
-        super(gl4, mDrawMethod);
+    public pmVerticalSlashLine(GL4 gl4){
+        super(gl4);
         numOfPatterns = 5;
         pointsPerPattern = 4;
         numOfVertices = 3*pointsPerPattern*numOfPatterns;

@@ -11,8 +11,8 @@ import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
  * Created by ZhangMenghe on 2017/7/10.
  */
 public class pmSeparateArrowLine extends pmPatternLineBasic {
-    public pmSeparateArrowLine(GL4 gl4, Byte mDrawMethod) {
-        super(gl4, mDrawMethod);
+    public pmSeparateArrowLine(GL4 gl4) {
+        super(gl4);
         pmBasicArrowShape[]arrowList = new pmBasicArrowShape[5];
         for(int i=0;i<5;i++){
             arrowList[i] = new pmLineSeparateArrowPattern(gl4);
