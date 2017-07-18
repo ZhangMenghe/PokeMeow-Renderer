@@ -34,9 +34,9 @@ public class mousePickupDemo implements GLEventListener,MouseListener {
     PMVMatrix pmvMatrix = new PMVMatrix();
     private int times = 0;
     private int numOfNodes = 10;
+
     @Override
     public void init(GLAutoDrawable drawable) {
-
         gl4 = drawable.getGL().getGL4();
         program = GLSLProgram.CompileProgram(gl4,
                 debugDraw.class.getResource("shader/flat.vert"),
@@ -147,6 +147,8 @@ public class mousePickupDemo implements GLEventListener,MouseListener {
         for(int i=0;i<numOfNodes;i++){
             pmBasicNodeShape node = NodeList[i];
             if(node.isHit(posx, posy)){
+                node.setColor(gl4, new Vector4(.0f,1.0f,.0f,1.0f));
+                node.dirty = true;
                 System.out.println("HIT - " + i + " " + times);
                 times++;
             }

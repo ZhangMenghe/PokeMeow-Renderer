@@ -26,6 +26,8 @@ public class pmBasicNodeShape{
     public float[] vertices;
     protected float xMin, xMax, yMin, yMax;
     protected float xMinOri, xMaxOri, yMinOri, yMaxOri;
+    public boolean dirty = false;
+
     public pmBasicNodeShape(){
         origin = new Vector3(.0f,.0f,.0f);
         scale = new Vector3(1.0f,1.0f,1.0f);
@@ -80,11 +82,47 @@ public class pmBasicNodeShape{
     public void setViewMatrix(Matrix4 new_viewMatrix){
         viewMatrix = new_viewMatrix;
     }
-    public void setColor(GL4 gl4, float[] new_color){}
-    public void setColor(GL4 gl4, Vector4 new_color){}
-    public void setColor(GL4 gl4, Vector4 [] colorList){}
-    public void setDefaultTexcoord(GL4 gl4){}
-    public void setZorder(GL4 gl4, int new_z){}
+
+    public void setColor(GL4 gl4, Vector4 new_color){
+        for(int i=3;i<vertices.length;i+=7){
+            vertices[i] = new_color.x;
+            vertices[i+1] = new_color.y;
+            vertices[i+2] = new_color.z;
+            vertices[i+3] = new_color.w;
+        }
+        dirty = true;
+    }
+    public void setColor(GL4 gl4, Vector4 [] colorList){
+        int len = colorList.length;
+        for(int i=3;i<vertices.length;i+=7){
+            int idx = Math.floorDiv(i,7);
+            if(idx >=len)
+                idx = 0;
+            vertices[i] = colorList[idx].x;
+            vertices[i+1] = colorList[idx].y;
+            vertices[i+2] = colorList[idx].z;
+            vertices[i+3] = colorList[idx].w;
+        }
+        dirty = true;
+    }
+
+    public void setDefaultTexcoord(GL4 gl4){
+        useTexture = true;
+        Vector4 [] coordList = {new Vector4(1.0f,1.0f,.0f,-1.0f),
+                new Vector4(1.0f,.0f,.0f,-1.0f),
+                new Vector4(.0f,.0f,.0f,-1.0f),
+                new Vector4(.0f,1.0f,.0f,-1.0f)
+        };
+
+        setColor(gl4,coordList);
+    }
+
+    public void setZorder(GL4 gl4, int new_z){
+        zorder = new_z;
+        for(int i=2;i<vertices.length;i+=7)
+            vertices[i] = new_z;
+        dirty = true;
+    }
 
     public boolean isHit(float posx, float posy){
         int nCross = 0;
@@ -118,9 +156,6 @@ public class pmBasicNodeShape{
             double x = (double) (posy - lastPosY) * (double) (currPosX - lastPosX) / (double) (currPosY - lastPosY) + lastPosX;
             if (x > posx)
                 nCross++;
-
-
-
         }
         return (nCross%2 == 1);
     }

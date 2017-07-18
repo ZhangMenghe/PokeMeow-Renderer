@@ -12,14 +12,14 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
     public float radius = 0.125f/2;
     private float[] controlPoints;
     public pmRoundedRectangle(GL4 gl4){
-        super(gl4,true);
+        super();
         controlPoints = new float[8];
         numOfVertices = 4*CircleSegment + 4;
         int count = 7*CircleSegment;
 
         vertices = new float[numOfVertices * 7];
         int[] new_colorIndices = new int[numOfVertices];
-        colorIndices = new_colorIndices;
+
         float singleStep = radius / CircleSegment;
         float radius_sqr = radius * radius;
         float x = .0f;
@@ -87,7 +87,6 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
             vertices[i*7 + 3] = .0f;
             vertices[i*7 + 4] = .0f;
             vertices[i*7 + 5] = -1.0f;
-            colorIndices[i] = i*7+3;
         }
         int baseIdx = numOfVertices-4;
 

@@ -17,9 +17,7 @@ public class drawLineDemo extends Demo {
     private int program;
     private pmLineVisual[] lineList;
     private pmLineFactory factory;
-    private Vector4[] colorList = {new Vector4(1.0f, 0.5f, 0.3f, 1.0f),
-            new Vector4(0.2f, 0.5f, 0.5f, 1.0f),
-            new Vector4(0.3f, 1.0f, 0.2f,1.0f)};
+
     public void create(GL4 gl4){
         program = GLSLProgram.CompileProgram(gl4,
                 debugDraw.class.getResource("shader/arrow.vert"),
@@ -32,7 +30,7 @@ public class drawLineDemo extends Demo {
 
         int n = 0;
         for(Byte i=0;i<13;i++)
-            lineList[n++] = factory.createLine_GL(i);
+            lineList[n++] = factory.createLine(i);
         for(n=0;n<12;n++){
             float cy = -0.9f + 0.1f*n;
             lineList[n].setOrigin(new Vector3(.0f, cy, .0f));

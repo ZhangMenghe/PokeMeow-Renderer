@@ -36,7 +36,7 @@ public class debugDrawLauncher implements GLEventListener, KeyListener{
             glWindow.destroy();
         };
 
-        final Demo demo = new drawLineDemo();
+        final Demo demo = new debugDraw();
 
         final debugDrawLauncher newtLauncher = new debugDrawLauncher(demo, onExitHook);
         glWindow.addGLEventListener(newtLauncher);
@@ -77,7 +77,7 @@ public class debugDrawLauncher implements GLEventListener, KeyListener{
     @Override
     public void display(GLAutoDrawable drawable) {
         final GL4 gl4 = getGL4(drawable);
-        gl4.glClearColor(0.8f, 0.77f, 0.75f, 1.0f);
+        gl4.glClearColor(0.2f, 0.2f, 0.2f,1.0f);
         demo.render(gl4);
     }
 

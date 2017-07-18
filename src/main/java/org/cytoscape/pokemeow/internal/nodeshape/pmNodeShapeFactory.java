@@ -1,5 +1,6 @@
 package main.java.org.cytoscape.pokemeow.internal.nodeshape;
 
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,7 @@ import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.util.texture.Texture;
 
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmTriangleNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmRectangleNodeShape;
@@ -45,31 +47,41 @@ public class pmNodeShapeFactory {
 
     public static final byte SHAPE_TRIANGLE = 8;
     public static final byte SHAPE_VEE = 9;
+    private GL4 gl4;
 
-    public Map<Byte, pmBasicNodeShape> nodeShapeCollector = null;
-
-    public pmNodeShapeFactory(GL4 gl4){
-        nodeShapeCollector = new HashMap<Byte,pmBasicNodeShape>();
-        nodeShapeCollector.put(SHAPE_RECTANGLE, new pmRectangleNodeShape(gl4));
-        nodeShapeCollector.put(SHAPE_CIRCLE, new pmCircleNodeShape(gl4));
-        nodeShapeCollector.put(SHAPE_ELLIPSE, new pmEllipseNodeShape(gl4));
-        nodeShapeCollector.put(SHAPE_ROUNDED_RECTANGLE, new pmRoundedRectangle(gl4));
-        nodeShapeCollector.put(SHAPE_DIAMOND, new pmDiamondNodeShape(gl4));
-        nodeShapeCollector.put(SHAPE_HEXAGON, new pmHexagonNodeShape(gl4));
-        nodeShapeCollector.put(SHAPE_OCTAGON, new pmOctagonNodeShape(gl4));
-        nodeShapeCollector.put(SHAPE_PARALLELOGRAM, new pmParallelogramNodeShape(gl4));
-        nodeShapeCollector.put(SHAPE_TRIANGLE, new pmTriangleNodeShape(gl4));
-        nodeShapeCollector.put(SHAPE_VEE, new pmVeeNodeShape(gl4));
-
+    public pmNodeShapeFactory(GL4 gl){
+        gl4 = gl;
         gl4.glEnable( GL4.GL_DEPTH_TEST );
         gl4.glDepthFunc( GL4.GL_LEQUAL );
     }
 
     public pmBasicNodeShape createNode(GL4 gl4, Byte type){
-
-        return nodeShapeCollector.get(type);
+        switch (type) {
+            case 0:
+                return new pmRectangleNodeShape(gl4);
+            case 1:
+                return new pmDiamondNodeShape(gl4);
+            case 2:
+                return new pmParallelogramNodeShape(gl4);
+            case 3:
+                return new pmRoundedRectangle(gl4);
+            case 4:
+                return new pmCircleNodeShape(gl4);
+            case 5:
+                return new pmEllipseNodeShape(gl4);
+            case 6:
+                return new pmHexagonNodeShape(gl4);
+            case 7:
+                return new pmOctagonNodeShape(gl4);
+            case 8:
+                return new pmTriangleNodeShape(gl4);
+            case 9:
+                return new pmVeeNodeShape(gl4);
+            default:
+                return new pmRectangleNodeShape(gl4);
+        }
     }
-
+    //TODO:SHOULD BE MODIFIED!!
     //Currently support only single texture
     public void drawNodeWithTexture(GL4 gl4, pmBasicNodeShape node, pmShaderParams gshaderParam, Texture texture){
         gl4.glActiveTexture(GL4.GL_TEXTURE0);
@@ -88,6 +100,12 @@ public class pmNodeShapeFactory {
         gl4.glBindVertexArray(node.gsthForDraw.objects[node.gsthForDraw.VAO]);
         gl4.glBindBuffer(GL_ARRAY_BUFFER, node.gsthForDraw.objects[node.gsthForDraw.VBO]);
 
+        if(node.dirty){
+            node.gsthForDraw.data_buff = Buffers.newDirectFloatBuffer(node.vertices);
+            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  node.gsthForDraw.objects[node.gsthForDraw.VBO]);
+            gl4.glBufferData(GL.GL_ARRAY_BUFFER, node.gsthForDraw.dataCapacity,node.gsthForDraw.data_buff, GL.GL_STATIC_DRAW);
+            node.dirty = false;
+        }
         if(node instanceof pmRectangleNodeShape){
             gl4.glBindBuffer(GL_ARRAY_BUFFER, node.gsthForDraw.objects[node.gsthForDraw.EBO]);
             gl4.glDrawElements(GL4.GL_TRIANGLES,node.gsthForDraw.numOfIndices, GL.GL_UNSIGNED_INT,0);
@@ -98,7 +116,7 @@ public class pmNodeShapeFactory {
         }
         gl4.glBindVertexArray(0);
     }
-
+    //TODO:SHOULD BE MODIFIED!!
     public void drawNodeList(GL4 gl4, pmBasicNodeShape[] NodeList, int[]programList, pmShaderParams gshaderParam, Texture texture, ArrayList<Integer>flatindices,ArrayList<Integer>textureindices){
         gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
         if(flatindices!=null) {
@@ -112,6 +130,7 @@ public class pmNodeShapeFactory {
                 drawNodeWithTexture(gl4, NodeList[i], gshaderParam, texture);
         }
     }
+    //TODO:SHOULD BE MODIFIED!!
     public void drawNodeList(GL4 gl4, pmBasicNodeShape[] NodeList, int[]programList, pmShaderParams gshaderParam,
                              ArrayList<Texture> textureList, ArrayList<Integer>flatindices,ArrayList<Integer>textureindices,
                              ArrayList<Integer> textureIdx){

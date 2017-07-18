@@ -8,7 +8,7 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
  */
 public class pmVeeNodeShape extends pmRectangleNodeShape{
     public pmVeeNodeShape(GL4 gl4){
-        super(gl4, true);
+        super();
         vertices[0] = .0f;
         vertices[14] = .0f;
         vertices[15] = -0.125f;

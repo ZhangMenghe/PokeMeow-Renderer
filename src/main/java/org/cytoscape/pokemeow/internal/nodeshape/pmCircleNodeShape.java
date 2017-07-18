@@ -60,42 +60,7 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
         }
         gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
-    @Override
-    public void setColor(GL4 gl4, float[] new_color){
-        for(int i:colorIndices){
-            vertices[i] = new_color[0];
-            vertices[i+1] = new_color[1];
-            vertices[i+2] = new_color[2];
-            vertices[i+3] = new_color[3];
-        }
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
-    }
 
-    @Override
-    public void setColor(GL4 gl4, Vector4 new_color){
-        for(int i:colorIndices){
-            vertices[i] = new_color.x;
-            vertices[i+1] = new_color.y;
-            vertices[i+2] = new_color.z;
-            vertices[i+3] = new_color.w;
-        }
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
-    }
-
-    @Override
-    public void setColor(GL4 gl4, Vector4 [] colorList){
-        int len = colorList.length;
-        for(int i:colorIndices){
-            int idx = Math.floorDiv(i,7);
-            if(idx >=len)
-                idx = 0;
-            vertices[i] = colorList[idx].x;
-            vertices[i+1] = colorList[idx].y;
-            vertices[i+2] = colorList[idx].z;
-            vertices[i+3] = colorList[idx].w;
-        }
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
-    }
     @Override
     public void setDefaultTexcoord(GL4 gl4){
         useTexture = true;
@@ -106,15 +71,7 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
             float y = vertices[7*i+1] * factor + 0.5f;
             coordList[i] = new Vector4(x,y,.0f,-1.0f);
         }
-        setColor(gl4,coordList);
-    }
-
-    @Override
-    public void setZorder(GL4 gl4, int new_z) {
-        zorder = new_z;
-        for(int i:colorIndices)
-            vertices[i-1] = new_z;
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
+        setColor(gl4, coordList);
     }
 
     @Override
