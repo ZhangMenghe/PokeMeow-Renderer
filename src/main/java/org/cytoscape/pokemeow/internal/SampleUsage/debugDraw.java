@@ -51,12 +51,10 @@ public class debugDraw extends Demo {
                 debugDraw.class.getResource("shader/texture.frag"));
 
         gshaderParam = new pmShaderParams(gl4, programList[0]);
+
         int n=0;
         for(Byte idx = 0;idx<10;idx++)
             NodeList[n++] = nodesFactory.createNode(gl4, idx);
-
-//        NodeList[1] = nodesFactory.createNode(gl4, pmNodeShapeFactory.SHAPE_VEE);
-
 
         for(int x=0;x<3;x++){
             for(int y=0;y<3;y++){
@@ -64,15 +62,17 @@ public class debugDraw extends Demo {
                 float cy = -0.6f + x*0.5f;
                 int idx = 3*x+y;
                 NodeList[idx].setOrigin(new Vector3(cx, cy, .0f));
+                NodeList[idx].setScale(0.5f);
             }
         }
         //test zOrder:the less z value the more front position
-//        NodeList[2].setZorder(gl4,-1);
-//        NodeList[5].setZorder(gl4,1);
-//        NodeList[8].setZorder(gl4,2);
+        NodeList[2].setZorder(-0.1f);
+        NodeList[5].setZorder(0.1f);
+        NodeList[8].setZorder(0.2f);
 
         NodeList[9].setOrigin(new Vector3(.0f,0.8f,.0f));
         NodeList[9].setRotation((float) Math.PI/8);
+        NodeList[9].setScale(0.5f);
         Vector4 [] test = {new Vector4(1.0f,.0f,.0f,1.0f),new Vector4(.0f,.0f,1.0f,1.0f)};
         NodeList[0].setColor(gl4, test);
         NodeList[1].setColor(gl4, test);
@@ -84,7 +84,6 @@ public class debugDraw extends Demo {
         NodeList[3].setDefaultTexcoord(gl4);
         NodeList[4].setDefaultTexcoord(gl4);
         NodeList[5].setDefaultTexcoord(gl4);
-//        NodeList[1].setOrigin(new Vector3(0.5f,.0f,.0f));
         for(int i=0;i<numOfNodes;i++){
             if(NodeList[i].useTexture)
                 textureNodeIndices.add(i);
@@ -102,6 +101,8 @@ public class debugDraw extends Demo {
 
     @Override
     public void render(GL4 gl4) {
+        gl4.glUseProgram(programList[0]);
+        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
         if(changed){
             renderer_t.RenderToTexturePrepare(gl4);
             nodesFactory.drawNodeList(gl4,NodeList,

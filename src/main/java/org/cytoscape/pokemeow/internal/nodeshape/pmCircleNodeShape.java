@@ -43,7 +43,7 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
         for(int i=0; i<count; i+=7){
             vertices[i] = x;//radius * (float)Math.cos(i * doublePi / CircleSegment);
             vertices[i+1] = y; //radius * (float)Math.sin( i * doublePi / CircleSegment);
-            vertices[i+2]=.0f;
+            vertices[i+2] = zorder;
             float tx = -y;
             float ty = x;
             x += tx*tangetial_factor;
@@ -69,7 +69,7 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
         for(int i=0;i<CircleSegment;i++){
             float x = vertices[7*i] * factor + 0.5f;
             float y = vertices[7*i+1] * factor + 0.5f;
-            coordList[i] = new Vector4(x,y,.0f,-1.0f);
+            coordList[i] = new Vector4(x, y, .0f, -1.0f);
         }
         setColor(gl4, coordList);
     }

@@ -21,7 +21,7 @@ public class pmBasicNodeShape{
     public Matrix4 modelMatrix;//translation*scale
     public Matrix4 viewMatrix;
     public int numOfVertices;
-    public int zorder = 0;
+    public float zorder = .0f;
     public boolean useTexture = false;
     public float[] vertices;
     protected float xMin, xMax, yMin, yMax;
@@ -117,7 +117,7 @@ public class pmBasicNodeShape{
         setColor(gl4,coordList);
     }
 
-    public void setZorder(GL4 gl4, int new_z){
+    public void setZorder(float new_z){
         zorder = new_z;
         for(int i=2;i<vertices.length;i+=7)
             vertices[i] = new_z;

@@ -11,9 +11,9 @@ import java.nio.FloatBuffer;
  */
 public class pmTriangleNodeShape extends pmBasicNodeShape{
     private float[] mvertices = {
-               .0f,  0.25f, .0f,.0f, .0f, .0f, 1.0f,
-            -0.25f, -0.25f, .0f,.0f, .0f, .0f, 1.0f,
-             0.25f, -0.25f, .0f,.0f, .0f, .0f, 1.0f
+               .0f,  0.25f, zorder, .0f, .0f, .0f, 1.0f,
+            -0.25f, -0.25f, zorder, .0f, .0f, .0f, 1.0f,
+             0.25f, -0.25f, zorder, .0f, .0f, .0f, 1.0f
     };
 
     public pmTriangleNodeShape(GL4 gl4){

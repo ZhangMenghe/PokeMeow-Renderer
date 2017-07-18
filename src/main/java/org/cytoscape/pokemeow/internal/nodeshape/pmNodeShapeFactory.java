@@ -81,8 +81,7 @@ public class pmNodeShapeFactory {
                 return new pmRectangleNodeShape(gl4);
         }
     }
-    //TODO:SHOULD BE MODIFIED!!
-    //Currently support only single texture
+
     public void drawNodeWithTexture(GL4 gl4, pmBasicNodeShape node, pmShaderParams gshaderParam, Texture texture){
         gl4.glActiveTexture(GL4.GL_TEXTURE0);
         texture.enable(gl4);
@@ -93,7 +92,6 @@ public class pmNodeShapeFactory {
         drawNode(gl4,node,gshaderParam);
     }
 
-    //Currently support only single texture
     public void drawNode(GL4 gl4, pmBasicNodeShape node, pmShaderParams gshaderParam){
         gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(node.modelMatrix.asArrayCM()));
         gl4.glUniformMatrix4fv(gshaderParam.mat4_viewMatrix, 1,false, Buffers.newDirectFloatBuffer(node.viewMatrix.asArrayCM()));
@@ -116,7 +114,7 @@ public class pmNodeShapeFactory {
         }
         gl4.glBindVertexArray(0);
     }
-    //TODO:SHOULD BE MODIFIED!!
+
     public void drawNodeList(GL4 gl4, pmBasicNodeShape[] NodeList, int[]programList, pmShaderParams gshaderParam, Texture texture, ArrayList<Integer>flatindices,ArrayList<Integer>textureindices){
         gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
         if(flatindices!=null) {
@@ -130,7 +128,7 @@ public class pmNodeShapeFactory {
                 drawNodeWithTexture(gl4, NodeList[i], gshaderParam, texture);
         }
     }
-    //TODO:SHOULD BE MODIFIED!!
+
     public void drawNodeList(GL4 gl4, pmBasicNodeShape[] NodeList, int[]programList, pmShaderParams gshaderParam,
                              ArrayList<Texture> textureList, ArrayList<Integer>flatindices,ArrayList<Integer>textureindices,
                              ArrayList<Integer> textureIdx){

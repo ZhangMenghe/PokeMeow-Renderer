@@ -9,6 +9,7 @@ import com.jogamp.opengl.GL4;
 
 import main.java.org.cytoscape.pokemeow.internal.SampleUsage.debugDraw;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
+import main.java.org.cytoscape.pokemeow.internal.commonUtil;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
@@ -36,11 +37,8 @@ public class pmRenderToTexture {
     }
 
     public pmRenderToTexture(GL4 gl4){
-        int [] tmp = new int[4];
-        IntBuffer viewport_size = Buffers.newDirectIntBuffer(tmp);
-        gl4.glGetIntegerv(GL4.GL_VIEWPORT, viewport_size);
-        textureWidth = viewport_size.get(2);
-        textureHeight = viewport_size.get(3);
+        textureWidth = (int)commonUtil.DEMO_VIEWPORT_SIZE.x;
+        textureHeight = (int)commonUtil.DEMO_VIEWPORT_SIZE.y;
         createRenderer(gl4);
     }
 
@@ -53,7 +51,7 @@ public class pmRenderToTexture {
         factory = new pmNodeShapeFactory(gl4);
         canvas = factory.createNode(gl4, pmNodeShapeFactory.SHAPE_RECTANGLE);
         canvas.setDefaultTexcoord(gl4);
-        canvas.setScale(8.0f);
+        canvas.setScale(4.0f);
         canvas.setOrigin(new Vector3(0,0,0));
         int[] tmpHandle = new int[1];
 
@@ -95,9 +93,16 @@ public class pmRenderToTexture {
         gl4.glUniformMatrix4fv(textureshaderParam.mat4_viewMatrix, 1,false, Buffers.newDirectFloatBuffer(canvas.viewMatrix.asArrayCM()));
         //bind buffer
         gl4.glBindVertexArray(canvas.gsthForDraw.objects[canvas.gsthForDraw.VAO]);
-        gl4.glBindBuffer(GL_ARRAY_BUFFER, canvas.gsthForDraw.objects[canvas.gsthForDraw.VBO]);
-        gl4.glBindBuffer(GL_ARRAY_BUFFER, canvas.gsthForDraw.objects[canvas.gsthForDraw.EBO]);
 
+        if(canvas.dirty){
+            canvas.gsthForDraw.data_buff = Buffers.newDirectFloatBuffer(canvas.vertices);
+            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  canvas.gsthForDraw.objects[canvas.gsthForDraw.VBO]);
+            gl4.glBufferData(GL.GL_ARRAY_BUFFER, canvas.gsthForDraw.dataCapacity,canvas.gsthForDraw.data_buff, GL.GL_STATIC_DRAW);
+
+            canvas.dirty = false;
+        }
+
+        gl4.glBindBuffer(GL_ARRAY_BUFFER, canvas.gsthForDraw.objects[canvas.gsthForDraw.EBO]);
         gl4.glDrawElements(GL4.GL_TRIANGLES,canvas.gsthForDraw.numOfIndices, GL.GL_UNSIGNED_INT,0);
         //unbind
         gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);

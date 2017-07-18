@@ -9,10 +9,10 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
  */
 public class pmRectangleNodeShape extends pmBasicNodeShape{
     public float[] mvertices = {
-        0.25f,  0.25f, .0f,.0f, .0f, .0f, 1.0f, // Top-left
-        0.25f, -0.25f, .0f,.0f, .0f, .0f, 1.0f, // Top-right
-        -0.25f, -0.25f, .0f,.0f, .0f, .0f, 1.0f, // Bottom-right
-        -0.25f,  0.25f, .0f,.0f, .0f, .0f, 1.0f  // Bottom-left
+         0.25f,  0.25f, zorder, .0f, .0f, .0f, 1.0f, // Top-left
+         0.25f, -0.25f, zorder, .0f, .0f, .0f, 1.0f, // Top-right
+        -0.25f, -0.25f, zorder, .0f, .0f, .0f, 1.0f, // Bottom-right
+        -0.25f,  0.25f, zorder, .0f, .0f, .0f, 1.0f  // Bottom-left
     };
     public int []elements = {
             3, 0, 1,
