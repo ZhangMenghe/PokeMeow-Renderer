@@ -2,7 +2,6 @@ package main.java.org.cytoscape.pokemeow.internal.arrowshape;
 
 import com.jogamp.opengl.GL4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
 /**
  * Created by ZhangMenghe on 2017/7/2.

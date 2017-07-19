@@ -160,14 +160,14 @@ public class pmLineFactory {
 
         drawLine_GL(gl4, line, gshaderParam);
 
-        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
-        gl4.glUniform4f(gshaderParam.vec4_color, line.color.x, line.color.y, line.color.z,line.color.w);
-//        FloatBuffer data_buff = Buffers.newDirectFloatBuffer(line.anchor.vertices);
-        gl4.glBindVertexArray(line.anchor.objects[line.anchor.VAO]);
-        gl4.glBindBuffer(GL_ARRAY_BUFFER, line.anchor.objects[line.anchor.VBO]);
-//        gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0,3 * Float.BYTES, data_buff);
-        gl4.glPointSize(10.0f);
-        gl4.glDrawArrays(GL4.GL_POINTS, 0, 1);
+//TODO: UNIFORM ANCHOR
+//        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
+//        gl4.glUniform4f(gshaderParam.vec4_color, line.color.x, line.color.y, line.color.z,line.color.w);
+//
+//        gl4.glBindVertexArray(line.anchor.objects[line.anchor.VAO]);
+//        gl4.glBindBuffer(GL_ARRAY_BUFFER, line.anchor.objects[line.anchor.VBO]);
+//        gl4.glPointSize(10.0f);
+//        gl4.glDrawArrays(GL4.GL_POINTS, 0, 1);
 
         gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl4.glBindVertexArray(0);

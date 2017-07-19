@@ -52,8 +52,10 @@ public class drawArrowDemo extends Demo {
         factory.drawArrowList(gl4, arrowList, gshaderParam);
 //        factory.drawArrow(gl4, arrowList[0], gshaderParam);
     }
+
     public void reSetMatrix(boolean viewChanged){
     }
+
     @Override
     public void dispose(GLAutoDrawable drawable) {
         for(pmBasicArrowShape arrow : arrowList)

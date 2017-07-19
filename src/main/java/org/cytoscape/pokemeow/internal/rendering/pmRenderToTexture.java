@@ -82,7 +82,7 @@ public class pmRenderToTexture {
     public void RenderToScreen(GL4 gl4){
         gl4.glBindFramebuffer(GL4.GL_FRAMEBUFFER, 0);
         gl4.glUseProgram(programTexture);
-        gl4.glClearColor(1.0f,1.0f,1.0f,1.0f);
+        gl4.glClearColor(0.2f, 0.2f, 0.2f,1.0f);
         gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
         //texture
         gl4.glActiveTexture(GL4.GL_TEXTURE0);
