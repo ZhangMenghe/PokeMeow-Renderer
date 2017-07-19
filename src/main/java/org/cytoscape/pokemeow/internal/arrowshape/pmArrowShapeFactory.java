@@ -37,31 +37,31 @@ public class pmArrowShapeFactory {
         gl4.glDepthFunc( GL4.GL_LEQUAL );
     }
 
-    public pmBasicArrowShape createNode(Byte type){
+    public pmBasicArrowShape createArrow(Byte type){
         switch (type) {
-            case 0:
+            case SHAPE_ARROWHEAD:
                 return new pmArrowheadShape(gl4);
-            case 1:
+            case SHAPE_ARROWHEAD_SHORT:
                 return new pmShortArrowheadShape(gl4);
-            case 2:
+            case SHAPE_DELTA:
                 return new pmDeltaArrowShape(gl4);
-            case 3:
+            case SHAPE_DELTA_SHORT:
                 return new pmShortDeltaArrowShape(gl4);
-            case 4:
+            case SHAPE_DELTA_SHORT2:
                 return new pmShort2DeltaArrowShape(gl4);
-            case 5:
+            case SHAPE_DIAMOND:
                 return new pmDiamondArrow(gl4);
-            case 6:
+            case SHAPE_DIAMOND_SHORT:
                 return new pmShortDiamondArrowShape(gl4);
-            case 7:
+            case SHAPE_DIAMOND_SHORT2:
                 return new pmShort2DiamondArrowShape(gl4);
-            case 8:
+            case SHAPE_DISC:
                 return new pmDiscArrowShape(gl4);
-            case 9:
+            case SHAPE_HALFBOTTOM:
                 return new pmHalfBottomArrowShape(gl4);
-            case 10:
+            case SHAPE_HALFTOP:
                 return new pmHalfTopArrowShape(gl4);
-            case 11:
+            case SHAPE_TEE:
                 return new pmTeeArrowShape(gl4);
             default:
                 return new pmDeltaArrowShape(gl4);
@@ -78,7 +78,7 @@ public class pmArrowShapeFactory {
             gl4.glDrawArrays(GL4.GL_TRIANGLE_FAN, 0, arrow.numOfVertices);
         else{
             gl4.glBindBuffer(GL_ARRAY_BUFFER, arrow.objects[arrow.EBO]);
-            gl4.glDrawElements(GL4.GL_TRIANGLE_FAN,arrow.numOfIndices, GL.GL_UNSIGNED_INT,0);
+            gl4.glDrawElements(GL4.GL_TRIANGLE_STRIP,arrow.numOfIndices, GL4.GL_UNSIGNED_INT,0);
             gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         }
 

@@ -7,7 +7,7 @@ import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 
-import main.java.org.cytoscape.pokemeow.internal.SampleUsage.debugDraw;
+import main.java.org.cytoscape.pokemeow.internal.SampleUsage.Demo;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
@@ -49,9 +49,9 @@ public class pmRenderToTextureAA {
 
     private void createRenderer(GL4 gl4){
         programTexture =  GLSLProgram.CompileProgram(gl4,
-                debugDraw.class.getResource("shader/texture.vert"),
+                Demo.class.getResource("shader/texture.vert"),
                 null,null,null,
-                debugDraw.class.getResource("shader/texture.frag"));
+                Demo.class.getResource("shader/texture.frag"));
         textureshaderParam = new pmShaderParams(gl4, programTexture);
         factory = new pmNodeShapeFactory(gl4);
         canvas = factory.createNode(gl4, pmNodeShapeFactory.SHAPE_RECTANGLE);

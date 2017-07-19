@@ -1,11 +1,11 @@
 package main.java.org.cytoscape.pokemeow.internal.label;
 
-import main.java.org.cytoscape.pokemeow.internal.SampleUsage.debugDraw;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 
 import com.pvporbit.freetype.*;
+import main.java.org.cytoscape.pokemeow.internal.SampleUsage.Demo;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
@@ -101,9 +101,9 @@ public class pmLabel{
         gl4.glBlendFunc(GL4.GL_SRC_ALPHA, GL4.GL_ONE_MINUS_SRC_ALPHA);
 
         fontProgram = GLSLProgram.CompileProgram(gl4,
-                debugDraw.class.getResource("shader/text.vert"),
+                Demo.class.getResource("shader/text.vert"),
                 null,null,null,
-                debugDraw.class.getResource("shader/text.frag"));
+                Demo.class.getResource("shader/text.frag"));
         gl4.glGenVertexArrays(1, tmpHandle, fontVAO);
         gl4.glGenBuffers(1, tmpHandle, fontVBO);
 

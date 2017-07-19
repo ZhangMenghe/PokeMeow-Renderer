@@ -1,6 +1,7 @@
 package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.opengl.GL4;
+import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.util.texture.Texture;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
@@ -15,12 +16,11 @@ import main.java.org.cytoscape.pokemeow.internal.utils.pmLoadTexture;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class debugDraw extends Demo {
+public class drawNodesDemo extends Demo {
     private pmShaderParams gshaderParam;
     private int[] programList;
     private pmBasicNodeShape[] NodeList;
 
-    private int numOfNodes = 10;
     private pmLoadTexture textureLoader;
     private Texture texture;
     private ArrayList<Texture> textureList = new ArrayList<Texture>();
@@ -31,24 +31,27 @@ public class debugDraw extends Demo {
     public pmRenderToTexture renderer_t;
     private boolean changed = true;
     private Matrix4 lastViewMatrix = Matrix4.identity();
+
     @Override
-    public void create(GL4 gl4) {
+    public void init(GLAutoDrawable drawable) {
+        super.init(drawable);
+        numOfItems = 10;
         programList = new int[2];
-        NodeList = new pmBasicNodeShape[numOfNodes];
+        NodeList = new pmBasicNodeShape[numOfItems];
         nodesFactory = new pmNodeShapeFactory(gl4);
 
         textureLoader = new pmLoadTexture();
-        texture = textureLoader.initialTexture(gl4, debugDraw.class.getResource("Texture.jpg"));
-        Texture texture2 = textureLoader.initialTexture(gl4, debugDraw.class.getResource("Texture2.jpg"));
+        texture = textureLoader.initialTexture(gl4, Demo.class.getResource("Texture.jpg"));
+        Texture texture2 = textureLoader.initialTexture(gl4, Demo.class.getResource("Texture2.jpg"));
         programList[0] = GLSLProgram.CompileProgram(gl4,
-                debugDraw.class.getResource("shader/flat.vert"),
+                Demo.class.getResource("shader/flat.vert"),
                 null,null,null,
-                debugDraw.class.getResource("shader/flat.frag"));
+                Demo.class.getResource("shader/flat.frag"));
 
         programList[1] = GLSLProgram.CompileProgram(gl4,
-                debugDraw.class.getResource("shader/texture.vert"),
+                Demo.class.getResource("shader/texture.vert"),
                 null,null,null,
-                debugDraw.class.getResource("shader/texture.frag"));
+                Demo.class.getResource("shader/texture.frag"));
 
         gshaderParam = new pmShaderParams(gl4, programList[0]);
 
@@ -73,18 +76,18 @@ public class debugDraw extends Demo {
         NodeList[9].setOrigin(new Vector3(.0f,0.8f,.0f));
         NodeList[9].setRotation((float) Math.PI/8);
         NodeList[9].setScale(0.5f);
-        Vector4 [] test = {new Vector4(1.0f,.0f,.0f,1.0f),new Vector4(.0f,.0f,1.0f,1.0f)};
+        Vector4 [] test = {new Vector4(0.69f, 0.88f, 0.9f,1.0f),new Vector4(0.97f,0.67f,0.65f,1.0f)};
         NodeList[0].setColor(gl4, test);
         NodeList[1].setColor(gl4, test);
         NodeList[2].setColor(gl4, test);
-        NodeList[6].setColor(gl4, new Vector4(0.5f,0.5f,.0f,0.8f));
-        NodeList[7].setColor(gl4, new Vector4(0.5f,0.5f,.0f,0.8f));
-        NodeList[8].setColor(gl4, new Vector4(0.5f,0.5f,.0f,0.8f));
-
+        NodeList[6].setColor(gl4, new Vector4(0.69f, 0.88f, 0.9f,1.0f));
+        NodeList[7].setColor(gl4, new Vector4(0.69f, 0.88f, 0.9f,1.0f));
+        NodeList[8].setColor(gl4, new Vector4(0.69f, 0.88f, 0.9f,1.0f));
+        NodeList[9].setColor(gl4, new Vector4(0.97f,0.67f,0.65f,1.0f));
         NodeList[3].setDefaultTexcoord(gl4);
         NodeList[4].setDefaultTexcoord(gl4);
         NodeList[5].setDefaultTexcoord(gl4);
-        for(int i=0;i<numOfNodes;i++){
+        for(int i=0;i<numOfItems;i++){
             if(NodeList[i].useTexture)
                 textureNodeIndices.add(i);
             else
@@ -100,7 +103,7 @@ public class debugDraw extends Demo {
     }
 
     @Override
-    public void render(GL4 gl4) {
+    public void display(GLAutoDrawable drawable) {
         gl4.glUseProgram(programList[0]);
         gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
         if(changed){
@@ -118,8 +121,8 @@ public class debugDraw extends Demo {
     }
 
     @Override
-    public void dispose(GL4 gl4) {
-        for(int i=0;i<numOfNodes;i++)
+    public void dispose(GLAutoDrawable drawable) {
+        for(int i=0;i<numOfItems;i++)
             NodeList[i].gsthForDraw.dispose(gl4);
     }
 
@@ -132,9 +135,8 @@ public class debugDraw extends Demo {
     }
 
     @Override
-    public void resize(GL4 gl4, int x, int y, int width, int height)
-    {
-        gl4.glViewport(x, y, width, height);
+    public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+        super.reshape(drawable, x, y, width, height);
         renderer_t = new pmRenderToTexture(gl4,width,height);//change to Syn?
         changed = true;
     }

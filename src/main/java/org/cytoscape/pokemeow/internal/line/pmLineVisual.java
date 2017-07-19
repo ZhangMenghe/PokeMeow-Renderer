@@ -16,6 +16,7 @@ public class pmLineVisual extends pmBasicArrowShape {
     public pmBasicArrowShape[] patternList;//used for arrow shape line
     public pmLineVisual [] plineList;//used for parallel
     protected float[] vertices;
+    public pmAnchor anchor = null;
 
     public static final byte CONNECT_STRIP = 0;//line to be drawn with each vertex connected to the next.
     public static final byte CONNECT_SEGMENTS = 1;//draw an independent line segment

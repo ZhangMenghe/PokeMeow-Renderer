@@ -101,7 +101,7 @@ public class pmNodeShapeFactory {
         if(node.dirty){
             node.gsthForDraw.data_buff = Buffers.newDirectFloatBuffer(node.vertices);
             gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  node.gsthForDraw.objects[node.gsthForDraw.VBO]);
-            gl4.glBufferData(GL.GL_ARRAY_BUFFER, node.gsthForDraw.dataCapacity,node.gsthForDraw.data_buff, GL.GL_STATIC_DRAW);
+            gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, node.gsthForDraw.dataCapacity, node.gsthForDraw.data_buff);
             node.dirty = false;
         }
         if(node instanceof pmRectangleNodeShape){

@@ -7,7 +7,7 @@ import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 
-import main.java.org.cytoscape.pokemeow.internal.SampleUsage.debugDraw;
+import main.java.org.cytoscape.pokemeow.internal.SampleUsage.Demo;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.commonUtil;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
@@ -44,9 +44,9 @@ public class pmRenderToTexture {
 
     private void createRenderer(GL4 gl4){
         programTexture =  GLSLProgram.CompileProgram(gl4,
-                debugDraw.class.getResource("shader/texture.vert"),
+                Demo.class.getResource("shader/texture.vert"),
                 null,null,null,
-                debugDraw.class.getResource("shader/texture.frag"));
+                Demo.class.getResource("shader/texture.frag"));
         textureshaderParam = new pmShaderParams(gl4, programTexture);
         factory = new pmNodeShapeFactory(gl4);
         canvas = factory.createNode(gl4, pmNodeShapeFactory.SHAPE_RECTANGLE);
@@ -97,7 +97,7 @@ public class pmRenderToTexture {
         if(canvas.dirty){
             canvas.gsthForDraw.data_buff = Buffers.newDirectFloatBuffer(canvas.vertices);
             gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  canvas.gsthForDraw.objects[canvas.gsthForDraw.VBO]);
-            gl4.glBufferData(GL.GL_ARRAY_BUFFER, canvas.gsthForDraw.dataCapacity,canvas.gsthForDraw.data_buff, GL.GL_STATIC_DRAW);
+            gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, canvas.gsthForDraw.dataCapacity,canvas.gsthForDraw.data_buff);
 
             canvas.dirty = false;
         }

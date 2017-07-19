@@ -12,13 +12,11 @@ import java.util.HashSet;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 
-import main.java.org.cytoscape.pokemeow.internal.SampleUsage.simpleTriangle;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.camera.Camera;
 
-import main.java.org.cytoscape.pokemeow.internal.SampleUsage.debugDraw;
 import main.java.org.cytoscape.pokemeow.internal.SampleUsage.Demo;
 
 import com.jogamp.nativewindow.NativeSurface;
@@ -161,7 +159,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		int[] windowUnits = new int[] {100, 100};
 		windowUnits = surface.convertToPixelUnits(windowUnits);
 		scaleDPI = (float)windowUnits[0] / 100.0f;
-		demo.create(gl);
+//		demo.create(gl);
 		invokeViewportInitializeEvent(drawable);
 	}
 	
@@ -182,8 +180,8 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		gl.glClearDepthf(1.0f);
 		gl.glClear(GL4.GL_COLOR_BUFFER_BIT | GL4.GL_DEPTH_BUFFER_BIT);
 
-		if(triggered)
-			demo.render(gl);
+//		if(triggered)
+//			demo.render(gl);
 
 		invokeViewportDisplayEvent(drawable);
 		
@@ -219,7 +217,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	 */
 	public void redraw(boolean viewChanged)
 	{
-		demo.reSetMatrix(viewChanged);
+//		demo.reSetMatrix(viewChanged);
 		panel.repaint();
 	}
 
@@ -333,7 +331,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		if (mouseState == MouseStates.PAN)
 		{
 			System.out.println("PAN");
-			demo.viewMatrix = Matrix4.translation(new Vector3(diff.x/100,diff.y/100,.0f));
+//			demo.viewMatrix = Matrix4.translation(new Vector3(diff.x/100,diff.y/100,.0f));
 			//camera.panByPixels(new Vector2(-diff.x, -diff.y));
 			redraw(true);
 		}
@@ -343,7 +341,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 //			if(currentAngle > 6.28)
 //				currentAngle-=6.28f;
 			currentAngle =(float) Math.atan(diff.x/diff.y);
-			demo.viewMatrix = Matrix4.rotationZ(currentAngle);
+////			demo.viewMatrix = Matrix4.rotationZ(currentAngle);
 //
 //			Vector2 angles = new Vector2(-diff.x, -diff.y);
 //
@@ -396,7 +394,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 			zoomFactor+=0.05f;
 		else if(event.delta<0 && zoomFactor>.0f)
 			zoomFactor-=0.05f;
-		demo.zoomMatrix = Matrix4.projectionOrthogonal(zoomFactor,zoomFactor,1,-1);
+//		demo.zoomMatrix = Matrix4.projectionOrthogonal(zoomFactor,zoomFactor,1,-1);
 		redraw(false);
 	}
 	

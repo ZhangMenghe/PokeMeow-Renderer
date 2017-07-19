@@ -15,7 +15,7 @@ import java.util.StringTokenizer;
 /**
  * Created by ZhangMenghe on 2017/7/13.
  */
-public class buildJarUtil {
+public class buildJarUtilTest {
         private static final String LIB_BIN = "lib-bin/";
 
         private final static String GLUEGEN = "gluegen-rt";
@@ -52,7 +52,7 @@ public class buildJarUtil {
                 }
                 // have to use a stream
                 //InputStream in = new FileInputStream("f://lib-bin//" + name);
-                InputStream in = debugDraw.class.getResourceAsStream(LIB_BIN + name);
+                InputStream in = Demo.class.getResourceAsStream(LIB_BIN + name);
                 // always write to different location
                 File fileOut = new File(mpath + "/" + name);//System.getProperty("java.io.tmpdir") + "/" + path +'/'+ LIB_BIN + name);//
                 System.out.println("Writing dll to: " + fileOut.getAbsolutePath());

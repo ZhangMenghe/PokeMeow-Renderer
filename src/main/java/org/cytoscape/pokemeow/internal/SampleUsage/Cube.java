@@ -145,12 +145,10 @@ public class Cube implements GLEventListener {
         glu.gluPerspective( 45.0f, h, 1.0, 20.0 );
         gl.glMatrixMode( GL2.GL_MODELVIEW );
         gl.glLoadIdentity();
-
-
     }
 
     public static void main( String[] args ) {
-        buildJarUtil loader = new buildJarUtil();
+        buildJarUtilTest loader = new buildJarUtilTest();
         loader.loadFromJar();
         //specify the exact version of OpenGL API being used
         final GLProfile profile = GLProfile.get( GLProfile.GL2 );

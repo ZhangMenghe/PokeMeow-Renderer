@@ -22,31 +22,29 @@ import java.nio.FloatBuffer;
 /**
  * Created by ZhangMenghe on 2017/7/12.
  */
-public class mousePickupDemo implements GLEventListener,MouseListener {
-    private pmShaderParams gshaderParam;
-    private int program;
+public class mousePickupDemo extends Demo {
+
     private pmBasicNodeShape[] NodeList;
     private pmNodeShapeFactory factory;
-    private Vector2 lastMousePosition;
-    private GL4 gl4;
-    public float[] rList;
-    private int width = 600;
-    PMVMatrix pmvMatrix = new PMVMatrix();
-    private int times = 0;
-    private int numOfNodes = 10;
+
+//    public float[] rList;
+//    private int width = 600;
+//    PMVMatrix pmvMatrix = new PMVMatrix();
+
 
     @Override
     public void init(GLAutoDrawable drawable) {
-        gl4 = drawable.getGL().getGL4();
+        super.init(drawable);
+        numOfItems = 10;
         program = GLSLProgram.CompileProgram(gl4,
-                debugDraw.class.getResource("shader/flat.vert"),
+                Demo.class.getResource("shader/flat.vert"),
                 null, null, null,
-                debugDraw.class.getResource("shader/flat.frag"));
+                Demo.class.getResource("shader/flat.frag"));
         gshaderParam = new pmShaderParams(gl4, program);
         factory = new pmNodeShapeFactory(gl4);
-        NodeList = new pmBasicNodeShape[numOfNodes];
+        NodeList = new pmBasicNodeShape[numOfItems];
         int n=0;
-        for(Byte idx = 0;idx<numOfNodes;idx++)
+        for(Byte idx = 0;idx<numOfItems;idx++)
             NodeList[n++] = factory.createNode(gl4, idx);
 
         for(int x=0;x<3;x++){
@@ -71,14 +69,13 @@ public class mousePickupDemo implements GLEventListener,MouseListener {
 
     @Override
     public void display(GLAutoDrawable drawable) {
-        gl4.glUseProgram(program);
-        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
+        super.display(drawable);
         for(pmBasicNodeShape node : NodeList)
             factory.drawNode(gl4, node, gshaderParam);
         //debugWriteToFile();
     }
     private void debugWriteToFile(){
-        FloatBuffer glBB = FloatBuffer.allocate(12 * width * width);
+      /*  FloatBuffer glBB = FloatBuffer.allocate(12 * width * width);
         gl4.glReadPixels(0, 0, width, width, GL4.GL_RGBA, GL4.GL_FLOAT, glBB);
         float[] tmp;
         tmp = glBB.array();
@@ -122,19 +119,14 @@ public class mousePickupDemo implements GLEventListener,MouseListener {
             catch ( IOException e)
             {
             }
-        }
-    }
-    @Override
-    public void dispose(GLAutoDrawable drawable) {
-        for(int i=0;i<numOfNodes;i++)
-            NodeList[i].gsthForDraw.dispose(gl4);
-//        mtriangle.gsthForDraw.dispose(gl4);
+        }*/
     }
 
     @Override
-    public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-        gl4.glClearColor(0.2f, 0.2f, 0.2f,1.0f);
-        gl4.glViewport(x, y, width, height);
+    public void dispose(GLAutoDrawable drawable) {
+        for(int i=0;i<numOfItems;i++)
+            NodeList[i].gsthForDraw.dispose(gl4);
+//        mtriangle.gsthForDraw.dispose(gl4);
     }
 
     @Override
@@ -144,7 +136,7 @@ public class mousePickupDemo implements GLEventListener,MouseListener {
         float posy = 1.0f-(2*(float) lastMousePosition.y/commonUtil.DEMO_VIEWPORT_SIZE.y);
 
         System.out.println(lastMousePosition);
-        for(int i=0;i<numOfNodes;i++){
+        for(int i=0;i<numOfItems;i++){
             pmBasicNodeShape node = NodeList[i];
             if(node.isHit(posx, posy)){
                 node.setColor(gl4, new Vector4(.0f,1.0f,.0f,1.0f));
@@ -153,49 +145,7 @@ public class mousePickupDemo implements GLEventListener,MouseListener {
                 times++;
             }
         }
-
     }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-//        lastMousePosition = new Vector2(e.getX(), e.getY());
-//        System.out.println(lastMousePosition);
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-    public void mouseWheelMoved(MouseEvent e){}
-    public void mouseDragged(MouseEvent e){}
-    public void mouseMoved(MouseEvent e){}
-
-    public static void main(String[] args) throws IOException {
-        final GLProfile glProfile = GLProfile.get(GLProfile.GL4);
-        GLCapabilities glCapabilities = new GLCapabilities(glProfile);
-        final GLWindow glWindow = GLWindow.create(glCapabilities);
-        final Animator animator = new Animator(glWindow);
-        glWindow.setSize(600, 600);
-        glWindow.setTitle("mousePickUp Demo");
-        glWindow.setFullscreen(false);
-        glWindow.setVisible(true);
-
-        final mousePickupDemo demo = new mousePickupDemo();
-        glWindow.addGLEventListener(demo);
-        glWindow.addMouseListener(demo);
-        animator.start();
-    }
-
 
 }
 

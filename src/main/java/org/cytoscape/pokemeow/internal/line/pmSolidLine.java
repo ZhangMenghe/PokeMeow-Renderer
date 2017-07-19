@@ -13,9 +13,12 @@ public class pmSolidLine extends pmLineVisual {
         super(gl4);
         initLineVisual(gl4, vertices);
     }
+
     public pmSolidLine(GL4 gl4, float srcx, float srcy, float destx, float desty){
         super(gl4);
-        QuadraticBezier curve = new QuadraticBezier(srcx, srcy,(srcx+destx)/2.0f,(srcy + desty)/2.0f+0.125f, destx, desty);
+        float ctrx = (srcx+destx)/2.0f;
+        float ctry = (srcy + desty)/2.0f+0.125f;
+        QuadraticBezier curve = new QuadraticBezier(srcx, srcy, ctrx, ctry, destx, desty);
         Vector2 [] curvePoints = curve.getPointsOnCurves();
         numOfVertices = curve.resolution+1;
         vertices = new float[3*numOfVertices];
@@ -25,6 +28,6 @@ public class pmSolidLine extends pmLineVisual {
             vertices[3*k+2] = .0f;//z
         }
         initLineVisual(gl4, vertices);
-
+        anchor = new pmAnchor(gl4, ctrx, ctry+0.01f);
     }
 }
