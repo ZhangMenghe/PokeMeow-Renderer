@@ -32,17 +32,11 @@ public class drawLineDemo extends Demo {
 
         int n = 0;
         for(Byte i=0;i<13;i++)
-            lineList[n++] = factory.createLine(i);
-        for(n=0;n<12;n++){
+            lineList[n++] = factory.createLine(i, -1,.0f,1.0f,.0f, pmLineVisual.LINE_STRAIGHT);
+        for(n=0;n<13;n++){
             float cy = -0.9f + 0.1f*n;
             lineList[n].setOrigin(new Vector3(.0f, cy, .0f));
-            if(n>5 && n<11)
-                lineList[n].setScale(0.25f);
-            else
-                lineList[n].setScale(0.5f);
         }
-        lineList[12].setScale(0.5f);
-        lineList[12].setOrigin(new Vector3(0.5f, .0f, .0f));
     }
 
     @Override

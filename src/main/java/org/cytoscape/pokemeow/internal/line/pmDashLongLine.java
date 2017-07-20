@@ -7,28 +7,28 @@ import com.jogamp.opengl.GL4;
  */
 
 public class pmDashLongLine extends pmLineVisual{
-    private int lineSegments = 50;
-    private int numOfPoints;
-    private float base;
-    public pmDashLongLine(GL4 gl4){
-        super(gl4);
-        numOfPoints = 3*(lineSegments+1);
-        float[] pos = new float[numOfPoints];
-        base = 2.0f/lineSegments;
-
-        pos[0] = -1.0f; pos[1] = .0f; pos[2] = .0f;
-        base/=4;
-        for(int i=3,n=1; i<numOfPoints; i+=3,n++){
-            if(n%2==1)
-                pos[i] = pos[i-3] + 7*base;
-            else
-                pos[i] = pos[i-3] + base;
-            pos[i+1] = .0f;
-            pos[i+2] = .0f;
+    public pmDashLongLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
+        super(gl4, srcx, srcy, destx, desty, type);
+        lineSegments = 10;
+        if(curveType == LINE_STRAIGHT){
+            float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
+            int pointNum = lineSegments * (int)rlen+1;
+            numOfVertices = 3*pointNum;
+            float k = (desty - srcy) / (destx-srcx);
+            vertices = new float[numOfVertices];
+            float shrink = 0.25f*(destx-srcx)/(pointNum-1);
+            vertices[0]=srcx; vertices[1]=srcy; vertices[2]=zorder;
+            for(int i=3, n=1; i<numOfVertices; i+=3, n++){
+                if(n%2==1)
+                    vertices[i] = vertices[i-3] + shrink*7;
+                else
+                    vertices[i] = vertices[i-3] + shrink;
+                vertices[i+1] = srcy + k*(vertices[i] - srcx);
+                vertices[i+2] = zorder;
+            }
         }
-
         connectMethod = CONNECT_SEGMENTS;
-        initLineVisual(gl4, pos);
+        initLineVisual(gl4, vertices);
     }
 }
 

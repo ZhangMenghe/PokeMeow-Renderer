@@ -11,15 +11,28 @@ import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
  * Created by ZhangMenghe on 2017/7/10.
  */
 public class pmSeparateArrowLine extends pmPatternLineBasic {
-    public pmSeparateArrowLine(GL4 gl4) {
-        super(gl4);
-        pmBasicArrowShape[]arrowList = new pmBasicArrowShape[5];
-        for(int i=0;i<5;i++){
-            arrowList[i] = new pmLineSeparateArrowPattern(gl4);
-            arrowList[i].setScale(0.2f);
-            arrowList[i].setOrigin(new Vector3(.0f, -0.6f+0.2f*i,.0f));
+    public pmSeparateArrowLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type) {
+        super(gl4, srcx, srcy, destx, desty, type);
+        if(curveType == LINE_STRAIGHT) {
+            float deltay = desty - srcy;
+            float deltax = destx - srcx;
+            float k = deltay / deltax;
+            double theta = Math.atan(k);
+            double length2 =deltay*deltay + deltax*deltax;
+            numOfPatterns  = 20*(int)(length2/2);
+
+            shrink = (float) Math.sqrt(length2)/numOfPatterns;
+            pmBasicArrowShape[] arrowList = new pmBasicArrowShape[numOfPatterns];
+            for (int i = 0; i < numOfPatterns; i++) {
+                arrowList[i] = new pmLineSeparateArrowPattern(gl4);
+                arrowList[i].setScale(0.05f);
+                arrowList[i].setRotation((float) theta - 3.14f/2);
+                float tmpx = srcx+shrink*i;
+                float tmpy = srcy+k*shrink*i;
+                arrowList[i].setOrigin(new Vector3(tmpx, tmpy, zorder));
+            }
+            initLineVisual(gl4, arrowList);
         }
-        initLineVisual(gl4, arrowList);
     }
     public void setScale(Vector2 new_scale) {
         scale.x *= new_scale.x;

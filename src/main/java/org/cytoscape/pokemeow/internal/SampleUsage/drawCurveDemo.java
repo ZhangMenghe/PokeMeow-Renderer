@@ -31,7 +31,7 @@ public class drawCurveDemo extends Demo {
         gshaderParam = new pmShaderParams(gl4, program);
         factory = new pmLineFactory(gl4);
         lineList = new pmLineVisual[numOfItems];
-        lineList[0] = factory.createLine(pmLineFactory.LINE_SOLID, -1.0f, .0f, 1.0f,.0f,pmLineVisual.LINE_STRAIGHT);
+        lineList[0] = factory.createLine(pmLineFactory.LINE_SEPARATE_ARROW, -1.0f, .0f, 1.0f,.0f,pmLineVisual.LINE_STRAIGHT);
 
 //        int n = 0;
 //        for(Byte i=0;i<13;i++)

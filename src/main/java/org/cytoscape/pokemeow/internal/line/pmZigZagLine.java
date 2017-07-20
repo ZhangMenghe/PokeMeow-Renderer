@@ -7,23 +7,43 @@ import com.jogamp.opengl.GL4;
  */
 
 public class pmZigZagLine extends pmLineVisual{
-    private int lineSegments = 50;
-    private int numOfPoints;
-    private float base;
-    public pmZigZagLine(GL4 gl4){
-        super(gl4);
-        numOfPoints = 3*(lineSegments+1);
-        float[] pos = new float[numOfPoints];
-        base = 2.0f/lineSegments;
+    private float height = 20.0f;
+    public pmZigZagLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
+        super(gl4, srcx, srcy, destx, desty, type);
+        if(curveType == LINE_STRAIGHT){
+            lineSegments = 20;
+            float deltay = desty - srcy;
+            float deltax = destx - srcx;
+            float k = deltay / deltax;
+            float length =(float) Math.sqrt(deltay*deltay + deltax*deltax);
 
-        int []values = {0,1,0,-1};
-        for(int i=0, n = 0;i<numOfPoints;i+=3,n++){
-            pos[i] = -1.0f + base*n;
-            pos[i+1] = values[n%4]/5.0f;
-            pos[i+2] = .0f;
+            float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
+            int pointNum = lineSegments * (int)rlen;
+            numOfVertices = 3*(pointNum+1);
+
+            vertices = new float[numOfVertices];
+            float shrink = length/pointNum;
+            double theta = Math.atan(k);
+            float cost = (float)Math.cos(theta);
+            float sint = (float)Math.sin(theta);
+            float gapx = .0f,gapy = .0f;
+            int []values = {0,1,0,-1};
+            for(int i=0, n=0; i<numOfVertices; i+=3, n++){
+                float tmpx = srcx + shrink*n;
+                float tmpy =  values[n%4]/height;
+                vertices[i] = tmpx*cost-tmpy*sint+gapx;
+                vertices[i+1] = tmpx*sint+tmpy*cost+gapy;
+                if(n==0){
+                    gapx = srcx - vertices[0];
+                    gapy = srcy - vertices[1];
+                    vertices[0] = srcx;
+                    vertices[1] = srcy;
+                }
+                vertices[i+2] = zorder;
+            }
         }
         connectMethod = CONNECT_STRIP;
-        initLineVisual(gl4, pos);
+        initLineVisual(gl4, vertices);
     }
 }
 
