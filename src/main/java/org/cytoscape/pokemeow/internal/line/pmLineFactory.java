@@ -71,10 +71,10 @@ public class pmLineFactory {
                 return new pmSolidLine(gl4);
         }
     }
-    public pmLineVisual createLine(Byte type, float srcx, float srcy, float destx, float desty) {
+    public pmLineVisual createLine(Byte type, float srcx, float srcy, float destx, float desty, Byte curveType) {
         switch (type) {
             case 0:
-                return new pmSolidLine(gl4, srcx, srcy, destx, desty);
+                return new pmSolidLine(gl4, srcx, srcy, destx, desty, curveType);
             case 1:
                 return new pmEqualDashLine(gl4);
             case 2:
@@ -156,21 +156,35 @@ public class pmLineFactory {
         gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
         gl4.glUniform4f(gshaderParam.vec4_color, line.color.x, line.color.y, line.color.z,line.color.w);
         gl4.glBindVertexArray(line.objects[line.VAO]);
-        gl4.glBindBuffer(GL_ARRAY_BUFFER, line.objects[line.VBO]);
 
+        if(line.dirty){
+            line.data_buff = Buffers.newDirectFloatBuffer(line.vertices);
+            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  line.objects[line.VBO]);
+            gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, line.data_buff.capacity() * Float.BYTES, line.data_buff);
+        }
         drawLine_GL(gl4, line, gshaderParam);
+        gl4.glPointSize(10.0f);
 
-//TODO: UNIFORM ANCHOR
-//        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
-//        gl4.glUniform4f(gshaderParam.vec4_color, line.color.x, line.color.y, line.color.z,line.color.w);
-//
-//        gl4.glBindVertexArray(line.anchor.objects[line.anchor.VAO]);
-//        gl4.glBindBuffer(GL_ARRAY_BUFFER, line.anchor.objects[line.anchor.VBO]);
-//        gl4.glPointSize(10.0f);
-//        gl4.glDrawArrays(GL4.GL_POINTS, 0, 1);
-
+        if(line.curveType == pmLineVisual.LINE_QUADRIC_CURVE){
+            drawAnchorPoint(line.anchor, line.dirty);
+        }
+        if(line.curveType == pmLineVisual.LINE_CUBIC_CURVE){
+            drawAnchorPoint(line.anchor, line.dirty);
+            drawAnchorPoint(line.anchor2, line.dirty);
+        }
+        line.dirty = false;
         gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl4.glBindVertexArray(0);
+    }
+
+    private void drawAnchorPoint(pmAnchor anchor, boolean dirty){
+        gl4.glBindVertexArray(anchor.objects[anchor.VAO]);
+        if(dirty){
+            anchor.data_buff = Buffers.newDirectFloatBuffer(anchor.vertices);
+            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  anchor.objects[anchor.VBO]);
+            gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, 3 * Float.BYTES, anchor.data_buff);
+        }
+        gl4.glDrawArrays(GL4.GL_POINTS, 0, 1);
 
     }
 

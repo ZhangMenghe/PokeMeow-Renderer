@@ -22,7 +22,7 @@ public class Demo implements GLEventListener,MouseListener {
     protected int numOfItems;
     protected pmShaderParams gshaderParam;
     protected int program;
-    protected Vector2 lastMousePosition;
+    protected Vector2 lastMousePosition = new Vector2(.0f, .0f);
     protected int times = 0;
     @Override
     public void init(GLAutoDrawable drawable){
@@ -73,10 +73,10 @@ public class Demo implements GLEventListener,MouseListener {
         //final simpleTriangleDemo demo = new simpleTriangleDemo();
         //final drawNodesDemo demo = new drawNodesDemo();
         //final drawArrowDemo demo = new drawArrowDemo();
-        //final drawCurveDemo demo = new drawCurveDemo();
+        final drawCurveDemo demo = new drawCurveDemo();
         //final drawLineDemo demo = new drawLineDemo();
         //final renderToTextureDemo demo = new renderToTextureDemo();
-        final TextRendererDemo demo = new TextRendererDemo();
+        //final TextRendererDemo demo = new TextRendererDemo();
 
         glWindow.addGLEventListener(demo);
         glWindow.addMouseListener(demo);

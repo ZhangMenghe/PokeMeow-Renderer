@@ -9,21 +9,21 @@ public class CubicBezier {
     private Vector2 controlPos1;
     private Vector2 controlPos2;
     private Vector2 destinationPos;
-    private final int resolution = 20;
+    public static final int resolution = 20;
     private float stepSize;
 
-    public CubicBezier(Vector2 src, Vector2 control1, Vector2 control2, Vector2 dest){
-        sourcePos = src;
-        controlPos1 = control1;
-        controlPos2 = control2;
-        destinationPos = dest;
+    public CubicBezier(float srcx, float srcy, float ctr1x,float ctr1y, float ctr2x, float ctr2y, float destx, float desty){
+        sourcePos = new Vector2(srcx, srcy);
+        controlPos1 = new Vector2(ctr1x, ctr1y);
+        controlPos2 = new Vector2(ctr2x, ctr2y);
+        destinationPos = new Vector2(destx, desty);
         stepSize = 1.0f/(resolution-1);
     }
 
     private Vector2 interpolate(float t){
         Vector2 intermediate1 = new QuadraticBezier(sourcePos,controlPos1,controlPos2).interpolate(t);
         Vector2 intermediate2 = new QuadraticBezier(controlPos1, controlPos2,destinationPos).interpolate(t);
-        return Vector2.add(Vector2.scalarMult(t,intermediate1), Vector2.scalarMult(t,intermediate2));
+        return Vector2.add(Vector2.scalarMult((1-t),intermediate1), Vector2.scalarMult(t,intermediate2));
     }
 
     public Vector2[] getPointsOnCurves(){

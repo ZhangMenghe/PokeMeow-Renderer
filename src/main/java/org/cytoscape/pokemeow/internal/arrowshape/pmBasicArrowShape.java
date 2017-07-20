@@ -21,7 +21,8 @@ public abstract class pmBasicArrowShape {
     public int[] objects = new int[3];
     public int numOfVertices = 0;
     public int numOfIndices = -1;
-
+    public boolean dirty = false;
+    public FloatBuffer data_buff;
     public Vector3 origin = new Vector3(.0f,.0f,.0f);
     public Matrix4 modelMatrix = Matrix4.identity();
     public Matrix4 rotMatrix = Matrix4.identity();
@@ -34,7 +35,7 @@ public abstract class pmBasicArrowShape {
     }
 
     protected void initBuffer(GL4 gl4, float[] vertices){
-        FloatBuffer data_buff = Buffers.newDirectFloatBuffer(vertices);
+        data_buff = Buffers.newDirectFloatBuffer(vertices);
         gl4.glGenVertexArrays(1,objects,VAO);
         gl4.glGenBuffers(1,objects,VBO);
 

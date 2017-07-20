@@ -2,6 +2,7 @@ package main.java.org.cytoscape.pokemeow.internal.line;
 
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
@@ -12,11 +13,18 @@ import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
 public class pmLineVisual extends pmBasicArrowShape {
     private float width = 1.0f;
     public Byte connectMethod = 0; //default to be connect strip
+    public Byte curveType = 0;     //default to straight line
     private int[] connectArray = null;//if use CONNECT_ARRAY, then specify
     public pmBasicArrowShape[] patternList;//used for arrow shape line
     public pmLineVisual [] plineList;//used for parallel
     protected float[] vertices;
+    protected float zorder = .0f;
+
     public pmAnchor anchor = null;
+    public pmAnchor anchor2 = null;
+    protected float[] controlPoints;
+    protected Vector2 srcPos = new Vector2();
+    protected Vector2 destPos = new Vector2();
 
     public static final byte CONNECT_STRIP = 0;//line to be drawn with each vertex connected to the next.
     public static final byte CONNECT_SEGMENTS = 1;//draw an independent line segment
@@ -24,6 +32,10 @@ public class pmLineVisual extends pmBasicArrowShape {
     public static final byte CONNECT_PATTERN = 3;//draw triangle fans
     public static final byte CONNECT_ARRAY = 4;//should specify an array of segment pairs
     public static final byte CONNECT_PARALLEL = 5;//should specify an array of segment pairs
+
+    public static final byte LINE_STRAIGHT = 0;
+    public static final byte LINE_QUADRIC_CURVE = 1;
+    public static final byte LINE_CUBIC_CURVE = 2;
 
     public pmLineVisual(GL4 gl4){super();}
 
@@ -67,7 +79,6 @@ public class pmLineVisual extends pmBasicArrowShape {
         plineList[0] = line;
         plineList[1] = new pmLineVisual(gl4, line);
         plineList[1].setOrigin(new Vector3(line.origin.x, line.origin.y + 0.01f, line.origin.z));
-
     }
 
     protected void initLineVisual(GL4 gl4, float[] pos){
@@ -87,4 +98,5 @@ public class pmLineVisual extends pmBasicArrowShape {
         gl4.glLineWidth(width);
     }
 
+    public void setControlPoints(float nctrx, float nctry, int anchorID){}
 }

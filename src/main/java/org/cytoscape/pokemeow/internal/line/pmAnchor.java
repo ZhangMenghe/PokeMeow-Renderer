@@ -17,20 +17,17 @@ public class pmAnchor {
     public int VAO = 0;
     public int VBO = 1;
     public int[] objects = new int[2];
-    public Matrix4 modelMatrix = Matrix4.identity();
-    public Vector3 position;
-    public Vector4 color;
+    public Vector4 color;//currently no use, color same to line
     public float[] vertices;
-    public boolean dirty = false;
+    public FloatBuffer data_buff;
 
     public pmAnchor(GL4 gl4, float posx, float posy){
-        setPosition(posx, posy);
         vertices = new float[3];
         vertices[0] = posx;
         vertices[1] = posy;
         vertices[2] = -1.0f;
 
-        FloatBuffer data_buff = Buffers.newDirectFloatBuffer(vertices);
+        data_buff = Buffers.newDirectFloatBuffer(vertices);
         gl4.glGenVertexArrays(1,objects,VAO);
         gl4.glGenBuffers(1,objects,VBO);
 
@@ -43,11 +40,17 @@ public class pmAnchor {
 
         gl4.glBindVertexArray(0);
     }
+
     public void setPosition(float posx, float posy){
-        position = new Vector3(posx, posy, -1.0f);
-        modelMatrix = Matrix4.translation(position);
+        vertices[0] = posx;
+        vertices[1] = posy;
     }
+
     public void setColor(Vector4 new_color){
         color = new_color;
+    }
+
+    public boolean isHit(float posx, float posy){
+        return Math.abs(posx-vertices[0]) < 0.08 && Math.abs(posy-vertices[1]) < 0.08;
     }
 }
