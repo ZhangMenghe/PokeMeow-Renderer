@@ -10,12 +10,12 @@ public class pmEqualDashLine extends pmLineVisual{
         super(gl4, srcx, srcy, destx, desty, type);
         if(curveType == LINE_STRAIGHT){
             float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
-            int pointNum = lineSegments * (int)rlen;
-            numOfVertices = 3*(pointNum+1);
+            numOfVertices = lineSegments * (int)rlen +1;
+            int numOfPoints = 3*numOfVertices;
             float k = (desty - srcy) / (destx-srcx);
-            vertices = new float[numOfVertices];
-            float shrink = (destx-srcx)/pointNum;
-            for(int i=0, n=0; i<numOfVertices; i+=3, n++){
+            vertices = new float[numOfPoints];
+            float shrink = (destx-srcx)/(numOfVertices-1);
+            for(int i=0, n=0; i<numOfPoints; i+=3, n++){
                 vertices[i] = srcx + shrink*n;
                 vertices[i+1] = srcy + k*(vertices[i] - srcx);
                 vertices[i+2] = zorder;

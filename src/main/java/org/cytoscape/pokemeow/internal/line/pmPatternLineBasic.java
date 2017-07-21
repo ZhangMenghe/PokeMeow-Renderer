@@ -18,8 +18,8 @@ public class pmPatternLineBasic extends pmLineVisual {
         float rlen = Math.abs(srcPos.x-destPos.x) + Math.abs(srcPos.y-destPos.y);
         shrink = 1.0f/numOfPatterns;
         numOfPatterns = (int)(rlen * numOfPatterns);
-        numOfVertices = 3*pointsPerPattern*numOfPatterns;
-        vertices = new float[numOfVertices];
+        numOfVertices = pointsPerPattern*numOfPatterns;
+        vertices = new float[3*numOfVertices];
         int base = 3*pointsPerPattern;
         float k = (srcPos.y-destPos.y) / (srcPos.x-destPos.x);
         double theta = Math.atan(k);

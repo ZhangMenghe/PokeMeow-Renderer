@@ -18,17 +18,17 @@ public class pmZigZagLine extends pmLineVisual{
             float length =(float) Math.sqrt(deltay*deltay + deltax*deltax);
 
             float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
-            int pointNum = lineSegments * (int)rlen;
-            numOfVertices = 3*(pointNum+1);
+            numOfVertices = lineSegments * (int)rlen +1;
+            int numOfPoints = 3*numOfVertices;
 
-            vertices = new float[numOfVertices];
-            float shrink = length/pointNum;
+            vertices = new float[numOfPoints];
+            float shrink = length/(numOfVertices-1);
             double theta = Math.atan(k);
             float cost = (float)Math.cos(theta);
             float sint = (float)Math.sin(theta);
             float gapx = .0f,gapy = .0f;
             int []values = {0,1,0,-1};
-            for(int i=0, n=0; i<numOfVertices; i+=3, n++){
+            for(int i=0, n=0; i<numOfPoints; i+=3, n++){
                 float tmpx = srcx + shrink*n;
                 float tmpy =  values[n%4]/height;
                 vertices[i] = tmpx*cost-tmpy*sint+gapx;

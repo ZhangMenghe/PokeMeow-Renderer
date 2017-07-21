@@ -13,13 +13,13 @@ public class pmDashDotLine extends pmLineVisual{
         super(gl4, srcx, srcy, destx, desty, type);
         if(curveType == LINE_STRAIGHT){
             float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
-            int pointNum = lineSegments * (int)rlen+1;
-            numOfVertices = 3*pointNum;
+            numOfVertices = lineSegments * (int)rlen +1;
+            int numOfPoints = 3*numOfVertices;
             float k = (desty - srcy) / (destx-srcx);
-            vertices = new float[numOfVertices];
-            float base = 0.5f*(destx-srcx)/(pointNum-1);
+            vertices = new float[numOfPoints];
+            float base = 0.5f*(destx-srcx)/(numOfVertices-1);
             vertices[0]=srcx; vertices[1]=srcy; vertices[2]=zorder;
-            for(int i=3, n=1; i<numOfVertices; i+=3, n++){
+            for(int i=3, n=1; i<numOfPoints; i+=3, n++){
                 if(n%4==1)
                     vertices[i] = vertices[i-3] + base*5;
                 else
