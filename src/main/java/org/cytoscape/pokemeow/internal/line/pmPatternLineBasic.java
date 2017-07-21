@@ -9,6 +9,10 @@ public class pmPatternLineBasic extends pmLineVisual {
     protected int pointsPerPattern;
     protected float shrink;
 
+    public pmPatternLineBasic(){
+        super();
+        connectMethod = CONNECT_SEGMENTS;
+    }
     public pmPatternLineBasic(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
         connectMethod = CONNECT_SEGMENTS;

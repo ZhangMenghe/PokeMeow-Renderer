@@ -43,7 +43,7 @@ public class pmLineFactory {
         switch (type) {
             case 0:
                 return new pmSolidLine(gl4, srcx, srcy, destx, desty, curveType);
-            case 1:
+            case 11:
                 return new pmEqualDashLine(gl4, srcx, srcy, destx, desty, curveType);
             case 2:
                 return new pmDashLongLine(gl4, srcx, srcy, destx, desty, curveType);
@@ -63,7 +63,7 @@ public class pmLineFactory {
                 return new pmBackwardSlashLine(gl4, srcx, srcy, destx, desty, curveType);
             case 10:
                 return new pmContiguousArrowLine(gl4, srcx, srcy, destx, desty, curveType);
-            case 11:
+            case 111:
                 return new pmParallelLine(gl4, new pmEqualDashLine(gl4, srcx, srcy, destx, desty, curveType));
             case 12:
                 return new pmSeparateArrowLine(gl4, srcx, srcy, destx, desty, curveType);
@@ -96,11 +96,11 @@ public class pmLineFactory {
                     gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(arrow.modelMatrix.asArrayCM()));
                     gl4.glUniform4f(gshaderParam.vec4_color, arrow.color.x, arrow.color.y, arrow.color.z,arrow.color.w);
                     gl4.glBindVertexArray(arrow.objects[arrow.VAO]);
-                    gl4.glBindBuffer(GL_ARRAY_BUFFER, arrow.objects[arrow.VBO]);
+//                    gl4.glBindBuffer(GL_ARRAY_BUFFER, arrow.objects[arrow.VBO]);
                     gl4.glBindBuffer(GL_ARRAY_BUFFER, arrow.objects[arrow.EBO]);
                     gl4.glDrawElements(GL4.GL_TRIANGLE_FAN,arrow.numOfIndices, GL.GL_UNSIGNED_INT,0);
                     gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
-                    gl4.glBindVertexArray(0);
+//                    gl4.glBindVertexArray(0);
                 }
                 break;
             case pmLineVisual.CONNECT_PARALLEL:
@@ -135,6 +135,8 @@ public class pmLineFactory {
         gl4.glPointSize(10.0f);
 
         if(line.curveType == pmLineVisual.LINE_QUADRIC_CURVE){
+            gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
+            gl4.glUniform4f(gshaderParam.vec4_color, 1.0f, .0f, .0f,.0f);
             drawAnchorPoint(line.anchor, line.dirty);
         }
         if(line.curveType == pmLineVisual.LINE_CUBIC_CURVE){
