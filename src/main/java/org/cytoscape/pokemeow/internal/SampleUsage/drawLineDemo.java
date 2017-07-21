@@ -1,10 +1,7 @@
 package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
-import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 import main.java.org.cytoscape.pokemeow.internal.line.pmLineVisual;
@@ -28,12 +25,11 @@ public class drawLineDemo extends Demo {
         gshaderParam = new pmShaderParams(gl4, program);
         factory = new pmLineFactory(gl4);
         lineList = new pmLineVisual[numOfItems];
-//        lineList[0] = factory.createLine_GL(pmLineFactory.LINE_SOLID);
 
         int n = 0;
-        for(Byte i=0;i<13;i++)
+        for(Byte i=0;i<numOfItems;i++)
             lineList[n++] = factory.createLine(i, -1,.0f,1.0f,.0f, pmLineVisual.LINE_STRAIGHT);
-        for(n=0;n<13;n++){
+        for(n=0; n<numOfItems; n++){
             float cy = -0.9f + 0.1f*n;
             lineList[n].setOrigin(new Vector3(.0f, cy, .0f));
         }
@@ -42,7 +38,6 @@ public class drawLineDemo extends Demo {
     @Override
     public void display(GLAutoDrawable drawable) {
         super.display(drawable);
-//        factory.drawLine(gl4, lineList[0], gshaderParam);
         factory.drawLineList(gl4, lineList, gshaderParam);
     }
 

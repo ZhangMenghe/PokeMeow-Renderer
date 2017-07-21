@@ -14,7 +14,7 @@ import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
  */
 public class pmLineVisual extends pmBasicArrowShape {
     private float width = 1.0f;
-    protected int lineSegments = 20;
+    protected int lineSegments = 40;
     public int numOfPatterns = 20;
     public Byte connectMethod = 0; //default to be connect strip
     public Byte curveType = 0;     //default to straight line
@@ -41,12 +41,7 @@ public class pmLineVisual extends pmBasicArrowShape {
     public static final byte LINE_QUADRIC_CURVE = 1;
     public static final byte LINE_CUBIC_CURVE = 2;
 
-    public pmLineVisual(GL4 gl4){super();}
-
-    public pmLineVisual(GL4 gl4, float[] pos){
-        super();
-        initLineVisual(gl4, pos);
-    }
+    public pmLineVisual(){super();}
     public pmLineVisual(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         curveType = type;
         srcPos.x = srcx; srcPos.y = srcy;
@@ -133,7 +128,7 @@ public class pmLineVisual extends pmBasicArrowShape {
         for(int k=0; k<numOfVertices; k++){
             vertices[3*k] = curvePoints[k].x;
             vertices[3*k+1] = curvePoints[k].y;
-            vertices[3*k+2] = .0f;//z
+            vertices[3*k+2] = zorder;
         }
     }
 
@@ -145,7 +140,7 @@ public class pmLineVisual extends pmBasicArrowShape {
         for(int k=0; k<numOfVertices; k++){
             vertices[3*k] = curvePoints[k].x;
             vertices[3*k+1] = curvePoints[k].y;
-            vertices[3*k+2] = .0f;//z
+            vertices[3*k+2] = zorder;
         }
     }
 

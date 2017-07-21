@@ -9,7 +9,7 @@ public class CubicBezier {
     private Vector2 controlPos1;
     private Vector2 controlPos2;
     private Vector2 destinationPos;
-    public static final int resolution = 20;
+    public static final int resolution = 120;
     private float stepSize;
 
     public CubicBezier(float srcx, float srcy, float ctr1x,float ctr1y, float ctr2x, float ctr2y, float destx, float desty){
@@ -35,4 +35,14 @@ public class CubicBezier {
         points[resolution] = destinationPos;
         return points;
     }
+//    public Vector2[] getPointsOnCurves(int res){
+//        Vector2 []points = new Vector2[res+1];
+//        stepSize = 1.0f/(res-1);
+//        float currentT = .0f;
+//        for(int i=0; i<res; i++,currentT+=stepSize){
+//            points[i] = interpolate(currentT);
+//        }
+//        points[res] = destinationPos;
+//        return points;
+//    }
 }

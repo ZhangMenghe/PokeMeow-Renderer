@@ -1,6 +1,9 @@
 package main.java.org.cytoscape.pokemeow.internal.line;
 
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
+import main.java.org.cytoscape.pokemeow.internal.utils.CubicBezier;
+import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
 
 /**
  * Created by ZhangMenghe on 2017/7/10.
@@ -27,5 +30,42 @@ public class pmDashDotLine extends pmLineVisual{
         }
         connectMethod = CONNECT_SEGMENTS;
         initLineVisual(gl4, vertices);
+    }
+    @Override
+    protected void setQuadraticBezierCurveVertices(float ctrx, float ctry){
+        numOfVertices = QuadraticBezier.resolution/2 + 1;
+        vertices = new float[3*numOfVertices];
+
+        controlPoints[0] = ctrx;
+        controlPoints[1] = ctry;
+
+        QuadraticBezier curve = new QuadraticBezier(srcPos.x, srcPos.y, ctrx, ctry, destPos.x, destPos.y);
+        Vector2[] curvePoints = curve.getPointsOnCurves();
+
+        for(int k=0, n=0; k<numOfVertices; k++,n++){
+            vertices[3*k] = curvePoints[n].x;
+            vertices[3*k+1] = curvePoints[n].y;
+            vertices[3*k+2] = zorder;
+            if(k%4==0)
+                n+=4;
+        }
+    }
+
+    @Override
+    protected void setCubicBezierCurveVertices(float ctr1x, float ctr1y, float ctr2x, float ctr2y){
+        numOfVertices = CubicBezier.resolution/2 + 1;
+        vertices = new float[3*numOfVertices];
+
+        controlPoints[0] = ctr1x; controlPoints[1] = ctr1y;
+        controlPoints[2] = ctr2x; controlPoints[3] = ctr2y;
+        CubicBezier curve = new CubicBezier(srcPos.x, srcPos.y, ctr1x, ctr1y, ctr2x, ctr2y, destPos.x, destPos.y);
+        Vector2 [] curvePoints = curve.getPointsOnCurves();
+        for(int k=0, n=0; k<numOfVertices; k++,n++){
+            vertices[3*k] = curvePoints[n].x;
+            vertices[3*k+1] = curvePoints[n].y;
+            vertices[3*k+2] = zorder;
+            if(k%4==0)
+                n+=4;
+        }
     }
 }

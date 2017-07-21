@@ -1,6 +1,9 @@
 package main.java.org.cytoscape.pokemeow.internal.line;
 
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
+import main.java.org.cytoscape.pokemeow.internal.utils.CubicBezier;
+import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
 
 /**
  * Created by ZhangMenghe on 2017/7/10.
@@ -9,8 +12,8 @@ import com.jogamp.opengl.GL4;
 public class pmDashLongLine extends pmLineVisual{
     public pmDashLongLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
-        lineSegments = 10;
         if(curveType == LINE_STRAIGHT){
+            lineSegments = 10;
             float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
             int pointNum = lineSegments * (int)rlen+1;
             numOfVertices = 3*pointNum;
@@ -29,6 +32,44 @@ public class pmDashLongLine extends pmLineVisual{
         }
         connectMethod = CONNECT_SEGMENTS;
         initLineVisual(gl4, vertices);
+    }
+
+    @Override
+    protected void setQuadraticBezierCurveVertices(float ctrx, float ctry){
+        numOfVertices = QuadraticBezier.resolution/4 + 1;
+        vertices = new float[3*numOfVertices];
+
+        controlPoints[0] = ctrx;
+        controlPoints[1] = ctry;
+
+        QuadraticBezier curve = new QuadraticBezier(srcPos.x, srcPos.y, ctrx, ctry, destPos.x, destPos.y);
+        Vector2[] curvePoints = curve.getPointsOnCurves();
+
+        for(int k=0, n=0; k<numOfVertices; k++,n++){
+            vertices[3*k] = curvePoints[n].x;
+            vertices[3*k+1] = curvePoints[n].y;
+            vertices[3*k+2] = zorder;//z
+            if(k%2==0)
+                n+=6;
+        }
+    }
+
+    @Override
+    protected void setCubicBezierCurveVertices(float ctr1x, float ctr1y, float ctr2x, float ctr2y){
+        numOfVertices = CubicBezier.resolution/4 + 1;
+        vertices = new float[3*numOfVertices];
+
+        controlPoints[0] = ctr1x; controlPoints[1] = ctr1y;
+        controlPoints[2] = ctr2x; controlPoints[3] = ctr2y;
+        CubicBezier curve = new CubicBezier(srcPos.x, srcPos.y, ctr1x, ctr1y, ctr2x, ctr2y, destPos.x, destPos.y);
+        Vector2 [] curvePoints = curve.getPointsOnCurves();
+        for(int k=0, n=0; k<numOfVertices; k++,n++){
+            vertices[3*k] = curvePoints[n].x;
+            vertices[3*k+1] = curvePoints[n].y;
+            vertices[3*k+2] = zorder;
+            if(k%2==0)
+                n+=6;
+        }
     }
 }
 

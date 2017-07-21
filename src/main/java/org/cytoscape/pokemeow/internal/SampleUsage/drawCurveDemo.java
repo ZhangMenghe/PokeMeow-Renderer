@@ -1,11 +1,7 @@
 package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.newt.event.MouseEvent;
-import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.commonUtil;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
@@ -16,14 +12,13 @@ import main.java.org.cytoscape.pokemeow.internal.line.pmLineFactory;
  */
 
 public class drawCurveDemo extends Demo {
-
     private pmLineVisual[] lineList;
     private pmLineFactory factory;
 
     @Override
     public void init(GLAutoDrawable drawable) {
         super.init(drawable);
-        numOfItems = 1;
+        numOfItems = 5;
         program = GLSLProgram.CompileProgram(gl4,
                 Demo.class.getResource("shader/arrow.vert"),
                 null,null,null,
@@ -31,29 +26,20 @@ public class drawCurveDemo extends Demo {
         gshaderParam = new pmShaderParams(gl4, program);
         factory = new pmLineFactory(gl4);
         lineList = new pmLineVisual[numOfItems];
-        lineList[0] = factory.createLine(pmLineFactory.LINE_SEPARATE_ARROW, -1.0f, .0f, 1.0f,.0f,pmLineVisual.LINE_STRAIGHT);
 
-//        int n = 0;
-//        for(Byte i=0;i<13;i++)
-//            lineList[n++] = factory.createLine(i);
-//        for(n=0;n<12;n++){
-//            float cy = -0.9f + 0.1f*n;
-//            lineList[n].setOrigin(new Vector3(.0f, cy, .0f));
-//            if(n>5 && n<11)
-//                lineList[n].setScale(0.25f);
-//            else
-//                lineList[n].setScale(0.5f);
-//        }
-//        lineList[12].setScale(0.5f);
-//        lineList[12].setOrigin(new Vector3(0.5f, .0f, .0f));
+        int n = 0;
+        for(Byte i=5;i<10;i++){
+            float cy = -0.9f + 0.3f * n;
+            lineList[n++] = factory.createLine(i, -1,cy,
+                                                  1.0f,cy,
+                                                    pmLineVisual.LINE_QUADRIC_CURVE);
+        }
     }
 
     @Override
     public void display(GLAutoDrawable drawable) {
-        gl4.glUseProgram(program);
-        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
-        factory.drawLine(gl4, lineList[0], gshaderParam);
-        //factory.drawLineList(gl4, lineList, gshaderParam);
+        super.display(drawable);
+        factory.drawLineList(gl4, lineList, gshaderParam);
     }
 
     public void reSetMatrix(boolean viewChanged){}
@@ -82,11 +68,13 @@ public class drawCurveDemo extends Demo {
                 System.out.println("HIT ANCHOR1 - " + times);
                 times++;
                 line.setControlPoints(posx, posy,1);
+                return;
             }
             else if(line.anchor2!=null && line.anchor2.isHit(posx, posy)){
                 System.out.println("HIT ANCHOR2 - " + times);
                 times++;
                 line.setControlPoints(posx, posy, 2);
+                return;
             }
         }
     }
