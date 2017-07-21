@@ -12,8 +12,20 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 public class pmParallelLine extends pmLineVisual {
     public pmParallelLine(GL4 gl4, pmLineVisual line){
         super();
+        curveType = line.curveType;
+        srcPos.x = line.srcPos.x; srcPos.y = line.srcPos.y;
+        destPos.x = line.destPos.x; destPos.y = line.destPos.y;
         connectMethod = CONNECT_PARALLEL;
         initLineVisual(gl4, line);
+        if(curveType == LINE_QUADRIC_CURVE){
+            controlPoints = line.controlPoints;
+            anchor = new pmAnchor(gl4, controlPoints[0], controlPoints[1]);
+        }
+        if(curveType == LINE_CUBIC_CURVE){
+            controlPoints = line.controlPoints;
+            anchor = new pmAnchor(gl4, controlPoints[0], controlPoints[1]);
+            anchor2 = new pmAnchor(gl4, controlPoints[2], controlPoints[3]);
+        }
     }
     public void setScale(Vector2 new_scale){
         scale.x *= new_scale.x;
@@ -52,5 +64,10 @@ public class pmParallelLine extends pmLineVisual {
     }
 
     public void setZorder(GL4 gl4, float new_z){
+    }
+    public void setControlPoints(float nctrx, float nctry, int anchorID){
+        for(pmLineVisual line: plineList)
+            line.setControlPoints(nctrx,nctry,anchorID);
+        dirty = true;
     }
 }

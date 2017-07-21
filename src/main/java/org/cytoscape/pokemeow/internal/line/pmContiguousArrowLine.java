@@ -6,19 +6,26 @@ import com.jogamp.opengl.GL4;
  * Created by ZhangMenghe on 2017/7/10.
  */
 public class pmContiguousArrowLine extends pmPatternLineBasic {
+    private float[] singlePattern = {
+            .0f, 0.5f, .0f,
+            0.5f, .0f, .0f,
+            -0.5f, .0f, .0f,
+            0.5f, .0f, .0f,
+            .0f, -0.5f, .0f,
+            0.5f, .0f, .0f,
+    };
+
     public pmContiguousArrowLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
-        if(curveType == LINE_STRAIGHT) {
-            pointsPerPattern = 6;
-            float[] singlePattern = {
-                    .0f, 0.5f, .0f,
-                    0.5f, .0f, .0f,
-                    -0.5f, .0f, .0f,
-                    0.5f, .0f, .0f,
-                    .0f, -0.5f, .0f,
-                    0.5f, .0f, .0f,
-            };
+        pointsPerPattern = 6;
+        if(curveType == LINE_STRAIGHT)
             initVertices(gl4, singlePattern);
-        }
+        else
+            initCurveVertices(gl4, singlePattern);
+        initLineVisual(gl4, vertices);
+    }
+
+    public void setControlPoints(float nctrx, float nctry, int anchorID){
+        super.setControlPoints(nctrx,nctry,anchorID,singlePattern);
     }
 }

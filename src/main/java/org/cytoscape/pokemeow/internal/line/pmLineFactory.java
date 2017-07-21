@@ -127,9 +127,19 @@ public class pmLineFactory {
         gl4.glBindVertexArray(line.objects[line.VAO]);
 
         if(line.dirty){
-            line.data_buff = Buffers.newDirectFloatBuffer(line.vertices);
-            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  line.objects[line.VBO]);
-            gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, line.data_buff.capacity() * Float.BYTES, line.data_buff);
+            if(line.plineList!=null){
+                for(pmLineVisual sline:line.plineList){
+                    sline.data_buff = Buffers.newDirectFloatBuffer(sline.vertices);
+                    gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  sline.objects[sline.VBO]);
+                    gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, sline.data_buff.capacity() * Float.BYTES, sline.data_buff);
+                }
+            }
+            else{
+                line.data_buff = Buffers.newDirectFloatBuffer(line.vertices);
+                gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  line.objects[line.VBO]);
+                gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, line.data_buff.capacity() * Float.BYTES, line.data_buff);
+            }
+
         }
         drawLine_GL(gl4, line, gshaderParam);
         gl4.glPointSize(10.0f);

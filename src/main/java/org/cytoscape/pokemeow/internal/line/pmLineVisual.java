@@ -20,7 +20,7 @@ public class pmLineVisual extends pmBasicArrowShape {
     public Byte curveType = 0;     //default to straight line
     private int[] connectArray = null;//if use CONNECT_ARRAY, then specify
     public pmBasicArrowShape[] patternList;//used for arrow shape line
-    public pmLineVisual [] plineList;//used for parallel
+    public pmLineVisual [] plineList = null;//used for parallel
     protected float[] vertices;
     protected float zorder = .0f;
 
@@ -72,6 +72,9 @@ public class pmLineVisual extends pmBasicArrowShape {
         patternList = line.patternList;
         plineList = line.plineList;
         vertices = line.vertices;
+        controlPoints = line.controlPoints;
+        anchor = line.anchor;
+        anchor2 = line.anchor2;
         initLineVisual(gl4, vertices);
     }
 
