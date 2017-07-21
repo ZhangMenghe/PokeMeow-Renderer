@@ -8,6 +8,8 @@ import com.jogamp.opengl.GL4;
 public class pmVerticalSlashLine extends pmPatternLineBasic{
     public pmVerticalSlashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
+        if(curveType == LINE_QUADRIC_CURVE){}
+
         if(curveType == LINE_STRAIGHT) {
             pointsPerPattern = 4;
             float[] singlePattern = {

@@ -43,7 +43,7 @@ public class pmLineFactory {
         switch (type) {
             case 0:
                 return new pmSolidLine(gl4, srcx, srcy, destx, desty, curveType);
-            case 11:
+            case 1:
                 return new pmEqualDashLine(gl4, srcx, srcy, destx, desty, curveType);
             case 2:
                 return new pmDashLongLine(gl4, srcx, srcy, destx, desty, curveType);
@@ -63,7 +63,7 @@ public class pmLineFactory {
                 return new pmBackwardSlashLine(gl4, srcx, srcy, destx, desty, curveType);
             case 10:
                 return new pmContiguousArrowLine(gl4, srcx, srcy, destx, desty, curveType);
-            case 111:
+            case 11:
                 return new pmParallelLine(gl4, new pmEqualDashLine(gl4, srcx, srcy, destx, desty, curveType));
             case 12:
                 return new pmSeparateArrowLine(gl4, srcx, srcy, destx, desty, curveType);
@@ -140,6 +140,8 @@ public class pmLineFactory {
             drawAnchorPoint(line.anchor, line.dirty);
         }
         if(line.curveType == pmLineVisual.LINE_CUBIC_CURVE){
+            gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
+            gl4.glUniform4f(gshaderParam.vec4_color, 1.0f, .0f, .0f,.0f);
             drawAnchorPoint(line.anchor, line.dirty);
             drawAnchorPoint(line.anchor2, line.dirty);
         }
