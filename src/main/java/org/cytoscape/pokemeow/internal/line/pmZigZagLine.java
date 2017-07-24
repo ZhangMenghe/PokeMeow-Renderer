@@ -17,9 +17,9 @@ public class pmZigZagLine extends pmPatternLineBasic{
         else{
             singlePattern = new float[30];
             double start = -1.0;
-            for(int i=0;i<30;i+=3,start+=.1){
+            for(int i=0, n=0;i<30;i+=3,start+=.1,n++){
                 singlePattern[i] = (float) start;
-                singlePattern[i+1] =(float) Math.sin(start);
+                singlePattern[i+1] = (float)start;
                 singlePattern[i+2] = zorder;
             }
             pointsPerPattern = 10;
