@@ -7,10 +7,10 @@ import com.jogamp.opengl.GL4;
  */
 public class pmBackwardSlashLine extends pmPatternLineBasic{
     private float[] singlePattern = {
-            .0f, 0.25f, .0f,
-            0.5f, -0.25f, .0f,
-            .0f, -0.25f, .0f,
-            -0.5f, 0.25f, .0f
+            .0f, 0.5f, .0f,
+            1.0f, -0.5f, .0f,
+            .0f, -0.5f, .0f,
+            -1.0f, 0.5f, .0f
     };
     public pmBackwardSlashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);

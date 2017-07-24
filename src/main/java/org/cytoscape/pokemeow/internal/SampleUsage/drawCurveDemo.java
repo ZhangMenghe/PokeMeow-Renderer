@@ -18,7 +18,7 @@ public class drawCurveDemo extends Demo {
     @Override
     public void init(GLAutoDrawable drawable) {
         super.init(drawable);
-        numOfItems = 5;
+        numOfItems = 1;
         program = GLSLProgram.CompileProgram(gl4,
                 Demo.class.getResource("shader/arrow.vert"),
                 null,null,null,
@@ -28,11 +28,11 @@ public class drawCurveDemo extends Demo {
         lineList = new pmLineVisual[numOfItems];
 
         int n = 0;
-        for(Byte i=7;i<12;i++){
+        for(Byte i=6;i<7;i++){
             float cy = -0.9f + 0.3f * n;
-            lineList[n++] = factory.createLine(i, -1,cy,
-                                                  1.0f,cy,
-                                                    pmLineVisual.LINE_CUBIC_CURVE);
+            lineList[n++] = factory.createLine(i,-.0f,-1.0f,
+                    .0f,1,
+                                                    pmLineVisual.LINE_QUADRIC_CURVE);
         }
     }
 

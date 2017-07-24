@@ -27,7 +27,7 @@ public abstract class pmBasicArrowShape {
     public Matrix4 modelMatrix = Matrix4.identity();
     public Matrix4 rotMatrix = Matrix4.identity();
     public Vector3 scale = new Vector3(1.0f,1.0f,1.0f);
-    public Vector4 color = new Vector4(.0f,1.0f,.0f,1.0f);
+    public Vector4 color = new Vector4(0.69f, 0.88f, 0.9f,1.0f);
 
     public pmBasicArrowShape(){
         modelMatrix = Matrix4.mult(Matrix4.scale((scale)), Matrix4.translation(origin));

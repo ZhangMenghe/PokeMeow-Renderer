@@ -69,12 +69,12 @@ public class Demo implements GLEventListener,MouseListener {
         glWindow.setFullscreen(false);
         glWindow.setVisible(true);
 
-        //final mousePickupDemo demo = new mousePickupDemo();
+//        final mousePickupDemo demo = new mousePickupDemo();
         //final simpleTriangleDemo demo = new simpleTriangleDemo();
         //final drawNodesDemo demo = new drawNodesDemo();
         //final drawArrowDemo demo = new drawArrowDemo();
         final drawCurveDemo demo = new drawCurveDemo();
-//        final drawLineDemo demo = new drawLineDemo();
+        //final drawLineDemo demo = new drawLineDemo();
         //final renderToTextureDemo demo = new renderToTextureDemo();
         //final TextRendererDemo demo = new TextRendererDemo();
 

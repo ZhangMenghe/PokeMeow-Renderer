@@ -41,7 +41,20 @@ public class QuadraticBezier {
         points[resolution] = destinationPos;
         return points;
     }
-
+    public float[] getPointsOnCurves(float z){
+        float []points = new float[(resolution+1)*3];
+        float currentT = .0f;
+        for(int i=0; i<resolution; i++,currentT+=stepSize){
+            Vector2 tmp = interpolate(currentT);
+            points[3*i] = tmp.x;
+            points[3*i+1] = tmp.y;
+            points[3*i+2] = z;
+        }
+        points[3*resolution] = destinationPos.x;
+        points[3*resolution+1] = destinationPos.y;
+        points[3*resolution+2] = z;
+        return points;
+    }
 //    public static void main(String[] args) {
 //        Vector2 source = new Vector2((float) 1.0, (float) 0.0);
 //        Vector2 control = new Vector2((float) 0.0, (float) 2.0);

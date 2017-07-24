@@ -50,14 +50,14 @@ public class pmLineVisual extends pmBasicArrowShape {
             numOfVertices = QuadraticBezier.resolution + 1;
             vertices = new float[3*numOfVertices];
             controlPoints = new float[2];
-            setQuadraticBezierCurveVertices((srcx + destx)/2.0f,(srcy + desty)/2.0f+0.125f);
+            setQuadraticBezierCurveVertices((srcx + destx)/2.0f,(srcy + desty)/2.0f);
             anchor = new pmAnchor(gl4, controlPoints[0], controlPoints[1]);
         }
         if(curveType == LINE_CUBIC_CURVE){
             numOfVertices = CubicBezier.resolution + 1;
             vertices = new float[3*numOfVertices];
             controlPoints = new float[4];
-            float tmpx = (destx-srcx)/3.0f; float tmpy = (srcy + desty)/2.0f+0.125f;
+            float tmpx = (destx-srcx)/3.0f; float tmpy = (srcy + desty)/2.0f;
             setCubicBezierCurveVertices(tmpx+srcx, tmpy, tmpx*2+srcx, tmpy);
             anchor = new pmAnchor(gl4, controlPoints[0], controlPoints[1]);
             anchor2 = new pmAnchor(gl4, controlPoints[2], controlPoints[3]);

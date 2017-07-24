@@ -35,6 +35,21 @@ public class CubicBezier {
         points[resolution] = destinationPos;
         return points;
     }
+
+    public float[] getPointsOnCurves(float z){
+        float []points = new float[(resolution+1)*3];
+        float currentT = .0f;
+        for(int i=0; i<resolution; i++,currentT+=stepSize){
+            Vector2 tmp = interpolate(currentT);
+            points[3*i] = tmp.x;
+            points[3*i+1] = tmp.y;
+            points[3*i+2] = z;
+        }
+        points[3*resolution] = destinationPos.x;
+        points[3*resolution+1] = destinationPos.y;
+        points[3*resolution+2] = z;
+        return points;
+    }
 //    public Vector2[] getPointsOnCurves(int res){
 //        Vector2 []points = new Vector2[res+1];
 //        stepSize = 1.0f/(res-1);

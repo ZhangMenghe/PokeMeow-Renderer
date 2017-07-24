@@ -28,7 +28,7 @@ public class drawLineDemo extends Demo {
 
         int n = 0;
         for(Byte i=0;i<numOfItems;i++)
-            lineList[n++] = factory.createLine(i, -1,.0f,1.0f,.0f, pmLineVisual.LINE_STRAIGHT);
+            lineList[n++] = factory.createLine(i, -1,-1.0f,1.0f,1.0f, pmLineVisual.LINE_STRAIGHT);
         for(n=0; n<numOfItems; n++){
             float cy = -0.9f + 0.1f*n;
             lineList[n].setOrigin(new Vector3(.0f, cy, .0f));
