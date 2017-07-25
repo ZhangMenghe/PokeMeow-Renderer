@@ -66,8 +66,16 @@ public class pmParallelLine extends pmLineVisual {
     public void setZorder(GL4 gl4, float new_z){
     }
     public void setControlPoints(float nctrx, float nctry, int anchorID){
-        for(pmLineVisual line: plineList)
-            line.setControlPoints(nctrx,nctry,anchorID);
+        if(anchorID == 1){
+            controlPoints[0] = nctrx; controlPoints[1] = nctry;
+            anchor.setPosition(nctrx, nctry);
+        }
+        else{
+            controlPoints[2] = nctrx; controlPoints[3] = nctry;
+            anchor2.setPosition(nctrx, nctry);
+        }
+        plineList[0].setControlPoints(nctrx,nctry,anchorID);
+        plineList[1].vertices = plineList[0].vertices;
         dirty = true;
     }
 }

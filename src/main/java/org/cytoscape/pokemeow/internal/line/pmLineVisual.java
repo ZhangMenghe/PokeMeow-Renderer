@@ -1,10 +1,8 @@
 package main.java.org.cytoscape.pokemeow.internal.line;
 
-import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
 import main.java.org.cytoscape.pokemeow.internal.utils.CubicBezier;
 import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
@@ -23,6 +21,7 @@ public class pmLineVisual extends pmBasicArrowShape {
     public pmLineVisual [] plineList = null;//used for parallel
     protected float[] vertices;
     protected float zorder = .0f;
+    protected float slope;
 
     public pmAnchor anchor = null;
     public pmAnchor anchor2 = null;
@@ -46,19 +45,32 @@ public class pmLineVisual extends pmBasicArrowShape {
         curveType = type;
         srcPos.x = srcx; srcPos.y = srcy;
         destPos.x = destx; destPos.y = desty;
+        slope = (desty - srcy) / (destx - srcx);
         if(curveType == LINE_QUADRIC_CURVE){
             numOfVertices = QuadraticBezier.resolution + 1;
             vertices = new float[3*numOfVertices];
             controlPoints = new float[2];
-            setQuadraticBezierCurveVertices((srcx + destx)/2.0f,(srcy + desty)/2.0f);
+            if(Math.abs(slope)<=1)
+                setQuadraticBezierCurveVertices((srcx + destx)/2.0f,(srcy + desty)/2.0f+0.1f);
+            else
+                setQuadraticBezierCurveVertices((srcx + destx)/2.0f+0.1f,(srcy + desty)/2.0f);
             anchor = new pmAnchor(gl4, controlPoints[0], controlPoints[1]);
         }
         if(curveType == LINE_CUBIC_CURVE){
             numOfVertices = CubicBezier.resolution + 1;
             vertices = new float[3*numOfVertices];
             controlPoints = new float[4];
-            float tmpx = (destx-srcx)/3.0f; float tmpy = (srcy + desty)/2.0f;
-            setCubicBezierCurveVertices(tmpx+srcx, tmpy, tmpx*2+srcx, tmpy);
+            if(Math.abs(slope)<=1){
+                float tmpx = (destx-srcx)/3.0f;
+                float tmpy = (srcy + desty)/2.0f;
+                setCubicBezierCurveVertices(tmpx+srcx, tmpy+0.1f, tmpx*2+srcx, tmpy+0.1f);
+            }
+            else{
+                float tmpx = (destx+srcx)/2.0f;
+                float tmpy = (desty-srcy)/3.0f;
+                setCubicBezierCurveVertices(tmpx+0.1f, tmpy+srcy, tmpx+0.1f, 2*tmpy+srcy);
+            }
+
             anchor = new pmAnchor(gl4, controlPoints[0], controlPoints[1]);
             anchor2 = new pmAnchor(gl4, controlPoints[2], controlPoints[3]);
         }
@@ -101,7 +113,10 @@ public class pmLineVisual extends pmBasicArrowShape {
         plineList = new pmLineVisual[2];
         plineList[0] = line;
         plineList[1] = new pmLineVisual(gl4, line);
-        plineList[1].setOrigin(new Vector3(line.origin.x, line.origin.y + 0.01f, line.origin.z));
+        if(Math.abs(line.slope) <= 1)
+            plineList[1].setOrigin(new Vector3(line.origin.x, line.origin.y + 0.02f, line.origin.z));
+        else
+            plineList[1].setOrigin(new Vector3(line.origin.x+ 0.02f, line.origin.y , line.origin.z));
     }
 
     protected void initLineVisual(GL4 gl4, float[] pos){

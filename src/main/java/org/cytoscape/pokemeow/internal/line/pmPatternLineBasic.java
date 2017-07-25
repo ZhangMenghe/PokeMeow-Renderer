@@ -12,15 +12,17 @@ import org.omg.CORBA.MARSHAL;
 public class pmPatternLineBasic extends pmLineVisual {
     protected int pointsPerPattern;
     protected float shrink;
-    public final static int arrDensity = 8;
+    public int arrDensity = 8;
     public pmPatternLineBasic(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
         connectMethod = CONNECT_SEGMENTS;
     }
 
     protected void initVertices(GL4 gl4, float []singlePattern){
-        float k = (destPos.y - srcPos.y) / (destPos.x - srcPos.x);
-        double theta = Math.atan(k);
+//        float k = (destPos.y - srcPos.y) / (destPos.x - srcPos.x);
+        double theta = Math.atan(slope);
+        if(slope<0)
+            theta-=3.14f;
         float cost = (float)Math.cos(theta);
         float sint = (float)Math.sin(theta);
 
@@ -44,19 +46,19 @@ public class pmPatternLineBasic extends pmLineVisual {
             vertices[3*j+2] = zorder;
         }
         float lastx, lasty;
-        if(Math.abs(k) <= 1){
+        if(Math.abs(slope) <= 1){
             for(int i=1;i<numOfPatterns;i++){
                 for(int j=0;j<pointsPerPattern;j++) {
                     lastx = vertices[base * (i-1) +3*j];
                     lasty = vertices[base * (i-1) +3*j+1];
                     vertices[base * i + 3*j] =  lastx + shrink;
-                    vertices[base * i + 3*j+1] = lasty + shrink * k;
+                    vertices[base * i + 3*j+1] = lasty + shrink * slope;
                     vertices[base * i + 3*j+2] = zorder;
                 }
             }
         }
         else{
-            k = 1.0f/k;
+            float k = 1.0f/slope;
             for(int i=1;i<numOfPatterns;i++){
                 for(int j=0;j<pointsPerPattern;j++) {
                     lastx = vertices[base * (i-1) +3*j];
@@ -95,9 +97,10 @@ public class pmPatternLineBasic extends pmLineVisual {
         for (int i = 0, n = 0; i < numOfPatterns; i++, n += arrDensity) {
             lastorix = orix; lastoriy = oriy;
             orix = curvePoints[3 * n];oriy = curvePoints[3 * n + 1];
-
-            float k = (oriy-lastoriy) / (orix - lastorix + 0.0001f);
-            double theta = Math.abs(Math.atan(k));
+            float k = (oriy-lastoriy) / (orix - lastorix);
+            double theta = Math.atan(k);
+            if(k<0)
+                theta-=3.14f;
             float cost = (float)Math.cos(theta);
             float sint = (float)Math.sin(theta);
             for(int ii=0;ii<pointsPerPattern;ii++){

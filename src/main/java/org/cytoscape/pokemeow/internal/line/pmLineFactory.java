@@ -64,7 +64,7 @@ public class pmLineFactory {
             case 10:
                 return new pmContiguousArrowLine(gl4, srcx, srcy, destx, desty, curveType);
             case 11:
-                return new pmParallelLine(gl4, new pmEqualDashLine(gl4, srcx, srcy, destx, desty, curveType));
+                return new pmParallelLine(gl4, createLine(LINE_SOLID, srcx, srcy, destx, desty, curveType));
             case 12:
                 return new pmSeparateArrowLine(gl4, srcx, srcy, destx, desty, curveType);
             default:
@@ -72,7 +72,16 @@ public class pmLineFactory {
         }
     }
 
-
+    public pmLineVisual createLine(Byte type, Byte parallType, float srcx, float srcy, float destx, float desty, Byte curveType){
+        if(type!=LINE_PARALLEL)
+            return createLine(type, srcx, srcy, destx, desty, curveType);
+        else{
+            if(parallType == LINE_PARALLEL)
+                return new pmParallelLine(gl4, createLine(LINE_SOLID, srcx, srcy, destx, desty, curveType));
+            else
+                return new pmParallelLine(gl4, createLine(parallType, srcx, srcy, destx, desty, curveType));
+        }
+    }
     private void drawLine_GL(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam){
         switch (line.connectMethod){
             case pmLineVisual.CONNECT_STRIP:

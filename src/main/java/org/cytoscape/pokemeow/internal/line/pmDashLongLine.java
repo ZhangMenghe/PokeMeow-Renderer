@@ -13,21 +13,36 @@ public class pmDashLongLine extends pmLineVisual{
     public pmDashLongLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
         if(curveType == LINE_STRAIGHT){
-            lineSegments = 10;
+            lineSegments = 20;
             float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
             numOfVertices = lineSegments * (int)rlen +1;
             int numOfPoints = 3*numOfVertices;
-            float k = (desty - srcy) / (destx-srcx);
+//            float k = (desty - srcy) / (destx-srcx);
             vertices = new float[numOfPoints];
-            float shrink = 0.25f*(destx-srcx)/(numOfVertices-1);
+            float shrink = 0.25f*rlen/(numOfVertices-1);
             vertices[0]=srcx; vertices[1]=srcy; vertices[2]=zorder;
-            for(int i=3, n=1; i<numOfPoints; i+=3, n++){
-                if(n%2==1)
-                    vertices[i] = vertices[i-3] + shrink*7;
-                else
-                    vertices[i] = vertices[i-3] + shrink;
-                vertices[i+1] = srcy + k*(vertices[i] - srcx);
-                vertices[i+2] = zorder;
+            if(Math.abs(slope) <= 1) {
+                for (int i = 3, n = 1; i < numOfPoints; i += 3, n++) {
+                    if (n % 2 == 1)
+                        vertices[i] = vertices[i - 3] + shrink * 5;
+                    else
+                        vertices[i] = vertices[i - 3] + shrink * 3;
+                    vertices[i + 1] = srcy + slope * (vertices[i] - srcx);
+                    vertices[i + 2] = zorder;
+                }
+            }
+            else{
+                float k = 1.0f/slope;
+                float tmpy;
+                for (int i = 3, n = 1; i < numOfPoints; i += 3, n++) {
+                    if (n % 2 == 1)
+                        tmpy = vertices[i - 2] + shrink * 5;
+                    else
+                        tmpy = vertices[i - 2] + shrink*3;
+                    vertices[i] = srcx + k*(tmpy - srcy);
+                    vertices[i + 1] = tmpy;
+                    vertices[i + 2] = zorder;
+                }
             }
         }
         connectMethod = CONNECT_SEGMENTS;

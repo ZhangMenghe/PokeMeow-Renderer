@@ -16,24 +16,39 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
     public final static int arrDensity = 4;
     public pmSeparateArrowLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type) {
         super(gl4, srcx, srcy, destx, desty, type);
-
         if(curveType == LINE_STRAIGHT) {
             float deltay = desty - srcy;
             float deltax = destx - srcx;
-            float k = deltay / deltax;
-            double theta = Math.atan(k);
+
+            double theta = Math.atan(slope);
+            if(slope<0)
+                theta -= 3.14f;
             double length2 =deltay*deltay + deltax*deltax;
             numOfPatterns  = 20*(int)(length2/2);
 
             shrink = (float) Math.sqrt(length2)/numOfPatterns;
             arrowList = new pmBasicArrowShape[numOfPatterns];
-            for (int i = 0; i < numOfPatterns; i++) {
-                arrowList[i] = new pmLineSeparateArrowPattern(gl4);
-                arrowList[i].setScale(0.05f);
-                arrowList[i].setRotation((float) theta - 3.14f/2);
-                float tmpx = srcx+shrink*i;
-                float tmpy = srcy+k*shrink*i;
-                arrowList[i].setOrigin(new Vector3(tmpx, tmpy, zorder));
+            if(Math.abs(slope) <= 1) {
+                for (int i = 0; i < numOfPatterns; i++) {
+                    arrowList[i] = new pmLineSeparateArrowPattern(gl4);
+                    arrowList[i].setScale(0.05f);
+                    arrowList[i].setRotation((float) theta - 3.14f / 2);
+                    float tmpx = srcx + shrink * i;
+                    float tmpy = srcy + slope * shrink * i;
+                    arrowList[i].setOrigin(new Vector3(tmpx, tmpy, zorder));
+                }
+            }
+            else{
+                float k = 1.0f/slope;
+                for (int i = 0; i < numOfPatterns; i++) {
+                    arrowList[i] = new pmLineSeparateArrowPattern(gl4);
+                    arrowList[i].setScale(0.05f);
+                    arrowList[i].setRotation((float) theta - 3.14f / 2);
+
+                    float tmpy = srcy + shrink * i;
+                    float tmpx = srcx + k * shrink * i;
+                    arrowList[i].setOrigin(new Vector3(tmpx, tmpy, zorder));
+                }
             }
         }
         else{
@@ -102,6 +117,8 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
             float deltax = patternList[i+1].origin.x - patternList[i].origin.x;
             float k = deltay / deltax;
             theta = Math.atan(k);
+            if(k <0)
+                theta -= 3.14f;
             patternList[i].setRotation((float) theta - 3.14f/2);
             patternList[i].setOrigin(new Vector3(vertices[3*n], vertices[3*n+1], zorder));
         }

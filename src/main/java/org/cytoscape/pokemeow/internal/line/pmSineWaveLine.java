@@ -37,7 +37,7 @@ public class pmSineWaveLine extends pmPatternLineBasic{
     private void initStraightLinePoints(float srcx, float srcy, float destx, float desty){
         float deltay = desty - srcy;
         float deltax = destx - srcx;
-        float k = deltay / deltax;
+//        float k = deltay / deltax;
         float length =(float) Math.sqrt(deltay*deltay + deltax*deltax);
 
         float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
@@ -47,7 +47,7 @@ public class pmSineWaveLine extends pmPatternLineBasic{
         vertices = new float[numOfPoints];
         float shrink = length/(numOfVertices-1);
         float exampleX = period*baseW;
-        double theta = Math.atan(k);
+        double theta = Math.atan(slope);
         float cost = (float)Math.cos(theta);
         float sint = (float)Math.sin(theta);
         float gapx = .0f,gapy = .0f;

@@ -38,7 +38,7 @@ public class pmZigZagLine extends pmPatternLineBasic{
         lineSegments = 20;
         float deltay = desty - srcy;
         float deltax = destx - srcx;
-        float k = deltay / deltax;
+//        float k = deltay / deltax;
         float length =(float) Math.sqrt(deltay*deltay + deltax*deltax);
 
         float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
@@ -47,7 +47,7 @@ public class pmZigZagLine extends pmPatternLineBasic{
 
         vertices = new float[numOfPoints];
         float shrink = length/(numOfVertices-1);
-        double theta = Math.atan(k);
+        double theta = Math.atan(slope);
         float cost = (float)Math.cos(theta);
         float sint = (float)Math.sin(theta);
         float gapx = .0f,gapy = .0f;

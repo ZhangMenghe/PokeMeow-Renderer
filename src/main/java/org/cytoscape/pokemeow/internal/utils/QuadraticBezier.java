@@ -9,7 +9,7 @@ public class QuadraticBezier {
     private Vector2 sourcePos;
     private Vector2 controlPos;
     private Vector2 destinationPos;
-    public static final int resolution = 120;
+    public static final int resolution = 160;
     private float stepSize;
 
     public QuadraticBezier(float srcx, float srcy, float controlx, float controly, float destx, float desty){
