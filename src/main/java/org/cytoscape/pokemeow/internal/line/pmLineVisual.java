@@ -19,15 +19,15 @@ public class pmLineVisual extends pmBasicArrowShape {
     private int[] connectArray = null;//if use CONNECT_ARRAY, then specify
     public pmBasicArrowShape[] patternList;//used for arrow shape line
     public pmLineVisual [] plineList = null;//used for parallel
-    protected float[] vertices;
-    protected float zorder = .0f;
-    protected float slope;
+    public float[] vertices;
+    public float zorder = .0f;
+    public float slope;
 
     public pmAnchor anchor = null;
     public pmAnchor anchor2 = null;
-    protected float[] controlPoints;
-    protected Vector2 srcPos = new Vector2();
-    protected Vector2 destPos = new Vector2();
+    public float[] controlPoints;
+    public Vector2 srcPos = new Vector2();
+    public Vector2 destPos = new Vector2();
 
     public static final byte CONNECT_STRIP = 0;//line to be drawn with each vertex connected to the next.
     public static final byte CONNECT_SEGMENTS = 1;//draw an independent line segment
