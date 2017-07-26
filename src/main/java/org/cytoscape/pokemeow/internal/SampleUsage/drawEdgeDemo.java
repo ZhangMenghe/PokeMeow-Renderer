@@ -33,7 +33,7 @@ public class drawEdgeDemo extends Demo{
                 null,null,null,
                 Demo.class.getResource("shader/arrow.frag"));
         gshaderParam = new pmShaderParams(gl4, program);
-        numOfItems = 1;
+        numOfItems = 12;
 //
 //        pmLineVisual line = new pmSolidLine(gl4,-0.5f,-0.5f,
 //                0.5f,0.5f,pmLineVisual.LINE_STRAIGHT);
@@ -47,9 +47,13 @@ public class drawEdgeDemo extends Demo{
         int n = 0;
         for(Byte i=0;i<numOfItems;i++) {
             float cy = -0.6f + 0.1f * n;
-            edgeList[n++] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_CUBIC_CURVE, i,
-                     .0f,0.5f,  .0f,-0.5f);
+            edgeList[n++] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, i,i,
+                       cy,-0.5f,cy,0.5f);
         }
+//        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_CUBIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
+//                .0f,-0.5f,.0f,0.5f);
+//        edgeList[1] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_CUBIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
+//                0.2f,0.5f,0.2f,-0.5f);
 
     }
 

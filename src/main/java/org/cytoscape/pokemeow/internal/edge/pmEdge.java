@@ -22,39 +22,26 @@ public class pmEdge {
     public Byte curveType;
     private float xMin,xMax,yMin,yMax;
     private Vector2 origin;
+    //No arrow
     public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType,
                   float srcx, float srcy, float destx, float desty){
-        lineFactory = new pmLineFactory(gl4);
-        _line = lineFactory.createLine(lineType, srcx, srcy, destx, desty,mcurveType);
-        curveType = mcurveType;
-        xMin = Math.min(srcx, destx); xMax = Math.max(srcx, destx);
-        yMin = Math.min(srcy, desty); yMax = Math.max(srcy, desty);
-        origin = new Vector2((srcx+destx)/2, (srcy+desty)/2);
+        commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty);
+
     }
     public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType,Byte destArrowType,
                   float srcx, float srcy, float destx, float desty){
-        lineFactory = new pmLineFactory(gl4);
-        _line = lineFactory.createLine(lineType, srcx, srcy, destx, desty,mcurveType);
-        curveType = mcurveType;
-        xMin = Math.min(srcx, destx)-0.01f; xMax = Math.max(srcx, destx)+0.01f;
-        yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;
+        commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty);
         arrowFactory = new pmArrowShapeFactory(gl4);
         _destArrow = arrowFactory.createArrow(destArrowType);
-        setArrowPosition();
-        origin = new Vector2((srcx+destx)/2, (srcy+desty)/2);
+        setArrowPosAndRot();
     }
     public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType, Byte srcArrowType, Byte destArrowType,
                   float srcx, float srcy, float destx, float desty){
-        lineFactory = new pmLineFactory(gl4);
-        _line = lineFactory.createLine(lineType, srcx, srcy, destx, desty,mcurveType);
-        curveType = mcurveType;
-        xMin = Math.min(srcx, destx)-0.01f; xMax = Math.max(srcx, destx)+0.01f;
-        yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;
+        commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty);
         arrowFactory = new pmArrowShapeFactory(gl4);
         _srcArrow = arrowFactory.createArrow(srcArrowType);
         _destArrow = arrowFactory.createArrow(destArrowType);
-        setArrowPosition();
-        origin = new Vector2((srcx+destx)/2, (srcy+desty)/2);
+        setArrowPosAndRot();
     }
 
     public pmEdge(GL4 gl4, pmLineVisual line, pmBasicArrowShape srcArrow, pmBasicArrowShape destArrow){
@@ -67,43 +54,91 @@ public class pmEdge {
         _srcArrow = srcArrow;
         _destArrow = destArrow;
         lineFactory = new pmLineFactory(gl4);
-        if(srcArrow==null && destArrow==null)
+        origin = new Vector2((line.srcPos.x+line.destPos.x)/2, (line.srcPos.y+line.destPos.y)/2);
+
+        if(destArrow == null)
             return;
 
         arrowFactory = new pmArrowShapeFactory(gl4);
-        setArrowPosition();
-        origin = new Vector2((line.srcPos.x+line.destPos.x)/2, (line.srcPos.y+line.destPos.y)/2);
+        setArrowPosAndRot();
+
+    }
+    private void commonInitialForEdge(GL4 gl4, Byte lineType, Byte mcurveType,
+
+                                      float srcx, float srcy, float destx, float desty){
+        lineFactory = new pmLineFactory(gl4);
+        _line = lineFactory.createLine(lineType, srcx, srcy, destx, desty,mcurveType);
+        curveType = mcurveType;
+        xMin = Math.min(srcx, destx); xMax = Math.max(srcx, destx);
+        yMin = Math.min(srcy, desty); yMax = Math.max(srcy, desty);
+        origin = new Vector2((srcx+destx)/2, (srcy+desty)/2);
+
+    }
+    private void setArrowPosAndRot(){
+        if (_destArrow != null) {
+            _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
+            _destArrow.setScale(0.2f);
+        }
+        if (_srcArrow != null) {
+            _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
+            _srcArrow.setScale(0.2f);
+        }
+        setArrowRotation();
     }
 
-    private void setArrowPosition(){
+    private void setArrowRotation(){
         double thetasrc, thetadest;
         if(_line.curveType == pmLineVisual.LINE_STRAIGHT){
             thetasrc = Math.atan(_line.slope);
-            if(_line.slope<0)
+            if(_line.destPos.x<_line.srcPos.x)
                 thetasrc -= 3.14f;
             thetadest = thetasrc;
         }
-        else{
+        else if(_line.curveType == pmLineVisual.LINE_QUADRIC_CURVE){
             float k = (_line.srcPos.y - _line.controlPoints[1]) / (_line.srcPos.x - _line.controlPoints[0]);
             thetasrc = Math.atan(k);
-            float k2 = (_line.controlPoints[1]-_line.destPos.y) / (_line.controlPoints[0]-_line.destPos.x);
-            thetadest= Math.atan(k2);
-//            if(Math.abs(k2)>=1)
-//                thetadest += 3.14f;
+
+            float k2 = (_line.controlPoints[1] - _line.destPos.y) / (_line.controlPoints[0] - _line.destPos.x);
+            thetadest = Math.atan(k2);
+            if (Math.abs(_line.slope) > 1) {
+                if (_line.controlPoints[0] > _line.srcPos.x)
+                    thetadest -= 3.14f;
+                else
+                    thetasrc -= 3.14f;
+            }
+            else{
+                if(_line.destPos.x < _line.srcPos.x){
+                    thetadest -= 3.14f;
+                    thetasrc -= 3.14f;
+                }
+            }
+        }
+        else {
+            float k = (_line.srcPos.y - _line.controlPoints[1]) / (_line.srcPos.x - _line.controlPoints[0]);
+            thetasrc = Math.atan(k);
+
+            float k2 = (_line.controlPoints[3] - _line.destPos.y) / (_line.controlPoints[2] - _line.destPos.x);
+            thetadest = Math.atan(k2);
+            if (Math.abs(_line.slope) > 1) {
+                if(_line.controlPoints[0]<_line.srcPos.x)
+                    thetasrc-=3.14;
+                if(_line.controlPoints[2]>_line.destPos.x)
+                    thetadest-=3.14;
+            }
+            else{
+                if(_line.destPos.x < _line.srcPos.x){
+                    thetadest -= 3.14f;
+                    thetasrc -= 3.14f;
+                }
+            }
         }
 
-        if(_srcArrow != null){
-            _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
-            _srcArrow.setRotation((float) thetasrc-3.14f);
-            _srcArrow.setScale(0.2f);
-        }
-
-        if(_destArrow != null){
-            _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
-            _destArrow.setScale(0.2f);
+        if (_destArrow != null)
             _destArrow.setRotation((float) thetadest);
-        }
+        if (_srcArrow != null)
+            _srcArrow.setRotation((float) thetasrc - 3.14f);
     }
+
     public void draw(GL4 gl4, pmShaderParams gshaderParam){
         if(_srcArrow != null)
             arrowFactory.drawArrow(gl4, _srcArrow, gshaderParam);
@@ -114,19 +149,7 @@ public class pmEdge {
 
     public void setControlPoints(float nctrx, float nctry, int anchorID){
         _line.setControlPoints(nctrx, nctry, anchorID);
-//        double theta;
-//        if(_srcArrow!=null){
-//            float k = (_line.srcPos.y - _line.controlPoints[1]) / (_line.srcPos.x - _line.controlPoints[0]);
-//            theta = Math.atan(k);
-//            _srcArrow.setRotation((float) theta-3.14f);
-//        }
-//        if(_destArrow!=null){
-//            float k2 = (_line.controlPoints[1]-_line.destPos.y) / (_line.controlPoints[0]-_line.destPos.x);
-//            theta = Math.atan(k2);
-////            if(Math.abs(k2)>=100)
-////                theta += 3.14f;
-//            _destArrow.setRotation((float) theta);
-//        }
+        setArrowRotation();
     }
 
     public boolean isAnchorHit(float posx, float posy, int anchorID){
