@@ -2,6 +2,7 @@ package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.opengl.GLAutoDrawable;
+import com.sun.corba.se.impl.logging.POASystemException;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
@@ -33,7 +34,7 @@ public class drawEdgeDemo extends Demo{
                 null,null,null,
                 Demo.class.getResource("shader/arrow.frag"));
         gshaderParam = new pmShaderParams(gl4, program);
-        numOfItems = 12;
+        numOfItems = 1;
 //
 //        pmLineVisual line = new pmSolidLine(gl4,-0.5f,-0.5f,
 //                0.5f,0.5f,pmLineVisual.LINE_STRAIGHT);
@@ -44,14 +45,14 @@ public class drawEdgeDemo extends Demo{
 
 //        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_STRAIGHT, pmArrowShapeFactory.SHAPE_ARROWHEAD_SHORT, pmArrowShapeFactory.SHAPE_DELTA,
 //                -0.5f,-0.5f, 0.5f,0.5f);
-        int n = 0;
-        for(Byte i=0;i<numOfItems;i++) {
-            float cy = -0.6f + 0.1f * n;
-            edgeList[n++] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, i,i,
-                       cy,-0.5f,cy,0.5f);
-        }
-//        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_CUBIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
-//                .0f,-0.5f,.0f,0.5f);
+//        int n = 0;
+//        for(Byte i=0;i<numOfItems;i++) {
+//            float cy = -0.6f + 0.1f * n;
+//            edgeList[n++] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, i,i,
+//                       cy,-0.5f,cy,0.5f);
+//        }
+        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_STRAIGHT, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
+                .0f,-0.5f,.0f,0.5f);
 //        edgeList[1] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_CUBIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
 //                0.2f,0.5f,0.2f,-0.5f);
 
@@ -150,13 +151,7 @@ public class drawEdgeDemo extends Demo{
         float posx = 2*(float) lastMousePosition.x/ commonUtil.DEMO_VIEWPORT_SIZE.x-1;
         float posy = 1.0f-(2*(float) lastMousePosition.y/commonUtil.DEMO_VIEWPORT_SIZE.y);
 
-        for(pmEdge edge : edgeList){
-            if(edge.isHit(posx, posy)){
-//                System.out.println("HIT - " + times);
-                times++;
-                edge.setColor(colorList[times%2]);
-            }
-        }
+        hitEdge(posx,posy);
     }
     @Override
     public void mousePressed(MouseEvent e){
