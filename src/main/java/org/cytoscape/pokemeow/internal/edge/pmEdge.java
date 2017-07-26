@@ -1,6 +1,7 @@
 package main.java.org.cytoscape.pokemeow.internal.edge;
 
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
@@ -20,7 +21,7 @@ public class pmEdge {
     private pmArrowShapeFactory arrowFactory;
     public Byte curveType;
     private float xMin,xMax,yMin,yMax;
-    private Vector3 origin;
+    private Vector2 origin;
     public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType,
                   float srcx, float srcy, float destx, float desty){
         lineFactory = new pmLineFactory(gl4);
@@ -28,7 +29,7 @@ public class pmEdge {
         curveType = mcurveType;
         xMin = Math.min(srcx, destx); xMax = Math.max(srcx, destx);
         yMin = Math.min(srcy, desty); yMax = Math.max(srcy, desty);
-        origin = new Vector3((srcx+destx)/2, (srcy+desty)/2, _line.zorder);
+        origin = new Vector2((srcx+destx)/2, (srcy+desty)/2);
     }
     public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType,Byte destArrowType,
                   float srcx, float srcy, float destx, float desty){
@@ -39,8 +40,8 @@ public class pmEdge {
         yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;
         arrowFactory = new pmArrowShapeFactory(gl4);
         _destArrow = arrowFactory.createArrow(destArrowType);
-        setArrowRotation();
-        origin = new Vector3((srcx+destx)/2, (srcy+desty)/2, _line.zorder);
+        setArrowPosition();
+        origin = new Vector2((srcx+destx)/2, (srcy+desty)/2);
     }
     public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType, Byte srcArrowType, Byte destArrowType,
                   float srcx, float srcy, float destx, float desty){
@@ -52,8 +53,8 @@ public class pmEdge {
         arrowFactory = new pmArrowShapeFactory(gl4);
         _srcArrow = arrowFactory.createArrow(srcArrowType);
         _destArrow = arrowFactory.createArrow(destArrowType);
-        setArrowRotation();
-        origin = new Vector3((srcx+destx)/2, (srcy+desty)/2, _line.zorder);
+        setArrowPosition();
+        origin = new Vector2((srcx+destx)/2, (srcy+desty)/2);
     }
 
     public pmEdge(GL4 gl4, pmLineVisual line, pmBasicArrowShape srcArrow, pmBasicArrowShape destArrow){
@@ -70,11 +71,11 @@ public class pmEdge {
             return;
 
         arrowFactory = new pmArrowShapeFactory(gl4);
-        setArrowRotation();
-        origin = new Vector3((line.srcPos.x+line.destPos.x)/2, (line.srcPos.y+line.destPos.y)/2, _line.zorder);
+        setArrowPosition();
+        origin = new Vector2((line.srcPos.x+line.destPos.x)/2, (line.srcPos.y+line.destPos.y)/2);
     }
 
-    private void setArrowRotation(){
+    private void setArrowPosition(){
         double thetasrc, thetadest;
         if(_line.curveType == pmLineVisual.LINE_STRAIGHT){
             thetasrc = Math.atan(_line.slope);
@@ -113,19 +114,19 @@ public class pmEdge {
 
     public void setControlPoints(float nctrx, float nctry, int anchorID){
         _line.setControlPoints(nctrx, nctry, anchorID);
-        double theta;
-        if(_srcArrow!=null){
-            float k = (_line.srcPos.y - _line.controlPoints[1]) / (_line.srcPos.x - _line.controlPoints[0]);
-            theta = Math.atan(k);
-            _srcArrow.setRotation((float) theta-3.14f);
-        }
-        if(_destArrow!=null){
-            float k2 = (_line.controlPoints[1]-_line.destPos.y) / (_line.controlPoints[0]-_line.destPos.x);
-            theta = Math.atan(k2);
-//            if(Math.abs(k2)>=100)
-//                theta += 3.14f;
-            _destArrow.setRotation((float) theta);
-        }
+//        double theta;
+//        if(_srcArrow!=null){
+//            float k = (_line.srcPos.y - _line.controlPoints[1]) / (_line.srcPos.x - _line.controlPoints[0]);
+//            theta = Math.atan(k);
+//            _srcArrow.setRotation((float) theta-3.14f);
+//        }
+//        if(_destArrow!=null){
+//            float k2 = (_line.controlPoints[1]-_line.destPos.y) / (_line.controlPoints[0]-_line.destPos.x);
+//            theta = Math.atan(k2);
+////            if(Math.abs(k2)>=100)
+////                theta += 3.14f;
+//            _destArrow.setRotation((float) theta);
+//        }
     }
 
     public boolean isAnchorHit(float posx, float posy, int anchorID){
@@ -215,11 +216,36 @@ public class pmEdge {
         if(_destArrow!=null)
             _destArrow.setRotation(radians);
     }
-    public void setOrigin(Vector3 new_origin){
+    public void setOrigin(Vector2 new_origin){
         float deltax = new_origin.x - origin.x;
         float deltay = new_origin.y - origin.y;
         origin.x = new_origin.x;
         origin.y = new_origin.y;
+        _line.srcPos.x += deltax;_line.srcPos.y += deltay;
+        _line.destPos.x += deltax;_line.destPos.y += deltay;
+        for(int i=0;i<_line.numOfVertices;i++){
+            _line.vertices[3*i] +=deltax;
+            _line.vertices[3*i+1]+=deltay;
+        }
+        if(curveType != pmLineVisual.LINE_STRAIGHT){
+            _line.controlPoints[0]+=deltax;
+            _line.controlPoints[1]+=deltay;
+            _line.anchor.vertices[0]+=deltax;
+            _line.anchor.vertices[1]+=deltay;
+        }
+        if(curveType == pmLineVisual.LINE_CUBIC_CURVE){
+            _line.controlPoints[2]+=deltax;
+            _line.controlPoints[3]+=deltay;
+            _line.anchor2.vertices[0]+=deltax;
+            _line.anchor2.vertices[1]+=deltay;
+        }
+        _line.dirty = true;
+        if(_srcArrow != null){
+            _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
+        }
 
+        if(_destArrow != null){
+            _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
+        }
     }
 }
