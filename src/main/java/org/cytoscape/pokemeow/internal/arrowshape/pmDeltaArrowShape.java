@@ -15,6 +15,8 @@ public class pmDeltaArrowShape extends pmBasicArrowShape {
     public pmDeltaArrowShape(GL4 gl4){
         super();
         numOfVertices = 3;
+//        xMinOri = -0.5f;xMaxOri = 0.5f;yMinOri = -0.25f;yMaxOri = 0.25f;
+//        xMin= xMinOri;xMax = xMaxOri;yMin = yMinOri;yMax = yMaxOri;
         initBuffer(gl4, vertices);
         setScale(0.5f);
     }

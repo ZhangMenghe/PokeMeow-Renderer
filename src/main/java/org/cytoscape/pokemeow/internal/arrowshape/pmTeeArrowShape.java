@@ -7,10 +7,10 @@ import com.jogamp.opengl.GL4;
  */
 public class pmTeeArrowShape extends pmBasicArrowShape{
     public float[] vertices = {
-            -0.25f,  -0.25f, .0f,
-            -0.125f, -0.25f, .0f,
-            -0.125f, 0.25f, .0f,
-            -0.25f,  0.25f, .0f
+            -0.5f,  -0.5f, .0f,
+            -0.25f, -0.5f, .0f,
+            -0.25f, 0.5f, .0f,
+            -0.5f,  0.5f, .0f
     };
     public int []elements = {
             0,2,3,

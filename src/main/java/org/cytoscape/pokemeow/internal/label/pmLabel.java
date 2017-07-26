@@ -192,4 +192,7 @@ public class pmLabel{
         gl4.glDeleteBuffers(2,tmpHandle,0);
         gl4.glDeleteVertexArrays(1,tmpHandle,fontVAO);
     }
+    public boolean isHit(float posx, float posy){
+        return false;
+    }
 }

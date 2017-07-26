@@ -10,6 +10,7 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.Arrays;
 
 /**
  * Created by ZhangMenghe on 2017/7/2.
@@ -28,6 +29,8 @@ public abstract class pmBasicArrowShape {
     public Matrix4 rotMatrix = Matrix4.identity();
     public Vector3 scale = new Vector3(1.0f,1.0f,1.0f);
     public Vector4 color = new Vector4(0.69f, 0.88f, 0.9f,1.0f);
+    protected float xMin, xMax, yMin, yMax;
+    protected float xMinOri, xMaxOri, yMinOri, yMaxOri;
 
     public pmBasicArrowShape(){
         modelMatrix = Matrix4.mult(Matrix4.scale((scale)), Matrix4.translation(origin));
@@ -73,26 +76,36 @@ public abstract class pmBasicArrowShape {
     public void setScale(Vector2 new_scale){
         scale.x *= new_scale.x;
         scale.y *= new_scale.y;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
+        updateMatrix();
     }
 
     public void setScale(float s_scale){
         scale.x *= s_scale;
         scale.y *= s_scale;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
+        updateMatrix();
     }
 
     public void setOrigin(Vector3 new_origin){
         origin = new_origin;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
+        updateMatrix();
     }
     public void setRotation(float radians){
         rotMatrix = Matrix4.rotationZ(radians);
+        updateMatrix();
+    }
+    private void updateMatrix(){
         modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
         modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
+//        float r11 = modelMatrix.e11;float r21 = modelMatrix.e21;
+//        float r12 = modelMatrix.e12;float r22 = modelMatrix.e22;
+//        float r14 = modelMatrix.e14;float r24 = modelMatrix.e24;
+//
+//        float[]arr1 = {r11*xMinOri+r12*yMinOri+r14, r11*xMinOri+r12*yMaxOri+r14, r11*xMaxOri+r12*yMinOri+r14, r11*xMaxOri+r12*yMaxOri+r14};
+//        float[]arr2 = {r21*xMinOri+r22*yMinOri+r24, r21*xMaxOri+r22*yMaxOri+r24, r21*xMinOri+r22*yMinOri+r24, r21*xMaxOri+r22*yMaxOri+r24};
+//        Arrays.sort(arr1);
+//        Arrays.sort(arr2);
+//        xMin = arr1[0]; xMax = arr1[3];
+//        yMin = arr2[0]; yMax = arr2[3];
     }
     public void setColor(Vector4 new_color){
         color = new_color;
@@ -105,4 +118,7 @@ public abstract class pmBasicArrowShape {
         gl4.glDeleteBuffers(2, objects,0);
         gl4.glDeleteVertexArrays(1, objects, VAO);
     }
+//    public boolean isHit(float posx, float posy){
+//        return !(posx<xMin || posx>xMax || posy<yMin || posy>yMax);
+//    }
 }

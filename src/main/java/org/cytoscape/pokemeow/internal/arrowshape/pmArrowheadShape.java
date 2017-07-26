@@ -15,10 +15,12 @@ public class pmArrowheadShape extends pmBasicArrowShape{
     public pmArrowheadShape(GL4 gl4){
         super();
         initPoints(gl4);
+        setScale(0.5f);
     }
 
     public pmArrowheadShape(GL4 gl4, boolean skip){
         super();
+        setScale(0.5f);
     }
 
     protected void initPoints(GL4 gl4){
