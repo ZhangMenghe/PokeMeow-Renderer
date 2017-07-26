@@ -16,6 +16,6 @@ public class pmShort2DiamondArrowShape extends pmTeeArrowShape{
         vertices[7] = 0.25f;
         vertices[9] = -0.25f;
         vertices[10] = .0f;
-        initBuffer(gl4, vertices, elements);
+        initBuffer(gl4, true);
     }
 }

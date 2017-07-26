@@ -46,7 +46,7 @@ public class pmDashLongLine extends pmLineVisual{
             }
         }
         connectMethod = CONNECT_SEGMENTS;
-        initLineVisual(gl4, vertices);
+        initLineVisual(gl4);
     }
 
     @Override

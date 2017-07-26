@@ -8,7 +8,7 @@ import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
  * Created by ZhangMenghe on 2017/7/9.
  */
 public class pmLineSeparateArrowPattern extends pmBasicArrowShape {
-    public float[] vertices = {
+    public float[] _vertices = {
             .0f, 0.5f, .0f,
             0.5f, .0f, .0f,
             0.25f, .0f, .0f,
@@ -17,7 +17,7 @@ public class pmLineSeparateArrowPattern extends pmBasicArrowShape {
             -0.25f, .0f, .0f,
             -0.5f, .0f, .0f
     };
-    public int [] elements = {
+    public int [] _elements = {
             0,6,5,
             0,5,2,
             0,1,2,
@@ -28,6 +28,8 @@ public class pmLineSeparateArrowPattern extends pmBasicArrowShape {
         super();
         numOfVertices = 7;
         numOfIndices = 15;
-        this.initBuffer(gl4, vertices, elements);
+        vertices = _vertices;
+        elements = _elements;
+        initBuffer(gl4, true);
     }
 }

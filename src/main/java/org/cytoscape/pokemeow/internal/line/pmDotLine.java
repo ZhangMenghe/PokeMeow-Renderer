@@ -34,6 +34,6 @@ public class pmDotLine extends pmLineVisual{
             }
         }
         connectMethod = CONNECT_DOTS;
-        initLineVisual(gl4, vertices);
+        initLineVisual(gl4);
     }
 }

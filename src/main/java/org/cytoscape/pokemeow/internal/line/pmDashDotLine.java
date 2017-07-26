@@ -43,7 +43,7 @@ public class pmDashDotLine extends pmLineVisual{
             }
         }
         connectMethod = CONNECT_SEGMENTS;
-        initLineVisual(gl4, vertices);
+        initLineVisual(gl4);
     }
     @Override
     protected void setQuadraticBezierCurveVertices(float ctrx, float ctry){

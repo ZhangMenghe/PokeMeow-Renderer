@@ -7,8 +7,8 @@ import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
  * Created by ZhangMenghe on 2017/7/2.
  */
 public class pmArrowheadShape extends pmBasicArrowShape{
-    public float[] vertices;
-    public int [] elements;
+//    public float[] vertices;
+//    public int [] elements;
     protected QuadraticBezier curve = new QuadraticBezier(-0.5f, -0.25f,.0f,.0f,0.5f,.0f);
     protected QuadraticBezier curve2 = new QuadraticBezier(0.5f,.0f,.0f,.0f,-0.5f, 0.25f);
 
@@ -52,13 +52,13 @@ public class pmArrowheadShape extends pmBasicArrowShape{
             elements[3*i+1] = tmpHandle[i+1];
             elements[3*i+2] = tmpHandle[i+2];
         }
-        this.initBuffer(gl4, vertices, elements);
+        this.initBuffer(gl4, true);
     }
 
     public void setZorder(GL4 gl4, float new_z){
         int length = vertices.length;
         for(int i =2; i<length; i+=3)
             vertices[i] = new_z;
-        this.initBuffer(gl4, vertices, elements);
+        this.initBuffer(gl4, true);
     }
 }

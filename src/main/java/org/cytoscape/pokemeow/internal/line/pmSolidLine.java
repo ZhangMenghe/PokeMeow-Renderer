@@ -17,7 +17,7 @@ public class pmSolidLine extends pmLineVisual {
             vertices[0]=srcx; vertices[1]=srcy; vertices[2]=zorder;
             vertices[3]=destx; vertices[4]=desty; vertices[5]=zorder;
         }
-        initLineVisual(gl4, vertices);
+        initLineVisual(gl4);
     }
 
 }

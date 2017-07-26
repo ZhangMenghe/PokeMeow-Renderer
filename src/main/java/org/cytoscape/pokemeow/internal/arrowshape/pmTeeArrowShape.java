@@ -6,13 +6,13 @@ import com.jogamp.opengl.GL4;
  * Created by ZhangMenghe on 2017/7/5.
  */
 public class pmTeeArrowShape extends pmBasicArrowShape{
-    public float[] vertices = {
+    public float[] _vertices = {
             -0.5f,  -0.5f, .0f,
             -0.25f, -0.5f, .0f,
             -0.25f, 0.5f, .0f,
             -0.5f,  0.5f, .0f
     };
-    public int []elements = {
+    public int []_elements = {
             0,2,3,
             0,1,2
     };
@@ -20,13 +20,17 @@ public class pmTeeArrowShape extends pmBasicArrowShape{
         super();
         numOfVertices = 4;
         numOfIndices = 6;
-        this.initBuffer(gl4, vertices, elements);
+        vertices = _vertices;
+        elements = _elements;
+        this.initBuffer(gl4,true);
         setScale(0.5f);
     }
     public pmTeeArrowShape(GL4 gl4, boolean skip){
         super();
         numOfVertices = 4;
         numOfIndices = 6;
+        vertices = _vertices;
+        elements = _elements;
         setScale(0.5f);
     }
     public void setZorder(GL4 gl4, float new_z){
@@ -34,6 +38,6 @@ public class pmTeeArrowShape extends pmBasicArrowShape{
         vertices[5] = new_z;
         vertices[8] = new_z;
         vertices[11] = new_z;
-        this.initBuffer(gl4, vertices, elements);
+        this.initBuffer(gl4, true);
     }
 }

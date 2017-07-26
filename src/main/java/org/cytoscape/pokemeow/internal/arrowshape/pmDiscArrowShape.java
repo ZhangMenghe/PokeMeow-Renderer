@@ -8,7 +8,6 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
  */
 public class pmDiscArrowShape extends pmBasicArrowShape {
     public int CircleSegment = 60;
-    public float[] vertices;
     public float radius = 0.25f;
 
     public  pmDiscArrowShape(GL4 gl4){
@@ -34,13 +33,13 @@ public class pmDiscArrowShape extends pmBasicArrowShape {
             x *= radial_factor;
             y *= radial_factor;
         }
-        initBuffer(gl4, vertices);
+        initBuffer(gl4);
         this.setScale(new Vector2(0.75f, 0.5f));
     }
     public void setZorder(GL4 gl4, float new_z){
         int length = vertices.length;
         for(int i =2; i<length; i+=3)
             vertices[i] = new_z;
-        this.initBuffer(gl4, vertices);
+        this.initBuffer(gl4);
     }
 }

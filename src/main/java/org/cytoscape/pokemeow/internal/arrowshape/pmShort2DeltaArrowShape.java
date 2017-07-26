@@ -15,6 +15,6 @@ public class pmShort2DeltaArrowShape extends pmDeltaArrowShape {
         vertices[4] = .0f;
         vertices[6] = -0.25f;
         vertices[7] = -0.25f;
-        initBuffer(gl4, vertices);
+        initBuffer(gl4);
     }
 }

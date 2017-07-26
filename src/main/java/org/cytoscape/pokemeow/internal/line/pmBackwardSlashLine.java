@@ -19,7 +19,7 @@ public class pmBackwardSlashLine extends pmPatternLineBasic{
             initVertices(gl4, singlePattern);
         else
             initCurveVertices(gl4, singlePattern);
-        initLineVisual(gl4, vertices);
+        initLineVisual(gl4);
     }
     public void setControlPoints(float nctrx, float nctry, int anchorID){
         super.setControlPoints(nctrx, nctry, anchorID, singlePattern);

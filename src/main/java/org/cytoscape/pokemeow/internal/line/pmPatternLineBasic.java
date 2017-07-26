@@ -71,7 +71,7 @@ public class pmPatternLineBasic extends pmLineVisual {
                 }
             }
         }
-        initLineVisual(gl4, vertices);
+        initLineVisual(gl4);
 //        setRotation(3.14f/4);
 //        setRotation((float)Math.atan((srcPos.y-destPos.y) / (srcPos.x-destPos.x)));
 

@@ -27,7 +27,7 @@ public class pmZigZagLine extends pmPatternLineBasic{
         }
 
         connectMethod = CONNECT_STRIP;
-        initLineVisual(gl4, vertices);
+        initLineVisual(gl4);
     }
 
     public void setControlPoints(float nctrx, float nctry, int anchorID){

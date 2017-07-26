@@ -31,7 +31,7 @@ public class pmSineWaveLine extends pmPatternLineBasic{
         }
 
         connectMethod = CONNECT_STRIP;
-        initLineVisual(gl4, vertices);
+        initLineVisual(gl4);
 
     }
     private void initStraightLinePoints(float srcx, float srcy, float destx, float desty){

@@ -19,7 +19,6 @@ public class pmLineVisual extends pmBasicArrowShape {
     private int[] connectArray = null;//if use CONNECT_ARRAY, then specify
     public pmBasicArrowShape[] patternList;//used for arrow shape line
     public pmLineVisual [] plineList = null;//used for parallel
-    public float[] vertices;
     public float zorder = .0f;
     public float slope;
 
@@ -87,21 +86,21 @@ public class pmLineVisual extends pmBasicArrowShape {
         controlPoints = line.controlPoints;
         anchor = line.anchor;
         anchor2 = line.anchor2;
-        initLineVisual(gl4, vertices);
+        initLineVisual(gl4);
     }
 
     public pmLineVisual(GL4 gl4, float[] pos, Byte mconnectMethod){
         super();
         if(mconnectMethod != CONNECT_ARRAY)
             connectMethod = mconnectMethod;
-        initLineVisual(gl4, pos);
+        initLineVisual(gl4);
     }
 
     public pmLineVisual(GL4 gl4, float[] pos, int [] mconnectArray){
         super();
         connectMethod = CONNECT_ARRAY;
         connectArray = mconnectArray;
-        initLineVisual(gl4, pos);
+        initLineVisual(gl4);
     }
 
     protected void initLineVisual(GL4 gl4, pmBasicArrowShape[] patterns){
@@ -119,14 +118,14 @@ public class pmLineVisual extends pmBasicArrowShape {
             plineList[1].setOrigin(new Vector3(line.origin.x+ 0.02f, line.origin.y , line.origin.z));
     }
 
-    protected void initLineVisual(GL4 gl4, float[] pos){
-        vertices = pos;
-        numOfVertices = pos.length/3;
+    protected void initLineVisual(GL4 gl4){
+        elements = connectArray;
+        numOfVertices = vertices.length/3;
         if(connectMethod != CONNECT_ARRAY)
-            initBuffer(gl4, pos);
+            initBuffer(gl4);
         else{
             numOfIndices = connectArray.length;
-            initBuffer(gl4, pos, connectArray);
+            initBuffer(gl4, true);
         }
 
     }

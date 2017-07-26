@@ -19,6 +19,8 @@ public abstract class pmBasicArrowShape {
     public int VAO = 0;
     public int VBO = 1;
     public int EBO = 2;//index buffer, maybe no use
+    public float[] vertices;
+    public int [] elements;
     public int[] objects = new int[3];
     public int numOfVertices = 0;
     public int numOfIndices = -1;
@@ -37,7 +39,7 @@ public abstract class pmBasicArrowShape {
         modelMatrix = Matrix4.mult(modelMatrix,rotMatrix);
     }
 
-    protected void initBuffer(GL4 gl4, float[] vertices){
+    protected void initBuffer(GL4 gl4){
         data_buff = Buffers.newDirectFloatBuffer(vertices);
         gl4.glGenVertexArrays(1,objects,VAO);
         gl4.glGenBuffers(1,objects,VBO);
@@ -52,9 +54,9 @@ public abstract class pmBasicArrowShape {
         gl4.glBindVertexArray(0);
     }
 
-    protected void initBuffer(GL4 gl, float[] vertices, int[] indices){
+    protected void initBuffer(GL4 gl, boolean useElement){
         FloatBuffer data_buff = Buffers.newDirectFloatBuffer(vertices);
-        IntBuffer indice_buff = Buffers.newDirectIntBuffer(indices);
+        IntBuffer indice_buff = Buffers.newDirectIntBuffer(elements);
         gl.glGenVertexArrays(1,objects,VAO);
         gl.glGenBuffers(1,objects,VBO);
         gl.glGenBuffers(1,objects,EBO);
@@ -96,6 +98,7 @@ public abstract class pmBasicArrowShape {
     private void updateMatrix(){
         modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
         modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
+
 //        float r11 = modelMatrix.e11;float r21 = modelMatrix.e21;
 //        float r12 = modelMatrix.e12;float r22 = modelMatrix.e22;
 //        float r14 = modelMatrix.e14;float r24 = modelMatrix.e24;
@@ -106,6 +109,13 @@ public abstract class pmBasicArrowShape {
 //        Arrays.sort(arr2);
 //        xMin = arr1[0]; xMax = arr1[3];
 //        yMin = arr2[0]; yMax = arr2[3];
+//        Vector4 tmp;
+//        for(int i=0;i<numOfVertices;i++){
+//            tmp = new Vector4(vertices[7 * i], vertices[7 * i + 1], .0f, 1.0f);
+//            tmp  = Vector4.matrixMult(modelMatrix, tmp);
+//            currPosX = tmp.x;
+//            currPosY = tmp.y;
+//        }
     }
     public void setColor(Vector4 new_color){
         color = new_color;

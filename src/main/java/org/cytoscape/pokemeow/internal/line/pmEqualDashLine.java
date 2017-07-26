@@ -32,6 +32,6 @@ public class pmEqualDashLine extends pmLineVisual{
             }
         }
         connectMethod = CONNECT_SEGMENTS;
-        initLineVisual(gl4, vertices);
+        initLineVisual(gl4);
     }
 }
