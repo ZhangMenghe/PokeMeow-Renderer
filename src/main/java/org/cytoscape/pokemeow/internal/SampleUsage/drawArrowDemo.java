@@ -33,7 +33,7 @@ public class drawArrowDemo extends Demo {
         int n = 0;
         for(Byte i=0;i<numOfItems;i++)
             arrowList[n++] = factory.createArrow(i);
-
+//        arrowList[0].setOrigin(new Vector3(1.0f,1.0f,.0f));
         for(int x=0;x<4;x++){
             for(int y=0;y<3;y++){
                 float cx = -0.5f + y*0.5f;

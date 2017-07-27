@@ -5,6 +5,7 @@ import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
+import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmArrowShapeFactory;
 import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 
@@ -32,7 +33,7 @@ public class pmLineFactory {
     public static final byte LINE_SEPARATE_ARROW = 12;
 
     private GL4 gl4;
-
+    private pmArrowShapeFactory arrowFctory;
     public pmLineFactory(GL4 gl){
         gl4 = gl;
         gl4.glEnable(GL4.GL_LINE_SMOOTH);
@@ -66,6 +67,7 @@ public class pmLineFactory {
             case 11:
                 return new pmParallelLine(gl4, createLine(LINE_SOLID, srcx, srcy, destx, desty, curveType));
             case 12:
+                arrowFctory = new pmArrowShapeFactory(gl4);
                 return new pmSeparateArrowLine(gl4, srcx, srcy, destx, desty, curveType);
             default:
                 return new pmSolidLine(gl4, srcx, srcy, destx, desty, curveType);
@@ -100,17 +102,7 @@ public class pmLineFactory {
                 gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
                 break;
             case pmLineVisual.CONNECT_PATTERN:
-                for(int i=0;i<line.numOfPatterns;i++){
-                    pmBasicArrowShape arrow = line.patternList[i];
-                    gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(arrow.modelMatrix.asArrayCM()));
-                    gl4.glUniform4f(gshaderParam.vec4_color, arrow.color.x, arrow.color.y, arrow.color.z,arrow.color.w);
-                    gl4.glBindVertexArray(arrow.objects[arrow.VAO]);
-//                    gl4.glBindBuffer(GL_ARRAY_BUFFER, arrow.objects[arrow.VBO]);
-                    gl4.glBindBuffer(GL_ARRAY_BUFFER, arrow.objects[arrow.EBO]);
-                    gl4.glDrawElements(GL4.GL_TRIANGLE_FAN,arrow.numOfIndices, GL.GL_UNSIGNED_INT,0);
-                    gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
-//                    gl4.glBindVertexArray(0);
-                }
+                arrowFctory.drawArrowList(gl4, line.patternList, gshaderParam);
                 break;
             case pmLineVisual.CONNECT_PARALLEL:
                 for(int i=0; i<2; i++){
@@ -144,9 +136,11 @@ public class pmLineFactory {
                 }
             }
             else{
-                line.data_buff = Buffers.newDirectFloatBuffer(line.vertices);
-                gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  line.objects[line.VBO]);
-                gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, line.data_buff.capacity() * Float.BYTES, line.data_buff);
+                if(line.connectMethod != pmLineVisual.CONNECT_PATTERN){
+                    line.data_buff = Buffers.newDirectFloatBuffer(line.vertices);
+                    gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  line.objects[line.VBO]);
+                    gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, line.data_buff.capacity() * Float.BYTES, line.data_buff);
+                }
             }
 
         }

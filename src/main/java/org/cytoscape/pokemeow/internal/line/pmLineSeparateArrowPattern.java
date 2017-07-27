@@ -30,6 +30,6 @@ public class pmLineSeparateArrowPattern extends pmBasicArrowShape {
         numOfIndices = 15;
         vertices = _vertices;
         elements = _elements;
-        initBuffer(gl4, true);
+        this.initBuffer(gl4, true);
     }
 }

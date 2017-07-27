@@ -69,11 +69,14 @@ public class pmArrowShapeFactory {
     }
 
     public void drawArrow(GL4 gl4, pmBasicArrowShape arrow, pmShaderParams gshaderParam){
-        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(arrow.modelMatrix.asArrayCM()));
         gl4.glUniform4f(gshaderParam.vec4_color, arrow.color.x, arrow.color.y, arrow.color.z,arrow.color.w);
         gl4.glBindVertexArray(arrow.objects[arrow.VAO]);
-        gl4.glBindBuffer(GL_ARRAY_BUFFER, arrow.objects[arrow.VBO]);
-
+        if(arrow.dirty){
+            arrow.data_buff = Buffers.newDirectFloatBuffer(arrow.vertices);
+            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  arrow.objects[arrow.VBO]);
+            gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, arrow.data_buff.capacity() * Float.BYTES, arrow.data_buff);
+            arrow.dirty = false;
+        }
         if(arrow.numOfIndices == -1)
             gl4.glDrawArrays(GL4.GL_TRIANGLE_FAN, 0, arrow.numOfVertices);
         else{
@@ -82,6 +85,7 @@ public class pmArrowShapeFactory {
             gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         }
 
+        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl4.glBindVertexArray(0);
     }
     

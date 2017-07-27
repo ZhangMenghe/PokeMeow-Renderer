@@ -55,7 +55,7 @@ public abstract class pmBasicArrowShape {
     }
 
     protected void initBuffer(GL4 gl, boolean useElement){
-        FloatBuffer data_buff = Buffers.newDirectFloatBuffer(vertices);
+        data_buff = Buffers.newDirectFloatBuffer(vertices);
         IntBuffer indice_buff = Buffers.newDirectIntBuffer(elements);
         gl.glGenVertexArrays(1,objects,VAO);
         gl.glGenBuffers(1,objects,VBO);
@@ -88,14 +88,39 @@ public abstract class pmBasicArrowShape {
     }
 
     public void setOrigin(Vector3 new_origin){
+        float gapx = new_origin.x - origin.x;
+        float gapy = new_origin.y - origin.y;
         origin = new_origin;
-        updateMatrix();
+        for(int i=0; i<numOfVertices; i++){
+            vertices[3*i]+=gapx;
+            vertices[3*i+1]+=gapy;
+        }
+        dirty = true;
     }
+
+    public void setOrigin(float gapx, float gapy){
+        origin.x+=gapx;
+        origin.y+=gapy;
+        for(int i=0; i<numOfVertices; i++){
+            vertices[3*i]+=gapx;
+            vertices[3*i+1]+=gapy;
+        }
+        dirty = true;
+    }
+
     public void setRotation(float radians){
-        rotMatrix = Matrix4.rotationZ(radians);
-        updateMatrix();
+        float cost = (float)Math.cos(radians);
+        float sint = (float)Math.sin(radians);
+        for(int i=0; i<numOfVertices; i++){
+            float tmpx = vertices[3*i];
+            float tmpy = vertices[3*i+1];
+            vertices[3*i] = tmpx*cost-tmpy*sint;
+            vertices[3*i+1] = tmpx*sint+tmpy*cost;
+        }
+        dirty = true;
     }
-    private void updateMatrix(){
+
+    public void updateMatrix(){
         modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
         modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
 
@@ -109,13 +134,24 @@ public abstract class pmBasicArrowShape {
 //        Arrays.sort(arr2);
 //        xMin = arr1[0]; xMax = arr1[3];
 //        yMin = arr2[0]; yMax = arr2[3];
-//        Vector4 tmp;
-//        for(int i=0;i<numOfVertices;i++){
-//            tmp = new Vector4(vertices[7 * i], vertices[7 * i + 1], .0f, 1.0f);
-//            tmp  = Vector4.matrixMult(modelMatrix, tmp);
-//            currPosX = tmp.x;
-//            currPosY = tmp.y;
-//        }
+        Vector4 tmp;
+        for(int i=0;i<numOfVertices;i++){
+            tmp = new Vector4(vertices[3 * i], vertices[3 * i + 1], .0f, 1.0f);
+            tmp  = Vector4.matrixMult(modelMatrix, tmp);
+            vertices[3 * i] = tmp.x;
+            vertices[3 * i+1] = tmp.y;
+        }
+        dirty = true;
+    }
+    public void updateMatrix(boolean skip){
+        Vector4 tmp;
+        for(int i=0;i<numOfVertices;i++){
+            tmp = new Vector4(vertices[3 * i], vertices[3 * i + 1], .0f, 1.0f);
+            tmp  = Vector4.matrixMult(modelMatrix, tmp);
+            vertices[3 * i] = tmp.x;
+            vertices[3 * i+1] = tmp.y;
+        }
+        dirty = true;
     }
     public void setColor(Vector4 new_color){
         color = new_color;

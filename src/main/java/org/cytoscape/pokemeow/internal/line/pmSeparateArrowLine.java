@@ -36,6 +36,7 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
                     float tmpx = srcx + shrink * i;
                     float tmpy = srcy + slope * shrink * i;
                     arrowList[i].setOrigin(new Vector3(tmpx, tmpy, zorder));
+                    arrowList[i].dirty = true;
                 }
             }
             else{
@@ -67,7 +68,7 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
             }
         }
             initLineVisual(gl4, arrowList);
-
+        dirty = true;
     }
     public void setScale(Vector2 new_scale) {
         scale.x *= new_scale.x;
@@ -87,11 +88,11 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
     }
 
     public void setOrigin(Vector3 new_origin){
+        float gapx = new_origin.x - origin.x;
+        float gapy = new_origin.y - origin.y;
         origin = new_origin;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
-        for (int i = 0; i < patternList.length; i++)
-            patternList[i].modelMatrix = Matrix4.mult(modelMatrix, patternList[i].modelMatrix);
+        for(pmBasicArrowShape arrow: patternList)
+            arrow.setOrigin(gapx, gapy);
     }
     public void setRotation(float radians){
         rotMatrix = Matrix4.rotationZ(radians);
@@ -125,5 +126,22 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
         patternList[numOfPatterns-1].setRotation((float) theta - 3.14f/2);
         patternList[numOfPatterns-1].setOrigin(new Vector3(vertices[3*n], vertices[3*n+1], zorder));
 
+    }
+
+    public void updateMatrix(){
+        super.updateMatrix();
+        for(pmBasicArrowShape arrow:patternList)
+            arrow.updateMatrix();
+
+//        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
+//        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
+//        Vector4 tmp;
+//        for(int i=0;i<numOfVertices;i++){
+//            tmp = new Vector4(vertices[3 * i], vertices[3 * i + 1], .0f, 1.0f);
+//            tmp  = Vector4.matrixMult(modelMatrix, tmp);
+//            vertices[3 * i] = tmp.x;
+//            vertices[3 * i+1] = tmp.y;
+//        }
+//        dirty = true;
     }
 }

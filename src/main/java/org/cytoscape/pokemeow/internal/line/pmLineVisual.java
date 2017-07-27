@@ -82,7 +82,9 @@ public class pmLineVisual extends pmBasicArrowShape {
         connectArray = line.connectArray;
         patternList = line.patternList;
         plineList = line.plineList;
-        vertices = line.vertices;
+        vertices = new float[3*line.numOfVertices];
+        for(int i=0;i<line.vertices.length;i++)
+            vertices[i] = line.vertices[i];
         controlPoints = line.controlPoints;
         anchor = line.anchor;
         anchor2 = line.anchor2;
@@ -115,7 +117,7 @@ public class pmLineVisual extends pmBasicArrowShape {
         if(Math.abs(line.slope) <= 1)
             plineList[1].setOrigin(new Vector3(line.origin.x, line.origin.y + 0.02f, line.origin.z));
         else
-            plineList[1].setOrigin(new Vector3(line.origin.x+ 0.02f, line.origin.y , line.origin.z));
+            plineList[1].setOrigin(new Vector3(line.origin.x + 0.02f, line.origin.y , line.origin.z));
     }
 
     protected void initLineVisual(GL4 gl4){

@@ -17,6 +17,7 @@ public class pmParallelLine extends pmLineVisual {
         destPos.x = line.destPos.x; destPos.y = line.destPos.y;
         connectMethod = CONNECT_PARALLEL;
         initLineVisual(gl4, line);
+        dirty = true;
         if(curveType == LINE_QUADRIC_CURVE){
             controlPoints = line.controlPoints;
             anchor = new pmAnchor(gl4, controlPoints[0], controlPoints[1]);
@@ -51,7 +52,11 @@ public class pmParallelLine extends pmLineVisual {
         modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
         plineList[0].modelMatrix = Matrix4.mult(modelMatrix, plineList[0].modelMatrix);
         plineList[1].modelMatrix = Matrix4.mult(modelMatrix, plineList[1].modelMatrix);
+        plineList[0].updateMatrix(true);
+        plineList[1].updateMatrix(true);
+        dirty = true;
     }
+
     public void setRotation(float radians){
         rotMatrix = Matrix4.rotationZ(radians);
         modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
