@@ -76,12 +76,12 @@ public class pmEdge {
     }
     private void setArrowPosAndRot(){
         if (_destArrow != null) {
-            _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
             _destArrow.setScale(0.2f);
+            _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
         }
         if (_srcArrow != null) {
-            _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
             _srcArrow.setScale(0.2f);
+            _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
         }
         setArrowRotation();
     }
@@ -135,8 +135,10 @@ public class pmEdge {
 
         if (_destArrow != null)
             _destArrow.setRotation((float) thetadest);
+//            _destArrow.setRotation(3.14f/2);
         if (_srcArrow != null)
             _srcArrow.setRotation((float) thetasrc - 3.14f);
+//            _srcArrow.setRotation(3.14f/2);
     }
 
     public void draw(GL4 gl4, pmShaderParams gshaderParam){

@@ -9,7 +9,7 @@ public class pmContiguousArrowLine extends pmPatternLineBasic {
     private float[] singlePattern = {
             .0f, 0.5f, .0f,
             0.5f, .0f, .0f,
-            -1.0f, .0f, .0f,
+            -1.5f, .0f, .0f,
             0.5f, .0f, .0f,
             .0f, -0.5f, .0f,
             0.5f, .0f, .0f,

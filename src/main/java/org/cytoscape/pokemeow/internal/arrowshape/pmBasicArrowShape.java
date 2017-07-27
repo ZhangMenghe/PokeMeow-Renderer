@@ -33,7 +33,7 @@ public abstract class pmBasicArrowShape {
     public Vector4 color = new Vector4(0.69f, 0.88f, 0.9f,1.0f);
     protected float xMin, xMax, yMin, yMax;
     protected float xMinOri, xMaxOri, yMinOri, yMaxOri;
-
+    private float lastRadians = .0f;
     public pmBasicArrowShape(){
         modelMatrix = Matrix4.mult(Matrix4.scale((scale)), Matrix4.translation(origin));
         modelMatrix = Matrix4.mult(modelMatrix,rotMatrix);
@@ -78,13 +78,27 @@ public abstract class pmBasicArrowShape {
     public void setScale(Vector2 new_scale){
         scale.x *= new_scale.x;
         scale.y *= new_scale.y;
-        updateMatrix();
+        float tmpx, tmpy;
+        for(int i=0; i<numOfVertices; i++){
+            tmpx = vertices[3*i] - origin.x;
+            tmpy = vertices[3*i+1] - origin.y;
+            vertices[3*i] = tmpx*new_scale.x + origin.x;
+            vertices[3*i+1]= tmpy*new_scale.y + origin.y;
+        }
+        dirty = true;
     }
 
     public void setScale(float s_scale){
         scale.x *= s_scale;
         scale.y *= s_scale;
-        updateMatrix();
+        float tmpx, tmpy;
+        for(int i=0; i<numOfVertices; i++){
+            tmpx = vertices[3*i] - origin.x;
+            tmpy = vertices[3*i+1] - origin.y;
+            vertices[3*i] = tmpx*s_scale+origin.x;
+            vertices[3*i+1]= tmpy*s_scale+origin.y;
+        }
+        dirty = true;
     }
 
     public void setOrigin(Vector3 new_origin){
@@ -109,13 +123,17 @@ public abstract class pmBasicArrowShape {
     }
 
     public void setRotation(float radians){
-        float cost = (float)Math.cos(radians);
-        float sint = (float)Math.sin(radians);
+        float radia = radians - lastRadians;
+        lastRadians = radians;
+        float cost = (float)Math.cos(radia);
+        float sint = (float)Math.sin(radia);
+        float tmpx,tmpy;
+
         for(int i=0; i<numOfVertices; i++){
-            float tmpx = vertices[3*i];
-            float tmpy = vertices[3*i+1];
-            vertices[3*i] = tmpx*cost-tmpy*sint;
-            vertices[3*i+1] = tmpx*sint+tmpy*cost;
+            tmpx = vertices[3*i]-origin.x;
+            tmpy = vertices[3*i+1]-origin.y;
+            vertices[3*i] = tmpx*cost - tmpy*sint + origin.x;
+            vertices[3*i+1] = tmpx*sint + tmpy*cost + origin.y;
         }
         dirty = true;
     }

@@ -33,9 +33,10 @@ public class drawLineDemo extends Demo {
         for(n=0; n<numOfItems; n++){
             float cy = -0.9f + 0.1f*n;
             lineList[n].setOrigin(new Vector3(.0f, cy, .0f));
+            lineList[n].setRotation(3.14f/2);
         }
+
 //        lineList[0] = factory.createLine(pmLineFactory.LINE_SEPARATE_ARROW, -1,.0f,1.0f,.0f, pmLineVisual.LINE_STRAIGHT);
-//        lineList[0].setOrigin(new Vector3(.0f, 1.0f, .0f));
     }
 
     @Override

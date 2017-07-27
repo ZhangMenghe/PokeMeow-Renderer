@@ -15,6 +15,7 @@ public class pmParallelLine extends pmLineVisual {
         curveType = line.curveType;
         srcPos.x = line.srcPos.x; srcPos.y = line.srcPos.y;
         destPos.x = line.destPos.x; destPos.y = line.destPos.y;
+        slope = line.slope;
         connectMethod = CONNECT_PARALLEL;
         initLineVisual(gl4, line);
         dirty = true;
@@ -31,39 +32,31 @@ public class pmParallelLine extends pmLineVisual {
     public void setScale(Vector2 new_scale){
         scale.x *= new_scale.x;
         scale.y *= new_scale.y;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
-        plineList[0].modelMatrix = Matrix4.mult(modelMatrix, plineList[0].modelMatrix);
-        plineList[1].modelMatrix = Matrix4.mult(modelMatrix, plineList[1].modelMatrix);
+        plineList[0].setScale(new_scale);
+        plineList[1].setScale(new_scale);
     }
 
     public void setScale(float s_scale){
         scale.x *= s_scale;
         scale.y *= s_scale;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
-        plineList[0].modelMatrix = Matrix4.mult(modelMatrix, plineList[0].modelMatrix);
-        plineList[1].modelMatrix = Matrix4.mult(modelMatrix, plineList[1].modelMatrix);
+        plineList[0].setScale(s_scale);
+        plineList[1].setScale(s_scale);
     }
 
     public void setOrigin(Vector3 new_origin){
+        float gapx = new_origin.x-origin.x;
+        float gapy = new_origin.y-origin.y;
+        plineList[0].setOrigin(gapx, gapy);
+        plineList[1].setOrigin(gapx, gapy);
         origin = new_origin;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
-        plineList[0].modelMatrix = Matrix4.mult(modelMatrix, plineList[0].modelMatrix);
-        plineList[1].modelMatrix = Matrix4.mult(modelMatrix, plineList[1].modelMatrix);
-        plineList[0].updateMatrix(true);
-        plineList[1].updateMatrix(true);
         dirty = true;
     }
 
     public void setRotation(float radians){
-        rotMatrix = Matrix4.rotationZ(radians);
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
-        plineList[0].modelMatrix = Matrix4.mult(modelMatrix, plineList[0].modelMatrix);
-        plineList[1].modelMatrix = Matrix4.mult(modelMatrix, plineList[1].modelMatrix);
+        plineList[0].setRotation(radians);
+        plineList[1].setRotation(radians);
     }
+
     public void setColor(Vector4 new_color){
         color = new_color;
     }
@@ -80,7 +73,20 @@ public class pmParallelLine extends pmLineVisual {
             anchor2.setPosition(nctrx, nctry);
         }
         plineList[0].setControlPoints(nctrx,nctry,anchorID);
-        plineList[1].vertices = plineList[0].vertices;
+        if(Math.abs(slope) <= 1){
+            for(int i=0;i<plineList[0].numOfVertices;i++){
+                plineList[1].vertices[3*i]=plineList[0].vertices[3*i];
+                plineList[1].vertices[3*i+1]=plineList[0].vertices[3*i+1]+0.02f;
+            }
+        }
+        else{
+            for(int i=0;i<plineList[0].numOfVertices;i++){
+                plineList[1].vertices[3*i]=plineList[0].vertices[3*i] +0.02f;
+                plineList[1].vertices[3*i+1]=plineList[0].vertices[3*i+1];
+            }
+        }
+
+        plineList[1].dirty = true;
         dirty = true;
     }
 }

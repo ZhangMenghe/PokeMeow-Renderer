@@ -73,18 +73,14 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
     public void setScale(Vector2 new_scale) {
         scale.x *= new_scale.x;
         scale.y *= new_scale.y;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin), Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
         for (int i = 0; i < patternList.length; i++)
-            patternList[i].modelMatrix = Matrix4.mult(modelMatrix, patternList[i].modelMatrix);
+            patternList[i].setScale(new_scale);
     }
     public void setScale(float s_scale){
         scale.x *= s_scale;
         scale.y *= s_scale;
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
         for (int i = 0; i < patternList.length; i++)
-            patternList[i].modelMatrix = Matrix4.mult(modelMatrix, patternList[i].modelMatrix);
+            patternList[i].setScale(s_scale);
     }
 
     public void setOrigin(Vector3 new_origin){
@@ -95,11 +91,8 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
             arrow.setOrigin(gapx, gapy);
     }
     public void setRotation(float radians){
-        rotMatrix = Matrix4.rotationZ(radians);
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
-        for (int i = 0; i < patternList.length; i++)
-            patternList[i].modelMatrix = Matrix4.mult(modelMatrix, patternList[i].modelMatrix);
+//        for (int i = 0; i < patternList.length; i++)
+//            patternList[i].setRotation(radians);
     }
     public void setColor(Vector4 new_color){
         color = new_color;
@@ -109,11 +102,9 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
     }
     public void setControlPoints(float nctrx, float nctry, int anchorID){
         super.setControlPoints(nctrx,nctry,anchorID);
-        numOfPatterns = QuadraticBezier.resolution/arrDensity;
-        arrowList = new pmBasicArrowShape[numOfPatterns];
         double theta = 0;
         int n = 0;
-        for (int i = 0; i < numOfPatterns-1; i++,n+=arrDensity) {
+        for (int i = 0; i < numOfPatterns-1; i++, n+=arrDensity) {
             float deltay = patternList[i+1].origin.y - patternList[i].origin.y;
             float deltax = patternList[i+1].origin.x - patternList[i].origin.x;
             float k = deltay / deltax;
@@ -126,22 +117,5 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
         patternList[numOfPatterns-1].setRotation((float) theta - 3.14f/2);
         patternList[numOfPatterns-1].setOrigin(new Vector3(vertices[3*n], vertices[3*n+1], zorder));
 
-    }
-
-    public void updateMatrix(){
-        super.updateMatrix();
-        for(pmBasicArrowShape arrow:patternList)
-            arrow.updateMatrix();
-
-//        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-//        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
-//        Vector4 tmp;
-//        for(int i=0;i<numOfVertices;i++){
-//            tmp = new Vector4(vertices[3 * i], vertices[3 * i + 1], .0f, 1.0f);
-//            tmp  = Vector4.matrixMult(modelMatrix, tmp);
-//            vertices[3 * i] = tmp.x;
-//            vertices[3 * i+1] = tmp.y;
-//        }
-//        dirty = true;
     }
 }

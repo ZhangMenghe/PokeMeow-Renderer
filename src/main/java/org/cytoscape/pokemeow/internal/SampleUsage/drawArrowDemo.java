@@ -44,6 +44,7 @@ public class drawArrowDemo extends Demo {
                 arrowList[idx].setScale(0.5f);
             }
         }
+        arrowList[0].setRotation(3.14f);
         //arrowList[2].setZorder(gl4, 1);
     }
     @Override
