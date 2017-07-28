@@ -88,12 +88,7 @@ public class pmLineVisual extends pmBasicArrowShape {
         initLineVisual(gl4);
     }
 
-    protected void initLineVisual(GL4 gl4, pmBasicArrowShape[] patterns){
-        patternList = patterns;
-        connectMethod = CONNECT_PATTERN;
-    }
-
-    protected  void initLineVisual(GL4 gl4, pmLineVisual line){
+    protected void initLineVisual(GL4 gl4, pmLineVisual line){
         plineList = new pmLineVisual[2];
         plineList[0] = line;
         plineList[1] = new pmLineVisual(gl4, line);

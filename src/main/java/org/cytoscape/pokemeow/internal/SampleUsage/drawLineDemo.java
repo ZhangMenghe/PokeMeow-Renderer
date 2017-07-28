@@ -32,7 +32,7 @@ public class drawLineDemo extends Demo {
 //            lineList[n++] = factory.createLine(i, -1,.0f,1.0f,.0f, pmLineVisual.LINE_QUADRIC_CURVE);
         for(Byte i=12;i<13;i++){
             float cy = -0.9f + 0.1f*n;
-            lineList[n++] = factory.createLine(i, -1.0f,cy,1.0f,cy, pmLineVisual.LINE_QUADRIC_CURVE);
+            lineList[n++] = factory.createLine(i, -1.0f,-1.0f,1.0f,1.0f, pmLineVisual.LINE_QUADRIC_CURVE);
             lineList[n-1].resetSrcAndDest(cy,-1.0f,cy,1.0f);
 //            lineList[n].setOrigin(new Vector3(.0f, cy, .0f));
 //            lineList[n].setRotation(3.14f/2);
