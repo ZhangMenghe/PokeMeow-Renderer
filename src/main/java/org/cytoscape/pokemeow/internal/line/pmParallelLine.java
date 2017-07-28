@@ -73,6 +73,10 @@ public class pmParallelLine extends pmLineVisual {
             anchor2.setPosition(nctrx, nctry);
         }
         plineList[0].setControlPoints(nctrx,nctry,anchorID);
+        SynchronizeLine();
+        dirty = true;
+    }
+    private void SynchronizeLine(){
         if(Math.abs(slope) <= 1){
             for(int i=0;i<plineList[0].numOfVertices;i++){
                 plineList[1].vertices[3*i]=plineList[0].vertices[3*i];
@@ -85,8 +89,16 @@ public class pmParallelLine extends pmLineVisual {
                 plineList[1].vertices[3*i+1]=plineList[0].vertices[3*i+1];
             }
         }
-
         plineList[1].dirty = true;
+    }
+    @Override
+    public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
         dirty = true;
+        srcPos.x = srcx; srcPos.y = srcy;
+        destPos.x = destx; destPos.y = desty;
+        slope = (desty - srcy) / (destx - srcx);
+
+        plineList[0].setSrcAndDest(srcx,srcy,destx,desty);
+        SynchronizeLine();
     }
 }

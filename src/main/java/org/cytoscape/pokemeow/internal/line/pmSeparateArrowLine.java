@@ -12,10 +12,12 @@ import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
  * Created by ZhangMenghe on 2017/7/10.
  */
 public class pmSeparateArrowLine extends pmPatternLineBasic {
-    private pmBasicArrowShape[] arrowList;
     public final static int arrDensity = 4;
+    private GL4 gl;
     public pmSeparateArrowLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type) {
         super(gl4, srcx, srcy, destx, desty, type);
+        numOfPatterns = QuadraticBezier.resolution/arrDensity;
+        gl = gl4;
         if(curveType == LINE_STRAIGHT) {
             float deltay = desty - srcy;
             float deltax = destx - srcx;
@@ -27,48 +29,52 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
             numOfPatterns  = 20*(int)(length2/2);
 
             shrink = (float) Math.sqrt(length2)/numOfPatterns;
-            arrowList = new pmBasicArrowShape[numOfPatterns];
+            patternList = new pmBasicArrowShape[numOfPatterns];
             if(Math.abs(slope) <= 1) {
                 for (int i = 0; i < numOfPatterns; i++) {
-                    arrowList[i] = new pmLineSeparateArrowPattern(gl4);
-                    arrowList[i].setScale(0.05f);
-                    arrowList[i].setRotation((float) theta - 3.14f / 2);
+                    patternList[i] = new pmLineSeparateArrowPattern(gl4);
+                    patternList[i].setScale(0.05f);
+                    patternList[i].setRotation((float) theta - 3.14f / 2);
                     float tmpx = srcx + shrink * i;
                     float tmpy = srcy + slope * shrink * i;
-                    arrowList[i].setOrigin(new Vector3(tmpx, tmpy, zorder));
-                    arrowList[i].dirty = true;
+                    patternList[i].setOrigin(new Vector3(tmpx, tmpy, zorder));
+                    patternList[i].dirty = true;
                 }
             }
             else{
                 float k = 1.0f/slope;
                 for (int i = 0; i < numOfPatterns; i++) {
-                    arrowList[i] = new pmLineSeparateArrowPattern(gl4);
-                    arrowList[i].setScale(0.05f);
-                    arrowList[i].setRotation((float) theta - 3.14f / 2);
+                    patternList[i] = new pmLineSeparateArrowPattern(gl4);
+                    patternList[i].setScale(0.05f);
+                    patternList[i].setRotation((float) theta - 3.14f / 2);
 
                     float tmpy = srcy + shrink * i;
                     float tmpx = srcx + k * shrink * i;
-                    arrowList[i].setOrigin(new Vector3(tmpx, tmpy, zorder));
+                    patternList[i].setOrigin(new Vector3(tmpx, tmpy, zorder));
                 }
             }
         }
-        else{
-            numOfPatterns = QuadraticBezier.resolution/arrDensity;
-            arrowList = new pmBasicArrowShape[numOfPatterns];
-            for (int i = 0, n=0; i < numOfPatterns; i++,n+=arrDensity) {
-                arrowList[i] = new pmLineSeparateArrowPattern(gl4);
-                arrowList[i].setScale(0.05f);
-                //should calculate tangent of curve
-                float deltay = vertices[3*(i+1)+1] - vertices[3*i+1];
-                float deltax = vertices[3*(i+1)] - vertices[3*i];
-                float k = deltay / deltax;
-                double theta = Math.atan(k);
-                arrowList[i].setRotation((float) theta - 3.14f/2);
-                arrowList[i].setOrigin(new Vector3(vertices[3*n], vertices[3*n+1], zorder));
-            }
-        }
-            initLineVisual(gl4, arrowList);
+        else
+            setPatternOnCurve();
+        connectMethod = CONNECT_PATTERN;
         dirty = true;
+    }
+    private void setPatternOnCurve(){
+        float rlen = (Math.abs(srcPos.x-destPos.x) + Math.abs(srcPos.y-destPos.y))/2;
+        int absNumOfPatterns = (int)(rlen * numOfPatterns);
+        int step = numOfVertices / absNumOfPatterns;
+        patternList = new pmBasicArrowShape[absNumOfPatterns];
+        float deltax, deltay;
+        for (int i = 0, n=0; i < absNumOfPatterns; i++,n+=step) {
+            patternList[i] = new pmLineSeparateArrowPattern(gl);
+            patternList[i].setScale(0.05f);
+            deltay = vertices[3*(i+1)+1] - vertices[3*i+1];
+            deltax = vertices[3*(i+1)] - vertices[3*i];
+            float k = deltay / deltax;
+            double theta = Math.atan(k);
+            patternList[i].setRotation((float) theta - 3.14f/2);
+            patternList[i].setOrigin(new Vector3(vertices[3*n], vertices[3*n+1], zorder));
+        }
     }
     public void setScale(Vector2 new_scale) {
         scale.x *= new_scale.x;
@@ -118,5 +124,12 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
         patternList[numOfPatterns-1].setRotation((float) theta - 3.14f/2);
         patternList[numOfPatterns-1].setOrigin(new Vector3(vertices[3*n], vertices[3*n+1], zorder));
 
+    }
+
+    public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
+        super.setSrcAndDest(srcx,srcy,destx,desty);
+        if(curveType == LINE_STRAIGHT) {}
+        else
+            setPatternOnCurve();
     }
 }
