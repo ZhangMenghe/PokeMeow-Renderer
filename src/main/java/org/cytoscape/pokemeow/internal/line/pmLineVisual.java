@@ -159,6 +159,51 @@ public class pmLineVisual extends pmBasicArrowShape {
     public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
         setSrcAndDest(srcx,srcy,destx,desty);
     }
+    public void setRotation(float radians){
+        float radia = radians;//- lastRadians;
+        //lastRadians = radians;
+        float cost = (float)Math.cos(radia);
+        float sint = (float)Math.sin(radia);
+        float tmpx,tmpy;
+
+        for(int i=0; i<numOfVertices; i++){
+            tmpx = vertices[3*i]-origin.x;
+            tmpy = vertices[3*i+1]-origin.y;
+            vertices[3*i] = tmpx*cost - tmpy*sint + origin.x;
+            vertices[3*i+1] = tmpx*sint + tmpy*cost + origin.y;
+        }
+        tmpx = srcPos.x - origin.x;
+        tmpy = srcPos.y - origin.y;
+        srcPos.x = tmpx*cost - tmpy*sint + origin.x;
+        srcPos.y = tmpx*sint + tmpy*cost + origin.y;
+
+        tmpx = destPos.x - origin.x;
+        tmpy = destPos.y - origin.y;
+        destPos.x = tmpx*cost - tmpy*sint + origin.x;
+        destPos.y = tmpx*sint + tmpy*cost + origin.y;
+        slope = (destPos.y - srcPos.y) / (destPos.x - srcPos.x);
+        dirty = true;
+        if(curveType == LINE_STRAIGHT)
+            return;
+        tmpx = controlPoints[0] - origin.x;
+        tmpy = controlPoints[1] - origin.y;
+        controlPoints[0] = tmpx*cost - tmpy*sint + origin.x;
+        controlPoints[1] = tmpx*sint + tmpy*cost + origin.y;
+        tmpx = anchor.vertices[0] - origin.x;
+        tmpy = anchor.vertices[1] - origin.y;
+        anchor.vertices[0] = tmpx*cost - tmpy*sint + origin.x;
+        anchor.vertices[1] = tmpx*sint + tmpy*cost + origin.y;
+        if(anchor2!=null){
+            tmpx = controlPoints[2] - origin.x;
+            tmpy = controlPoints[3] - origin.y;
+            controlPoints[2] = tmpx*cost - tmpy*sint + origin.x;
+            controlPoints[3] = tmpx*sint + tmpy*cost + origin.y;
+            tmpx = anchor2.vertices[0] - origin.x;
+            tmpy = anchor2.vertices[1] - origin.y;
+            anchor2.vertices[0] = tmpx*cost - tmpy*sint + origin.x;
+            anchor2.vertices[1] = tmpx*sint + tmpy*cost + origin.y;
+        }
+    }
     protected void setSrcAndDest(float srcx, float srcy, float destx, float desty){
         dirty = true;
         srcPos.x = srcx; srcPos.y = srcy;

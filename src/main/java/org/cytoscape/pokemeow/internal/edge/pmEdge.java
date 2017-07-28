@@ -99,12 +99,13 @@ public class pmEdge {
             thetasrc = Math.atan(k);
 
             float k2 = (_line.controlPoints[1] - _line.destPos.y) / (_line.controlPoints[0] - _line.destPos.x);
+            System.out.println(_line.controlPoints[0] +"--" + _line.slope +"---" + _line.srcPos.x);
             thetadest = Math.atan(k2);
             if (Math.abs(_line.slope) > 1) {
-                if (_line.controlPoints[0] > _line.srcPos.x)
+                if (_line.controlPoints[0] > _line.destPos.x)
                     thetadest -= 3.14f;
-                else
-                    thetasrc -= 3.14f;
+                if(_line.controlPoints[0] < _line.srcPos.x)
+                    thetasrc-=3.14f;
             }
             else{
                 if(_line.destPos.x < _line.srcPos.x){
@@ -237,9 +238,10 @@ public class pmEdge {
     public void setRotation(float radians){
         _line.setRotation(radians);
         if(_srcArrow!=null)
-            _srcArrow.setRotation(radians);
+            _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
         if(_destArrow!=null)
-            _destArrow.setRotation(radians);
+            _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
+        setArrowRotation();
     }
     public void setOrigin(Vector2 new_origin){
         float deltax = new_origin.x - origin.x;

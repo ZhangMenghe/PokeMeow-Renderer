@@ -34,7 +34,7 @@ public class drawEdgeDemo extends Demo{
                 null,null,null,
                 Demo.class.getResource("shader/arrow.frag"));
         gshaderParam = new pmShaderParams(gl4, program);
-        numOfItems = 1;
+        numOfItems = 2;
 //
 //        pmLineVisual line = new pmSolidLine(gl4,-0.5f,-0.5f,
 //                0.5f,0.5f,pmLineVisual.LINE_STRAIGHT);
@@ -51,10 +51,10 @@ public class drawEdgeDemo extends Demo{
 //            edgeList[n++] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, i,i,
 //                       cy,-0.5f,cy,0.5f);
 //        }
-        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_STRAIGHT, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
+        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
                 .0f,-0.5f,.0f,0.5f);
-//        edgeList[1] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_CUBIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
-//                0.2f,0.5f,0.2f,-0.5f);
+        edgeList[1] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
+                0.2f,0.5f,0.2f,-0.5f);
 
     }
 
@@ -97,15 +97,13 @@ public class drawEdgeDemo extends Demo{
             case 0:
                 hitEdge =edgeList[0];//= hitEdge(posx,posy);
 //                if(hitEdge!=null){
-                    float currentAngle =(float) Math.atan(diff.x/diff.y)/10;
+                    float currentAngle =(float) Math.atan(diff.y/diff.x)/20;
                     hitEdge.setRotation(currentAngle);
 //                }
-                System.out.println("ROTATE");
                 break;
             case 1:
                 hitEdge =edgeList[0];//= hitEdge(posx,posy);
                 hitEdge.setOrigin(new Vector2(posx, posy));
-                System.out.println("PAN");
                 break;
             case 2:
                 tackleAnchor(posx, posy);

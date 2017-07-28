@@ -123,7 +123,7 @@ public abstract class pmBasicArrowShape {
     }
 
     public void setRotation(float radians){
-        float radia = radians - lastRadians;
+        float radia = radians- lastRadians;
         lastRadians = radians;
         float cost = (float)Math.cos(radia);
         float sint = (float)Math.sin(radia);
