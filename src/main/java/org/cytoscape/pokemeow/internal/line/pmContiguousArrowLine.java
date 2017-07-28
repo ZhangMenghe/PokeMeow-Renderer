@@ -23,9 +23,9 @@ public class pmContiguousArrowLine extends pmPatternLineBasic {
         super(gl4, srcx, srcy, destx, desty, type);
         pointsPerPattern = 10;
         if(curveType == LINE_STRAIGHT)
-            initVertices(gl4, singlePattern);
+            initVertices(singlePattern);
         else
-            initCurveVertices(gl4, singlePattern);
+            initCurveVertices(singlePattern);
 
         initLineVisual(gl4);
     }

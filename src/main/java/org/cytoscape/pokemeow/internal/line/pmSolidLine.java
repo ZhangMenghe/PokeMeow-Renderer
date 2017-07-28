@@ -20,4 +20,11 @@ public class pmSolidLine extends pmLineVisual {
         initLineVisual(gl4);
     }
 
+    public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
+        super.setSrcAndDest(srcx,srcy,destx,desty);
+        if(curveType == LINE_STRAIGHT) {
+            vertices[0] = srcx; vertices[1] = srcy;
+            vertices[3] = destx; vertices[4] = desty;
+        }
+    }
 }

@@ -42,37 +42,20 @@ public class pmLineVisual extends pmBasicArrowShape {
     public pmLineVisual(){super();}
     public pmLineVisual(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         curveType = type;
-        srcPos.x = srcx; srcPos.y = srcy;
-        destPos.x = destx; destPos.y = desty;
-        slope = (desty - srcy) / (destx - srcx);
         if(curveType == LINE_QUADRIC_CURVE){
             numOfVertices = QuadraticBezier.resolution + 1;
             vertices = new float[3*numOfVertices];
             controlPoints = new float[2];
-            if(Math.abs(slope)<=1)
-                setQuadraticBezierCurveVertices((srcx + destx)/2.0f,(srcy + desty)/2.0f+0.1f);
-            else
-                setQuadraticBezierCurveVertices((srcx + destx)/2.0f+0.1f,(srcy + desty)/2.0f);
-            anchor = new pmAnchor(gl4, controlPoints[0], controlPoints[1]);
+            anchor = new pmAnchor(gl4,.0f,.0f);
         }
         if(curveType == LINE_CUBIC_CURVE){
             numOfVertices = CubicBezier.resolution + 1;
             vertices = new float[3*numOfVertices];
             controlPoints = new float[4];
-            if(Math.abs(slope)<=1){
-                float tmpx = (destx-srcx)/3.0f;
-                float tmpy = (srcy + desty)/2.0f;
-                setCubicBezierCurveVertices(tmpx+srcx, tmpy+0.1f, tmpx*2+srcx, tmpy+0.1f);
-            }
-            else{
-                float tmpx = (destx+srcx)/2.0f;
-                float tmpy = (desty-srcy)/3.0f;
-                setCubicBezierCurveVertices(tmpx+0.1f, tmpy+srcy, tmpx+0.1f, 2*tmpy+srcy);
-            }
-
-            anchor = new pmAnchor(gl4, controlPoints[0], controlPoints[1]);
-            anchor2 = new pmAnchor(gl4, controlPoints[2], controlPoints[3]);
+            anchor = new pmAnchor(gl4,.0f,.0f);
+            anchor2 = new pmAnchor(gl4,.0f,.0f);
         }
+        setSrcAndDest(srcx,srcy,destx,desty);
     }
 
     public pmLineVisual(GL4 gl4, pmLineVisual line){
@@ -178,4 +161,38 @@ public class pmLineVisual extends pmBasicArrowShape {
             setCubicBezierCurveVertices(controlPoints[0], controlPoints[1], controlPoints[2], controlPoints[3]);
         dirty = true;
     }
+    public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
+        setSrcAndDest(srcx,srcy,destx,desty);
+    }
+    protected void setSrcAndDest(float srcx, float srcy, float destx, float desty){
+        dirty = true;
+        srcPos.x = srcx; srcPos.y = srcy;
+        destPos.x = destx; destPos.y = desty;
+        slope = (desty - srcy) / (destx - srcx);
+        if(curveType == LINE_STRAIGHT)
+            return;
+        if(curveType == LINE_QUADRIC_CURVE){
+            if(Math.abs(slope)<=1)
+                setQuadraticBezierCurveVertices((srcx + destx)/2.0f,(srcy + desty)/2.0f+0.1f);
+            else
+                setQuadraticBezierCurveVertices((srcx + destx)/2.0f+0.1f,(srcy + desty)/2.0f);
+            anchor.setPosition(controlPoints[0], controlPoints[1]);
+        }
+        if(curveType == LINE_CUBIC_CURVE){
+            if(Math.abs(slope)<=1){
+                float tmpx = (destx-srcx)/3.0f;
+                float tmpy = (srcy + desty)/2.0f;
+                setCubicBezierCurveVertices(tmpx+srcx, tmpy+0.1f, tmpx*2+srcx, tmpy+0.1f);
+            }
+            else{
+                float tmpx = (destx+srcx)/2.0f;
+                float tmpy = (desty-srcy)/3.0f;
+                setCubicBezierCurveVertices(tmpx+0.1f, tmpy+srcy, tmpx+0.1f, 2*tmpy+srcy);
+            }
+
+            anchor.setPosition(controlPoints[0], controlPoints[1]);
+            anchor2.setPosition(controlPoints[2], controlPoints[3]);
+        }
+    }
+
 }

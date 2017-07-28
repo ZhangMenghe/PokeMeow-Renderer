@@ -93,6 +93,7 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
     public void setRotation(float radians){
 //        for (int i = 0; i < patternList.length; i++)
 //            patternList[i].setRotation(radians);
+
     }
     public void setColor(Vector4 new_color){
         color = new_color;

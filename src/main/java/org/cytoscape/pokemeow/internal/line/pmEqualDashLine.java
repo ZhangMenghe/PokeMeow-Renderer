@@ -8,6 +8,13 @@ import com.jogamp.opengl.GL4;
 public class pmEqualDashLine extends pmLineVisual{
     public pmEqualDashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
+        connectMethod = CONNECT_SEGMENTS;
+        initLineVisual(gl4);
+    }
+
+    @Override
+    protected void setSrcAndDest(float srcx, float srcy, float destx, float desty){
+        super.setSrcAndDest(srcx,srcy,destx,desty);
         if(curveType == LINE_STRAIGHT){
             float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
             numOfVertices = lineSegments * (int)rlen +1;
@@ -31,7 +38,6 @@ public class pmEqualDashLine extends pmLineVisual{
                 }
             }
         }
-        connectMethod = CONNECT_SEGMENTS;
-        initLineVisual(gl4);
     }
+
 }

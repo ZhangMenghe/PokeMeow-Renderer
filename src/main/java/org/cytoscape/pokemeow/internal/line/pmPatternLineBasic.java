@@ -18,8 +18,7 @@ public class pmPatternLineBasic extends pmLineVisual {
         connectMethod = CONNECT_SEGMENTS;
     }
 
-    protected void initVertices(GL4 gl4, float []singlePattern){
-//        float k = (destPos.y - srcPos.y) / (destPos.x - srcPos.x);
+    protected void initVertices(float []singlePattern){
         double theta = Math.atan(slope);
         if(slope<0)
             theta-=3.14f;
@@ -28,8 +27,8 @@ public class pmPatternLineBasic extends pmLineVisual {
 
         float rlen = Math.abs(srcPos.x-destPos.x) + Math.abs(srcPos.y-destPos.y);
         shrink = 1.0f/numOfPatterns;
-        numOfPatterns = (int)(rlen * numOfPatterns);
-        numOfVertices = pointsPerPattern*numOfPatterns;
+        int absNumOfPatterns = (int)(rlen * numOfPatterns);
+        numOfVertices = pointsPerPattern*absNumOfPatterns;
         vertices = new float[3*numOfVertices];
         int base = 3*pointsPerPattern;
 
@@ -47,7 +46,7 @@ public class pmPatternLineBasic extends pmLineVisual {
         }
         float lastx, lasty;
         if(Math.abs(slope) <= 1){
-            for(int i=1;i<numOfPatterns;i++){
+            for(int i=1;i<absNumOfPatterns;i++){
                 for(int j=0;j<pointsPerPattern;j++) {
                     lastx = vertices[base * (i-1) +3*j];
                     lasty = vertices[base * (i-1) +3*j+1];
@@ -59,7 +58,7 @@ public class pmPatternLineBasic extends pmLineVisual {
         }
         else{
             float k = 1.0f/slope;
-            for(int i=1;i<numOfPatterns;i++){
+            for(int i=1;i<absNumOfPatterns;i++){
                 for(int j=0;j<pointsPerPattern;j++) {
                     lastx = vertices[base * (i-1) +3*j];
                     lasty = vertices[base * (i-1) +3*j+1];
@@ -71,13 +70,9 @@ public class pmPatternLineBasic extends pmLineVisual {
                 }
             }
         }
-        initLineVisual(gl4);
-//        setRotation(3.14f/4);
-//        setRotation((float)Math.atan((srcPos.y-destPos.y) / (srcPos.x-destPos.x)));
-
     }
 
-    protected void initCurveVertices(GL4 gl4, float []singlePattern){
+    protected void initCurveVertices(float []singlePattern){
         float[] curvePoints = vertices;
         numOfPatterns = QuadraticBezier.resolution / arrDensity;
         numOfVertices = pointsPerPattern * numOfPatterns;
@@ -141,4 +136,5 @@ public class pmPatternLineBasic extends pmLineVisual {
         }
         setCurveVerticesByPattern(curvePoints, singlePattern);
     }
+
 }

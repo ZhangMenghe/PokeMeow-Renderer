@@ -9,11 +9,18 @@ import com.jogamp.opengl.GL4;
 public class pmDotLine extends pmLineVisual{
     public pmDotLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
+
+        connectMethod = CONNECT_DOTS;
+        initLineVisual(gl4);
+    }
+
+    @Override
+    protected void setSrcAndDest(float srcx, float srcy, float destx, float desty){
+        super.setSrcAndDest(srcx,srcy,destx,desty);
         if(curveType == LINE_STRAIGHT){
             float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
             numOfVertices = lineSegments * (int)rlen +1;
             int numOfPoints = 3*numOfVertices;
-//            float k = (desty - srcy) / (destx-srcx);
             vertices = new float[numOfPoints];
             float shrink = rlen/(numOfVertices-1);
             if(Math.abs(slope) <= 1) {
@@ -33,7 +40,5 @@ public class pmDotLine extends pmLineVisual{
                 }
             }
         }
-        connectMethod = CONNECT_DOTS;
-        initLineVisual(gl4);
     }
 }

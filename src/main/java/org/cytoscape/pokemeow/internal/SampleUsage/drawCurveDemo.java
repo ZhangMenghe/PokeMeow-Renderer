@@ -33,7 +33,7 @@ public class drawCurveDemo extends Demo {
             lineList[n++] = factory.createLine(i,cy,-1.0f,
                     cy,1,
                                                     pmLineVisual.LINE_QUADRIC_CURVE);
-            lineList[n-1].setRotation(3.14f/2);
+//            lineList[n-1].setRotation(3.14f/2);
         }
     }
 
