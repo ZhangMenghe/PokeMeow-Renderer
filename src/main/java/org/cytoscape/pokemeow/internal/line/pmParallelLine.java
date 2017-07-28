@@ -100,5 +100,14 @@ public class pmParallelLine extends pmLineVisual {
 
         plineList[0].setSrcAndDest(srcx,srcy,destx,desty);
         SynchronizeLine();
+        if(curveType == LINE_STRAIGHT)
+            return;
+        controlPoints = plineList[0].controlPoints;
+        if(curveType == LINE_QUADRIC_CURVE)
+            anchor.setPosition(controlPoints[0], controlPoints[1]);
+        else{
+            anchor.setPosition(controlPoints[0], controlPoints[1]);
+            anchor2.setPosition(controlPoints[2], controlPoints[3]);
+        }
     }
 }
