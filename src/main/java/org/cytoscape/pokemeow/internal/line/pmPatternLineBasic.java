@@ -13,12 +13,14 @@ public class pmPatternLineBasic extends pmLineVisual {
     protected int pointsPerPattern;
     protected float shrink;
     public int arrDensity = 8;
+    public float[]singlePattern;
+
     public pmPatternLineBasic(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
         connectMethod = CONNECT_SEGMENTS;
     }
 
-    protected void initVertices(float []singlePattern){
+    protected void initStraightVertices(){
         double theta = Math.atan(slope);
         if(slope<0)
             theta-=3.14f;
@@ -71,17 +73,18 @@ public class pmPatternLineBasic extends pmLineVisual {
             }
         }
     }
+    protected void initStraightVertices(float srcx, float srcy, float destx, float desty){}
 
-    protected void initCurveVertices(float []singlePattern){
+    protected void initCurveVertices(){
         float[] curvePoints = vertices;
         numOfPatterns = QuadraticBezier.resolution / arrDensity;
         numOfVertices = pointsPerPattern * numOfPatterns;
         vertices = new float[3*numOfVertices];
         shrink = 1.0f / numOfPatterns;
-        setCurveVerticesByPattern(curvePoints, singlePattern);
+        setCurveVerticesByPattern(curvePoints);
     }
 
-    protected void setCurveVerticesByPattern(float[] curvePoints, float []singlePattern){
+    protected void setCurveVerticesByPattern(float[] curvePoints){
         float orix, oriy, lastorix, lastoriy;
         int base = 3 * pointsPerPattern;
         orix = curvePoints[0];
@@ -112,7 +115,7 @@ public class pmPatternLineBasic extends pmLineVisual {
         }
     }
 
-    protected void setControlPoints(float nctrx, float nctry, int anchorID,float []singlePattern){
+    public void setControlPoints(float nctrx, float nctry, int anchorID){
         dirty = true;
         if(anchorID == 1){
             controlPoints[0] = nctrx; controlPoints[1] = nctry;
@@ -134,7 +137,59 @@ public class pmPatternLineBasic extends pmLineVisual {
             CubicBezier curve = new CubicBezier(srcPos.x, srcPos.y, controlPoints[0], controlPoints[1], controlPoints[2], controlPoints[3], destPos.x, destPos.y);
             curvePoints = curve.getPointsOnCurves(zorder);
         }
-        setCurveVerticesByPattern(curvePoints, singlePattern);
+        setCurveVerticesByPattern(curvePoints);
     }
 
+    protected void resetSrcAndDestCurve(float srcx, float srcy, float destx, float desty){
+        float [] curvePoints;
+        if(curveType == LINE_QUADRIC_CURVE){
+            if(Math.abs(slope)<=1){
+                controlPoints[0] =(srcx + destx)/2.0f;
+                controlPoints[1] =(srcy + desty)/2.0f+0.1f;
+            }
+            else{
+                controlPoints[0] =(srcx + destx)/2.0f+0.1f;
+                controlPoints[1] =(srcy + desty)/2.0f;
+            }
+            QuadraticBezier curve = new QuadraticBezier(srcx,srcy,controlPoints[0],controlPoints[1],destx,desty);
+            curvePoints = curve.getPointsOnCurves(zorder);
+            anchor.setPosition(controlPoints[0], controlPoints[1]);
+        }
+        else{
+            if(Math.abs(slope)<=1){
+                float tmpx = (destx-srcx)/3.0f;
+                float tmpy = (srcy + desty)/2.0f;
+                controlPoints[0] =tmpx+srcx;
+                controlPoints[1] =tmpy+0.1f;
+                controlPoints[2] =tmpx*2+srcx;
+                controlPoints[4] =tmpy+0.1f;
+            }
+            else{
+                float tmpx = (destx+srcx)/2.0f;
+                float tmpy = (desty-srcy)/3.0f;
+                controlPoints[0] = tmpx+0.1f;
+                controlPoints[1] = tmpy+srcy;
+                controlPoints[2] = tmpx+0.1f;
+                controlPoints[4] = 2*tmpy+srcy;
+            }
+            CubicBezier curve = new CubicBezier(srcPos.x, srcPos.y, controlPoints[0], controlPoints[1], controlPoints[2], controlPoints[3], destPos.x, destPos.y);
+            curvePoints = curve.getPointsOnCurves(zorder);
+            anchor.setPosition(controlPoints[0], controlPoints[1]);
+            anchor2.setPosition(controlPoints[2], controlPoints[3]);
+        }
+        setCurveVerticesByPattern(curvePoints);
+    }
+    @Override
+    public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
+        dirty = true;
+        srcPos.x = srcx; srcPos.y = srcy;
+        destPos.x = destx; destPos.y = desty;
+        slope = (desty - srcy) / (destx - srcx);
+
+        if(curveType == LINE_STRAIGHT){
+            initStraightVertices(srcx,srcy,destx,desty);
+            return;
+        }
+        resetSrcAndDestCurve(srcx, srcy, destx, desty);
+    }
 }

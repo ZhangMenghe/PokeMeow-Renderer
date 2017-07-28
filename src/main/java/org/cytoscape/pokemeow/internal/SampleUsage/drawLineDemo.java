@@ -18,7 +18,7 @@ public class drawLineDemo extends Demo {
     @Override
     public void init(GLAutoDrawable drawable) {
         super.init(drawable);
-        numOfItems = 5;
+        numOfItems =6;
         program = GLSLProgram.CompileProgram(gl4,
                 Demo.class.getResource("shader/arrow.vert"),
                 null,null,null,
@@ -30,14 +30,14 @@ public class drawLineDemo extends Demo {
         int n = 0;
 //        for(Byte i=0;i<numOfItems;i++)
 //            lineList[n++] = factory.createLine(i, -1,.0f,1.0f,.0f, pmLineVisual.LINE_QUADRIC_CURVE);
-        for(Byte i=5;i<10;i++){
+        for(Byte i=5;i<11;i++){
             float cy = -0.9f + 0.1f*n;
             lineList[n++] = factory.createLine(i, -1,cy,1.0f,cy, pmLineVisual.LINE_STRAIGHT);
-
+            lineList[n-1].resetSrcAndDest(cy,-1.0f,cy,1.0f);
 //            lineList[n].setOrigin(new Vector3(.0f, cy, .0f));
 //            lineList[n].setRotation(3.14f/2);
         }
-        lineList[2].resetSrcAndDest(.0f,-1.0f,.0f,1.0f);
+
 //        lineList[0] = factory.createLine(pmLineFactory.LINE_SEPARATE_ARROW, -1,.0f,1.0f,.0f, pmLineVisual.LINE_STRAIGHT);
     }
 
