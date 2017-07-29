@@ -67,7 +67,7 @@ public class pmEdge {
 
                                       float srcx, float srcy, float destx, float desty){
         lineFactory = new pmLineFactory(gl4);
-        _line = lineFactory.createLine(lineType, srcx, srcy, destx, desty,mcurveType);
+        _line = lineFactory.createLine(lineType, srcx, srcy, destx, desty, mcurveType);
         curveType = mcurveType;
         xMin = Math.min(srcx, destx); xMax = Math.max(srcx, destx);
         yMin = Math.min(srcy, desty); yMax = Math.max(srcy, desty);
@@ -99,7 +99,6 @@ public class pmEdge {
             thetasrc = Math.atan(k);
 
             float k2 = (_line.controlPoints[1] - _line.destPos.y) / (_line.controlPoints[0] - _line.destPos.x);
-            System.out.println(_line.controlPoints[0] +"--" + _line.slope +"---" + _line.srcPos.x);
             thetadest = Math.atan(k2);
             if (Math.abs(_line.slope) > 1) {
                 if (_line.controlPoints[0] > _line.destPos.x)
@@ -136,10 +135,8 @@ public class pmEdge {
 
         if (_destArrow != null)
             _destArrow.setRotation((float) thetadest);
-//            _destArrow.setRotation(3.14f/2);
         if (_srcArrow != null)
             _srcArrow.setRotation((float) thetasrc - 3.14f);
-//            _srcArrow.setRotation(3.14f/2);
     }
 
     public void draw(GL4 gl4, pmShaderParams gshaderParam){
@@ -171,6 +168,7 @@ public class pmEdge {
     }
 
     public boolean isHit(float posx, float posy){
+
         if(_line.curveType == pmLineVisual.LINE_STRAIGHT)
             return isHitStraightLine(posx, posy);
 //        float bounxMin = xMin; float boundxMax = xMax;
@@ -218,12 +216,12 @@ public class pmEdge {
         return false;
     }
     private boolean isHitStraightLine(float posx, float posy){
-        if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
-            return false;
+//        if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
+//            return false;
         float tmpx = posx-(xMin+xMax)/2;
         float tmpy = posy-(yMin+yMax)/2;
         float length = Math.abs(_line.slope*tmpx - tmpy) / (float)Math.sqrt(_line.slope * _line.slope +1);
-        if(length <= 0.005f)
+        if(length <= 0.15f)
             return true;
         else
             return false;
@@ -274,5 +272,13 @@ public class pmEdge {
         if(_destArrow != null){
             _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
         }
+    }
+    public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
+        _line.resetSrcAndDest(srcx,srcy,destx,desty);
+        if(_srcArrow!=null)
+            _srcArrow.setOrigin(new Vector3(srcx, srcy, _line.zorder));
+        if(_destArrow!=null)
+            _destArrow.setOrigin(new Vector3(destx, desty, _line.zorder));
+        setArrowRotation();
     }
 }

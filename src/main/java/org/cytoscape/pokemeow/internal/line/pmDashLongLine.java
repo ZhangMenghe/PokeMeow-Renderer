@@ -58,13 +58,13 @@ public class pmDashLongLine extends pmLineVisual{
         super.setSrcAndDest(srcx,srcy,destx,desty);
         if(curveType == LINE_STRAIGHT){
             lineSegments = 20;
-            float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
-            numOfVertices = lineSegments * (int)rlen +1;
-            int numOfPoints = 3*numOfVertices;
-            vertices = new float[numOfPoints];
-            float shrink = 0.25f*rlen/(numOfVertices-1);
-            vertices[0]=srcx; vertices[1]=srcy; vertices[2]=zorder;
             if(Math.abs(slope) <= 1) {
+                float rlen = destx-srcx;
+                numOfVertices = (int)(lineSegments * Math.abs(rlen)) +1;
+                int numOfPoints = 3*numOfVertices;
+                vertices = new float[numOfPoints];
+                float shrink = 0.25f*rlen/(numOfVertices-1);
+                vertices[0]=srcx; vertices[1]=srcy; vertices[2]=zorder;
                 for (int i = 3, n = 1; i < numOfPoints; i += 3, n++) {
                     if (n % 2 == 1)
                         vertices[i] = vertices[i - 3] + shrink * 5;
@@ -75,6 +75,12 @@ public class pmDashLongLine extends pmLineVisual{
                 }
             }
             else{
+                float rlen = desty-srcy;
+                numOfVertices = (int)(lineSegments * Math.abs(rlen)) +1;
+                int numOfPoints = 3*numOfVertices;
+                vertices = new float[numOfPoints];
+                float shrink = 0.25f*rlen/(numOfVertices-1);
+                vertices[0]=srcx; vertices[1]=srcy; vertices[2]=zorder;
                 float k = 1.0f/slope;
                 float tmpy;
                 for (int i = 3, n = 1; i < numOfPoints; i += 3, n++) {

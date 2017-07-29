@@ -34,7 +34,7 @@ public class drawEdgeDemo extends Demo{
                 null,null,null,
                 Demo.class.getResource("shader/arrow.frag"));
         gshaderParam = new pmShaderParams(gl4, program);
-        numOfItems = 2;
+        numOfItems = 1;
 //
 //        pmLineVisual line = new pmSolidLine(gl4,-0.5f,-0.5f,
 //                0.5f,0.5f,pmLineVisual.LINE_STRAIGHT);
@@ -51,10 +51,11 @@ public class drawEdgeDemo extends Demo{
 //            edgeList[n++] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, i,i,
 //                       cy,-0.5f,cy,0.5f);
 //        }
-        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
-                .0f,-0.5f,.0f,0.5f);
-        edgeList[1] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
-                0.2f,0.5f,0.2f,-0.5f);
+        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_DASH_LONG, pmLineVisual.LINE_STRAIGHT,pmArrowShapeFactory.SHAPE_ARROWHEAD,pmArrowShapeFactory.SHAPE_ARROWHEAD,
+                -0.5f,.0f,0.5f,.0f);
+//        edgeList[0].resetSrcAndDest(-0.8f,.0f,0.8f,.0f);
+//        edgeList[1] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
+//                0.2f,0.5f,0.2f,-0.5f);
 
     }
 
@@ -87,9 +88,8 @@ public class drawEdgeDemo extends Demo{
             lastMousePosition = newPosition;
         }
         float posx = 2*(float) lastMousePosition.x/ commonUtil.DEMO_VIEWPORT_SIZE.x-1;
-        float posy = 1.0f-(2*(float) lastMousePosition.y/commonUtil.DEMO_VIEWPORT_SIZE.y);
+        float posy = 1.0f-(2*(float) lastMousePosition.y/ commonUtil.DEMO_VIEWPORT_SIZE.y);
         if(mouseState==-1){
-            System.out.println("back");
             return;
         }
         pmEdge hitEdge;
@@ -105,8 +105,11 @@ public class drawEdgeDemo extends Demo{
                 hitEdge =edgeList[0];//= hitEdge(posx,posy);
                 hitEdge.setOrigin(new Vector2(posx, posy));
                 break;
-            case 2:
+            case 3:
                 tackleAnchor(posx, posy);
+                break;
+            case 2:
+                edgeList[0].resetSrcAndDest(.0f,-0.5f,posx,posy);
                 break;
             default:
                 tackleAnchor(posx, posy);
@@ -132,6 +135,7 @@ public class drawEdgeDemo extends Demo{
         }
     }
     private pmEdge hitEdge(float posx, float posy){
+
         for(pmEdge edge : edgeList){
             if(edge.isHit(posx, posy)){
 //                System.out.println("HIT - " + times);
@@ -154,7 +158,10 @@ public class drawEdgeDemo extends Demo{
     @Override
     public void mousePressed(MouseEvent e){
         if(e.getButton() ==1){
-            mouseState = 2;
+            if(e.isShiftDown())
+                mouseState = 3;//try reset
+            else
+                mouseState = 2;
             return;
         }
         if(e.getButton()==3){
