@@ -107,7 +107,7 @@ public class pmLineFactory {
             case pmLineVisual.CONNECT_PARALLEL:
                 for(int i=0; i<2; i++){
                     pmLineVisual mline = line.plineList[i];
-                    gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(mline.modelMatrix.asArrayCM()));
+
                     gl4.glUniform4f(gshaderParam.vec4_color, mline.color.x, mline.color.y, mline.color.z,mline.color.w);
                     gl4.glBindVertexArray(mline.objects[mline.VAO]);
                     gl4.glBindBuffer(GL_ARRAY_BUFFER, mline.objects[mline.VBO]);
@@ -123,7 +123,6 @@ public class pmLineFactory {
     }
 
     public void drawLine(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam){
-        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
         gl4.glUniform4f(gshaderParam.vec4_color, line.color.x, line.color.y, line.color.z,line.color.w);
         gl4.glBindVertexArray(line.objects[line.VAO]);
 
@@ -147,14 +146,13 @@ public class pmLineFactory {
         drawLine_GL(gl4, line, gshaderParam);
         gl4.glPointSize(10.0f);
 
+        //Draw anchors for curve
         if(line.curveType == pmLineVisual.LINE_QUADRIC_CURVE){
-            gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
-            gl4.glUniform4f(gshaderParam.vec4_color, 1.0f, .0f, .0f,.0f);
+            gl4.glUniform4f(gshaderParam.vec4_color, line.anchor.color.x, line.anchor.color.y, line.anchor.color.z, line.anchor.color.w);
             drawAnchorPoint(line.anchor, line.dirty);
         }
         if(line.curveType == pmLineVisual.LINE_CUBIC_CURVE){
-            gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
-            gl4.glUniform4f(gshaderParam.vec4_color, 1.0f, .0f, .0f,.0f);
+            gl4.glUniform4f(gshaderParam.vec4_color, line.anchor2.color.x, line.anchor2.color.y, line.anchor2.color.z, line.anchor2.color.w);
             drawAnchorPoint(line.anchor, line.dirty);
             drawAnchorPoint(line.anchor2, line.dirty);
         }

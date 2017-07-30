@@ -26,18 +26,28 @@ public class drawEdgeDemo extends Demo{
             new Vector4(0.69f, 0.88f, 0.9f,1.0f)
     };
     private int mouseState = -1;
+    private pmShaderParams arrowParam;
+    private float srcx = -0.5f;
+    private float srcy = .0f;
+    private float destx = 0.5f;
+    private float desty = .0f;
+    private  int program2;
     @Override
     public void init(GLAutoDrawable drawable) {
         super.init(drawable);
         program = GLSLProgram.CompileProgram(gl4,
+                Demo.class.getResource("shader/line.vert"),
+                null,null,null,
+                Demo.class.getResource("shader/line.frag"));
+        program2 = GLSLProgram.CompileProgram(gl4,
                 Demo.class.getResource("shader/arrow.vert"),
                 null,null,null,
                 Demo.class.getResource("shader/arrow.frag"));
         gshaderParam = new pmShaderParams(gl4, program);
+        arrowParam = new pmShaderParams(gl4, program2);
         numOfItems = 1;
 //
-//        pmLineVisual line = new pmSolidLine(gl4,-0.5f,-0.5f,
-//                0.5f,0.5f,pmLineVisual.LINE_STRAIGHT);
+//        pmLineVisual line = new pmSolidLine(gl4,srcx, srcy, destx, desty,pmLineVisual.LINE_STRAIGHT);
 //        pmBasicArrowShape srcArrow = new pmDeltaArrowShape(gl4);
 //        pmBasicArrowShape destArrow= new pmDeltaArrowShape(gl4);
         edgeList = new pmEdge[numOfItems];
@@ -51,8 +61,8 @@ public class drawEdgeDemo extends Demo{
 //            edgeList[n++] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, i,i,
 //                       cy,-0.5f,cy,0.5f);
 //        }
-        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_DASH_LONG, pmLineVisual.LINE_STRAIGHT,pmArrowShapeFactory.SHAPE_ARROWHEAD,pmArrowShapeFactory.SHAPE_ARROWHEAD,
-                -0.5f,.0f,0.5f,.0f);
+        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_CUBIC_CURVE,pmArrowShapeFactory.SHAPE_ARROWHEAD,pmArrowShapeFactory.SHAPE_ARROWHEAD,
+                srcx, srcy, destx, desty);
 //        edgeList[0].resetSrcAndDest(-0.8f,.0f,0.8f,.0f);
 //        edgeList[1] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
 //                0.2f,0.5f,0.2f,-0.5f);
@@ -61,9 +71,9 @@ public class drawEdgeDemo extends Demo{
 
     @Override
     public void display(GLAutoDrawable drawable) {
-        super.display(drawable);
+//        super.display(drawable);
         for(pmEdge edge:edgeList)
-            edge.draw(gl4, gshaderParam);
+            edge.draw(gl4, gshaderParam, arrowParam, program, program2);
     }
 
     @Override
@@ -109,7 +119,7 @@ public class drawEdgeDemo extends Demo{
                 tackleAnchor(posx, posy);
                 break;
             case 2:
-                edgeList[0].resetSrcAndDest(.0f,-0.5f,posx,posy);
+                edgeList[0].resetSrcAndDest(srcx,srcy,posx,posy);
                 break;
             default:
                 tackleAnchor(posx, posy);

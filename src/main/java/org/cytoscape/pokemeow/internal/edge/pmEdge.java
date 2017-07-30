@@ -139,12 +139,16 @@ public class pmEdge {
             _srcArrow.setRotation((float) thetasrc - 3.14f);
     }
 
-    public void draw(GL4 gl4, pmShaderParams gshaderParam){
+    public void draw(GL4 gl4, pmShaderParams lineParam, pmShaderParams arrowParam, int lineProgram, int arrowProgram){
+        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
+        if(_destArrow != null){
+            gl4.glUseProgram(arrowProgram);
+            arrowFactory.drawArrow(gl4, _destArrow, arrowParam);
+        }
         if(_srcArrow != null)
-            arrowFactory.drawArrow(gl4, _srcArrow, gshaderParam);
-        if(_destArrow != null)
-            arrowFactory.drawArrow(gl4, _destArrow, gshaderParam);
-        lineFactory.drawLine(gl4, _line, gshaderParam);
+            arrowFactory.drawArrow(gl4, _srcArrow, arrowParam);
+        gl4.glUseProgram(lineProgram);
+        lineFactory.drawLine(gl4, _line, lineParam);
     }
 
     public void setControlPoints(float nctrx, float nctry, int anchorID){
