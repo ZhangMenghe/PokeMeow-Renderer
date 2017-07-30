@@ -108,7 +108,7 @@ public class pmLineFactory {
             case pmLineVisual.CONNECT_PARALLEL:
                 for(int i=0; i<2; i++){
                     pmLineVisual mline = line.plineList[i];
-
+                    gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(mline.modelMatrix.asArrayCM()));
                     gl4.glUniform4f(gshaderParam.vec4_color, mline.color.x, mline.color.y, mline.color.z,mline.color.w);
                     gl4.glBindVertexArray(mline.objects[mline.VAO]);
                     gl4.glBindBuffer(GL_ARRAY_BUFFER, mline.objects[mline.VBO]);
@@ -124,6 +124,7 @@ public class pmLineFactory {
     }
 
     public void drawLine(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam){
+        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
         gl4.glUniform4f(gshaderParam.vec4_color, line.color.x, line.color.y, line.color.z,line.color.w);
         gl4.glBindVertexArray(line.objects[line.VAO]);
 

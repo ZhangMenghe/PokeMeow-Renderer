@@ -21,7 +21,6 @@ public class pmEdge {
     private pmArrowShapeFactory arrowFactory;
     public Byte curveType;
     private float xMin,xMax,yMin,yMax;
-    private Vector2 origin;
     //No arrow
     public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType,
                   float srcx, float srcy, float destx, float desty){
@@ -54,7 +53,6 @@ public class pmEdge {
         _srcArrow = srcArrow;
         _destArrow = destArrow;
         lineFactory = new pmLineFactory(gl4);
-        origin = new Vector2((line.srcPos.x+line.destPos.x)/2, (line.srcPos.y+line.destPos.y)/2);
 
         if(destArrow == null)
             return;
@@ -70,8 +68,6 @@ public class pmEdge {
         curveType = mcurveType;
         xMin = Math.min(srcx, destx)-0.01f; xMax = Math.max(srcx, destx)+0.01f;
         yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;
-        origin = new Vector2((srcx+destx)/2, (srcy+desty)/2);
-
     }
     private void setArrowPosAndRot(){
         if (_destArrow != null) {
@@ -235,29 +231,31 @@ public class pmEdge {
         setArrowRotation();
     }
     public void setOrigin(Vector2 new_origin){
-        float deltax = new_origin.x - origin.x;
-        float deltay = new_origin.y - origin.y;
-        origin.x = new_origin.x;
-        origin.y = new_origin.y;
+
+        float deltax = new_origin.x - _line.origin.x;
+        float deltay = new_origin.y - _line.origin.y;
+//        origin.x = new_origin.x;
+//        origin.y = new_origin.y;
         _line.srcPos.x += deltax;_line.srcPos.y += deltay;
         _line.destPos.x += deltax;_line.destPos.y += deltay;
-        for(int i=0;i<_line.numOfVertices;i++){
-            _line.vertices[3*i] +=deltax;
-            _line.vertices[3*i+1]+=deltay;
-        }
-        if(curveType != pmLineVisual.LINE_STRAIGHT){
-            _line.controlPoints[0]+=deltax;
-            _line.controlPoints[1]+=deltay;
-            _line.anchor.vertices[0]+=deltax;
-            _line.anchor.vertices[1]+=deltay;
-        }
-        if(curveType == pmLineVisual.LINE_CUBIC_CURVE){
-            _line.controlPoints[2]+=deltax;
-            _line.controlPoints[3]+=deltay;
-            _line.anchor2.vertices[0]+=deltax;
-            _line.anchor2.vertices[1]+=deltay;
-        }
-        _line.dirty = true;
+        _line.setOrigin(new_origin);
+//        for(int i=0;i<_line.numOfVertices;i++){
+//            _line.vertices[3*i] +=deltax;
+//            _line.vertices[3*i+1]+=deltay;
+//        }
+//        if(curveType != pmLineVisual.LINE_STRAIGHT){
+//            _line.controlPoints[0]+=deltax;
+//            _line.controlPoints[1]+=deltay;
+//            _line.anchor.vertices[0]+=deltax;
+//            _line.anchor.vertices[1]+=deltay;
+//        }
+//        if(curveType == pmLineVisual.LINE_CUBIC_CURVE){
+//            _line.controlPoints[2]+=deltax;
+//            _line.controlPoints[3]+=deltay;
+//            _line.anchor2.vertices[0]+=deltax;
+//            _line.anchor2.vertices[1]+=deltay;
+//        }
+//        _line.dirty = true;
         if(_srcArrow != null){
             _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
         }

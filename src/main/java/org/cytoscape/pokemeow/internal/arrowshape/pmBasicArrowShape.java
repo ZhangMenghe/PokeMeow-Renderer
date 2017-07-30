@@ -31,6 +31,7 @@ public abstract class pmBasicArrowShape {
     public Matrix4 rotMatrix = Matrix4.identity();
     public Vector3 scale = new Vector3(1.0f,1.0f,1.0f);
     public Vector4 color = new Vector4(0.69f, 0.88f, 0.9f,1.0f);
+    public float zorder = .0f;
     protected float xMin, xMax, yMin, yMax;
     protected float xMinOri, xMaxOri, yMinOri, yMaxOri;
 
@@ -91,7 +92,11 @@ public abstract class pmBasicArrowShape {
         origin = new_origin;
         updateMatrix();
     }
-
+    public void setOrigin(Vector2 new_origin){
+        origin.x = new_origin.x;
+        origin.y = new_origin.y;
+        updateMatrix();
+    }
     public void setOrigin(float gapx, float gapy){
         origin.x+=gapx;
         origin.y+=gapy;

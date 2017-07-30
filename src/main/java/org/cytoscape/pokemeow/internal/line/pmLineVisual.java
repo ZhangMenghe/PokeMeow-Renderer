@@ -1,6 +1,7 @@
 package main.java.org.cytoscape.pokemeow.internal.line;
 
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
@@ -19,7 +20,7 @@ public class pmLineVisual extends pmBasicArrowShape {
     private int[] connectArray = null;//if use CONNECT_ARRAY, then specify
     public pmBasicArrowShape[] patternList;//used for arrow shape line
     public pmLineVisual [] plineList = null;//used for parallel
-    public float zorder = .0f;
+    //public float zorder = .0f;
     public float slope;
 
     public pmAnchor anchor = null;
@@ -160,18 +161,11 @@ public class pmLineVisual extends pmBasicArrowShape {
         setSrcAndDest(srcx,srcy,destx,desty);
     }
     public void setRotation(float radians){
-        float radia = radians;//- lastRadians;
-        //lastRadians = radians;
-        float cost = (float)Math.cos(radia);
-        float sint = (float)Math.sin(radia);
+        rotMatrix = Matrix4.mult(rotMatrix,Matrix4.rotationZ(radians));
+        updateMatrix();
+        float cost = (float)Math.cos(radians);
+        float sint = (float)Math.sin(radians);
         float tmpx,tmpy;
-
-        for(int i=0; i<numOfVertices; i++){
-            tmpx = vertices[3*i]-origin.x;
-            tmpy = vertices[3*i+1]-origin.y;
-            vertices[3*i] = tmpx*cost - tmpy*sint + origin.x;
-            vertices[3*i+1] = tmpx*sint + tmpy*cost + origin.y;
-        }
         tmpx = srcPos.x - origin.x;
         tmpy = srcPos.y - origin.y;
         srcPos.x = tmpx*cost - tmpy*sint + origin.x;
@@ -182,35 +176,46 @@ public class pmLineVisual extends pmBasicArrowShape {
         destPos.x = tmpx*cost - tmpy*sint + origin.x;
         destPos.y = tmpx*sint + tmpy*cost + origin.y;
         slope = (destPos.y - srcPos.y) / (destPos.x - srcPos.x);
-        dirty = true;
+//        dirty = true;
         if(curveType == LINE_STRAIGHT)
             return;
-        tmpx = controlPoints[0] - origin.x;
-        tmpy = controlPoints[1] - origin.y;
-        controlPoints[0] = tmpx*cost - tmpy*sint + origin.x;
-        controlPoints[1] = tmpx*sint + tmpy*cost + origin.y;
-        tmpx = anchor.vertices[0] - origin.x;
-        tmpy = anchor.vertices[1] - origin.y;
-        anchor.vertices[0] = tmpx*cost - tmpy*sint + origin.x;
-        anchor.vertices[1] = tmpx*sint + tmpy*cost + origin.y;
-        if(anchor2!=null){
-            tmpx = controlPoints[2] - origin.x;
-            tmpy = controlPoints[3] - origin.y;
-            controlPoints[2] = tmpx*cost - tmpy*sint + origin.x;
-            controlPoints[3] = tmpx*sint + tmpy*cost + origin.y;
-            tmpx = anchor2.vertices[0] - origin.x;
-            tmpy = anchor2.vertices[1] - origin.y;
-            anchor2.vertices[0] = tmpx*cost - tmpy*sint + origin.x;
-            anchor2.vertices[1] = tmpx*sint + tmpy*cost + origin.y;
-        }
+//        tmpx = controlPoints[0] - origin.x;
+//        tmpy = controlPoints[1] - origin.y;
+//        controlPoints[0] = tmpx*cost - tmpy*sint + origin.x;
+//        controlPoints[1] = tmpx*sint + tmpy*cost + origin.y;
+//        tmpx = anchor.vertices[0] - origin.x;
+//        tmpy = anchor.vertices[1] - origin.y;
+//        anchor.vertices[0] = tmpx*cost - tmpy*sint + origin.x;
+//        anchor.vertices[1] = tmpx*sint + tmpy*cost + origin.y;
+//        if(anchor2!=null){
+//            tmpx = controlPoints[2] - origin.x;
+//            tmpy = controlPoints[3] - origin.y;
+//            controlPoints[2] = tmpx*cost - tmpy*sint + origin.x;
+//            controlPoints[3] = tmpx*sint + tmpy*cost + origin.y;
+//            tmpx = anchor2.vertices[0] - origin.x;
+//            tmpy = anchor2.vertices[1] - origin.y;
+//            anchor2.vertices[0] = tmpx*cost - tmpy*sint + origin.x;
+//            anchor2.vertices[1] = tmpx*sint + tmpy*cost + origin.y;
+//        }
+    }
+    public void setScale(float s_scale){
+        scale.x = s_scale;
+        updateMatrix();
     }
     protected void setSrcAndDest(float srcx, float srcy, float destx, float desty){
         dirty = true;
         srcPos.x = srcx; srcPos.y = srcy;
         destPos.x = destx; destPos.y = desty;
-        slope = (desty - srcy) / (destx - srcx);
-        if(curveType == LINE_STRAIGHT)
+        float deltax = destx-srcx; float deltay = desty-srcy;
+        slope = deltay/deltax;
+        float theta = (float) Math.atan(slope);
+        if(curveType == LINE_STRAIGHT){
+            setOrigin(new Vector3((srcx+destx)/2.0f, (srcy+desty)/2.0f, .0f));
+            super.setRotation(theta);
+            float length = (float)Math.sqrt(deltax*deltax + deltay*deltay);
+            setScale(length);
             return;
+        }
         if(curveType == LINE_QUADRIC_CURVE){
             if(Math.abs(slope)<=1)
                 setQuadraticBezierCurveVertices((srcx + destx)/2.0f,(srcy + desty)/2.0f+0.1f);

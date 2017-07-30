@@ -21,8 +21,8 @@ public class pmSolidLine extends pmLineVisual {
                 numOfVertices = 2;
                 vertices = new float[6];
             }
-            vertices[0] = srcx; vertices[1] = srcy;
-            vertices[3] = destx; vertices[4] = desty;
+            vertices[0] = -0.5f; vertices[1] = .0f;
+            vertices[3] = 0.5f; vertices[4] = .0f;
         }
     }
 }
