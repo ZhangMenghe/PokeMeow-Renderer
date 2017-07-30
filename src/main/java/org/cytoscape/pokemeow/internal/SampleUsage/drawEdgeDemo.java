@@ -28,9 +28,9 @@ public class drawEdgeDemo extends Demo{
     private int mouseState = -1;
     private pmShaderParams arrowParam;
     private float srcx = -0.5f;
-    private float srcy = .0f;
+    private float srcy = -0.5f;
     private float destx = 0.5f;
-    private float desty = .0f;
+    private float desty = 0.5f;
     private  int program2;
     @Override
     public void init(GLAutoDrawable drawable) {
@@ -61,7 +61,7 @@ public class drawEdgeDemo extends Demo{
 //            edgeList[n++] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, i,i,
 //                       cy,-0.5f,cy,0.5f);
 //        }
-        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_CUBIC_CURVE,pmArrowShapeFactory.SHAPE_ARROWHEAD,pmArrowShapeFactory.SHAPE_ARROWHEAD,
+        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_VERTICAL_SLASH, pmLineVisual.LINE_STRAIGHT, pmArrowShapeFactory.SHAPE_ARROWHEAD,pmArrowShapeFactory.SHAPE_ARROWHEAD,
                 srcx, srcy, destx, desty);
 //        edgeList[0].resetSrcAndDest(-0.8f,.0f,0.8f,.0f);
 //        edgeList[1] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
@@ -153,6 +153,8 @@ public class drawEdgeDemo extends Demo{
                 edge.setColor(colorList[times%2]);
                 return edge;
             }
+            else
+                System.out.println("MISS - " + times);
         }
         return null;
     }

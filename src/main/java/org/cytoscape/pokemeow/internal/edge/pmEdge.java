@@ -64,13 +64,12 @@ public class pmEdge {
 
     }
     private void commonInitialForEdge(GL4 gl4, Byte lineType, Byte mcurveType,
-
                                       float srcx, float srcy, float destx, float desty){
         lineFactory = new pmLineFactory(gl4);
         _line = lineFactory.createLine(lineType, srcx, srcy, destx, desty, mcurveType);
         curveType = mcurveType;
-        xMin = Math.min(srcx, destx); xMax = Math.max(srcx, destx);
-        yMin = Math.min(srcy, desty); yMax = Math.max(srcy, desty);
+        xMin = Math.min(srcx, destx)-0.01f; xMax = Math.max(srcx, destx)+0.01f;
+        yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;
         origin = new Vector2((srcx+destx)/2, (srcy+desty)/2);
 
     }
@@ -172,12 +171,8 @@ public class pmEdge {
     }
 
     public boolean isHit(float posx, float posy){
-
         if(_line.curveType == pmLineVisual.LINE_STRAIGHT)
             return isHitStraightLine(posx, posy);
-//        float bounxMin = xMin; float boundxMax = xMax;
-//        float boundyMin = yMin; float boundyMax = yMax;
-
         xMin = Math.min(xMin, _line.controlPoints[0]); xMax = Math.max(xMax,  _line.controlPoints[0]);
         yMin = Math.min(yMin, _line.controlPoints[1]); yMax = Math.max(yMax,  _line.controlPoints[1]);
         if(_line.curveType == pmLineVisual.LINE_CUBIC_CURVE){
@@ -186,8 +181,6 @@ public class pmEdge {
         }
         if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
             return false;
-//        float tmpx = posx-(bounxMin+boundxMax)/2;
-//        float tmpy = posy-(boundyMin+boundyMax)/2;
         if(_line.slope>0){
             for(int i=0; i<_line.numOfVertices-1; i++){
                 if(_line.vertices[3*i+1]<(posy-0.02f) || _line.vertices[3*i] > (posx+0.02f))
@@ -195,11 +188,6 @@ public class pmEdge {
                 float deltay = _line.vertices[3*i+1]-posy;
                 float deltax = _line.vertices[3*i]-posx;
                 float length =deltay*deltay + deltax*deltax;
-
-//                float deltay = _line.vertices[3*(i+1)+1] - _line.vertices[3*i+1];
-//                float deltax = _line.vertices[3*(i+1)] - _line.vertices[3*i];
-//                float k = deltay / deltax;//
-//                float length = Math.abs(tmpx+k*tmpy-k*liney-linex) / (float)Math.sqrt(k * k +1);
                 if(length <= 0.0002f)
                     return true;
 
@@ -220,12 +208,13 @@ public class pmEdge {
         return false;
     }
     private boolean isHitStraightLine(float posx, float posy){
-//        if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
-//            return false;
+        if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
+            return false;
+
         float tmpx = posx-(xMin+xMax)/2;
         float tmpy = posy-(yMin+yMax)/2;
         float length = Math.abs(_line.slope*tmpx - tmpy) / (float)Math.sqrt(_line.slope * _line.slope +1);
-        if(length <= 0.15f)
+        if(length <= 0.01f)
             return true;
         else
             return false;
@@ -279,10 +268,12 @@ public class pmEdge {
     }
     public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
         _line.resetSrcAndDest(srcx,srcy,destx,desty);
-        if(_srcArrow!=null)
+        if(_srcArrow != null)
             _srcArrow.setOrigin(new Vector3(srcx, srcy, _line.zorder));
-        if(_destArrow!=null)
+        if(_destArrow != null)
             _destArrow.setOrigin(new Vector3(destx, desty, _line.zorder));
         setArrowRotation();
+        xMin = Math.min(srcx, destx)-0.01f; xMax = Math.max(srcx, destx)+0.01f;
+        yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;
     }
 }

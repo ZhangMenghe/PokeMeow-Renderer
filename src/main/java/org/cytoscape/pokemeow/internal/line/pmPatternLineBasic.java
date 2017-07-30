@@ -27,11 +27,8 @@ public class pmPatternLineBasic extends pmLineVisual {
         float cost = (float)Math.cos(theta);
         float sint = (float)Math.sin(theta);
 
-        float rlen = Math.abs(srcPos.x-destPos.x) + Math.abs(srcPos.y-destPos.y);
+
         shrink = 1.0f/numOfPatterns;
-        int absNumOfPatterns = (int)(rlen * numOfPatterns);
-        numOfVertices = pointsPerPattern*absNumOfPatterns;
-        vertices = new float[3*numOfVertices];
         int base = 3*pointsPerPattern;
 
         for(int i=0;i<pointsPerPattern;i++){
@@ -41,13 +38,18 @@ public class pmPatternLineBasic extends pmLineVisual {
             singlePattern[3*i+1] = tmpy;
         }
 
-        for(int j=0;j<pointsPerPattern;j++){
-            vertices[3*j] = singlePattern[3*j] * shrink+srcPos.x;
-            vertices[3*j+1] = singlePattern[3*j +1] * shrink+srcPos.y;
-            vertices[3*j+2] = zorder;
-        }
+
         float lastx, lasty;
         if(Math.abs(slope) <= 1){
+            float rlen = destPos.x - srcPos.x;
+            int absNumOfPatterns = (int)(Math.abs(rlen) * numOfPatterns) + 1;
+            numOfVertices = pointsPerPattern*absNumOfPatterns;
+            vertices = new float[3*numOfVertices];
+            for(int j=0;j<pointsPerPattern;j++){
+                vertices[3*j] = singlePattern[3*j] * shrink+srcPos.x;
+                vertices[3*j+1] = singlePattern[3*j +1] * shrink+srcPos.y;
+                vertices[3*j+2] = zorder;
+            }
             for(int i=1;i<absNumOfPatterns;i++){
                 for(int j=0;j<pointsPerPattern;j++) {
                     lastx = vertices[base * (i-1) +3*j];
@@ -59,6 +61,15 @@ public class pmPatternLineBasic extends pmLineVisual {
             }
         }
         else{
+            float rlen = destPos.y - srcPos.y;
+            int absNumOfPatterns =  (int)(Math.abs(rlen) * numOfPatterns) +1;
+            numOfVertices = pointsPerPattern*absNumOfPatterns+1;
+            vertices = new float[3*numOfVertices];
+            for(int j=0;j<pointsPerPattern;j++){
+                vertices[3*j] = singlePattern[3*j] * shrink+srcPos.x;
+                vertices[3*j+1] = singlePattern[3*j +1] * shrink+srcPos.y;
+                vertices[3*j+2] = zorder;
+            }
             float k = 1.0f/slope;
             for(int i=1;i<absNumOfPatterns;i++){
                 for(int j=0;j<pointsPerPattern;j++) {

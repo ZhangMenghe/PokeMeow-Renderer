@@ -90,6 +90,7 @@ public class pmLineFactory {
                 gl4.glDrawArrays(GL4.GL_LINE_STRIP, 0, line.numOfVertices);
                 break;
             case pmLineVisual.CONNECT_SEGMENTS:
+//                gl4.glPointSize(2.0f);
                 gl4.glDrawArrays(GL4.GL_LINES, 0, line.numOfVertices);
                 break;
             case pmLineVisual.CONNECT_DOTS:
@@ -131,17 +132,18 @@ public class pmLineFactory {
                 for(pmLineVisual sline:line.plineList){
                     sline.data_buff = Buffers.newDirectFloatBuffer(sline.vertices);
                     gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  sline.objects[sline.VBO]);
-                    gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, sline.data_buff.capacity() * Float.BYTES, sline.data_buff);
+//                    gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, sline.data_buff.capacity() * Float.BYTES, sline.data_buff);
+                    gl4.glBufferData(GL.GL_ARRAY_BUFFER, sline.data_buff.capacity() * Float.BYTES, sline.data_buff, GL.GL_STATIC_DRAW);
                 }
             }
             else{
                 if(line.connectMethod != pmLineVisual.CONNECT_PATTERN){
                     line.data_buff = Buffers.newDirectFloatBuffer(line.vertices);
                     gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  line.objects[line.VBO]);
-                    gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, line.data_buff.capacity() * Float.BYTES, line.data_buff);
+//                    gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, line.data_buff.capacity() * Float.BYTES, line.data_buff);
+                    gl4.glBufferData(GL.GL_ARRAY_BUFFER, line.data_buff.capacity() * Float.BYTES, line.data_buff, GL.GL_STATIC_DRAW);
                 }
             }
-
         }
         drawLine_GL(gl4, line, gshaderParam);
         gl4.glPointSize(10.0f);
