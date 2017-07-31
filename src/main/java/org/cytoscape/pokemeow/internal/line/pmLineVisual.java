@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
 import main.java.org.cytoscape.pokemeow.internal.utils.CubicBezier;
 import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
@@ -15,6 +16,7 @@ public class pmLineVisual extends pmBasicArrowShape {
     private float width = 1.0f;
     protected int lineSegments = 40;
     public int numOfPatterns = 20;
+    protected float curveFactor = 2.0f;
     public Byte connectMethod = 0; //default to be connect strip
     public Byte curveType = 0;     //default to straight line
     private int[] connectArray = null;//if use CONNECT_ARRAY, then specify
@@ -40,6 +42,8 @@ public class pmLineVisual extends pmBasicArrowShape {
     public static final byte LINE_QUADRIC_CURVE = 1;
     public static final byte LINE_CUBIC_CURVE = 2;
     public boolean afterSetCurve = false;
+    protected float baseLength = 1.0f;
+    private float _deltax, _deltay;
     public pmLineVisual(){super();}
     public pmLineVisual(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         curveType = type;
@@ -165,7 +169,7 @@ public class pmLineVisual extends pmBasicArrowShape {
     }
     public void setRotation(float radians){
         rotMatrix = Matrix4.mult(rotMatrix,Matrix4.rotationZ(radians));
-        updateMatrix();
+
         float cost = (float)Math.cos(radians);
         float sint = (float)Math.sin(radians);
         float tmpx,tmpy;
@@ -178,25 +182,44 @@ public class pmLineVisual extends pmBasicArrowShape {
         tmpy = destPos.y - origin.y;
         destPos.x = tmpx*cost - tmpy*sint + origin.x;
         destPos.y = tmpx*sint + tmpy*cost + origin.y;
+
         slope = (destPos.y - srcPos.y) / (destPos.x - srcPos.x);
-        if(curveType == LINE_STRAIGHT)
+
+
+        if(curveType == LINE_STRAIGHT){
+            updateMatrix();
             return;
-        tmpx = controlPoints[0] - origin.x;
-        tmpy = controlPoints[1] - origin.y;
-        controlPoints[0] = tmpx*cost - tmpy*sint + origin.x;
-        controlPoints[1] = tmpx*sint + tmpy*cost + origin.y;
-        tmpx = anchor.vertices[0] - origin.x;
-        tmpy = anchor.vertices[1] - origin.y;
-        anchor.setPosition(tmpx*cost - tmpy*sint + origin.x, tmpx*sint + tmpy*cost + origin.y);
-        if(anchor2!=null){
-            tmpx = controlPoints[2] - origin.x;
-            tmpy = controlPoints[3] - origin.y;
-            controlPoints[2] = tmpx*cost - tmpy*sint + origin.x;
-            controlPoints[3] = tmpx*sint + tmpy*cost + origin.y;
-            tmpx = anchor2.vertices[0] - origin.x;
-            tmpy = anchor2.vertices[1] - origin.y;
-            anchor2.setPosition(tmpx*cost - tmpy*sint + origin.x, tmpx*sint + tmpy*cost + origin.y);
         }
+        //TODO:Is there a rotation way without reseting?
+        //TODO:ROTATE+afterSetCurve+TRANSLATE = BUG
+        if(afterSetCurve){
+//            setOrigin(new Vector2(-_deltax, -_deltay));
+//            updateMatrix();
+//            setOrigin(_deltax, _deltay);
+            afterSetCurve = false;
+            resetSrcAndDest(srcPos.x,srcPos.y,destPos.x,destPos.y);
+        }
+        else{
+            updateMatrix();
+
+        }
+        //        tmpx = controlPoints[0] - origin.x;
+//        tmpy = controlPoints[1] - origin.y;
+//        controlPoints[0] = tmpx*cost - tmpy*sint + origin.x;
+//        controlPoints[1] = tmpx*sint + tmpy*cost + origin.y;
+//        tmpx = anchor.vertices[0] - origin.x;
+//        tmpy = anchor.vertices[1] - origin.y;
+//        anchor.setPosition(tmpx*cost - tmpy*sint + origin.x, tmpx*sint + tmpy*cost + origin.y);
+//        if(anchor2!=null){
+//            tmpx = controlPoints[2] - origin.x;
+//            tmpy = controlPoints[3] - origin.y;
+//            controlPoints[2] = tmpx*cost - tmpy*sint + origin.x;
+//            controlPoints[3] = tmpx*sint + tmpy*cost + origin.y;
+//            tmpx = anchor2.vertices[0] - origin.x;
+//            tmpy = anchor2.vertices[1] - origin.y;
+//            anchor2.setPosition(tmpx*cost - tmpy*sint + origin.x, tmpx*sint + tmpy*cost + origin.y);
+//        }
+
     }
     public void setScale(float s_scale){
         scale.x = s_scale;
@@ -212,12 +235,14 @@ public class pmLineVisual extends pmBasicArrowShape {
         if(curveType == LINE_STRAIGHT){
             setOrigin(new Vector3((srcx+destx)/2.0f, (srcy+desty)/2.0f, .0f));
             super.setRotation(theta);
-            float length = (float)Math.sqrt(deltax*deltax + deltay*deltay);
+            float length = (float)Math.sqrt(deltax*deltax + deltay*deltay) * baseLength;
             setScale(length);
             return;
         }
         dirty = true;
+        float lastorix = origin.x;float lastoriy=origin.y;
         origin.x = (srcx+destx)/2.0f; origin.y = (srcy+desty)/2.0f;
+        _deltax = lastorix-origin.x; _deltay = lastoriy-origin.y;
         if(curveType == LINE_QUADRIC_CURVE){
             if(Math.abs(slope)<=1)
                 setQuadraticBezierCurveVertices((srcx + destx)/2.0f,(srcy + desty)/2.0f+0.1f);
