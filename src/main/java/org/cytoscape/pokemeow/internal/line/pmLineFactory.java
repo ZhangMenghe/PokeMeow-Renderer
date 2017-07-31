@@ -3,6 +3,7 @@ package main.java.org.cytoscape.pokemeow.internal.line;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmArrowShapeFactory;
@@ -148,29 +149,27 @@ public class pmLineFactory {
         }
         drawLine_GL(gl4, line, gshaderParam);
         gl4.glPointSize(10.0f);
-
+        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(Matrix4.identity().asArrayCM()));
         //Draw anchors for curve
         if(line.curveType == pmLineVisual.LINE_QUADRIC_CURVE){
             gl4.glUniform4f(gshaderParam.vec4_color, line.anchor.color.x, line.anchor.color.y, line.anchor.color.z, line.anchor.color.w);
-            drawAnchorPoint(line.anchor, line.dirty);
+            drawAnchorPoint(line.anchor);
         }
         if(line.curveType == pmLineVisual.LINE_CUBIC_CURVE){
             gl4.glUniform4f(gshaderParam.vec4_color, line.anchor2.color.x, line.anchor2.color.y, line.anchor2.color.z, line.anchor2.color.w);
-            drawAnchorPoint(line.anchor, line.dirty);
-            drawAnchorPoint(line.anchor2, line.dirty);
+            drawAnchorPoint(line.anchor);
+            drawAnchorPoint(line.anchor2);
         }
         line.dirty = false;
         gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl4.glBindVertexArray(0);
     }
 
-    private void drawAnchorPoint(pmAnchor anchor, boolean dirty){
+    private void drawAnchorPoint(pmAnchor anchor){
         gl4.glBindVertexArray(anchor.objects[anchor.VAO]);
-        if(dirty){
             anchor.data_buff = Buffers.newDirectFloatBuffer(anchor.vertices);
             gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  anchor.objects[anchor.VBO]);
             gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, 3 * Float.BYTES, anchor.data_buff);
-        }
         gl4.glDrawArrays(GL4.GL_POINTS, 0, 1);
 
     }

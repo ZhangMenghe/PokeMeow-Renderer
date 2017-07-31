@@ -9,20 +9,11 @@ import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
  * Created by ZhangMenghe on 2017/7/10.
  */
 public class pmSolidLine extends pmLineVisual {
+    float []_vertices = {-0.5f,.0f,zorder,0.5f,.0f,zorder};
     public pmSolidLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
+        if(curveType == LINE_STRAIGHT)
+            vertices = _vertices;
         initLineVisual(gl4);
-    }
-
-    public void setSrcAndDest(float srcx, float srcy, float destx, float desty){
-        super.setSrcAndDest(srcx,srcy,destx,desty);
-        if(curveType == LINE_STRAIGHT) {
-            if(vertices == null){
-                numOfVertices = 2;
-                vertices = new float[6];
-            }
-            vertices[0] = -0.5f; vertices[1] = .0f;
-            vertices[3] = 0.5f; vertices[4] = .0f;
-        }
     }
 }

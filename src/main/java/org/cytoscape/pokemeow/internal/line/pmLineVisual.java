@@ -39,7 +39,7 @@ public class pmLineVisual extends pmBasicArrowShape {
     public static final byte LINE_STRAIGHT = 0;
     public static final byte LINE_QUADRIC_CURVE = 1;
     public static final byte LINE_CUBIC_CURVE = 2;
-
+    public boolean afterSetCurve = false;
     public pmLineVisual(){super();}
     public pmLineVisual(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         curveType = type;
@@ -122,7 +122,8 @@ public class pmLineVisual extends pmBasicArrowShape {
 
         QuadraticBezier curve = new QuadraticBezier(srcPos.x, srcPos.y, ctrx, ctry, destPos.x, destPos.y);
         Vector2 [] curvePoints = curve.getPointsOnCurves();
-
+        modelMatrix = Matrix4.identity();
+        afterSetCurve = true;
         for(int k=0; k<numOfVertices; k++){
             vertices[3*k] = curvePoints[k].x;
             vertices[3*k+1] = curvePoints[k].y;
@@ -135,6 +136,8 @@ public class pmLineVisual extends pmBasicArrowShape {
         controlPoints[2] = ctr2x; controlPoints[3] = ctr2y;
         CubicBezier curve = new CubicBezier(srcPos.x, srcPos.y, ctr1x, ctr1y, ctr2x, ctr2y, destPos.x, destPos.y);
         Vector2 [] curvePoints = curve.getPointsOnCurves();
+        modelMatrix = Matrix4.identity();
+        afterSetCurve = true;
         for(int k=0; k<numOfVertices; k++){
             vertices[3*k] = curvePoints[k].x;
             vertices[3*k+1] = curvePoints[k].y;
@@ -176,39 +179,36 @@ public class pmLineVisual extends pmBasicArrowShape {
         destPos.x = tmpx*cost - tmpy*sint + origin.x;
         destPos.y = tmpx*sint + tmpy*cost + origin.y;
         slope = (destPos.y - srcPos.y) / (destPos.x - srcPos.x);
-//        dirty = true;
         if(curveType == LINE_STRAIGHT)
             return;
-//        tmpx = controlPoints[0] - origin.x;
-//        tmpy = controlPoints[1] - origin.y;
-//        controlPoints[0] = tmpx*cost - tmpy*sint + origin.x;
-//        controlPoints[1] = tmpx*sint + tmpy*cost + origin.y;
-//        tmpx = anchor.vertices[0] - origin.x;
-//        tmpy = anchor.vertices[1] - origin.y;
-//        anchor.vertices[0] = tmpx*cost - tmpy*sint + origin.x;
-//        anchor.vertices[1] = tmpx*sint + tmpy*cost + origin.y;
-//        if(anchor2!=null){
-//            tmpx = controlPoints[2] - origin.x;
-//            tmpy = controlPoints[3] - origin.y;
-//            controlPoints[2] = tmpx*cost - tmpy*sint + origin.x;
-//            controlPoints[3] = tmpx*sint + tmpy*cost + origin.y;
-//            tmpx = anchor2.vertices[0] - origin.x;
-//            tmpy = anchor2.vertices[1] - origin.y;
-//            anchor2.vertices[0] = tmpx*cost - tmpy*sint + origin.x;
-//            anchor2.vertices[1] = tmpx*sint + tmpy*cost + origin.y;
-//        }
+        tmpx = controlPoints[0] - origin.x;
+        tmpy = controlPoints[1] - origin.y;
+        controlPoints[0] = tmpx*cost - tmpy*sint + origin.x;
+        controlPoints[1] = tmpx*sint + tmpy*cost + origin.y;
+        tmpx = anchor.vertices[0] - origin.x;
+        tmpy = anchor.vertices[1] - origin.y;
+        anchor.setPosition(tmpx*cost - tmpy*sint + origin.x, tmpx*sint + tmpy*cost + origin.y);
+        if(anchor2!=null){
+            tmpx = controlPoints[2] - origin.x;
+            tmpy = controlPoints[3] - origin.y;
+            controlPoints[2] = tmpx*cost - tmpy*sint + origin.x;
+            controlPoints[3] = tmpx*sint + tmpy*cost + origin.y;
+            tmpx = anchor2.vertices[0] - origin.x;
+            tmpy = anchor2.vertices[1] - origin.y;
+            anchor2.setPosition(tmpx*cost - tmpy*sint + origin.x, tmpx*sint + tmpy*cost + origin.y);
+        }
     }
     public void setScale(float s_scale){
         scale.x = s_scale;
         updateMatrix();
     }
     protected void setSrcAndDest(float srcx, float srcy, float destx, float desty){
-        dirty = true;
         srcPos.x = srcx; srcPos.y = srcy;
         destPos.x = destx; destPos.y = desty;
         float deltax = destx-srcx; float deltay = desty-srcy;
         slope = deltay/deltax;
         float theta = (float) Math.atan(slope);
+
         if(curveType == LINE_STRAIGHT){
             setOrigin(new Vector3((srcx+destx)/2.0f, (srcy+desty)/2.0f, .0f));
             super.setRotation(theta);
@@ -216,6 +216,8 @@ public class pmLineVisual extends pmBasicArrowShape {
             setScale(length);
             return;
         }
+        dirty = true;
+        origin.x = (srcx+destx)/2.0f; origin.y = (srcy+desty)/2.0f;
         if(curveType == LINE_QUADRIC_CURVE){
             if(Math.abs(slope)<=1)
                 setQuadraticBezierCurveVertices((srcx + destx)/2.0f,(srcy + desty)/2.0f+0.1f);
@@ -223,7 +225,7 @@ public class pmLineVisual extends pmBasicArrowShape {
                 setQuadraticBezierCurveVertices((srcx + destx)/2.0f+0.1f,(srcy + desty)/2.0f);
             anchor.setPosition(controlPoints[0], controlPoints[1]);
         }
-        if(curveType == LINE_CUBIC_CURVE){
+        else{
             if(Math.abs(slope)<=1){
                 float tmpx = (destx-srcx)/3.0f;
                 float tmpy = (srcy + desty)/2.0f;

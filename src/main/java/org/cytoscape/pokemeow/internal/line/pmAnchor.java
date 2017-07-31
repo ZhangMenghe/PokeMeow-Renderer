@@ -45,7 +45,10 @@ public class pmAnchor {
         vertices[0] = posx;
         vertices[1] = posy;
     }
-
+    public void setPosition(float posx, float posy, boolean useOffset){
+        vertices[0] += posx;
+        vertices[1] += posy;
+    }
     public void setColor(Vector4 new_color){
         color = new_color;
     }

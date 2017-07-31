@@ -21,6 +21,7 @@ public class pmEdge {
     private pmArrowShapeFactory arrowFactory;
     public Byte curveType;
     private float xMin,xMax,yMin,yMax;
+
     //No arrow
     public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType,
                   float srcx, float srcy, float destx, float desty){
@@ -231,30 +232,26 @@ public class pmEdge {
         setArrowRotation();
     }
     public void setOrigin(Vector2 new_origin){
-
         float deltax = new_origin.x - _line.origin.x;
         float deltay = new_origin.y - _line.origin.y;
-//        origin.x = new_origin.x;
-//        origin.y = new_origin.y;
         _line.srcPos.x += deltax;_line.srcPos.y += deltay;
         _line.destPos.x += deltax;_line.destPos.y += deltay;
-        _line.setOrigin(new_origin);
-//        for(int i=0;i<_line.numOfVertices;i++){
-//            _line.vertices[3*i] +=deltax;
-//            _line.vertices[3*i+1]+=deltay;
-//        }
-//        if(curveType != pmLineVisual.LINE_STRAIGHT){
-//            _line.controlPoints[0]+=deltax;
-//            _line.controlPoints[1]+=deltay;
-//            _line.anchor.vertices[0]+=deltax;
-//            _line.anchor.vertices[1]+=deltay;
-//        }
-//        if(curveType == pmLineVisual.LINE_CUBIC_CURVE){
-//            _line.controlPoints[2]+=deltax;
-//            _line.controlPoints[3]+=deltay;
-//            _line.anchor2.vertices[0]+=deltax;
-//            _line.anchor2.vertices[1]+=deltay;
-//        }
+        if(_line.afterSetCurve){
+            _line.setOrigin(new Vector2(deltax,deltay));
+            _line.afterSetCurve = false;
+        }
+        else
+            _line.setOrigin(deltax,deltay);
+        if(curveType != pmLineVisual.LINE_STRAIGHT){
+            _line.controlPoints[0]+=deltax;
+            _line.controlPoints[1]+=deltay;
+            _line.anchor.setPosition(deltax,deltay,true);
+        }
+        if(curveType == pmLineVisual.LINE_CUBIC_CURVE){
+            _line.controlPoints[2]+=deltax;
+            _line.controlPoints[3]+=deltay;
+            _line.anchor2.setPosition(deltax,deltay,true);
+        }
 //        _line.dirty = true;
         if(_srcArrow != null){
             _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
