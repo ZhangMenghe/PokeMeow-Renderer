@@ -88,7 +88,8 @@ public class pmPatternLineBasic extends pmLineVisual {
 
     protected void initCurveVertices(){
         float[] curvePoints = vertices;
-        numOfPatterns = QuadraticBezier.resolution / arrDensity;
+        arrDensity = 2;
+        numOfPatterns = QuadraticBezier.resolution  / arrDensity;
         numOfVertices = pointsPerPattern * numOfPatterns;
         vertices = new float[3*numOfVertices];
         shrink = 1.0f / numOfPatterns;
@@ -192,15 +193,16 @@ public class pmPatternLineBasic extends pmLineVisual {
     }
     @Override
     public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
+        if(curveType == LINE_STRAIGHT){
+            super.resetSrcAndDest(srcx,srcy,destx,desty);
+            return;
+        }
         dirty = true;
         srcPos.x = srcx; srcPos.y = srcy;
         destPos.x = destx; destPos.y = desty;
         slope = (desty - srcy) / (destx - srcx);
 
-        if(curveType == LINE_STRAIGHT){
-            initStraightVertices(srcx,srcy,destx,desty);
-            return;
-        }
+
         resetSrcAndDestCurve(srcx, srcy, destx, desty);
     }
 }
