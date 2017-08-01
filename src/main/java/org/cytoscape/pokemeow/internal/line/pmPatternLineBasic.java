@@ -1,6 +1,7 @@
 package main.java.org.cytoscape.pokemeow.internal.line;
 
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.utils.CubicBezier;
 import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
@@ -27,7 +28,6 @@ public class pmPatternLineBasic extends pmLineVisual {
         float cost = (float)Math.cos(theta);
         float sint = (float)Math.sin(theta);
 
-
         shrink = 1.0f/numOfPatterns;
         int base = 3*pointsPerPattern;
 
@@ -38,49 +38,23 @@ public class pmPatternLineBasic extends pmLineVisual {
             singlePattern[3*i+1] = tmpy;
         }
 
-
         float lastx, lasty;
-        if(Math.abs(slope) <= 1){
-            float rlen = destPos.x - srcPos.x;
-            int absNumOfPatterns = (int)(Math.abs(rlen) * numOfPatterns) + 1;
-            numOfVertices = pointsPerPattern*absNumOfPatterns;
-            vertices = new float[3*numOfVertices];
-            for(int j=0;j<pointsPerPattern;j++){
-                vertices[3*j] = singlePattern[3*j] * shrink+srcPos.x;
-                vertices[3*j+1] = singlePattern[3*j +1] * shrink+srcPos.y;
-                vertices[3*j+2] = zorder;
-            }
-            for(int i=1;i<absNumOfPatterns;i++){
-                for(int j=0;j<pointsPerPattern;j++) {
-                    lastx = vertices[base * (i-1) +3*j];
-                    lasty = vertices[base * (i-1) +3*j+1];
-                    vertices[base * i + 3*j] =  lastx + shrink;
-                    vertices[base * i + 3*j+1] = lasty + shrink * slope;
-                    vertices[base * i + 3*j+2] = zorder;
-                }
-            }
+        float rlen = destPos.x - srcPos.x;
+        int absNumOfPatterns = (int)(Math.abs(rlen) * numOfPatterns)-1;
+        numOfVertices = pointsPerPattern*absNumOfPatterns;
+        vertices = new float[3*numOfVertices];
+        for(int j=0;j<pointsPerPattern;j++){
+            vertices[3*j] = singlePattern[3*j] * shrink+srcPos.x+ shrink;
+            vertices[3*j+1] = singlePattern[3*j +1] * shrink+srcPos.y;
+            vertices[3*j+2] = zorder;
         }
-        else{
-            float rlen = destPos.y - srcPos.y;
-            int absNumOfPatterns =  (int)(Math.abs(rlen) * numOfPatterns) +1;
-            numOfVertices = pointsPerPattern*absNumOfPatterns+1;
-            vertices = new float[3*numOfVertices];
-            for(int j=0;j<pointsPerPattern;j++){
-                vertices[3*j] = singlePattern[3*j] * shrink+srcPos.x;
-                vertices[3*j+1] = singlePattern[3*j +1] * shrink+srcPos.y;
-                vertices[3*j+2] = zorder;
-            }
-            float k = 1.0f/slope;
-            for(int i=1;i<absNumOfPatterns;i++){
-                for(int j=0;j<pointsPerPattern;j++) {
-                    lastx = vertices[base * (i-1) +3*j];
-                    lasty = vertices[base * (i-1) +3*j+1];
-
-                    float tmpy = lasty + shrink;
-                    vertices[base * i + 3*j+1] = tmpy;
-                    vertices[base * i + 3*j] =  lastx + k *(tmpy - lasty);
-                    vertices[base * i + 3*j+2] = zorder;
-                }
+        for(int i=1;i<absNumOfPatterns;i++){
+            for(int j=0;j<pointsPerPattern;j++) {
+                lastx = vertices[base * (i-1) +3*j];
+                lasty = vertices[base * (i-1) +3*j+1];
+                vertices[base * i + 3*j] =  lastx + shrink;
+                vertices[base * i + 3*j+1] = lasty;
+                vertices[base * i + 3*j+2] = zorder;
             }
         }
     }
@@ -92,25 +66,24 @@ public class pmPatternLineBasic extends pmLineVisual {
         numOfPatterns = QuadraticBezier.resolution  / arrDensity;
         numOfVertices = pointsPerPattern * numOfPatterns;
         vertices = new float[3*numOfVertices];
-        shrink = 1.0f / numOfPatterns;
+        shrink = 0.5f / numOfPatterns;
         setCurveVerticesByPattern(curvePoints);
     }
 
     protected void setCurveVerticesByPattern(float[] curvePoints){
-        float orix, oriy, lastorix, lastoriy;
+        float orix, oriy,lastorix,lastoriy;
         int base = 3 * pointsPerPattern;
+        float []tmpSinglePattern = new float[3*pointsPerPattern];
         orix = curvePoints[0];
         oriy = curvePoints[1];
-        float []tmpSinglePattern = new float[3*pointsPerPattern];
+//        double theta = Math.atan(slope);
 
-
-        for (int i = 0, n = 0; i < numOfPatterns; i++, n += arrDensity) {
-            lastorix = orix; lastoriy = oriy;
+        for (int i = 0, n = 1; i < numOfPatterns; i++, n += arrDensity) {
+            lastoriy = oriy; lastorix = orix;
             orix = curvePoints[3 * n];oriy = curvePoints[3 * n + 1];
-            float k = (oriy-lastoriy) / (orix - lastorix);
+            float k = (oriy - lastoriy)/(orix-lastorix);
             double theta = Math.atan(k);
-            if(k<0)
-                theta-=3.14f;
+
             float cost = (float)Math.cos(theta);
             float sint = (float)Math.sin(theta);
             for(int ii=0;ii<pointsPerPattern;ii++){
@@ -154,6 +127,8 @@ public class pmPatternLineBasic extends pmLineVisual {
 
     protected void resetSrcAndDestCurve(float srcx, float srcy, float destx, float desty){
         float [] curvePoints;
+        modelMatrix = Matrix4.identity();
+        afterSetCurve = true;
         if(curveType == LINE_QUADRIC_CURVE){
             if(Math.abs(slope)<=1){
                 controlPoints[0] =(srcx + destx)/2.0f;
@@ -174,7 +149,7 @@ public class pmPatternLineBasic extends pmLineVisual {
                 controlPoints[0] =tmpx+srcx;
                 controlPoints[1] =tmpy+0.1f;
                 controlPoints[2] =tmpx*2+srcx;
-                controlPoints[4] =tmpy+0.1f;
+                controlPoints[3] =tmpy+0.1f;
             }
             else{
                 float tmpx = (destx+srcx)/2.0f;
@@ -182,7 +157,7 @@ public class pmPatternLineBasic extends pmLineVisual {
                 controlPoints[0] = tmpx+0.1f;
                 controlPoints[1] = tmpy+srcy;
                 controlPoints[2] = tmpx+0.1f;
-                controlPoints[4] = 2*tmpy+srcy;
+                controlPoints[3] = 2*tmpy+srcy;
             }
             CubicBezier curve = new CubicBezier(srcPos.x, srcPos.y, controlPoints[0], controlPoints[1], controlPoints[2], controlPoints[3], destPos.x, destPos.y);
             curvePoints = curve.getPointsOnCurves(zorder);

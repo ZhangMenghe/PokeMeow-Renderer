@@ -21,25 +21,16 @@ public class pmVerticalSlashLine extends pmPatternLineBasic{
         singlePattern = _singlePattern;
         if (curveType == LINE_STRAIGHT)
             initStraightVertices();
-        else
-            initCurveVertices();
-        initLineVisual(gl4);
-    }
-    public void setControlPoints(float nctrx, float nctry, int anchorID){
-        super.setControlPoints(nctrx,nctry,anchorID);
-    }
-    @Override
-    public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
-        dirty = true;
-        srcPos.x = srcx; srcPos.y = srcy;
-        destPos.x = destx; destPos.y = desty;
-        slope = (desty - srcy) / (destx - srcx);
-
-        if(curveType == LINE_STRAIGHT){
-            initStraightVertices();
-            return;
+        else{
+            float[] curvePoints = vertices;
+            arrDensity = 1;
+            numOfPatterns = QuadraticBezier.resolution  / arrDensity-2;
+            numOfVertices = pointsPerPattern * numOfPatterns;
+            vertices = new float[3*numOfVertices];
+            shrink = 1.0f / numOfPatterns;
+            setCurveVerticesByPattern(curvePoints);
         }
-        resetSrcAndDestCurve(srcx,srcy,destx,desty);
+        initLineVisual(gl4);
     }
 
 }

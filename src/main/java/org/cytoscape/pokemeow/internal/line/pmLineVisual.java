@@ -15,7 +15,7 @@ import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
 public class pmLineVisual extends pmBasicArrowShape {
     private float width = 1.0f;
     protected int lineSegments = 40;
-    public int numOfPatterns = 20;
+    public int numOfPatterns = 15;
     protected float curveFactor = 2.0f;
     public Byte connectMethod = 0; //default to be connect strip
     public Byte curveType = 0;     //default to straight line
@@ -97,10 +97,16 @@ public class pmLineVisual extends pmBasicArrowShape {
         plineList = new pmLineVisual[2];
         plineList[0] = line;
         plineList[1] = new pmLineVisual(gl4, line);
-        if(Math.abs(line.slope) <= 1)
-            plineList[1].setOrigin(new Vector3(line.origin.x, line.origin.y + 0.02f, line.origin.z));
-        else
-            plineList[1].setOrigin(new Vector3(line.origin.x + 0.02f, line.origin.y , line.origin.z));
+        if(Math.abs(line.slope) <= 1){
+            plineList[0].setOrigin(.0f,-0.01f);
+            plineList[1].setOrigin(new Vector3(line.origin.x, line.origin.y + 0.01f, line.origin.z));
+        }
+
+        else{
+            plineList[0].setOrigin(-0.01f, .0f);
+            plineList[1].setOrigin(new Vector3(line.origin.x + 0.01f, line.origin.y , line.origin.z));
+        }
+
     }
 
     protected void initLineVisual(GL4 gl4){

@@ -6,7 +6,6 @@ import com.jogamp.opengl.GL4;
  */
 
 public class pmSineWaveLine extends pmPatternLineBasic{
-    private int lineSegments = 100;
     private int period = 40;
     private float baseW = 0.174f;//baseW is approximate 2*pi/360
 
@@ -34,7 +33,7 @@ public class pmSineWaveLine extends pmPatternLineBasic{
         float rlen = destx-srcx;
         numOfVertices = (int)(lineSegments * Math.abs(rlen)) +1;
         int numOfPoints = 3*numOfVertices;
-
+        lineSegments = 100;
         vertices = new float[numOfPoints];
         float shrink = rlen/(numOfVertices-1);
         float exampleX = period*baseW;

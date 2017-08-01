@@ -1,6 +1,7 @@
 package main.java.org.cytoscape.pokemeow.internal.line;
 
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
 
 /**
  * Created by ZhangMenghe on 2017/7/10.
@@ -25,26 +26,15 @@ public class pmContiguousArrowLine extends pmPatternLineBasic {
         singlePattern = _singlePattern;
         if(curveType == LINE_STRAIGHT)
             initStraightVertices();
-        else
-            initCurveVertices();
-
-        initLineVisual(gl4);
-    }
-
-    public void setControlPoints(float nctrx, float nctry, int anchorID){
-        super.setControlPoints(nctrx,nctry,anchorID);
-    }
-    @Override
-    public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
-        dirty = true;
-        srcPos.x = srcx; srcPos.y = srcy;
-        destPos.x = destx; destPos.y = desty;
-        slope = (desty - srcy) / (destx - srcx);
-
-        if(curveType == LINE_STRAIGHT){
-            initStraightVertices();
-            return;
+        else{
+            float[] curvePoints = vertices;
+            arrDensity = 2;
+            numOfPatterns = QuadraticBezier.resolution  / arrDensity;
+            numOfVertices = pointsPerPattern * numOfPatterns;
+            vertices = new float[3*numOfVertices];
+            shrink = 0.6f / numOfPatterns;
+            setCurveVerticesByPattern(curvePoints);
         }
-        resetSrcAndDestCurve(srcx,srcy,destx,desty);
+        initLineVisual(gl4);
     }
 }
