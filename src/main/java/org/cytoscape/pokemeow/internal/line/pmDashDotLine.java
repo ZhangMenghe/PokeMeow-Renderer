@@ -27,7 +27,7 @@ public class pmDashDotLine extends pmLineVisual{
                     vertices[i] = vertices[i - 3] + shrink * 5;
                 else
                     vertices[i] = vertices[i - 3] + shrink;
-                vertices[i + 1] = srcy + slope * (vertices[i] - srcx);
+                vertices[i + 1] = srcy;// + slope * (vertices[i] - srcx);
                 vertices[i + 2] = zorder;
             }
         }

@@ -18,7 +18,7 @@ public class pmEqualDashLine extends pmLineVisual{
             float shrink = rlen / (numOfVertices - 1);
             for (int i = 0, n = 0; i < numOfPoints; i += 3, n++) {
                 vertices[i] = srcx + shrink * n;
-                vertices[i + 1] = srcy + slope * (vertices[i] - srcx);
+                vertices[i + 1] = srcy; //+ slope * (vertices[i] - srcx);
                 vertices[i + 2] = zorder;
             }
         }
