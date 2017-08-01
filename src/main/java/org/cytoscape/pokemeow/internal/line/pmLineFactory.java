@@ -3,6 +3,7 @@ package main.java.org.cytoscape.pokemeow.internal.line;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmArrowShapeFactory;
@@ -90,6 +91,7 @@ public class pmLineFactory {
                 gl4.glDrawArrays(GL4.GL_LINE_STRIP, 0, line.numOfVertices);
                 break;
             case pmLineVisual.CONNECT_SEGMENTS:
+//                gl4.glPointSize(2.0f);
                 gl4.glDrawArrays(GL4.GL_LINES, 0, line.numOfVertices);
                 break;
             case pmLineVisual.CONNECT_DOTS:
@@ -132,44 +134,42 @@ public class pmLineFactory {
                 for(pmLineVisual sline:line.plineList){
                     sline.data_buff = Buffers.newDirectFloatBuffer(sline.vertices);
                     gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  sline.objects[sline.VBO]);
-                    gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, sline.data_buff.capacity() * Float.BYTES, sline.data_buff);
+//                    gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, sline.data_buff.capacity() * Float.BYTES, sline.data_buff);
+                    gl4.glBufferData(GL.GL_ARRAY_BUFFER, sline.data_buff.capacity() * Float.BYTES, sline.data_buff, GL.GL_STATIC_DRAW);
                 }
             }
             else{
                 if(line.connectMethod != pmLineVisual.CONNECT_PATTERN){
                     line.data_buff = Buffers.newDirectFloatBuffer(line.vertices);
                     gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  line.objects[line.VBO]);
-                    gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, line.data_buff.capacity() * Float.BYTES, line.data_buff);
+//                    gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, line.data_buff.capacity() * Float.BYTES, line.data_buff);
+                    gl4.glBufferData(GL.GL_ARRAY_BUFFER, line.data_buff.capacity() * Float.BYTES, line.data_buff, GL.GL_STATIC_DRAW);
                 }
             }
-
         }
         drawLine_GL(gl4, line, gshaderParam);
         gl4.glPointSize(10.0f);
-
+        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(Matrix4.identity().asArrayCM()));
+        //Draw anchors for curve
         if(line.curveType == pmLineVisual.LINE_QUADRIC_CURVE){
-            gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
-            gl4.glUniform4f(gshaderParam.vec4_color, 1.0f, .0f, .0f,.0f);
-            drawAnchorPoint(line.anchor, line.dirty);
+            gl4.glUniform4f(gshaderParam.vec4_color, line.anchor.color.x, line.anchor.color.y, line.anchor.color.z, line.anchor.color.w);
+            drawAnchorPoint(line.anchor);
         }
         if(line.curveType == pmLineVisual.LINE_CUBIC_CURVE){
-            gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
-            gl4.glUniform4f(gshaderParam.vec4_color, 1.0f, .0f, .0f,.0f);
-            drawAnchorPoint(line.anchor, line.dirty);
-            drawAnchorPoint(line.anchor2, line.dirty);
+            gl4.glUniform4f(gshaderParam.vec4_color, line.anchor2.color.x, line.anchor2.color.y, line.anchor2.color.z, line.anchor2.color.w);
+            drawAnchorPoint(line.anchor);
+            drawAnchorPoint(line.anchor2);
         }
         line.dirty = false;
         gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl4.glBindVertexArray(0);
     }
 
-    private void drawAnchorPoint(pmAnchor anchor, boolean dirty){
+    private void drawAnchorPoint(pmAnchor anchor){
         gl4.glBindVertexArray(anchor.objects[anchor.VAO]);
-        if(dirty){
             anchor.data_buff = Buffers.newDirectFloatBuffer(anchor.vertices);
             gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  anchor.objects[anchor.VBO]);
             gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, 3 * Float.BYTES, anchor.data_buff);
-        }
         gl4.glDrawArrays(GL4.GL_POINTS, 0, 1);
 
     }

@@ -9,7 +9,7 @@ public class QuadraticBezier {
     private Vector2 sourcePos;
     private Vector2 controlPos;
     private Vector2 destinationPos;
-    public static final int resolution = 160;
+    public static final int resolution = 20;
     private float stepSize;
 
     public QuadraticBezier(float srcx, float srcy, float controlx, float controly, float destx, float desty){
@@ -53,6 +53,16 @@ public class QuadraticBezier {
         points[3*resolution] = destinationPos.x;
         points[3*resolution+1] = destinationPos.y;
         points[3*resolution+2] = z;
+        return points;
+    }
+    public Vector2[] getPointsOnCurves(int _resolution){
+        Vector2 []points = new Vector2[_resolution+1];
+        float currentT = .0f;
+        stepSize = 1.0f/(_resolution-1);
+        for(int i=0; i<_resolution; i++,currentT+=stepSize){
+            points[i] = interpolate(currentT);
+        }
+        points[_resolution] = destinationPos;
         return points;
     }
 //    public static void main(String[] args) {

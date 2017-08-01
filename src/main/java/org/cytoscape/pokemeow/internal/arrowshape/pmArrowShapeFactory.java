@@ -69,6 +69,7 @@ public class pmArrowShapeFactory {
     }
 
     public void drawArrow(GL4 gl4, pmBasicArrowShape arrow, pmShaderParams gshaderParam){
+        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(arrow.modelMatrix.asArrayCM()));
         gl4.glUniform4f(gshaderParam.vec4_color, arrow.color.x, arrow.color.y, arrow.color.z,arrow.color.w);
         gl4.glBindVertexArray(arrow.objects[arrow.VAO]);
         if(arrow.dirty){

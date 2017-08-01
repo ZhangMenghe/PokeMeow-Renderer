@@ -9,35 +9,19 @@ public class pmEqualDashLine extends pmLineVisual{
     public pmEqualDashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
         connectMethod = CONNECT_SEGMENTS;
-        initLineVisual(gl4);
-    }
-
-    @Override
-    protected void setSrcAndDest(float srcx, float srcy, float destx, float desty){
-        super.setSrcAndDest(srcx,srcy,destx,desty);
-        if(curveType == LINE_STRAIGHT){
-            float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
-            numOfVertices = lineSegments * (int)rlen +1;
-            int numOfPoints = 3*numOfVertices;
+        if(curveType == LINE_STRAIGHT) {
+            lineSegments=20;
+            float rlen = destx - srcx;
+            numOfVertices = (int) (lineSegments * Math.abs(rlen)) + 1;
+            int numOfPoints = 3 * numOfVertices;
             vertices = new float[numOfPoints];
-            float shrink = rlen/(numOfVertices-1);
-            if(Math.abs(slope) <= 1) {
-                for (int i = 0, n = 0; i < numOfPoints; i += 3, n++) {
-                    vertices[i] = srcx + shrink * n;
-                    vertices[i + 1] = srcy + slope * (vertices[i] - srcx);
-                    vertices[i + 2] = zorder;
-                }
-            }
-            else{
-                float k = 1.0f/slope;
-                for (int i = 0, n = 0; i < numOfPoints; i += 3, n++) {
-                    float tmpy = srcy+shrink*n;
-                    vertices[i] = srcx + k * (tmpy - srcy);
-                    vertices[i + 1] = tmpy;
-                    vertices[i + 2] = zorder;
-                }
+            float shrink = rlen / (numOfVertices - 1);
+            for (int i = 0, n = 0; i < numOfPoints; i += 3, n++) {
+                vertices[i] = srcx + shrink * n;
+                vertices[i + 1] = srcy; //+ slope * (vertices[i] - srcx);
+                vertices[i + 2] = zorder;
             }
         }
+        initLineVisual(gl4);
     }
-
 }

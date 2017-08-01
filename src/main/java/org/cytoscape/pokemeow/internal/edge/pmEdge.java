@@ -21,7 +21,7 @@ public class pmEdge {
     private pmArrowShapeFactory arrowFactory;
     public Byte curveType;
     private float xMin,xMax,yMin,yMax;
-    private Vector2 origin;
+
     //No arrow
     public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType,
                   float srcx, float srcy, float destx, float desty){
@@ -54,7 +54,6 @@ public class pmEdge {
         _srcArrow = srcArrow;
         _destArrow = destArrow;
         lineFactory = new pmLineFactory(gl4);
-        origin = new Vector2((line.srcPos.x+line.destPos.x)/2, (line.srcPos.y+line.destPos.y)/2);
 
         if(destArrow == null)
             return;
@@ -64,15 +63,12 @@ public class pmEdge {
 
     }
     private void commonInitialForEdge(GL4 gl4, Byte lineType, Byte mcurveType,
-
                                       float srcx, float srcy, float destx, float desty){
         lineFactory = new pmLineFactory(gl4);
-        _line = lineFactory.createLine(lineType, srcx, srcy, destx, desty,mcurveType);
+        _line = lineFactory.createLine(lineType, srcx, srcy, destx, desty, mcurveType);
         curveType = mcurveType;
-        xMin = Math.min(srcx, destx); xMax = Math.max(srcx, destx);
-        yMin = Math.min(srcy, desty); yMax = Math.max(srcy, desty);
-        origin = new Vector2((srcx+destx)/2, (srcy+desty)/2);
-
+        xMin = Math.min(srcx, destx)-0.01f; xMax = Math.max(srcx, destx)+0.01f;
+        yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;
     }
     private void setArrowPosAndRot(){
         if (_destArrow != null) {
@@ -101,10 +97,10 @@ public class pmEdge {
             float k2 = (_line.controlPoints[1] - _line.destPos.y) / (_line.controlPoints[0] - _line.destPos.x);
             thetadest = Math.atan(k2);
             if (Math.abs(_line.slope) > 1) {
-                if (_line.controlPoints[0] > _line.srcPos.x)
+                if (_line.controlPoints[0] > _line.destPos.x)
                     thetadest -= 3.14f;
-                else
-                    thetasrc -= 3.14f;
+                if(_line.controlPoints[0] < _line.srcPos.x)
+                    thetasrc-=3.14f;
             }
             else{
                 if(_line.destPos.x < _line.srcPos.x){
@@ -135,18 +131,20 @@ public class pmEdge {
 
         if (_destArrow != null)
             _destArrow.setRotation((float) thetadest);
-//            _destArrow.setRotation(3.14f/2);
         if (_srcArrow != null)
             _srcArrow.setRotation((float) thetasrc - 3.14f);
-//            _srcArrow.setRotation(3.14f/2);
     }
 
-    public void draw(GL4 gl4, pmShaderParams gshaderParam){
+    public void draw(GL4 gl4, pmShaderParams lineParam, pmShaderParams arrowParam, int lineProgram, int arrowProgram){
+        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
+        if(_destArrow != null){
+            gl4.glUseProgram(arrowProgram);
+            arrowFactory.drawArrow(gl4, _destArrow, arrowParam);
+        }
         if(_srcArrow != null)
-            arrowFactory.drawArrow(gl4, _srcArrow, gshaderParam);
-        if(_destArrow != null)
-            arrowFactory.drawArrow(gl4, _destArrow, gshaderParam);
-        lineFactory.drawLine(gl4, _line, gshaderParam);
+            arrowFactory.drawArrow(gl4, _srcArrow, arrowParam);
+        gl4.glUseProgram(lineProgram);
+        lineFactory.drawLine(gl4, _line, lineParam);
     }
 
     public void setControlPoints(float nctrx, float nctry, int anchorID){
@@ -172,9 +170,6 @@ public class pmEdge {
     public boolean isHit(float posx, float posy){
         if(_line.curveType == pmLineVisual.LINE_STRAIGHT)
             return isHitStraightLine(posx, posy);
-//        float bounxMin = xMin; float boundxMax = xMax;
-//        float boundyMin = yMin; float boundyMax = yMax;
-
         xMin = Math.min(xMin, _line.controlPoints[0]); xMax = Math.max(xMax,  _line.controlPoints[0]);
         yMin = Math.min(yMin, _line.controlPoints[1]); yMax = Math.max(yMax,  _line.controlPoints[1]);
         if(_line.curveType == pmLineVisual.LINE_CUBIC_CURVE){
@@ -183,8 +178,6 @@ public class pmEdge {
         }
         if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
             return false;
-//        float tmpx = posx-(bounxMin+boundxMax)/2;
-//        float tmpy = posy-(boundyMin+boundyMax)/2;
         if(_line.slope>0){
             for(int i=0; i<_line.numOfVertices-1; i++){
                 if(_line.vertices[3*i+1]<(posy-0.02f) || _line.vertices[3*i] > (posx+0.02f))
@@ -192,11 +185,6 @@ public class pmEdge {
                 float deltay = _line.vertices[3*i+1]-posy;
                 float deltax = _line.vertices[3*i]-posx;
                 float length =deltay*deltay + deltax*deltax;
-
-//                float deltay = _line.vertices[3*(i+1)+1] - _line.vertices[3*i+1];
-//                float deltax = _line.vertices[3*(i+1)] - _line.vertices[3*i];
-//                float k = deltay / deltax;//
-//                float length = Math.abs(tmpx+k*tmpy-k*liney-linex) / (float)Math.sqrt(k * k +1);
                 if(length <= 0.0002f)
                     return true;
 
@@ -219,10 +207,11 @@ public class pmEdge {
     private boolean isHitStraightLine(float posx, float posy){
         if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
             return false;
+
         float tmpx = posx-(xMin+xMax)/2;
         float tmpy = posy-(yMin+yMax)/2;
         float length = Math.abs(_line.slope*tmpx - tmpy) / (float)Math.sqrt(_line.slope * _line.slope +1);
-        if(length <= 0.005f)
+        if(length <= 0.01f)
             return true;
         else
             return false;
@@ -237,34 +226,33 @@ public class pmEdge {
     public void setRotation(float radians){
         _line.setRotation(radians);
         if(_srcArrow!=null)
-            _srcArrow.setRotation(radians);
+            _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
         if(_destArrow!=null)
-            _destArrow.setRotation(radians);
+            _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
+        setArrowRotation();
     }
     public void setOrigin(Vector2 new_origin){
-        float deltax = new_origin.x - origin.x;
-        float deltay = new_origin.y - origin.y;
-        origin.x = new_origin.x;
-        origin.y = new_origin.y;
+        float deltax = new_origin.x - _line.origin.x;
+        float deltay = new_origin.y - _line.origin.y;
         _line.srcPos.x += deltax;_line.srcPos.y += deltay;
         _line.destPos.x += deltax;_line.destPos.y += deltay;
-        for(int i=0;i<_line.numOfVertices;i++){
-            _line.vertices[3*i] +=deltax;
-            _line.vertices[3*i+1]+=deltay;
+        if(_line.afterSetCurve){
+            _line.setOrigin(new Vector2(deltax,deltay));
+            _line.afterSetCurve = false;
         }
+        else
+            _line.setOrigin(deltax,deltay);
         if(curveType != pmLineVisual.LINE_STRAIGHT){
             _line.controlPoints[0]+=deltax;
             _line.controlPoints[1]+=deltay;
-            _line.anchor.vertices[0]+=deltax;
-            _line.anchor.vertices[1]+=deltay;
+            _line.anchor.setPosition(deltax,deltay,true);
         }
         if(curveType == pmLineVisual.LINE_CUBIC_CURVE){
             _line.controlPoints[2]+=deltax;
             _line.controlPoints[3]+=deltay;
-            _line.anchor2.vertices[0]+=deltax;
-            _line.anchor2.vertices[1]+=deltay;
+            _line.anchor2.setPosition(deltax,deltay,true);
         }
-        _line.dirty = true;
+//        _line.dirty = true;
         if(_srcArrow != null){
             _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
         }
@@ -272,5 +260,15 @@ public class pmEdge {
         if(_destArrow != null){
             _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
         }
+    }
+    public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
+        _line.resetSrcAndDest(srcx,srcy,destx,desty);
+        if(_srcArrow != null)
+            _srcArrow.setOrigin(new Vector3(srcx, srcy, _line.zorder));
+        if(_destArrow != null)
+            _destArrow.setOrigin(new Vector3(destx, desty, _line.zorder));
+        setArrowRotation();
+        xMin = Math.min(srcx, destx)-0.01f; xMax = Math.max(srcx, destx)+0.01f;
+        yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;
     }
 }

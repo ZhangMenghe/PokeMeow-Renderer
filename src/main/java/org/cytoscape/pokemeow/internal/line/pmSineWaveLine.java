@@ -6,7 +6,6 @@ import com.jogamp.opengl.GL4;
  */
 
 public class pmSineWaveLine extends pmPatternLineBasic{
-    private int lineSegments = 50;
     private int period = 40;
     private float baseW = 0.174f;//baseW is approximate 2*pi/360
 
@@ -31,38 +30,20 @@ public class pmSineWaveLine extends pmPatternLineBasic{
     }
 
     protected void initStraightVertices(float srcx, float srcy, float destx, float desty){
-        float deltay = desty - srcy;
-        float deltax = destx - srcx;
-        float length =(float) Math.sqrt(deltay*deltay + deltax*deltax);
-
-        float rlen = Math.abs(srcx-destx) + Math.abs(srcy-desty);
-        numOfVertices = lineSegments * (int)rlen +1;
+        float rlen = destx-srcx;
+        numOfVertices = (int)(lineSegments * Math.abs(rlen)) +1;
         int numOfPoints = 3*numOfVertices;
-
+        lineSegments = 100;
         vertices = new float[numOfPoints];
-        float shrink = length/(numOfVertices-1);
+        float shrink = rlen/(numOfVertices-1);
         float exampleX = period*baseW;
-        double theta = Math.atan(slope);
-        float cost = (float)Math.cos(theta);
-        float sint = (float)Math.sin(theta);
-        float gapx = .0f,gapy = .0f;
-        for(int i=0, n=0; i<numOfPoints; i+=3, n++){
-            float tmpx = srcx + shrink*n;
-            float tmpy = (float) Math.sin(exampleX*n)/20;
-            vertices[i] = tmpx*cost-tmpy*sint+gapx;
-            vertices[i+1] = tmpx*sint+tmpy*cost+gapy;
-            if(n==0){
-                gapx = srcx - vertices[0];
-                gapy = srcy - vertices[1];
-                vertices[0] = srcx;
-                vertices[1] = srcy;
-            }
+        int i,n;
+        for(i=0, n=0; i<numOfPoints; i+=3, n++){
+            vertices[i] = srcx + shrink*n;
+            vertices[i+1] = (float) Math.sin(exampleX*n)/40;
             vertices[i+2] = zorder;
         }
-    }
-
-    public void setControlPoints(float nctrx, float nctry, int anchorID){
-        super.setControlPoints(nctrx,nctry,anchorID);
+        vertices[1] = vertices[i-2] = .0f;
     }
 
 }

@@ -65,8 +65,8 @@ public class pmBasicNodeShape{
     }
 
     private void updateMatrix(){
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(modelMatrix, rotMatrix);
+        modelMatrix = Matrix4.mult(rotMatrix,Matrix4.scale((scale)));
+        modelMatrix = Matrix4.mult(Matrix4.translation(origin),modelMatrix);
         float r11 = modelMatrix.e11;float r21 = modelMatrix.e21;
         float r12 = modelMatrix.e12;float r22 = modelMatrix.e22;
         float r14 = modelMatrix.e14;float r24 = modelMatrix.e24;

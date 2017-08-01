@@ -17,7 +17,7 @@ public class pmAnchor {
     public int VAO = 0;
     public int VBO = 1;
     public int[] objects = new int[2];
-    public Vector4 color;//currently no use, color same to line
+    public Vector4 color= new Vector4(1.0f,.0f,.0f,1.0f);//default to red
     public float[] vertices;
     public FloatBuffer data_buff;
 
@@ -45,7 +45,10 @@ public class pmAnchor {
         vertices[0] = posx;
         vertices[1] = posy;
     }
-
+    public void setPosition(float posx, float posy, boolean useOffset){
+        vertices[0] += posx;
+        vertices[1] += posy;
+    }
     public void setColor(Vector4 new_color){
         color = new_color;
     }
