@@ -76,8 +76,7 @@ public class pmPatternLineBasic extends pmLineVisual {
         float []tmpSinglePattern = new float[3*pointsPerPattern];
         orix = curvePoints[0];
         oriy = curvePoints[1];
-//        double theta = Math.atan(slope);
-
+        arrDensity = (int) curvePoints.length/(3*numOfPatterns);
         for (int i = 0, n = 1; i < numOfPatterns; i++, n += arrDensity) {
             lastoriy = oriy; lastorix = orix;
             orix = curvePoints[3 * n];oriy = curvePoints[3 * n + 1];
