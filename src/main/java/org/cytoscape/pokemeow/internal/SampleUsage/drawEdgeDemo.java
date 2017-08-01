@@ -61,7 +61,7 @@ public class drawEdgeDemo extends Demo{
 //            edgeList[n++] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, i,i,
 //                       cy,-0.5f,cy,0.5f);
 //        }
-        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_SEPARATE_ARROW, pmLineVisual.LINE_STRAIGHT, pmArrowShapeFactory.SHAPE_ARROWHEAD,pmArrowShapeFactory.SHAPE_ARROWHEAD,
+        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_SEPARATE_ARROW, pmLineVisual.LINE_QUADRIC_CURVE, pmArrowShapeFactory.SHAPE_ARROWHEAD,pmArrowShapeFactory.SHAPE_ARROWHEAD,
                 srcx, srcy, destx, desty);
 //        edgeList[0].resetSrcAndDest(-0.8f,.0f,0.8f,.0f);
 //        edgeList[1] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
