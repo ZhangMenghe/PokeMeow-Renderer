@@ -12,7 +12,7 @@ import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
  * Created by ZhangMenghe on 2017/7/10.
  */
 public class pmSeparateArrowLine extends pmPatternLineBasic {
-    public final static int arrDensity = 1;
+    public final static int arrDensity = 2;
     private GL4 gl;
     public pmSeparateArrowLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type) {
         super(gl4, srcx, srcy, destx, desty, type);
@@ -33,7 +33,11 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
     }
 
     private void setPatternOnCurve(){
-        float rlen = destPos.x - srcPos.x;
+        float rlen;
+        if(slope<1)
+            rlen = destPos.x - srcPos.x;
+        else
+            rlen = destPos.y - srcPos.y;
         int absNumOfPatterns = (int)(rlen * numOfPatterns);
         int step = numOfVertices / absNumOfPatterns;
         patternList = new pmBasicArrowShape[absNumOfPatterns];
@@ -54,15 +58,33 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
         if(slope<0)
             theta -= 3.14f;
 
-        float rlen = destPos.x - srcPos.x;
-        numOfVertices = (int) (lineSegments * Math.abs(rlen)) + 1;
-        int numOfPoints = 3*numOfVertices;
-        vertices = new float[numOfPoints];
-        float shrink = rlen/(numOfVertices-1);
-        for (int i = 0, n = 2; i < numOfPoints; i += 3, n++) {
-            vertices[i] = srcPos.x + shrink * n;
-            vertices[i + 1] = srcPos.y + slope * (vertices[i] - srcPos.x);
-            vertices[i + 2] = zorder;
+        float rlen;
+        if(slope<1){
+            rlen = destx - srcx;
+            numOfVertices = (int) (lineSegments * Math.abs(rlen)) + 1;
+            int numOfPoints = 3*numOfVertices;
+            vertices = new float[numOfPoints];
+            float shrink = rlen/(numOfVertices-1);
+            for (int i = 0, n = 2; i < numOfPoints; i += 3, n++) {
+                vertices[i] = srcPos.x + shrink * n;
+                vertices[i + 1] = srcPos.y + slope * (vertices[i] - srcPos.x);
+                vertices[i + 2] = zorder;
+            }
+        }
+
+        else{
+            rlen = desty - srcy;
+            numOfVertices = (int) (lineSegments * Math.abs(rlen)) + 1;
+            int numOfPoints = 3*numOfVertices;
+            vertices = new float[numOfPoints];
+            float shrink = rlen/(numOfVertices-1);
+            float k = 1.0f/slope;
+            for (int i = 0, n = 2; i < numOfPoints; i += 3, n++) {
+                float tmpy = srcy+shrink*n;
+                vertices[i] = srcx + k * (tmpy - srcy);
+                vertices[i + 1] = tmpy;
+                vertices[i + 2] = zorder;
+            }
         }
 
         int absNumOfPatterns = (int)(rlen * numOfPatterns)/2;
@@ -134,7 +156,9 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
 
         double theta = 0;
         int n = 0;
-        for (int i = 0; i < numOfPatterns-1; i++, n+=arrDensity) {
+        int absNumOfPattern = patternList.length;
+        int step = numOfVertices / absNumOfPattern;
+        for (int i = 0; i < absNumOfPattern-1; i++, n+=step) {
             float deltay = patternList[i+1].origin.y - patternList[i].origin.y;
             float deltax = patternList[i+1].origin.x - patternList[i].origin.x;
             float k = deltay / deltax;
@@ -144,8 +168,8 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
             patternList[i].setRotation((float) theta - 3.14f/2);
             patternList[i].setOrigin(new Vector3(vertices[3*n], vertices[3*n+1], zorder));
         }
-        patternList[numOfPatterns-1].setRotation((float) theta - 3.14f/2);
-        patternList[numOfPatterns-1].setOrigin(new Vector3(vertices[3*n], vertices[3*n+1], zorder));
+        patternList[absNumOfPattern-1].setRotation((float) theta - 3.14f/2);
+        patternList[absNumOfPattern-1].setOrigin(new Vector3(vertices[3*n], vertices[3*n+1], zorder));
     }
 
     public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
