@@ -114,6 +114,7 @@ public class pmPatternLineBasic extends pmLineVisual {
             anchor2.setPosition(nctrx, nctry);
         }
         float[] curvePoints;
+
         if(curveType == LINE_QUADRIC_CURVE) {
             controlPoints[0] = nctrx;
             controlPoints[1] = nctry;
@@ -125,6 +126,9 @@ public class pmPatternLineBasic extends pmLineVisual {
             CubicBezier curve = new CubicBezier(srcPos.x, srcPos.y, controlPoints[0], controlPoints[1], controlPoints[2], controlPoints[3], destPos.x, destPos.y);
             curvePoints = curve.getPointsOnCurves(zorder);
         }
+        _curveOffset.x = origin.x;
+        _curveOffset.y = origin.y;
+        modelMatrix = Matrix4.identity();
         setCurveVerticesByPattern(curvePoints);
     }
 
@@ -132,6 +136,8 @@ public class pmPatternLineBasic extends pmLineVisual {
         float [] curvePoints;
         modelMatrix = Matrix4.identity();
         //afterSetCurve = true;
+        _curveOffset.x = origin.x;
+        _curveOffset.y = origin.y;
         if(curveType == LINE_QUADRIC_CURVE){
             if(Math.abs(slope)<=1){
                 controlPoints[0] =(srcx + destx)/2.0f;
@@ -179,7 +185,7 @@ public class pmPatternLineBasic extends pmLineVisual {
         srcPos.x = srcx; srcPos.y = srcy;
         destPos.x = destx; destPos.y = desty;
         slope = (desty - srcy) / (destx - srcx);
-
+        origin.x = (srcx+destx)/2.0f; origin.y = (srcy+desty)/2.0f;
 
         resetSrcAndDestCurve(srcx, srcy, destx, desty);
     }
