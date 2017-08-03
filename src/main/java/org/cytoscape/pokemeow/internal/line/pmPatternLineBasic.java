@@ -39,13 +39,17 @@ public class pmPatternLineBasic extends pmLineVisual {
         }
 
         float lastx, lasty;
-        float rlen = destPos.x - srcPos.x;
+        float rlen;
+        if(slope<1)
+            rlen = destPos.x - srcPos.x;
+        else
+            rlen = destPos.y - srcPos.y;
         int absNumOfPatterns = (int)(Math.abs(rlen) * numOfPatterns)-1;
         numOfVertices = pointsPerPattern*absNumOfPatterns;
         vertices = new float[3*numOfVertices];
         for(int j=0;j<pointsPerPattern;j++){
-            vertices[3*j] = singlePattern[3*j] * shrink+srcPos.x+ shrink;
-            vertices[3*j+1] = singlePattern[3*j +1] * shrink+srcPos.y;
+            vertices[3*j] = singlePattern[3*j] * shrink-0.5f+ shrink;
+            vertices[3*j+1] = singlePattern[3*j +1] * shrink;
             vertices[3*j+2] = zorder;
         }
         for(int i=1;i<absNumOfPatterns;i++){
@@ -127,7 +131,7 @@ public class pmPatternLineBasic extends pmLineVisual {
     protected void resetSrcAndDestCurve(float srcx, float srcy, float destx, float desty){
         float [] curvePoints;
         modelMatrix = Matrix4.identity();
-        afterSetCurve = true;
+        //afterSetCurve = true;
         if(curveType == LINE_QUADRIC_CURVE){
             if(Math.abs(slope)<=1){
                 controlPoints[0] =(srcx + destx)/2.0f;

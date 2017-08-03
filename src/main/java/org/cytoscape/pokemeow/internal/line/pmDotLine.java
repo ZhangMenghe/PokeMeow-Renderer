@@ -11,14 +11,18 @@ public class pmDotLine extends pmLineVisual{
         super(gl4, srcx, srcy, destx, desty, type);
         if(curveType == LINE_STRAIGHT){
             lineSegments = 20;
-            float rlen = destx-srcx;
+            float rlen;
+            if(slope<1)
+                rlen = destx - srcx;
+            else
+                rlen = desty - srcy;
             numOfVertices = (int)(lineSegments * Math.abs(rlen)) +1;
             int numOfPoints = 3*numOfVertices;
             vertices = new float[numOfPoints];
             float shrink = rlen/(numOfVertices-1);
             for (int i = 0, n = 0; i < numOfPoints; i += 3, n++) {
-                vertices[i] = srcx + shrink * n;
-                vertices[i + 1] = srcy;// + slope * (vertices[i] - srcx);
+                vertices[i] = -0.5f + shrink * n;
+                vertices[i + 1] = .0f;// + slope * (vertices[i] - srcx);
                 vertices[i + 2] = zorder;
             }
         }

@@ -66,7 +66,7 @@ public class pmLineFactory {
             case 10:
                 return new pmContiguousArrowLine(gl4, srcx, srcy, destx, desty, curveType);
             case 11:
-                return new pmParallelLine(gl4, createLine(LINE_SOLID, srcx, srcy, destx, desty, curveType));
+                return createLine(LINE_PARALLEL, LINE_SOLID, srcx, srcy, destx, desty, curveType);
             case 12:
                 arrowFctory = new pmArrowShapeFactory(gl4);
                 return new pmSeparateArrowLine(gl4, srcx, srcy, destx, desty, curveType);
@@ -104,6 +104,7 @@ public class pmLineFactory {
                 gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
                 break;
             case pmLineVisual.CONNECT_PATTERN:
+                gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(Matrix4.identity().asArrayCM()));
                 arrowFctory.drawArrowList(gl4, line.patternList, gshaderParam);
                 break;
             case pmLineVisual.CONNECT_PARALLEL:

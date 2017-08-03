@@ -187,7 +187,6 @@ public class pmEdge {
                 float length =deltay*deltay + deltax*deltax;
                 if(length <= 0.0002f)
                     return true;
-
             }
         }
         else{
@@ -231,34 +230,30 @@ public class pmEdge {
             _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
         setArrowRotation();
     }
-    public void setOrigin(Vector2 new_origin){
+    public void setOrigin(Vector2 new_origin) {
         float deltax = new_origin.x - _line.origin.x;
         float deltay = new_origin.y - _line.origin.y;
-        _line.srcPos.x += deltax;_line.srcPos.y += deltay;
-        _line.destPos.x += deltax;_line.destPos.y += deltay;
-        if(_line.afterSetCurve){
-            _line.setOrigin(new Vector2(deltax,deltay));
-            _line.afterSetCurve = false;
+
+        _line.setOrigin(new_origin);
+        _line.srcPos.x +=deltax;
+        _line.srcPos.y +=deltay;
+        _line.destPos.x +=deltax;
+        _line.destPos.y +=deltay;
+
+        if (curveType != pmLineVisual.LINE_STRAIGHT) {
+            _line.controlPoints[0]+=deltax;_line.controlPoints[1]+=deltay;
+            _line.anchor.setPosition(_line.controlPoints[0], _line.controlPoints[1]);
         }
-        else
-            _line.setOrigin(deltax,deltay);
-        if(curveType != pmLineVisual.LINE_STRAIGHT){
-            _line.controlPoints[0]+=deltax;
-            _line.controlPoints[1]+=deltay;
-            _line.anchor.setPosition(deltax,deltay,true);
-        }
-        if(curveType == pmLineVisual.LINE_CUBIC_CURVE){
-            _line.controlPoints[2]+=deltax;
-            _line.controlPoints[3]+=deltay;
-            _line.anchor2.setPosition(deltax,deltay,true);
-        }
-//        _line.dirty = true;
-        if(_srcArrow != null){
-            _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
+        if (curveType == pmLineVisual.LINE_CUBIC_CURVE){
+            _line.controlPoints[2]+=deltax;_line.controlPoints[3]+=deltay;
+            _line.anchor2.setPosition(_line.controlPoints[2], _line.controlPoints[3]);
         }
 
-        if(_destArrow != null){
-            _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
+        if (_srcArrow != null) {
+            _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
+
+            if (_destArrow != null)
+                _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
         }
     }
     public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){

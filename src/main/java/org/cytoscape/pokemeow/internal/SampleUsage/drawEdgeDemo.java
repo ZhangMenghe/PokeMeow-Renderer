@@ -63,6 +63,7 @@ public class drawEdgeDemo extends Demo{
 //        }
         edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_SEPARATE_ARROW, pmLineVisual.LINE_QUADRIC_CURVE, pmArrowShapeFactory.SHAPE_ARROWHEAD,pmArrowShapeFactory.SHAPE_ARROWHEAD,
                 srcx, srcy, destx, desty);
+//        edgeList[0].setOrigin(new Vector2(.0f,.0f));
 //        edgeList[0].resetSrcAndDest(-0.8f,.0f,0.8f,.0f);
 //        edgeList[1] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
 //                0.2f,0.5f,0.2f,-0.5f);
@@ -117,6 +118,8 @@ public class drawEdgeDemo extends Demo{
             case 1:
                 hitEdge = edgeList[0];//= hitEdge(posx,posy);
                 hitEdge.setOrigin(new Vector2(posx, posy));
+//                edgeList[0].setOrigin(new Vector2(.0f,.0f));
+                //System.out.println(posx +"-"+posy);
                 break;
             case 3:
                 tackleAnchor(posx, posy);
