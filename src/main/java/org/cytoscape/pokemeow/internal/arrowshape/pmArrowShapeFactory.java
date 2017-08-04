@@ -91,6 +91,8 @@ public class pmArrowShapeFactory {
     }
     
     public void drawArrowList(GL4 gl4, pmBasicArrowShape[] arrowList, pmShaderParams gshaderParam){
+        if(arrowList == null)
+            return;
         for(pmBasicArrowShape arrow: arrowList){
             drawArrow(gl4, arrow, gshaderParam);
         }

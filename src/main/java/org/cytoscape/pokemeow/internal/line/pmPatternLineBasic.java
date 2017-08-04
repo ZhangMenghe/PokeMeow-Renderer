@@ -19,6 +19,7 @@ public class pmPatternLineBasic extends pmLineVisual {
     public pmPatternLineBasic(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
         connectMethod = CONNECT_SEGMENTS;
+        hitThreshold = 2.0f;
     }
 
     protected void initStraightVertices(){
@@ -31,21 +32,27 @@ public class pmPatternLineBasic extends pmLineVisual {
         shrink = 1.0f/numOfPatterns;
         int base = 3*pointsPerPattern;
 
-        for(int i=0;i<pointsPerPattern;i++){
-            float tmpx = singlePattern[3*i]*cost-singlePattern[3*i+1]*sint;
-            float tmpy = singlePattern[3*i]*sint+singlePattern[3*i+1]*cost;
-            singlePattern[3*i] = tmpx;
-            singlePattern[3*i+1] = tmpy;
-        }
+//        for(int i=0;i<pointsPerPattern;i++){
+//            float tmpx = singlePattern[3*i]*cost-singlePattern[3*i+1]*sint;
+//            float tmpy = singlePattern[3*i]*sint+singlePattern[3*i+1]*cost;
+//            singlePattern[3*i] = tmpx;
+//            singlePattern[3*i+1] = tmpy;
+//        }
 
         float lastx, lasty;
-        float rlen = destPos.x - srcPos.x;
-        int absNumOfPatterns = (int)(Math.abs(rlen) * numOfPatterns)-1;
+        float rlen;
+        if(slope<1)
+            rlen = destPos.x - srcPos.x;
+        else
+            rlen = destPos.y - srcPos.y;
+        int absNumOfPatterns = (int)(Math.abs(rlen) * numOfPatterns);
         numOfVertices = pointsPerPattern*absNumOfPatterns;
         vertices = new float[3*numOfVertices];
+        if(numOfVertices == 0)
+            return;
         for(int j=0;j<pointsPerPattern;j++){
-            vertices[3*j] = singlePattern[3*j] * shrink+srcPos.x+ shrink;
-            vertices[3*j+1] = singlePattern[3*j +1] * shrink+srcPos.y;
+            vertices[3*j] = singlePattern[3*j] * shrink-0.5f+ shrink;
+            vertices[3*j+1] = singlePattern[3*j +1] * shrink;
             vertices[3*j+2] = zorder;
         }
         for(int i=1;i<absNumOfPatterns;i++){
@@ -110,6 +117,7 @@ public class pmPatternLineBasic extends pmLineVisual {
             anchor2.setPosition(nctrx, nctry);
         }
         float[] curvePoints;
+
         if(curveType == LINE_QUADRIC_CURVE) {
             controlPoints[0] = nctrx;
             controlPoints[1] = nctry;
@@ -121,13 +129,18 @@ public class pmPatternLineBasic extends pmLineVisual {
             CubicBezier curve = new CubicBezier(srcPos.x, srcPos.y, controlPoints[0], controlPoints[1], controlPoints[2], controlPoints[3], destPos.x, destPos.y);
             curvePoints = curve.getPointsOnCurves(zorder);
         }
+        _curveOffset.x = origin.x;
+        _curveOffset.y = origin.y;
+        modelMatrix = Matrix4.identity();
         setCurveVerticesByPattern(curvePoints);
     }
 
     protected void resetSrcAndDestCurve(float srcx, float srcy, float destx, float desty){
         float [] curvePoints;
         modelMatrix = Matrix4.identity();
-        afterSetCurve = true;
+        //afterSetCurve = true;
+        _curveOffset.x = origin.x;
+        _curveOffset.y = origin.y;
         if(curveType == LINE_QUADRIC_CURVE){
             if(Math.abs(slope)<=1){
                 controlPoints[0] =(srcx + destx)/2.0f;
@@ -175,7 +188,7 @@ public class pmPatternLineBasic extends pmLineVisual {
         srcPos.x = srcx; srcPos.y = srcy;
         destPos.x = destx; destPos.y = desty;
         slope = (desty - srcy) / (destx - srcx);
-
+        origin.x = (srcx+destx)/2.0f; origin.y = (srcy+desty)/2.0f;
 
         resetSrcAndDestCurve(srcx, srcy, destx, desty);
     }

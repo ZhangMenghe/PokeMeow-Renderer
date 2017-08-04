@@ -135,16 +135,13 @@ public class pmEdge {
             _srcArrow.setRotation((float) thetasrc - 3.14f);
     }
 
-    public void draw(GL4 gl4, pmShaderParams lineParam, pmShaderParams arrowParam, int lineProgram, int arrowProgram){
-        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
+    public void draw(GL4 gl4, pmShaderParams gshaderParam){
         if(_destArrow != null){
-            gl4.glUseProgram(arrowProgram);
-            arrowFactory.drawArrow(gl4, _destArrow, arrowParam);
+            arrowFactory.drawArrow(gl4, _destArrow, gshaderParam);
         }
         if(_srcArrow != null)
-            arrowFactory.drawArrow(gl4, _srcArrow, arrowParam);
-        gl4.glUseProgram(lineProgram);
-        lineFactory.drawLine(gl4, _line, lineParam);
+            arrowFactory.drawArrow(gl4, _srcArrow, gshaderParam);
+        lineFactory.drawLine(gl4, _line, gshaderParam);
     }
 
     public void setControlPoints(float nctrx, float nctry, int anchorID){
@@ -185,9 +182,8 @@ public class pmEdge {
                 float deltay = _line.vertices[3*i+1]-posy;
                 float deltax = _line.vertices[3*i]-posx;
                 float length =deltay*deltay + deltax*deltax;
-                if(length <= 0.0002f)
+                if(length <= _line.hitThreshold * 0.0002f)
                     return true;
-
             }
         }
         else{
@@ -231,34 +227,30 @@ public class pmEdge {
             _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
         setArrowRotation();
     }
-    public void setOrigin(Vector2 new_origin){
+    public void setOrigin(Vector2 new_origin) {
         float deltax = new_origin.x - _line.origin.x;
         float deltay = new_origin.y - _line.origin.y;
-        _line.srcPos.x += deltax;_line.srcPos.y += deltay;
-        _line.destPos.x += deltax;_line.destPos.y += deltay;
-        if(_line.afterSetCurve){
-            _line.setOrigin(new Vector2(deltax,deltay));
-            _line.afterSetCurve = false;
+
+        _line.setOrigin(new_origin);
+        _line.srcPos.x +=deltax;
+        _line.srcPos.y +=deltay;
+        _line.destPos.x +=deltax;
+        _line.destPos.y +=deltay;
+
+        if (curveType != pmLineVisual.LINE_STRAIGHT) {
+            _line.controlPoints[0]+=deltax;_line.controlPoints[1]+=deltay;
+            _line.anchor.setPosition(_line.controlPoints[0], _line.controlPoints[1]);
         }
-        else
-            _line.setOrigin(deltax,deltay);
-        if(curveType != pmLineVisual.LINE_STRAIGHT){
-            _line.controlPoints[0]+=deltax;
-            _line.controlPoints[1]+=deltay;
-            _line.anchor.setPosition(deltax,deltay,true);
-        }
-        if(curveType == pmLineVisual.LINE_CUBIC_CURVE){
-            _line.controlPoints[2]+=deltax;
-            _line.controlPoints[3]+=deltay;
-            _line.anchor2.setPosition(deltax,deltay,true);
-        }
-//        _line.dirty = true;
-        if(_srcArrow != null){
-            _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
+        if (curveType == pmLineVisual.LINE_CUBIC_CURVE){
+            _line.controlPoints[2]+=deltax;_line.controlPoints[3]+=deltay;
+            _line.anchor2.setPosition(_line.controlPoints[2], _line.controlPoints[3]);
         }
 
-        if(_destArrow != null){
-            _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
+        if (_srcArrow != null) {
+            _srcArrow.setOrigin(new Vector3(_line.srcPos.x, _line.srcPos.y, _line.zorder));
+
+            if (_destArrow != null)
+                _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
         }
     }
     public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){

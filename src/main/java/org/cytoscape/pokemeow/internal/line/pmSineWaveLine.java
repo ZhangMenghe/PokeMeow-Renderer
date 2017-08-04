@@ -30,7 +30,12 @@ public class pmSineWaveLine extends pmPatternLineBasic{
     }
 
     protected void initStraightVertices(float srcx, float srcy, float destx, float desty){
-        float rlen = destx-srcx;
+        float rlen;
+        lineSegments = 80;
+        if(slope<1)
+            rlen = destx - srcx;
+        else
+            rlen = desty - srcy;
         numOfVertices = (int)(lineSegments * Math.abs(rlen)) +1;
         int numOfPoints = 3*numOfVertices;
         lineSegments = 100;
@@ -39,7 +44,7 @@ public class pmSineWaveLine extends pmPatternLineBasic{
         float exampleX = period*baseW;
         int i,n;
         for(i=0, n=0; i<numOfPoints; i+=3, n++){
-            vertices[i] = srcx + shrink*n;
+            vertices[i] = -0.5f + shrink*n;
             vertices[i+1] = (float) Math.sin(exampleX*n)/40;
             vertices[i+2] = zorder;
         }

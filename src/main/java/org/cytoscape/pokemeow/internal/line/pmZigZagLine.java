@@ -27,15 +27,14 @@ public class pmZigZagLine extends pmPatternLineBasic{
         connectMethod = CONNECT_STRIP;
         initLineVisual(gl4);
     }
-
-    public void setControlPoints(float nctrx, float nctry, int anchorID){
-        super.setControlPoints(nctrx,nctry,anchorID);
-    }
-
     protected void initStraightVertices(float srcx, float srcy, float destx, float desty){
         lineSegments = 60;
 
-        float rlen = destx-srcx;
+        float rlen;
+        if(slope<1)
+            rlen = destx - srcx;
+        else
+            rlen = desty - srcy;
         numOfVertices = (int)(lineSegments * Math.abs(rlen)) +1;
         int numOfPoints = 3*numOfVertices;
 
@@ -44,7 +43,7 @@ public class pmZigZagLine extends pmPatternLineBasic{
 
         float []values = {0,0.5f,0,-0.5f};
         for(int i=0, n=0; i<numOfPoints; i+=3, n++){
-            vertices[i] = srcx + shrink*n;
+            vertices[i] = -0.5f + shrink*n;
             vertices[i+1] = values[n%4]/height;
             vertices[i+2] = zorder;
         }

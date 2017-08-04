@@ -77,7 +77,8 @@ public class Demo implements GLEventListener,MouseListener {
 //        final drawLineDemo demo = new drawLineDemo();
         //final renderToTextureDemo demo = new renderToTextureDemo();
         //final TextRendererDemo demo = new TextRendererDemo();
-        final drawEdgeDemo demo = new drawEdgeDemo();
+//        final drawEdgeDemo demo = new drawEdgeDemo();
+        final edgeHitDemo demo = new edgeHitDemo();
 
         glWindow.addGLEventListener(demo);
         glWindow.addMouseListener(demo);
