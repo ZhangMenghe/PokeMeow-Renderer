@@ -4,7 +4,6 @@ import com.jogamp.opengl.GL4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
 import main.java.org.cytoscape.pokemeow.internal.utils.CubicBezier;
 import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
@@ -44,6 +43,7 @@ public class pmLineVisual extends pmBasicArrowShape {
     public boolean afterSetCurve = false;
     protected float baseLength = 1.0f;
     protected Vector2 _curveOffset = new Vector2(.0f,.0f);
+    public float hitThreshold = 1.0f;
     public pmLineVisual(){super();}
     public pmLineVisual(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         curveType = type;

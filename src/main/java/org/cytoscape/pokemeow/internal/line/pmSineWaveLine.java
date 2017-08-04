@@ -31,6 +31,7 @@ public class pmSineWaveLine extends pmPatternLineBasic{
 
     protected void initStraightVertices(float srcx, float srcy, float destx, float desty){
         float rlen;
+        lineSegments = 80;
         if(slope<1)
             rlen = destx - srcx;
         else

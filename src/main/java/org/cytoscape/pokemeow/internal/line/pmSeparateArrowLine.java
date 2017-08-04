@@ -39,6 +39,8 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
         else
             rlen = destPos.y - srcPos.y;
         int absNumOfPatterns = (int)(rlen * numOfPatterns);
+        if(absNumOfPatterns == 0)
+            return;
         int step = numOfVertices / absNumOfPatterns;
         patternList = new pmBasicArrowShape[absNumOfPatterns];
         float deltax, deltay;
@@ -88,6 +90,8 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
         }
 
         int absNumOfPatterns = (int)(rlen * numOfPatterns)/2;
+        if(absNumOfPatterns == 0)
+            return;
         int step = numOfVertices / absNumOfPatterns;
         patternList = new pmBasicArrowShape[absNumOfPatterns];
         for (int i = 0, n=0; i < absNumOfPatterns; i++,n+=step) {
@@ -134,7 +138,8 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
 
     }
     public void setColor(Vector4 new_color){
-        color = new_color;
+        for (int i = 0; i < patternList.length; i++)
+            patternList[i].color = new_color;
     }
 
     public void setZorder(GL4 gl4, float new_z){

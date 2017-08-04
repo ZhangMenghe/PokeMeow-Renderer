@@ -19,6 +19,7 @@ public class pmPatternLineBasic extends pmLineVisual {
     public pmPatternLineBasic(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
         connectMethod = CONNECT_SEGMENTS;
+        hitThreshold = 2.0f;
     }
 
     protected void initStraightVertices(){
@@ -31,12 +32,12 @@ public class pmPatternLineBasic extends pmLineVisual {
         shrink = 1.0f/numOfPatterns;
         int base = 3*pointsPerPattern;
 
-        for(int i=0;i<pointsPerPattern;i++){
-            float tmpx = singlePattern[3*i]*cost-singlePattern[3*i+1]*sint;
-            float tmpy = singlePattern[3*i]*sint+singlePattern[3*i+1]*cost;
-            singlePattern[3*i] = tmpx;
-            singlePattern[3*i+1] = tmpy;
-        }
+//        for(int i=0;i<pointsPerPattern;i++){
+//            float tmpx = singlePattern[3*i]*cost-singlePattern[3*i+1]*sint;
+//            float tmpy = singlePattern[3*i]*sint+singlePattern[3*i+1]*cost;
+//            singlePattern[3*i] = tmpx;
+//            singlePattern[3*i+1] = tmpy;
+//        }
 
         float lastx, lasty;
         float rlen;
@@ -44,9 +45,11 @@ public class pmPatternLineBasic extends pmLineVisual {
             rlen = destPos.x - srcPos.x;
         else
             rlen = destPos.y - srcPos.y;
-        int absNumOfPatterns = (int)(Math.abs(rlen) * numOfPatterns)-1;
+        int absNumOfPatterns = (int)(Math.abs(rlen) * numOfPatterns);
         numOfVertices = pointsPerPattern*absNumOfPatterns;
         vertices = new float[3*numOfVertices];
+        if(numOfVertices == 0)
+            return;
         for(int j=0;j<pointsPerPattern;j++){
             vertices[3*j] = singlePattern[3*j] * shrink-0.5f+ shrink;
             vertices[3*j+1] = singlePattern[3*j +1] * shrink;

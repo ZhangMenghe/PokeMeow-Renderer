@@ -12,6 +12,7 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 public class pmParallelLine extends pmLineVisual {
     public pmParallelLine(GL4 gl4, pmLineVisual line){
         super();
+        hitThreshold = 3.0f;
         curveType = line.curveType;
         srcPos.x = line.srcPos.x; srcPos.y = line.srcPos.y;
         destPos.x = line.destPos.x; destPos.y = line.destPos.y;
@@ -102,7 +103,8 @@ public class pmParallelLine extends pmLineVisual {
     }
 
     public void setColor(Vector4 new_color){
-        color = new_color;
+        plineList[0].color = new_color;
+        plineList[1].color = new_color;
     }
 
     public void setZorder(GL4 gl4, float new_z){
