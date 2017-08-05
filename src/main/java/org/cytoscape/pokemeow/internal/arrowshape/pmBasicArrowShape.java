@@ -24,7 +24,7 @@ public abstract class pmBasicArrowShape {
     public int[] objects = new int[3];
     public int numOfVertices = 0;
     public int numOfIndices = -1;
-    public boolean dirty = false;
+    public boolean dirty = true;
     public FloatBuffer data_buff;
     public Vector3 origin = new Vector3(.0f,.0f,.0f);
     public Matrix4 modelMatrix = Matrix4.identity();
@@ -32,6 +32,9 @@ public abstract class pmBasicArrowShape {
     public Vector3 scale = new Vector3(1.0f,1.0f,1.0f);
     public Vector4 color = new Vector4(0.69f, 0.88f, 0.9f,1.0f);
     public float zorder = .0f;
+    public int bufferByteOffset = 0;
+    public int indexByteOffset = 0;
+    public int bufferVerticeOffset = 0;
     protected float xMin, xMax, yMin, yMax;
     protected float xMinOri, xMaxOri, yMinOri, yMaxOri;
 
@@ -47,8 +50,7 @@ public abstract class pmBasicArrowShape {
 
         gl4.glBindVertexArray(objects[VAO]);
         gl4.glBindBuffer(GL.GL_ARRAY_BUFFER, objects[VBO]);
-        gl4.glBufferData(GL.GL_ARRAY_BUFFER, 0, null, GL.GL_DYNAMIC_DRAW);
-        dirty = true;
+        gl4.glBufferData(GL.GL_ARRAY_BUFFER, data_buff.capacity() * Float.BYTES, data_buff, GL.GL_DYNAMIC_DRAW);
 
         gl4.glEnableVertexAttribArray(0);
         gl4.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 3*Float.BYTES, 0);
