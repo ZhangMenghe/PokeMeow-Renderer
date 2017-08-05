@@ -263,4 +263,21 @@ public class pmEdge {
         xMin = Math.min(srcx, destx)-0.01f; xMax = Math.max(srcx, destx)+0.01f;
         yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;
     }
+    public void resetSrcAndDest(float posx, float posy, int srcOrdest){
+        float srcx, srcy, destx, desty;
+        if(srcOrdest == 1){
+            srcx = posx; srcy=posy;destx =_line.destPos.x;desty =_line.destPos.y;
+            if(_srcArrow != null)
+                _srcArrow.setOrigin(new Vector3(srcx, srcy, _line.zorder));
+        }
+        else{
+            srcx = _line.srcPos.x ; srcy=_line.srcPos.y ;destx =posx;desty =posy;
+            if(_destArrow != null)
+                _destArrow.setOrigin(new Vector3(srcx, srcy, _line.zorder));
+        }
+        _line.resetSrcAndDest(srcx,srcy,destx,desty);
+        setArrowRotation();
+        xMin = Math.min(srcx, destx)-0.01f; xMax = Math.max(srcx, destx)+0.01f;
+        yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;
+    }
 }

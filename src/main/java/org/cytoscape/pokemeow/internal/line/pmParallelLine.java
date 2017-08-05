@@ -3,7 +3,6 @@ package main.java.org.cytoscape.pokemeow.internal.line;
 import com.jogamp.opengl.GL4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 
 /**
@@ -107,8 +106,6 @@ public class pmParallelLine extends pmLineVisual {
         plineList[1].color = new_color;
     }
 
-    public void setZorder(GL4 gl4, float new_z){
-    }
     public void setControlPoints(float nctrx, float nctry, int anchorID){
         if(anchorID == 1){
             plineList[0].controlPoints[0] = nctrx; plineList[0].controlPoints[1] = nctry;

@@ -135,7 +135,6 @@ public class pmLineFactory {
                 for(pmLineVisual sline:line.plineList){
                     sline.data_buff = Buffers.newDirectFloatBuffer(sline.vertices);
                     gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  sline.objects[sline.VBO]);
-//                    gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, sline.data_buff.capacity() * Float.BYTES, sline.data_buff);
                     gl4.glBufferData(GL.GL_ARRAY_BUFFER, sline.data_buff.capacity() * Float.BYTES, sline.data_buff, GL.GL_STATIC_DRAW);
                 }
             }
@@ -145,6 +144,8 @@ public class pmLineFactory {
                     gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  line.objects[line.VBO]);
 //                    gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, line.data_buff.capacity() * Float.BYTES, line.data_buff);
                     gl4.glBufferData(GL.GL_ARRAY_BUFFER, line.data_buff.capacity() * Float.BYTES, line.data_buff, GL.GL_STATIC_DRAW);
+//                    gl4.glEnableVertexAttribArray(0);
+//                    gl4.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 3*Float.BYTES, 0);
                 }
             }
         }

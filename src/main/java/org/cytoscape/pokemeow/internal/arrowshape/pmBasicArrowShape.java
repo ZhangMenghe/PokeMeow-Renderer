@@ -47,11 +47,11 @@ public abstract class pmBasicArrowShape {
 
         gl4.glBindVertexArray(objects[VAO]);
         gl4.glBindBuffer(GL.GL_ARRAY_BUFFER, objects[VBO]);
-        gl4.glBufferData(GL.GL_ARRAY_BUFFER, data_buff.capacity() * Float.BYTES, data_buff, GL.GL_STATIC_DRAW);
+        gl4.glBufferData(GL.GL_ARRAY_BUFFER, 0, null, GL.GL_DYNAMIC_DRAW);
+        dirty = true;
 
         gl4.glEnableVertexAttribArray(0);
         gl4.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 3*Float.BYTES, 0);
-
         gl4.glBindVertexArray(0);
     }
 
@@ -64,13 +64,13 @@ public abstract class pmBasicArrowShape {
 
         gl.glBindVertexArray(objects[VAO]);
         gl.glBindBuffer(GL.GL_ARRAY_BUFFER, objects[VBO]);
-        gl.glBufferData(GL.GL_ARRAY_BUFFER, data_buff.capacity() * Float.BYTES,data_buff, GL.GL_STATIC_DRAW);
+        gl.glBufferData(GL.GL_ARRAY_BUFFER, data_buff.capacity() * Float.BYTES,data_buff, GL.GL_DYNAMIC_DRAW);
 
         gl.glEnableVertexAttribArray(0);
         gl.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 3*Float.BYTES, 0);
 
         gl.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER,objects[EBO]);
-        gl.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, indice_buff.capacity() * Integer.BYTES,indice_buff,GL.GL_STATIC_DRAW);
+        gl.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, indice_buff.capacity() * Integer.BYTES,indice_buff,GL.GL_DYNAMIC_DRAW);
 
         gl.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl.glBindVertexArray(0);
