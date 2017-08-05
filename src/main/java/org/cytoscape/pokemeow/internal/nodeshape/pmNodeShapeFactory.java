@@ -22,6 +22,7 @@ import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmHexagonNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmOctagonNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmVeeNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmRoundedRectangle;
+import main.java.org.cytoscape.pokemeow.internal.rendering.pmNodeBuffer;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
@@ -48,11 +49,13 @@ public class pmNodeShapeFactory {
     public static final byte SHAPE_TRIANGLE = 8;
     public static final byte SHAPE_VEE = 9;
     private GL4 gl4;
+    private pmNodeBuffer nodeBuffer;
 
     public pmNodeShapeFactory(GL4 gl){
         gl4 = gl;
         gl4.glEnable( GL4.GL_DEPTH_TEST );
         gl4.glDepthFunc( GL4.GL_LEQUAL );
+        nodeBuffer = new pmNodeBuffer(gl4);
     }
 
     public pmBasicNodeShape createNode(GL4 gl4, Byte type){
@@ -74,7 +77,16 @@ public class pmNodeShapeFactory {
             case 7:
                 return new pmOctagonNodeShape(gl4);
             case 8:
-                return new pmTriangleNodeShape(gl4);
+                pmBasicNodeShape node = new pmTriangleNodeShape(gl4);
+                int[] offsets = node.setBufferOffset(nodeBuffer.dataOffset, nodeBuffer.indexOffset, nodeBuffer.capacity);
+                nodeBuffer.dataOffset = offsets[0];
+                nodeBuffer.indexOffset = offsets[1];
+
+                if(offsets[2] != nodeBuffer.capacity){
+                    nodeBuffer.capacity = offsets[2];
+                    nodeBuffer.shouldBeResize = true;
+                }
+                return node;
             case 9:
                 return new pmVeeNodeShape(gl4);
             default:
@@ -148,5 +160,31 @@ public class pmNodeShapeFactory {
 
         }
     }
+    public void drawNode(GL4 gl4, pmBasicNodeShape node, pmShaderParams gshaderParam, boolean useUniformBuffer){
+        if(nodeBuffer.shouldBeResize){
+            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  nodeBuffer.objects[nodeBuffer.VBO]);
+            gl4.glBufferData(GL.GL_ARRAY_BUFFER, nodeBuffer.capacity, null, GL.GL_DYNAMIC_DRAW);
+            nodeBuffer.shouldBeResize  = false;
+        }
+        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(node.modelMatrix.asArrayCM()));
+        gl4.glUniformMatrix4fv(gshaderParam.mat4_viewMatrix, 1,false, Buffers.newDirectFloatBuffer(node.viewMatrix.asArrayCM()));
+        gl4.glBindVertexArray(nodeBuffer.objects[nodeBuffer.VAO]);
+        gl4.glBindBuffer(GL_ARRAY_BUFFER, nodeBuffer.objects[nodeBuffer.VBO]);
 
+        if(node.dirty){
+            node.gsthForDraw.data_buff = Buffers.newDirectFloatBuffer(node.vertices);
+            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  nodeBuffer.objects[nodeBuffer.VBO]);
+            gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, node.numOfVertices*28, node.gsthForDraw.data_buff);
+            node.dirty = false;
+        }
+        if(node instanceof pmRectangleNodeShape){//TODO
+            gl4.glBindBuffer(GL_ARRAY_BUFFER, node.gsthForDraw.objects[node.gsthForDraw.EBO]);
+            gl4.glDrawElements(GL4.GL_TRIANGLES,node.gsthForDraw.numOfIndices, GL.GL_UNSIGNED_INT,0);
+            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
+        }
+        else{
+            gl4.glDrawArrays(GL4.GL_TRIANGLE_FAN, 0, node.numOfVertices);
+        }
+        gl4.glBindVertexArray(0);
+    }
 }

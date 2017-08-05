@@ -1,6 +1,7 @@
 package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.newt.event.MouseEvent;
+import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.sun.corba.se.impl.logging.POASystemException;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
@@ -16,6 +17,7 @@ import main.java.org.cytoscape.pokemeow.internal.line.pmSolidLine;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmRectangleNodeShape;
+import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmTriangleNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmArrowShapeFactory;
@@ -40,7 +42,10 @@ public class drawNodeAndEdgeDemo extends Demo {
     private Byte[] lineType = {0,1,2,3,4,5};
     private int mouseState = -1;
     private Integer reactNodeId;
-
+    private int numOfNodes = 0;
+    private int numOfEdges = 0;
+    private pmShaderParams gshaderParamNode;
+    private int programNode;
     @Override
     public void init(GLAutoDrawable drawable) {
         super.init(drawable);
@@ -48,7 +53,14 @@ public class drawNodeAndEdgeDemo extends Demo {
                 Demo.class.getResource("shader/arrow.vert"),
                 null, null, null,
                 Demo.class.getResource("shader/arrow.frag"));
+        programNode = GLSLProgram.CompileProgram(gl4,
+                Demo.class.getResource("shader/flat.vert"),
+                null,null,null,
+                Demo.class.getResource("shader/flat.frag"));
+
         gshaderParam = new pmShaderParams(gl4, program);
+        gshaderParamNode = new pmShaderParams(gl4, programNode);
+
         edgeList = new ArrayList();
         nodeList = new ArrayList();
         nodeFactory = new pmNodeShapeFactory(gl4);
@@ -61,11 +73,12 @@ public class drawNodeAndEdgeDemo extends Demo {
         @Override
     public void display(GLAutoDrawable drawable) {
         super.display(drawable);
-        for (pmBasicNodeShape node : nodeList)
-            nodeFactory.drawNode(gl4, node, gshaderParam);
-
-        for (int i=0;i<numOfItems;i++)
+        for (int i=0;i<numOfEdges;i++)
             edgeFactory.drawEdge(edgeList.get(i),gshaderParam);
+       gl4.glUseProgram(programNode);
+//            gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
+        for (int j=0;j<numOfNodes;j++)
+            nodeFactory.drawNode(gl4, nodeList.get(j), gshaderParamNode, true);
     }
 
     @Override
@@ -192,12 +205,13 @@ public class drawNodeAndEdgeDemo extends Demo {
             if (e.isShiftDown()) {
                   edgeList.add(edgeFactory.createEdge(pmLineFactory.LINE_SOLID,pmLineVisual.LINE_STRAIGHT, -0.5f,.0f,posx,posy));
                    times++;
-                   numOfItems ++;
-                  //                  edgeList.add(new pmEdge(gl4,pmLineFactory.LINE_SOLID,pmLineVisual.LINE_STRAIGHT,.0f,.0f,posx,posy));
-
-//                pmBasicNodeShape node = new pmRectangleNodeShape(gl4);
-//                node.setOrigin(new Vector2(posx, posy));
-//                nodeList.add(node);
+                   numOfEdges ++;
+            }
+            if(e.isControlDown()){
+                pmBasicNodeShape node = new pmTriangleNodeShape(gl4);
+                node.setOrigin(new Vector2(posx, posy));
+                nodeList.add(node);
+                numOfNodes++;
             }
         }
 

@@ -19,10 +19,6 @@ public class pmEdgeFactory {
         gl4.glEnable(GL4.GL_LINE_SMOOTH);
         gl4.glEnable( GL4.GL_DEPTH_TEST );
         edgeBuffer = new pmEdgeBuffer(gl4);
-//                gl4.glBindBuffer(GL.GL_ARRAY_BUFFER, edgeBuffer.objects[edgeBuffer.VBO]);
-//        gl4.glBufferData(GL.GL_ARRAY_BUFFER, Float.BYTES*100, null, GL.GL_DYNAMIC_DRAW);
-//        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
-//        gl4.glBindVertexArray(0);
     }
     public pmEdge createEdge(Byte lineType, Byte mcurveType,
                              float srcx, float srcy, float destx, float desty){
@@ -31,7 +27,7 @@ public class pmEdgeFactory {
         edgeBuffer.dataOffset = offsets[0];
         edgeBuffer.indexOffset = offsets[1];
 
-        if(offsets[2]!=edgeBuffer.capacity){
+        if(offsets[2] != edgeBuffer.capacity){
             edgeBuffer.capacity = offsets[2];
             edgeBuffer.shouldBeResize = true;
         }
@@ -56,7 +52,6 @@ public class pmEdgeFactory {
             gl4.glBufferData(GL.GL_ARRAY_BUFFER, edgeBuffer.capacity, null, GL.GL_DYNAMIC_DRAW);
             edgeBuffer.shouldBeResize  = false;
         }
-
         edge.draw(gl4, gshaderParam, edgeBuffer);
 
     }
