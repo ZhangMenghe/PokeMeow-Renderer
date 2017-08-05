@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by ZhangMenghe on 2017/7/18.
  */
-public class Demo implements GLEventListener,MouseListener {
+public class Demo implements GLEventListener, MouseListener {
     public Matrix4 viewMatrix = Matrix4.identity();
     public Matrix4 zoomMatrix= Matrix4.identity();
     protected GL4 gl4;
@@ -64,6 +64,7 @@ public class Demo implements GLEventListener,MouseListener {
         GLCapabilities glCapabilities = new GLCapabilities(glProfile);
         final GLWindow glWindow = GLWindow.create(glCapabilities);
         final Animator animator = new Animator(glWindow);
+
         glWindow.setSize(600, 600);
         glWindow.setTitle("mousePickUp Demo");
         glWindow.setFullscreen(false);
@@ -78,7 +79,8 @@ public class Demo implements GLEventListener,MouseListener {
         //final renderToTextureDemo demo = new renderToTextureDemo();
         //final TextRendererDemo demo = new TextRendererDemo();
 //        final drawEdgeDemo demo = new drawEdgeDemo();
-        final edgeHitDemo demo = new edgeHitDemo();
+//        final edgeHitDemo demo = new edgeHitDemo();
+        final drawNodeAndEdgeDemo demo = new drawNodeAndEdgeDemo();
 
         glWindow.addGLEventListener(demo);
         glWindow.addMouseListener(demo);

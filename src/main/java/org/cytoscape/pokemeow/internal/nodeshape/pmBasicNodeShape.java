@@ -58,7 +58,11 @@ public class pmBasicNodeShape{
         origin = new_origin;
         updateMatrix();
     }
-
+    public void setOrigin(Vector2 new_origin){
+        origin.x = new_origin.x;
+        origin.y = new_origin.y;
+        updateMatrix();
+    }
     public void setRotation(float radians){
         rotMatrix = Matrix4.rotationZ(radians);
         updateMatrix();
