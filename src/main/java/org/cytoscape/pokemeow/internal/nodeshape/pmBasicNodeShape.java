@@ -28,7 +28,7 @@ public class pmBasicNodeShape{
     public int[] indices;
     protected float xMin, xMax, yMin, yMax;
     protected float xMinOri, xMaxOri, yMinOri, yMaxOri;
-    public boolean dirty = false;
+    public boolean dirty = true;
     public int bufferByteOffset = 0;
     public int indexByteOffset = 0;
     public int bufferVerticeOffset = 0;
@@ -130,16 +130,19 @@ public class pmBasicNodeShape{
             vertices[i] = new_z;
         dirty = true;
     }
-    public int[] setBufferOffset(int bufferOffset, int indexOffset, int boundBuffer){
-        int[] offset = {bufferOffset,indexOffset,boundBuffer};
+    public int[] setBufferOffset(int bufferOffset, int indexOffset, int boundBuffer, int boundBufferIdx){
+        int[] offset = {bufferOffset,indexOffset,boundBuffer, boundBufferIdx};
         bufferByteOffset = bufferOffset;
         bufferVerticeOffset = bufferOffset/28;
         offset[0] += numOfVertices *28;
         if(offset[0]>boundBuffer)
-            offset[2] *=2;
+            offset[2]  = -1;
+
         if(numOfIndices!=-1){
             indexByteOffset = offset[1];
-            offset[1]+=numOfIndices;
+            offset[1]+=numOfIndices * 4;
+            if(offset[1]>boundBufferIdx)
+                offset[3] = -1;
         }
         return offset;
     }

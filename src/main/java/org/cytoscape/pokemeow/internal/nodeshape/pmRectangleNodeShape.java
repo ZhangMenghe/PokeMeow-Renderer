@@ -28,7 +28,7 @@ public class pmRectangleNodeShape extends pmBasicNodeShape{
         indices = _indices;
         numOfVertices = 4;
         numOfIndices = 6;
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, indices);
+//        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, indices);
     }
 
     public pmRectangleNodeShape(){

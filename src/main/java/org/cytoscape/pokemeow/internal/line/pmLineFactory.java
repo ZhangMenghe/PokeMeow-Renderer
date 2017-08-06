@@ -90,10 +90,10 @@ public class pmLineFactory {
     private void drawLine_GL(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam){
         switch (line.connectMethod){
             case pmLineVisual.CONNECT_STRIP:
-                gl4.glDrawArrays(GL4.GL_LINE_STRIP, 0, line.numOfVertices);
+                gl4.glDrawArrays(GL4.GL_LINE_STRIP, line.bufferVerticeOffset, line.numOfVertices);
                 break;
             case pmLineVisual.CONNECT_SEGMENTS:
-                gl4.glDrawArrays(GL4.GL_LINES, line.bufferVerticeOffset, line.numOfVertices);
+                gl4.glDrawArrays(GL4.GL_LINES, 0, line.numOfVertices);
                 break;
             case pmLineVisual.CONNECT_DOTS:
                 gl4.glPointSize(3.0f);

@@ -58,7 +58,7 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
 
             colorIndices[Math.floorDiv(i,7)] = i+3;
         }
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
+        //gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
 
     @Override

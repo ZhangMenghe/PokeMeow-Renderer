@@ -39,7 +39,7 @@ public class drawNodeAndEdgeDemo extends Demo {
             new Vector4(0.97f, 0.67f, 0.65f, 1.0f),
             new Vector4(0.69f, 0.88f, 0.9f, 1.0f)
     };
-    private Byte[] lineType = {0,1,2,3,4,5};
+    private Byte[] Type = {0,1,2,3,4,5,6,7,8,9};
     private int mouseState = -1;
     private Integer reactNodeId;
     private int numOfNodes = 0;
@@ -191,7 +191,7 @@ public class drawNodeAndEdgeDemo extends Demo {
         lastMousePosition.y = e.getY();
         float posx = 2 * (float) lastMousePosition.x / commonUtil.DEMO_VIEWPORT_SIZE.x - 1;
         float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
-        reactNodeId = hitNode(posx, posy);
+//        reactNodeId = hitNode(posx, posy);
 //        hitEdge(posx, posy);
     }
 
@@ -208,8 +208,10 @@ public class drawNodeAndEdgeDemo extends Demo {
                    numOfEdges ++;
             }
             if(e.isControlDown()){
-                pmBasicNodeShape node = new pmTriangleNodeShape(gl4);
+                pmBasicNodeShape node = nodeFactory.createNode(gl4, Type[numOfNodes%2]);
                 node.setOrigin(new Vector2(posx, posy));
+                node.setColor(gl4, colorList[numOfNodes%2]);
+                node.setScale(0.2f);
                 nodeList.add(node);
                 numOfNodes++;
             }
