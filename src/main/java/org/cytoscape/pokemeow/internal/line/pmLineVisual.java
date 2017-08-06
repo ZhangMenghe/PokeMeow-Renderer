@@ -18,7 +18,6 @@ public class pmLineVisual extends pmBasicArrowShape {
     protected float curveFactor = 2.0f;
     public Byte connectMethod = 0; //default to be connect strip
     public Byte curveType = 0;     //default to straight line
-    private int[] connectArray = null;//if use CONNECT_ARRAY, then specify
     public pmBasicArrowShape[] patternList;//used for arrow shape line
     public pmLineVisual [] plineList = null;//used for parallel
     //public float zorder = .0f;
@@ -34,8 +33,7 @@ public class pmLineVisual extends pmBasicArrowShape {
     public static final byte CONNECT_SEGMENTS = 1;//draw an independent line segment
     public static final byte CONNECT_DOTS = 2;//draw independent dots
     public static final byte CONNECT_PATTERN = 3;//draw triangle fans
-    public static final byte CONNECT_ARRAY = 4;//should specify an array of segment pairs
-    public static final byte CONNECT_PARALLEL = 5;//should specify an array of segment pairs
+    public static final byte CONNECT_PARALLEL = 4;//should specify an array of segment pairs
 
     public static final byte LINE_STRAIGHT = 0;
     public static final byte LINE_QUADRIC_CURVE = 1;
@@ -67,7 +65,6 @@ public class pmLineVisual extends pmBasicArrowShape {
         super();
         width = line.width;
         connectMethod = line.connectMethod;
-        connectArray = line.connectArray;
         patternList = line.patternList;
         plineList = line.plineList;
         vertices = new float[3*line.numOfVertices];
@@ -79,20 +76,6 @@ public class pmLineVisual extends pmBasicArrowShape {
         initLineVisual(gl4);
     }
 
-    public pmLineVisual(GL4 gl4, float[] pos, Byte mconnectMethod){
-        super();
-        if(mconnectMethod != CONNECT_ARRAY)
-            connectMethod = mconnectMethod;
-        initLineVisual(gl4);
-    }
-
-    public pmLineVisual(GL4 gl4, float[] pos, int [] mconnectArray){
-        super();
-        connectMethod = CONNECT_ARRAY;
-        connectArray = mconnectArray;
-        initLineVisual(gl4);
-    }
-
     protected void initLineVisual(GL4 gl4, pmLineVisual line){
         plineList = new pmLineVisual[2];
         plineList[0] = line;
@@ -100,15 +83,7 @@ public class pmLineVisual extends pmBasicArrowShape {
     }
 
     protected void initLineVisual(GL4 gl4){
-        elements = connectArray;
-        numOfVertices = vertices.length/3;
-        if(connectMethod != CONNECT_ARRAY)
-            initBuffer(gl4);
-        else{
-            numOfIndices = connectArray.length;
-            initBuffer(gl4, true);
-        }
-
+//        numOfVertices = vertices.length/3;
     }
 
     public void setLineWidth(GL4 gl4, float mwidth){

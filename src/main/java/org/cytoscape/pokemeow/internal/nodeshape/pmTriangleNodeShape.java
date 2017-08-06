@@ -21,8 +21,8 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
         vertices = mvertices;
         numOfVertices = 3;
         xMinOri = -0.25f; xMaxOri = 0.25f; yMinOri = -0.25f; yMaxOri = 0.25f;
-        xMin= xMinOri; xMax = xMaxOri; yMin = yMinOri; yMax = yMaxOri;
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
+        xMin = xMinOri; xMax = xMaxOri; yMin = yMinOri; yMax = yMaxOri;
+//        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
 
     @Override

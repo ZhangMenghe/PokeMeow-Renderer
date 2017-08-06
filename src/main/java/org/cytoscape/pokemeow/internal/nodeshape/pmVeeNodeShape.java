@@ -14,7 +14,7 @@ public class pmVeeNodeShape extends pmRectangleNodeShape{
         vertices[15] = -0.125f;
         vertices[22] = -0.25f;
         int [] new_elements = {3,0,2,0,2,1};
-        elements = new_elements;
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, elements);
+        indices = new_elements;
+        //gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, indices);
     }
 }

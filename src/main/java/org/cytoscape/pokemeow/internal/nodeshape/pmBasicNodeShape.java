@@ -21,19 +21,22 @@ public class pmBasicNodeShape{
     public Matrix4 modelMatrix;//translation*scale
     public Matrix4 viewMatrix;
     public int numOfVertices;
+    public int numOfIndices = -1;
     public float zorder = .0f;
     public boolean useTexture = false;
     public float[] vertices;
+    public int[] indices;
     protected float xMin, xMax, yMin, yMax;
     protected float xMinOri, xMaxOri, yMinOri, yMaxOri;
-    public boolean dirty = false;
-
+    public boolean dirty = true;
+    public int bufferByteOffset = 0;
+    public int indexByteOffset = 0;
+    public int bufferVerticeOffset = 0;
     public pmBasicNodeShape(){
-        origin = new Vector3(.0f,.0f,.0f);
+        origin = new Vector3(.0f,.0f, zorder);
         scale = new Vector3(1.0f,1.0f,1.0f);
         rotMatrix = Matrix4.identity();
-        modelMatrix = Matrix4.mult(Matrix4.scale((scale)),Matrix4.translation(origin));
-        modelMatrix = Matrix4.mult(modelMatrix,rotMatrix);
+        modelMatrix = Matrix4.identity();
         viewMatrix = Matrix4.identity();
         gsthForDraw = new pmSthForDraw();
     }
@@ -58,15 +61,19 @@ public class pmBasicNodeShape{
         origin = new_origin;
         updateMatrix();
     }
-
+    public void setOrigin(Vector2 new_origin){
+        origin.x = new_origin.x;
+        origin.y = new_origin.y;
+        updateMatrix();
+    }
     public void setRotation(float radians){
         rotMatrix = Matrix4.rotationZ(radians);
         updateMatrix();
     }
 
     private void updateMatrix(){
-        modelMatrix = Matrix4.mult(rotMatrix,Matrix4.scale((scale)));
-        modelMatrix = Matrix4.mult(Matrix4.translation(origin),modelMatrix);
+        modelMatrix = Matrix4.mult(rotMatrix, Matrix4.scale((scale)));
+        modelMatrix = Matrix4.mult(Matrix4.translation(origin), modelMatrix);
         float r11 = modelMatrix.e11;float r21 = modelMatrix.e21;
         float r12 = modelMatrix.e12;float r22 = modelMatrix.e22;
         float r14 = modelMatrix.e14;float r24 = modelMatrix.e24;
@@ -123,7 +130,22 @@ public class pmBasicNodeShape{
             vertices[i] = new_z;
         dirty = true;
     }
+    public int[] setBufferOffset(int bufferOffset, int indexOffset, int boundBuffer, int boundBufferIdx){
+        int[] offset = {bufferOffset,indexOffset,boundBuffer, boundBufferIdx};
+        bufferByteOffset = bufferOffset;
+        bufferVerticeOffset = bufferOffset/28;
+        offset[0] += numOfVertices *28;
+        if(offset[0]>boundBuffer)
+            offset[2]  = -1;
 
+        if(numOfIndices!=-1){
+            indexByteOffset = offset[1];
+            offset[1]+=numOfIndices * 4;
+            if(offset[1]>boundBufferIdx)
+                offset[3] = -1;
+        }
+        return offset;
+    }
     public boolean isHit(float posx, float posy){
         int nCross = 0;
         float currPosX, currPosY,lastPosX,lastPosY;

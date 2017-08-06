@@ -8,15 +8,16 @@ import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
 import main.java.org.cytoscape.pokemeow.internal.line.pmLineVisual;
 import main.java.org.cytoscape.pokemeow.internal.line.pmLineFactory;
 import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmArrowShapeFactory;
+import main.java.org.cytoscape.pokemeow.internal.rendering.pmEdgeBuffer;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 
 /**
  * Created by ZhangMenghe on 2017/7/25.
  */
 public class pmEdge {
-    private pmLineVisual _line;
-    private pmBasicArrowShape _srcArrow;
-    private pmBasicArrowShape _destArrow;
+    public pmLineVisual _line;
+    public pmBasicArrowShape _srcArrow;
+    public pmBasicArrowShape _destArrow;
     private pmLineFactory lineFactory;
     private pmArrowShapeFactory arrowFactory;
     public Byte curveType;
@@ -144,6 +145,15 @@ public class pmEdge {
         lineFactory.drawLine(gl4, _line, gshaderParam);
     }
 
+    public void draw(GL4 gl4, pmShaderParams gshaderParam, pmEdgeBuffer buffer){
+        if(_destArrow != null){
+            arrowFactory.drawArrow(gl4, _destArrow, gshaderParam, buffer);
+        }
+        if(_srcArrow != null)
+            arrowFactory.drawArrow(gl4, _srcArrow, gshaderParam, buffer);
+        lineFactory.drawLine(gl4, _line, gshaderParam, buffer);
+    }
+
     public void setControlPoints(float nctrx, float nctry, int anchorID){
         _line.setControlPoints(nctrx, nctry, anchorID);
         setArrowRotation();
@@ -200,6 +210,7 @@ public class pmEdge {
         }
         return false;
     }
+
     private boolean isHitStraightLine(float posx, float posy){
         if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
             return false;
@@ -212,6 +223,7 @@ public class pmEdge {
         else
             return false;
     }
+
     public void setColor(Vector4 ncolor){
         _line.setColor(ncolor);
         if(_srcArrow!=null)
@@ -219,6 +231,7 @@ public class pmEdge {
         if(_destArrow!=null)
             _destArrow.setColor(ncolor);
     }
+
     public void setRotation(float radians){
         _line.setRotation(radians);
         if(_srcArrow!=null)
@@ -227,6 +240,7 @@ public class pmEdge {
             _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
         setArrowRotation();
     }
+
     public void setOrigin(Vector2 new_origin) {
         float deltax = new_origin.x - _line.origin.x;
         float deltay = new_origin.y - _line.origin.y;
@@ -253,12 +267,57 @@ public class pmEdge {
                 _destArrow.setOrigin(new Vector3(_line.destPos.x, _line.destPos.y, _line.zorder));
         }
     }
+
+    public int[] setBufferOffset(int bufferOffset, int indexOffset, int boundBuffer){
+        int[] offset = {bufferOffset,indexOffset,boundBuffer};
+        _line.bufferByteOffset = bufferOffset;
+        _line.bufferVerticeOffset  = bufferOffset/12;
+        offset[0] += _line.numOfVertices *12;
+        if(offset[0]>boundBuffer)
+            offset[2] *=2;
+        if(_srcArrow!=null){
+            _srcArrow.bufferByteOffset = offset[0];
+            offset[0]+=_srcArrow.numOfVertices *12;
+            if(_srcArrow.numOfIndices!=-1){
+                _srcArrow.indexByteOffset = offset[1];
+                offset[1] += _srcArrow.numOfIndices *12;
+            }
+        }
+        if(_destArrow!=null){
+            _srcArrow.bufferByteOffset = offset[0];
+            offset[0]+=_destArrow.numOfVertices *12;
+            if(_destArrow.numOfIndices!=-1){
+                _destArrow.indexByteOffset = offset[1];
+                offset[1] += _destArrow.numOfIndices * Integer.BYTES;
+            }
+        }
+        return offset;
+    }
+
     public void resetSrcAndDest(float srcx, float srcy, float destx, float desty){
         _line.resetSrcAndDest(srcx,srcy,destx,desty);
         if(_srcArrow != null)
             _srcArrow.setOrigin(new Vector3(srcx, srcy, _line.zorder));
         if(_destArrow != null)
             _destArrow.setOrigin(new Vector3(destx, desty, _line.zorder));
+        setArrowRotation();
+        xMin = Math.min(srcx, destx)-0.01f; xMax = Math.max(srcx, destx)+0.01f;
+        yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;
+    }
+
+    public void resetSrcAndDest(float posx, float posy, int srcOrdest){
+        float srcx, srcy, destx, desty;
+        if(srcOrdest == 1){
+            srcx = posx; srcy=posy;destx =_line.destPos.x;desty =_line.destPos.y;
+            if(_srcArrow != null)
+                _srcArrow.setOrigin(new Vector3(srcx, srcy, _line.zorder));
+        }
+        else{
+            srcx = _line.srcPos.x ; srcy=_line.srcPos.y ;destx =posx;desty =posy;
+            if(_destArrow != null)
+                _destArrow.setOrigin(new Vector3(srcx, srcy, _line.zorder));
+        }
+        _line.resetSrcAndDest(srcx,srcy,destx,desty);
         setArrowRotation();
         xMin = Math.min(srcx, destx)-0.01f; xMax = Math.max(srcx, destx)+0.01f;
         yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;

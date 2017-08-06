@@ -111,10 +111,10 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
                 arc_elements[n++] = k*CircleSegment + i+1;
             }
         }
-        elements = new int[new_elements.length + 12*CircleSegment];
-        System.arraycopy(new_elements,0,elements,0,new_elements.length);
-        System.arraycopy(arc_elements, 0, elements,new_elements.length, 12*CircleSegment);
-        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, elements);
+        _indices = new int[new_elements.length + 12*CircleSegment];
+        System.arraycopy(new_elements,0,_indices,0,new_elements.length);
+        System.arraycopy(arc_elements, 0, _indices,new_elements.length, 12*CircleSegment);
+//        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, _indices);
     }
 
     @Override
