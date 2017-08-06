@@ -1,5 +1,6 @@
 package main.java.org.cytoscape.pokemeow.internal.nodeshape;
 
+import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 import main.java.org.cytoscape.pokemeow.internal.algebra.*;
 import main.java.org.cytoscape.pokemeow.internal.commonUtil;
@@ -32,6 +33,9 @@ public class pmBasicNodeShape{
     public int bufferByteOffset = 0;
     public int indexByteOffset = 0;
     public int bufferVerticeOffset = 0;
+    public int[] objects= new int[1];
+    public boolean isNew = true;
+    public boolean isfirst = false;//TODO:It's sooo ugly. But I don't know why the Rectangle Node is easy to be earsed....
     public pmBasicNodeShape(){
         origin = new Vector3(.0f,.0f, zorder);
         scale = new Vector3(1.0f,1.0f,1.0f);
@@ -146,6 +150,7 @@ public class pmBasicNodeShape{
         }
         return offset;
     }
+
     public boolean isHit(float posx, float posy){
         int nCross = 0;
         float currPosX, currPosY,lastPosX,lastPosY;

@@ -208,10 +208,12 @@ public class drawNodeAndEdgeDemo extends Demo {
                    numOfEdges ++;
             }
             if(e.isControlDown()){
-                pmBasicNodeShape node = nodeFactory.createNode(gl4, Type[numOfNodes%2]);
+                pmBasicNodeShape node = nodeFactory.createNode(gl4, Type[numOfNodes%10]);
+                if(numOfNodes == 0)
+                    node.isfirst = true;
                 node.setOrigin(new Vector2(posx, posy));
                 node.setColor(gl4, colorList[numOfNodes%2]);
-                node.setScale(0.2f);
+                node.setScale(0.5f);
                 nodeList.add(node);
                 numOfNodes++;
             }
