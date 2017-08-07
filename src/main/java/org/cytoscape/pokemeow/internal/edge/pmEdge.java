@@ -25,20 +25,20 @@ public class pmEdge {
 
     //No arrow
     public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType,
-                  float srcx, float srcy, float destx, float desty){
-        commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty);
+                  float srcx, float srcy, float destx, float desty, boolean initBuffer){
+        commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty,initBuffer);
 
     }
     public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType,Byte destArrowType,
-                  float srcx, float srcy, float destx, float desty){
-        commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty);
+                  float srcx, float srcy, float destx, float desty, boolean initBuffer){
+        commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty,initBuffer);
         arrowFactory = new pmArrowShapeFactory(gl4);
         _destArrow = arrowFactory.createArrow(destArrowType);
         setArrowPosAndRot();
     }
     public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType, Byte srcArrowType, Byte destArrowType,
-                  float srcx, float srcy, float destx, float desty){
-        commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty);
+                  float srcx, float srcy, float destx, float desty, boolean initBuffer){
+        commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty,initBuffer);
         arrowFactory = new pmArrowShapeFactory(gl4);
         _srcArrow = arrowFactory.createArrow(srcArrowType);
         _destArrow = arrowFactory.createArrow(destArrowType);
@@ -64,9 +64,9 @@ public class pmEdge {
 
     }
     private void commonInitialForEdge(GL4 gl4, Byte lineType, Byte mcurveType,
-                                      float srcx, float srcy, float destx, float desty){
+                                      float srcx, float srcy, float destx, float desty, boolean initBuffer){
         lineFactory = new pmLineFactory(gl4);
-        _line = lineFactory.createLine(lineType, srcx, srcy, destx, desty, mcurveType);
+        _line = lineFactory.createLine(lineType, srcx, srcy, destx, desty, mcurveType, initBuffer);
         curveType = mcurveType;
         xMin = Math.min(srcx, destx)-0.01f; xMax = Math.max(srcx, destx)+0.01f;
         yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;

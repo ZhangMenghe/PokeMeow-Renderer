@@ -43,10 +43,10 @@ public class pmLineFactory {
         gl4.glEnable( GL4.GL_DEPTH_TEST );
         gl4.glDepthFunc( GL4.GL_LEQUAL );
     }
-    public pmLineVisual createLine(Byte type, float srcx, float srcy, float destx, float desty, Byte curveType) {
+    public pmLineVisual createLine(Byte type, float srcx, float srcy, float destx, float desty, Byte curveType, boolean initBuffer) {
         switch (type) {
             case 0:
-                return new pmSolidLine(gl4, srcx, srcy, destx, desty, curveType);
+                return new pmSolidLine(gl4, srcx, srcy, destx, desty, curveType, initBuffer);
             case 1:
                 return new pmEqualDashLine(gl4, srcx, srcy, destx, desty, curveType);
             case 2:
@@ -68,23 +68,23 @@ public class pmLineFactory {
             case 10:
                 return new pmContiguousArrowLine(gl4, srcx, srcy, destx, desty, curveType);
             case 11:
-                return createLine(LINE_PARALLEL, LINE_SOLID, srcx, srcy, destx, desty, curveType);
+                return createLine(LINE_PARALLEL, LINE_SOLID, srcx, srcy, destx, desty, curveType,initBuffer);
             case 12:
                 arrowFctory = new pmArrowShapeFactory(gl4);
                 return new pmSeparateArrowLine(gl4, srcx, srcy, destx, desty, curveType);
             default:
-                return new pmSolidLine(gl4, srcx, srcy, destx, desty, curveType);
+                return new pmSolidLine(gl4, srcx, srcy, destx, desty, curveType,initBuffer);
         }
     }
 
-    public pmLineVisual createLine(Byte type, Byte parallType, float srcx, float srcy, float destx, float desty, Byte curveType){
+    public pmLineVisual createLine(Byte type, Byte parallType, float srcx, float srcy, float destx, float desty, Byte curveType, boolean initBuffer){
         if(type!=LINE_PARALLEL)
-            return createLine(type, srcx, srcy, destx, desty, curveType);
+            return createLine(type, srcx, srcy, destx, desty, curveType,initBuffer);
         else{
             if(parallType == LINE_PARALLEL)
-                return new pmParallelLine(gl4, createLine(LINE_SOLID, srcx, srcy, destx, desty, curveType));
+                return new pmParallelLine(gl4, createLine(LINE_SOLID, srcx, srcy, destx, desty, curveType,initBuffer));
             else
-                return new pmParallelLine(gl4, createLine(parallType, srcx, srcy, destx, desty, curveType));
+                return new pmParallelLine(gl4, createLine(parallType, srcx, srcy, destx, desty, curveType,initBuffer));
         }
     }
     private void drawLine_GL(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam){

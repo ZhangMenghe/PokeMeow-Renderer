@@ -37,7 +37,7 @@ public class edgeHitDemo extends Demo{
         for(Byte i=0;i<numOfItems;i++){
             float cy = -0.9f + 0.1f*n;
             edgeList[n++] = new pmEdge(gl4, i, pmLineVisual.LINE_STRAIGHT, pmArrowShapeFactory.SHAPE_ARROWHEAD,pmArrowShapeFactory.SHAPE_ARROWHEAD,
-                    -1.0f,cy,1.0f,cy);
+                    -1.0f,cy,1.0f,cy, true);
         }
     }
 

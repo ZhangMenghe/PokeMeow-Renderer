@@ -21,8 +21,8 @@ public class pmEdgeFactory {
         edgeBuffer = new pmEdgeBuffer(gl4);
     }
     public pmEdge createEdge(Byte lineType, Byte mcurveType,
-                             float srcx, float srcy, float destx, float desty){
-        pmEdge edge =  new pmEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty);
+                             float srcx, float srcy, float destx, float desty,boolean initBuffer){
+        pmEdge edge =  new pmEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty,initBuffer);
         int[] offsets = edge.setBufferOffset(edgeBuffer.dataOffset, edgeBuffer.indexOffset, edgeBuffer.capacity);
         edgeBuffer.dataOffset = offsets[0];
         edgeBuffer.indexOffset = offsets[1];
@@ -36,14 +36,14 @@ public class pmEdgeFactory {
         return edge;
     }
     public pmEdge createEdge(Byte lineType, Byte mcurveType,Byte destArrowType,
-                             float srcx, float srcy, float destx, float desty){
-        return new pmEdge(gl4,lineType,mcurveType,destArrowType,srcx,srcy,destx,desty);
+                             float srcx, float srcy, float destx, float desty,boolean initBuffer){
+        return new pmEdge(gl4,lineType,mcurveType,destArrowType,srcx,srcy,destx,desty,initBuffer);
     }
     public pmEdge createEdge(Byte lineType, Byte mcurveType, Byte srcArrowType, Byte destArrowType,
-                             float srcx, float srcy, float destx, float desty){
-        return new pmEdge(gl4,lineType,mcurveType,srcArrowType,destArrowType,srcx,srcy,destx,desty);
+                             float srcx, float srcy, float destx, float desty,boolean initBuffer){
+        return new pmEdge(gl4,lineType,mcurveType,srcArrowType,destArrowType,srcx,srcy,destx,desty,initBuffer);
     }
-    public pmEdge createEdge(pmLineVisual line, pmBasicArrowShape srcArrow, pmBasicArrowShape destArrow){
+    public pmEdge createEdge(pmLineVisual line, pmBasicArrowShape srcArrow, pmBasicArrowShape destArrow,boolean initBuffer){
         return new pmEdge(gl4,line,srcArrow,destArrow);
     }
     public void drawEdge(pmEdge edge, pmShaderParams gshaderParam){

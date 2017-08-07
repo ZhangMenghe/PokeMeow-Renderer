@@ -83,7 +83,7 @@ public class pmLineVisual extends pmBasicArrowShape {
     }
 
     protected void initLineVisual(GL4 gl4){
-//        numOfVertices = vertices.length/3;
+        initBuffer(gl4);
     }
 
     public void setLineWidth(GL4 gl4, float mwidth){

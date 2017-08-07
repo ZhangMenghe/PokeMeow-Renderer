@@ -55,11 +55,11 @@ public class drawEdgeDemo extends Demo{
 //                       cy,-0.5f,cy,0.5f);
 //        }
         edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_FORWARD_SLASH, pmLineVisual.LINE_STRAIGHT, pmArrowShapeFactory.SHAPE_ARROWHEAD,pmArrowShapeFactory.SHAPE_ARROWHEAD,
-                srcx, srcy, destx, desty);
+                srcx, srcy, destx, desty,true);
 //        edgeList[0].setOrigin(new Vector2(.0f,.0f));
 //        edgeList[0].resetSrcAndDest(-0.8f,.0f,0.8f,.0f);
         edgeList[1] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_QUADRIC_CURVE, pmLineFactory.LINE_SOLID,pmLineFactory.LINE_SOLID,
-                srcx+ 0.2f, srcy , destx+ 0.2f, desty);
+                srcx+ 0.2f, srcy , destx+ 0.2f, desty,true);
 //        edgeList[0].resetSrcAndDest(.0f, .0f, 0.25f, 0.25f);
 //////        edgeList[0].setOrigin(new Vector2(.0f,0.5f));
 //        edgeList[0].setRotation(3.14f/4);
