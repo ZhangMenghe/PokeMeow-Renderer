@@ -67,7 +67,7 @@ public class drawNodeAndEdgeDemo extends Demo {
         edgeFactory = new pmEdgeFactory(gl4);
         NodeEdgeMap = new HashMap<>();
         //////////////////////////////////////////////////////////////////
-        pmBasicNodeShape node = nodeFactory.createNode(gl4, Type[9]);
+        pmBasicNodeShape node = nodeFactory.createNode(Type[3]);
         node.isfirst = true;
         node.setOrigin(new Vector2(.0f, .0f));
         node.setScale(0.5f);
@@ -220,7 +220,7 @@ public class drawNodeAndEdgeDemo extends Demo {
 
             }
             if(e.isControlDown()){
-                pmBasicNodeShape node = nodeFactory.createNode(gl4, Type[numOfNodes%10]);
+                pmBasicNodeShape node = nodeFactory.createNode(Type[numOfNodes%10]);
 //                if(numOfNodes == 0)
 //                    node.isfirst = true;
                 node.setOrigin(new Vector2(posx, posy));

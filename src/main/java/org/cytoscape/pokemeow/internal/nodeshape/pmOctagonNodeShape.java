@@ -10,7 +10,10 @@ public class pmOctagonNodeShape extends pmCircleNodeShape{
         super(gl4, 8);
         setRotation((float) Math.PI/8);
     }
-
+    public pmOctagonNodeShape(){
+        super(8);
+        setRotation((float) Math.PI/8);
+    }
     @Override
     public boolean isHit(float posx, float posy) {
         if(((posx - origin.x) *(posx - origin.x) +  (posy - origin.y) *(posy - origin.y) > radius*radius))

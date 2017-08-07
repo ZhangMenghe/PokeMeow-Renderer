@@ -11,8 +11,17 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
     public float halfLength = 0.25f;
     public float radius = 0.125f/2;
     private float[] controlPoints;
+    public pmRoundedRectangle(){
+        super();
+        commonInitial();
+    }
     public pmRoundedRectangle(GL4 gl4){
         super();
+        commonInitial();
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, indices);
+    }
+
+    private void commonInitial(){
         controlPoints = new float[8];
         numOfVertices = 4*CircleSegment + 4;
         int count = 7*CircleSegment;
@@ -115,9 +124,7 @@ public class pmRoundedRectangle extends pmRectangleNodeShape  {
         indices = new int[numOfIndices];
         System.arraycopy(new_elements,0,indices,0,new_elements.length);
         System.arraycopy(arc_elements, 0, indices, new_elements.length, 12*CircleSegment);
-//        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, _indices);
     }
-
     @Override
     public void setDefaultTexcoord(GL4 gl4){
         useTexture = true;

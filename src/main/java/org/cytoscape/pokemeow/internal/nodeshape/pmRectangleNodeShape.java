@@ -28,7 +28,7 @@ public class pmRectangleNodeShape extends pmBasicNodeShape{
         indices = _indices;
         numOfVertices = 4;
         numOfIndices = 6;
-//        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, indices);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, indices);
     }
 
     public pmRectangleNodeShape(){
@@ -40,7 +40,6 @@ public class pmRectangleNodeShape extends pmBasicNodeShape{
         numOfVertices = 4;
         numOfIndices = 6;
     }
-
     @Override
     public boolean isHit(float posx, float posy) {
         if (posx<xMin || posx>xMax || posy<yMin || posy>yMax)

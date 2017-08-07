@@ -7,6 +7,15 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
  * Created by ZhangMenghe on 2017/6/22.
  */
 public class pmVeeNodeShape extends pmRectangleNodeShape{
+    public pmVeeNodeShape(){
+        super();
+        vertices[0] = .0f;
+        vertices[14] = .0f;
+        vertices[15] = -0.125f;
+        vertices[22] = -0.25f;
+        int [] new_elements = {3,0,2,0,2,1};
+        indices = new_elements;
+    }
     public pmVeeNodeShape(GL4 gl4){
         super();
         vertices[0] = .0f;
@@ -15,6 +24,7 @@ public class pmVeeNodeShape extends pmRectangleNodeShape{
         vertices[22] = -0.25f;
         int [] new_elements = {3,0,2,0,2,1};
         indices = new_elements;
-        //gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, indices);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices, indices);
     }
+
 }

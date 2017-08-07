@@ -10,7 +10,9 @@ public class pmHexagonNodeShape extends pmCircleNodeShape{
     public pmHexagonNodeShape(GL4 gl4){
         super(gl4, 6);
     }
-
+    public pmHexagonNodeShape(){
+        super(6);
+    }
     @Override
     public boolean isHit(float posx, float posy) {
         if(((posx - origin.x) *(posx - origin.x) +  (posy - origin.y) *(posy - origin.y) > radius*radius))

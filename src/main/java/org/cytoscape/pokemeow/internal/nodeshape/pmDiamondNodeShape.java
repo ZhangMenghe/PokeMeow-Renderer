@@ -10,7 +10,10 @@ public class pmDiamondNodeShape extends pmRectangleNodeShape{
         super(gl4);
         setRotation((float) Math.PI/4);
     }
-
+    public pmDiamondNodeShape(){
+        super();
+        setRotation((float) Math.PI/4);
+    }
     @Override
     public void setDefaultTexcoord(GL4 gl4){
         useTexture = true;

@@ -15,14 +15,20 @@ public class pmTriangleNodeShape extends pmBasicNodeShape{
             -0.25f, -0.25f, zorder, .0f, .0f, .0f, 1.0f,
              0.25f, -0.25f, zorder, .0f, .0f, .0f, 1.0f
     };
-
+    public pmTriangleNodeShape(){
+        super();
+        vertices = mvertices;
+        numOfVertices = 3;
+        xMinOri = -0.25f; xMaxOri = 0.25f; yMinOri = -0.25f; yMaxOri = 0.25f;
+        xMin = xMinOri; xMax = xMaxOri; yMin = yMinOri; yMax = yMaxOri;
+    }
     public pmTriangleNodeShape(GL4 gl4){
         super();
         vertices = mvertices;
         numOfVertices = 3;
         xMinOri = -0.25f; xMaxOri = 0.25f; yMinOri = -0.25f; yMaxOri = 0.25f;
         xMin = xMinOri; xMax = xMaxOri; yMin = yMinOri; yMax = yMaxOri;
-//        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
 
     @Override

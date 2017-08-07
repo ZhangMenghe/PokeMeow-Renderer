@@ -16,20 +16,33 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
     High efficient way to draw circle,
     reference:  http://slabode.exofire.net/circle_draw.shtml
     */
+    public pmCircleNodeShape(){
+        super();
+        numOfVertices = CircleSegment;
+        initCircle(numOfVertices);
+    }
+    public pmCircleNodeShape(int new_CircleSegment){
+        super();
+        CircleSegment = new_CircleSegment;
+        numOfVertices = CircleSegment;
+        initCircle(numOfVertices);
+    }
     public pmCircleNodeShape(GL4 gl4){
         super();
         numOfVertices = CircleSegment;
-        initCircle(gl4, numOfVertices);
+        initCircle(numOfVertices);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
 
     public pmCircleNodeShape(GL4 gl4, int new_CircleSegment){
         super();
         CircleSegment = new_CircleSegment;
         numOfVertices = CircleSegment;
-        initCircle(gl4, numOfVertices);
+        initCircle(numOfVertices);
+        gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
 
-    private void initCircle(GL4 gl4, int numOfVertices){
+    private void initCircle(int numOfVertices){
         int count = 7*numOfVertices;
         vertices = new float[count];
         colorIndices = new int[numOfVertices];
@@ -58,7 +71,6 @@ public class pmCircleNodeShape extends pmBasicNodeShape {
 
             colorIndices[Math.floorDiv(i,7)] = i+3;
         }
-        //gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
 
     @Override

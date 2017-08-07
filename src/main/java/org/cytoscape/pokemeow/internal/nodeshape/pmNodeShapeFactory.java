@@ -56,42 +56,67 @@ public class pmNodeShapeFactory {
         gl4.glDepthFunc( GL4.GL_LEQUAL );
         nodeBuffer = new pmNodeBuffer(gl4);
     }
-
     public pmBasicNodeShape createNode(GL4 gl4, Byte type){
+        switch (type) {
+            case 0:
+                return new pmRectangleNodeShape(gl4);
+            case 1:
+                return new pmDiamondNodeShape(gl4);
+            case 2:
+                return new pmParallelogramNodeShape(gl4);
+            case 3:
+                return new pmRoundedRectangle(gl4);
+            case 4:
+                return new pmCircleNodeShape(gl4);
+            case 5:
+                return new pmEllipseNodeShape(gl4);
+            case 6:
+                return new pmHexagonNodeShape(gl4);
+            case 7:
+                return new pmOctagonNodeShape(gl4);
+            case 8:
+                return new pmTriangleNodeShape(gl4);
+            case 9:
+                return new pmVeeNodeShape(gl4);
+            default:
+                return new pmRectangleNodeShape(gl4);
+        }
+    }
+    public pmBasicNodeShape createNode(Byte type){
         pmBasicNodeShape node;
         switch (type) {
             case 0:
-                node = new pmRectangleNodeShape(gl4);
+                node = new pmRectangleNodeShape();
                 break;
             case 1:
-                node = new pmDiamondNodeShape(gl4);
+                node = new pmDiamondNodeShape();
                 break;
             case 2:
-                node = new pmParallelogramNodeShape(gl4);
+                node = new pmParallelogramNodeShape();
                 break;
             case 3:
-                node = new pmRoundedRectangle(gl4);
+                node = new pmRoundedRectangle();
                 break;
             case 4:
-                node = new pmCircleNodeShape(gl4);
+                node = new pmCircleNodeShape();
                 break;
             case 5:
-                node = new pmEllipseNodeShape(gl4);
+                node = new pmEllipseNodeShape();
                 break;
             case 6:
-                node = new pmHexagonNodeShape(gl4);
+                node = new pmHexagonNodeShape();
                 break;
             case 7:
-                node = new pmOctagonNodeShape(gl4);
+                node = new pmOctagonNodeShape();
                 break;
             case 8:
-                node = new pmTriangleNodeShape(gl4);
+                node = new pmTriangleNodeShape();
                 break;
             case 9:
-                node = new pmVeeNodeShape(gl4);
+                node = new pmVeeNodeShape();
                 break;
             default:
-                node = new pmRectangleNodeShape(gl4);
+                node = new pmRectangleNodeShape();
         }
         int[] offsets = node.setBufferOffset(
                 nodeBuffer.dataOffset,
