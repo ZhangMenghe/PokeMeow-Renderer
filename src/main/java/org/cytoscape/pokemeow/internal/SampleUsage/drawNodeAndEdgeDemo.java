@@ -41,7 +41,7 @@ public class drawNodeAndEdgeDemo extends Demo {
     };
     private Byte[] Type = {0,1,2,3,4,5,6,7,8,9};
     private int mouseState = -1;
-    private Integer reactNodeId;
+    private Integer reactNodeId = -1;
     private int numOfNodes = 0;
     private int numOfEdges = 0;
     private pmShaderParams gshaderParamNode;
@@ -66,8 +66,16 @@ public class drawNodeAndEdgeDemo extends Demo {
         nodeFactory = new pmNodeShapeFactory(gl4);
         edgeFactory = new pmEdgeFactory(gl4);
         NodeEdgeMap = new HashMap<>();
-//        edgeList.add(edgeFactory.createEdge(pmLineFactory.LINE_SOLID, pmLineVisual.LINE_STRAIGHT, -0.5f, .0f, 0.5f, .0f));
-//                  edgeList.add(new pmEdge(gl4,pmLineFactory.LINE_SOLID,pmLineVisual.LINE_STRAIGHT,.0f,.0f,posx,posy));
+        //////////////////////////////////////////////////////////////////
+        pmBasicNodeShape node = nodeFactory.createNode(gl4, Type[9]);
+        node.isfirst = true;
+        node.setOrigin(new Vector2(.0f, .0f));
+        node.setScale(0.5f);
+        node.setColor(gl4,colorList[0]);
+        NodeEdgeMap.put(0,new ArrayList<>());
+        numOfNodes++;
+        nodeList.add(node);
+        ////////////////////////////////////////////////////////////////////
     }
 
         @Override
@@ -89,28 +97,28 @@ public class drawNodeAndEdgeDemo extends Demo {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-//        Vector2 diff;
-//
-//        if (lastMousePosition == null) {
-//            lastMousePosition = new Vector2(e.getX(), e.getY());
-//        } else {
-//            Vector2 newPosition = new Vector2(e.getX(), e.getY());
-//            diff = Vector2.subtract(newPosition, lastMousePosition);
-//            diff.y *= -1.0f;
-//            lastMousePosition = newPosition;
-//        }
-//        float posx = 2 * (float) lastMousePosition.x / commonUtil.DEMO_VIEWPORT_SIZE.x - 1;
-//        float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
-//        if (reactNodeId != -1) {
-//            nodeList.get(reactNodeId).setOrigin(new Vector2(posx, posy));
-//            for (Integer index : NodeEdgeMap.get(reactNodeId)) {
-//                //change src of edge
-//                if (index > 0)
-//                    edgeList.get(index).resetSrcAndDest(posx, posy, 1);
-//                else//change dest
-//                    edgeList.get(-index).resetSrcAndDest(posx, posy, 0);
-//            }
-//        }
+        Vector2 diff;
+
+        if (lastMousePosition == null) {
+            lastMousePosition = new Vector2(e.getX(), e.getY());
+        } else {
+            Vector2 newPosition = new Vector2(e.getX(), e.getY());
+            diff = Vector2.subtract(newPosition, lastMousePosition);
+            diff.y *= -1.0f;
+            lastMousePosition = newPosition;
+        }
+        float posx = 2 * (float) lastMousePosition.x / commonUtil.DEMO_VIEWPORT_SIZE.x - 1;
+        float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
+        if (reactNodeId != -1) {
+            nodeList.get(reactNodeId).setOrigin(new Vector2(posx, posy));
+            for (Integer index : NodeEdgeMap.get(reactNodeId)) {
+                //change src of edge
+                if (index >= 0)
+                    edgeList.get(index).resetSrcAndDest(posx, posy, 1);
+                else//change dest
+                    edgeList.get(-index).resetSrcAndDest(posx, posy, 0);
+            }
+        }
 //        if(mouseState==-1){
 //            return;
 //        }
@@ -175,12 +183,12 @@ public class drawNodeAndEdgeDemo extends Demo {
     private Integer hitNode(float posx, float posy) {
         int idx = 0;
         for (pmBasicNodeShape node : nodeList) {
-            idx++;
             if (node.isHit(posx, posy)) {
-                node.setColor(gl4, new Vector4(.0f, 1.0f, .0f, 1.0f));
+                node.setColor(gl4, colorList[1]);
                 node.dirty = true;
                 return idx;
             }
+            idx++;
         }
         return -1;
     }
@@ -191,7 +199,8 @@ public class drawNodeAndEdgeDemo extends Demo {
         lastMousePosition.y = e.getY();
         float posx = 2 * (float) lastMousePosition.x / commonUtil.DEMO_VIEWPORT_SIZE.x - 1;
         float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
-//        reactNodeId = hitNode(posx, posy);
+        if(e.getButton() == 1)
+            reactNodeId = hitNode(posx, posy);
 //        hitEdge(posx, posy);
     }
 
@@ -203,14 +212,17 @@ public class drawNodeAndEdgeDemo extends Demo {
         float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
         if (e.getButton() == 3) {
             if (e.isShiftDown()) {
-                  edgeList.add(edgeFactory.createEdge(pmLineFactory.LINE_SOLID,pmLineVisual.LINE_STRAIGHT, -0.5f,.0f,posx,posy));
-                   times++;
+                  edgeList.add(edgeFactory.createEdge(pmLineFactory.LINE_SOLID,pmLineVisual.LINE_STRAIGHT, nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy));
+                  NodeEdgeMap.get(0).add(numOfEdges);
+//                  NodeEdgeMap.put(0,);
+                  times++;
                    numOfEdges ++;
+
             }
             if(e.isControlDown()){
                 pmBasicNodeShape node = nodeFactory.createNode(gl4, Type[numOfNodes%10]);
-                if(numOfNodes == 0)
-                    node.isfirst = true;
+//                if(numOfNodes == 0)
+//                    node.isfirst = true;
                 node.setOrigin(new Vector2(posx, posy));
                 node.setColor(gl4, colorList[numOfNodes%2]);
                 node.setScale(0.5f);
@@ -218,8 +230,13 @@ public class drawNodeAndEdgeDemo extends Demo {
                 numOfNodes++;
             }
         }
-
-
+        if(e.getButton() == 1){
+            if(e.isShiftDown())
+                mouseState = 1;
+            if(e.isControlDown())
+                mouseState = 2;
+            return;
+        }
     }
 //                mouseState = 3;//try reset
 //            else

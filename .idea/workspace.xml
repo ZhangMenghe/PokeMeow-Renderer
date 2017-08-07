@@ -9,9 +9,6 @@
     <list default="true" id="d0f4b3b5-58d3-4e28-82b2-d281123e725b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmBasicNodeShape.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmBasicNodeShape.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRoundedRectangle.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRoundedRectangle.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,7 +42,7 @@
               <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmBasicNodeShape.java">
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="432">
-                    <caret line="33" column="35" lean-forward="true" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+                    <caret line="33" column="35" lean-forward="false" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
                     <folding />
                   </state>
                 </provider>
@@ -59,11 +56,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="drawNodeAndEdgeDemo.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="drawNodeAndEdgeDemo.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="212" column="32" lean-forward="false" selection-start-line="211" selection-start-column="32" selection-end-line="212" selection-end-column="32" />
+            <state relative-caret-position="236">
+              <caret line="85" column="37" lean-forward="true" selection-start-line="85" selection-start-column="37" selection-end-line="85" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -81,11 +78,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pmNodeShapeFactory.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pmNodeShapeFactory.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="196" column="45" lean-forward="true" selection-start-line="196" selection-start-column="45" selection-end-line="196" selection-end-column="45" />
+            <state relative-caret-position="1089">
+              <caret line="194" column="86" lean-forward="false" selection-start-line="194" selection-start-column="86" selection-end-line="194" selection-end-column="86" />
               <folding>
                 <element signature="method#drawNodeWithTexture#0;class#pmNodeShapeFactory#0" expanded="false" />
                 <element signature="method#drawNodeList#0;class#pmNodeShapeFactory#0" expanded="false" />
@@ -136,11 +133,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>shouldBeResize</find>
-      <find>indexByteOffset</find>
-      <find>dataOffset</find>
-      <find>bufferdata</find>
-      <find>pointer</find>
       <find>Type</find>
       <find>dis</find>
       <find>buffersub</find>
@@ -155,7 +147,6 @@
       <find>disp</find>
       <find>indices</find>
       <find>glDrawElements</find>
-      <find>setcolor</find>
       <find>%</find>
       <find>numofin</find>
       <find>SETSCAL</find>
@@ -163,9 +154,15 @@
       <find>vao</find>
       <find>bind</find>
       <find>setscale</find>
-      <find>numofver</find>
       <find>setsc</find>
       <find>isfir</find>
+      <find>reactNodeId</find>
+      <find>NodeEdgeMap</find>
+      <find>createedge</find>
+      <find>crea</find>
+      <find>numofver</find>
+      <find>createed</find>
+      <find>setcolor</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -231,9 +228,9 @@
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmSthForDraw.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmEllipseNodeShape.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmNodeBuffer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmBasicNodeShape.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java" />
       </list>
     </option>
   </component>
@@ -645,7 +642,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998455" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.08438061" sideWeight="0.76733434" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.74422187" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32854578" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32896763" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -658,7 +655,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.08438061" sideWeight="0.23266564" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.25577813" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -703,11 +700,12 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="475" />
+      <option name="time" value="476" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="nodeList" language="JAVA" />
+        <watch expression="NodeEdgeMap" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
@@ -1094,6 +1092,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmBasicNodeShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="33" column="35" lean-forward="false" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1089">
+          <caret line="194" column="86" lean-forward="false" selection-start-line="194" selection-start-column="86" selection-end-line="194" selection-end-column="86" />
+          <folding>
+            <element signature="method#drawNodeWithTexture#0;class#pmNodeShapeFactory#0" expanded="false" />
+            <element signature="method#drawNodeList#0;class#pmNodeShapeFactory#0" expanded="false" />
+            <element signature="method#drawNodeList#1;class#pmNodeShapeFactory#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmCircleNodeShape.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="708">
@@ -1104,30 +1122,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="212" column="32" lean-forward="false" selection-start-line="211" selection-start-column="32" selection-end-line="212" selection-end-column="32" />
+        <state relative-caret-position="236">
+          <caret line="85" column="37" lean-forward="true" selection-start-line="85" selection-start-column="37" selection-end-line="85" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmBasicNodeShape.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="33" column="35" lean-forward="true" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="196" column="45" lean-forward="true" selection-start-line="196" selection-start-column="45" selection-end-line="196" selection-end-column="45" />
-          <folding>
-            <element signature="method#drawNodeWithTexture#0;class#pmNodeShapeFactory#0" expanded="false" />
-            <element signature="method#drawNodeList#0;class#pmNodeShapeFactory#0" expanded="false" />
-            <element signature="method#drawNodeList#1;class#pmNodeShapeFactory#0" expanded="false" />
           </folding>
         </state>
       </provider>
