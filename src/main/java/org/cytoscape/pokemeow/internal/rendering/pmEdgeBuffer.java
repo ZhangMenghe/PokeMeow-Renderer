@@ -19,8 +19,11 @@ public class pmEdgeBuffer {
     public int numOfIndices;
 //    public FloatBuffer data_buff;
     public int capacity = 4000;
-    public boolean shouldBeResize = false;
-    public IntBuffer index_buff;
+    public int capacityIdx = 4000;
+    //-1: no need to resize
+    //0: should double vbo
+    //1: should double ebo
+    public int shouldBeResize = -1;
     public int dataOffset;
     public int indexOffset;
     public pmEdgeBuffer(GL4 gl4){
@@ -36,10 +39,34 @@ public class pmEdgeBuffer {
         gl4.glVertexAttribPointer(0, 3, GL.GL_FLOAT,false, 3*Float.BYTES, 0);
 
         gl4.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER,objects[EBO]);
-        gl4.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, 0,null, GL.GL_DYNAMIC_DRAW);
+        gl4.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, capacityIdx,null, GL.GL_DYNAMIC_DRAW);
 
         gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl4.glBindVertexArray(0);
     }
+    public void doubleVBOSize(GL4 gl4){
+        int[] t_object = new int[1];
+        gl4.glGenBuffers(1,t_object,0);
+        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER, t_object[0]);
+        gl4.glBufferData(GL.GL_ARRAY_BUFFER, capacity, null, GL.GL_DYNAMIC_DRAW);
+        gl4.glCopyBufferSubData(objects[VBO],t_object[0],0,0,capacity);
 
+        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  objects[VBO]);
+        gl4.glBufferData(GL.GL_ARRAY_BUFFER, capacity*2, null, GL.GL_DYNAMIC_DRAW);
+        gl4.glCopyBufferSubData(t_object[0], objects[VBO], 0, 0, capacity);
+        capacity*=2;
+    }
+
+    public void doubleEBOSize(GL4 gl4){
+        int[] t_object = new int[1];
+        gl4.glGenBuffers(1,t_object,0);
+        gl4.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, t_object[0]);
+        gl4.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, capacityIdx, null, GL.GL_DYNAMIC_DRAW);
+        gl4.glCopyBufferSubData(objects[VBO],t_object[0],0,0,capacityIdx);
+
+        gl4.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER,  objects[EBO]);
+        gl4.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, capacityIdx*2, null, GL.GL_DYNAMIC_DRAW);
+        gl4.glCopyBufferSubData(t_object[0], objects[EBO], 0, 0, capacityIdx);
+        capacityIdx*=2;
+    }
 }

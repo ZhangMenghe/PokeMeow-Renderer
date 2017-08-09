@@ -123,7 +123,6 @@ public class pmNodeShapeFactory {
                 nodeBuffer.indexOffset,
                 nodeBuffer.capacity,
                 nodeBuffer.capacityIdx
-
         );
 
         nodeBuffer.dataOffset = offsets[0];

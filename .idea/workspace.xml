@@ -7,17 +7,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0f4b3b5-58d3-4e28-82b2-d281123e725b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Demo.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Demo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawCurveDemo.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawCurveDemo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawArrowDemo.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawArrowDemo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawEdgeDemo.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawEdgeDemo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawLineDemo.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawLineDemo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/edgeHitDemo.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/edgeHitDemo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowShapeFactory.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowShapeFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowheadShape.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowheadShape.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmBasicArrowShape.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmBasicArrowShape.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDeltaArrowShape.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDeltaArrowShape.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDiamondArrow.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDiamondArrow.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDiscArrowShape.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDiscArrowShape.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmHalfBottomArrowShape.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmHalfBottomArrowShape.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmHalfTopArrowShape.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmHalfTopArrowShape.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShort2DeltaArrowShape.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShort2DeltaArrowShape.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShort2DiamondArrowShape.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShort2DiamondArrowShape.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShortArrowheadShape.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShortArrowheadShape.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShortDeltaArrowShape.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShortDeltaArrowShape.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShortDiamondArrowShape.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShortDiamondArrowShape.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmTeeArrowShape.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmTeeArrowShape.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdge.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdge.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdgeFactory.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdgeFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmBackwardSlashLine.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmBackwardSlashLine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmContiguousArrowLine.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmContiguousArrowLine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDashDotLine.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDashDotLine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDashLongLine.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDashLongLine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDotLine.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDotLine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmEqualDashLine.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmEqualDashLine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmForwardSlashLine.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmForwardSlashLine.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineVisual.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineVisual.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSolidLine.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSolidLine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmPatternLineBasic.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmPatternLineBasic.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSineWaveLine.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSineWaveLine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmVerticalSlashLine.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmVerticalSlashLine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmZigZagLine.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmZigZagLine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmEdgeBuffer.java" afterPath="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmEdgeBuffer.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,35 +56,77 @@
     </SUITE>
   </component>
   <component name="DockManager">
-    <window id="2">
+    <window id="1">
       <content type="file-editors">
         <state>
-          <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-            <file leaf-file-name="pmNodeBuffer.java" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmNodeBuffer.java">
+          <leaf>
+            <file leaf-file-name="pmEdgeFactory.java" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdgeFactory.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="888">
-                    <caret line="42" column="18" lean-forward="false" selection-start-line="38" selection-start-column="19" selection-end-line="42" selection-end-column="18" />
+                  <state relative-caret-position="274">
+                    <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+                    <folding>
+                      <element signature="imports" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="pmLineFactory.java" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="10">
+                    <caret line="71" column="30" lean-forward="false" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="30" />
                     <folding />
                   </state>
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="pmBasicNodeShape.java" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmBasicNodeShape.java">
+            <file leaf-file-name="pmContiguousArrowLine.java" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmContiguousArrowLine.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="249">
-                    <caret line="171" column="53" lean-forward="false" selection-start-line="171" selection-start-column="53" selection-end-line="171" selection-end-column="53" />
+                  <state relative-caret-position="480">
+                    <caret line="24" column="30" lean-forward="false" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
                     <folding />
                   </state>
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="pmRectangleNodeShape.java" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRectangleNodeShape.java">
+            <file leaf-file-name="pmPatternLineBasic.java" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmPatternLineBasic.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="290">
-                    <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+                  <state relative-caret-position="240">
+                    <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="pmZigZagLine.java" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmZigZagLine.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="343">
+                    <caret line="31" column="26" lean-forward="false" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="pmSineWaveLine.java" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSineWaveLine.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="672">
+                    <caret line="28" column="12" lean-forward="false" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="pmEdge.java" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdge.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="37">
+                    <caret line="271" column="0" lean-forward="false" selection-start-line="271" selection-start-column="0" selection-end-line="271" selection-end-column="0" />
                     <folding />
                   </state>
                 </provider>
@@ -75,93 +140,24 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="drawNodeAndEdgeDemo.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="drawNodeAndEdgeDemo.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="214" column="48" lean-forward="false" selection-start-line="214" selection-start-column="48" selection-end-line="214" selection-end-column="48" />
+            <state relative-caret-position="74">
+              <caret line="214" column="78" lean-forward="false" selection-start-line="214" selection-start-column="78" selection-end-line="214" selection-end-column="78" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#init#0;class#drawNodeAndEdgeDemo#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pmBasicArrowShape.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pmBasicArrowShape.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmBasicArrowShape.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="46" column="59" lean-forward="true" selection-start-line="46" selection-start-column="59" selection-end-line="46" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pmEdge.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdge.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4">
-              <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="drawEdgeDemo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawEdgeDemo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="57" column="35" lean-forward="false" selection-start-line="57" selection-start-column="35" selection-end-line="57" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pmLineFactory.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7">
-              <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Demo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Demo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="81" column="53" lean-forward="true" selection-start-line="81" selection-start-column="53" selection-end-line="81" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pmDeltaArrowShape.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDeltaArrowShape.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="drawCurveDemo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawCurveDemo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="33" column="25" lean-forward="false" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pmSolidLine.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSolidLine.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+            <state relative-caret-position="107">
+              <caret line="56" column="46" lean-forward="false" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -178,36 +174,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>numofver</find>
-      <find>createed</find>
-      <find>setcolor</find>
-      <find>glDrawElements</find>
-      <find>initb</find>
-      <find>gs</find>
-      <find>gsthfordraw</find>
-      <find>numofin</find>
-      <find>createnode</find>
-      <find>gl4</find>
-      <find>buff</find>
-      <find>initBuffer</find>
-      <find>initLineVisual(gl4);</find>
-      <find>initLineVisual(gl4)</find>
-      <find>initLineVisual(gl4</find>
-      <find>initLineVisual(gl</find>
-      <find>initLineVisual(g</find>
-      <find>initLineVisual(</find>
-      <find>initLineVisual</find>
-      <find>in</find>
-      <find>initbu</find>
-      <find>initbuf</find>
-      <find>initbuff</find>
-      <find>initbuffe</find>
-      <find>initbuffer</find>
-      <find>initlinevisual</find>
-      <find>createlin</find>
-      <find>createLine</find>
-      <find>commonInitialForEdge</find>
-      <find>createEdge</find>
+      <find>arrowt</find>
+      <find>arrowtee</find>
+      <find>arrowte</find>
+      <find>t</find>
+      <find>teea</find>
+      <find>teear</find>
+      <find>GL_ELEMENT_ARRAY_BUFFER</find>
+      <find>teearr</find>
+      <find>s</find>
+      <find>set</find>
+      <find>setbuff</find>
+      <find>setbuffe</find>
+      <find>setbuffer</find>
+      <find>setbufferof</find>
+      <find>setbufferoff</find>
+      <find>setbufferoffs</find>
+      <find>setbufferoffse</find>
+      <find>setbufferoffset</find>
+      <find>dra</find>
+      <find>dou</find>
+      <find>shouldBeResize</find>
+      <find>if(slope&lt;1 &amp;&amp; slope&gt;-1)</find>
+      <find>if(slope&lt;1 &amp;&amp; slope&gt;1)</find>
+      <find>scale</find>
+      <find>setscale</find>
+      <find>single</find>
+      <find>createedge</find>
+      <find>draw</find>
+      <find>doub</find>
+      <find>lineWidthFactor</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -225,32 +221,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineSeparateArrowPattern.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/shader/line.vert" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/shader/arrow.vert" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawArrowDemo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmShaderParams.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmAnchor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/utils/QuadraticBezier.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/utils/CubicBezier.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmForwardSlashLine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmEqualDashLine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDashLongLine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDotLine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawLineDemo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSineWaveLine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmPatternLineBasic.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSeparateArrowLine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmParallelLine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/commonUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowShapeFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmBasicArrowShape.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmEdgeBuffer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmSthForDraw.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmNodeBuffer.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmBasicNodeShape.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRectangleNodeShape.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmDiamondNodeShape.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmParallelogramNodeShape.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmEllipseNodeShape.java" />
@@ -258,24 +231,47 @@
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmHexagonNodeShape.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmOctagonNodeShape.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmTriangleNodeShape.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodesDemo.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmVeeNodeShape.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRoundedRectangle.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSolidLine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/edgeHitDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawCurveDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawEdgeDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowheadShape.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShortArrowheadShape.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShortDeltaArrowShape.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShort2DeltaArrowShape.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDiscArrowShape.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmHalfBottomArrowShape.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmHalfTopArrowShape.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawArrowDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDeltaArrowShape.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdge.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmBasicArrowShape.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmTeeArrowShape.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDiamondArrow.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShortDiamondArrowShape.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShort2DiamondArrowShape.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowShapeFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Demo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmEdgeBuffer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdgeFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmEqualDashLine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDashLongLine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDashDotLine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDotLine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSineWaveLine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineVisual.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmVerticalSlashLine.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmZigZagLine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDashDotLine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmForwardSlashLine.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmBackwardSlashLine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmContiguousArrowLine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineVisual.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSolidLine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdge.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/edgeHitDemo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawEdgeDemo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdgeFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawCurveDemo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Demo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmPatternLineBasic.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmContiguousArrowLine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java" />
       </list>
     </option>
   </component>
@@ -292,7 +288,7 @@
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -305,7 +301,12 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="preferences.toDoOptions" />
@@ -313,7 +314,7 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="SearchEverywhereHistoryKey" value="deltaar&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.arrowshape.pmDeltaArrowShape&#10;Demo.ja&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Demo.java&#10;linefac&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java&#10;demo.java&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Demo.java&#10;back&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmBackwardSlashLine.java&#10;pmarrowsh&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmBasicArrowShape.java&#10;pmaf&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowShapeFactory.java&#10;pmsolid&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmSolidLine.java&#10;pmlinevi&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineVisual.java&#10;rounde&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRoundedRectangle.java&#10;rectan&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRectangleNodeShape.java&#10;basicno&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape&#10;circle&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmCircleNodeShape.java&#10;pmnode&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmNodeBuffer.java&#10;pmvee&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmVeeNodeShape.java&#10;pmnodebuff&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.rendering.pmNodeBuffer&#10;pmsth&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmSthForDraw.java&#10;nodebuffer&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.rendering.pmNodeBuffer&#10;diamondno&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.nodeshape.pmDiamondNodeShape&#10;dia&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.arrowshape.pmDiamondArrow&#10;pmsthf&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmSthForDraw.java&#10;pmnodebu&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.rendering.pmNodeBuffer&#10;linefact&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java&#10;arrowsha&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmBasicArrowShape.java&#10;nodesha&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java&#10;drawnode&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java&#10;nodefac&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java&#10;pmst&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmSthForDraw.java&#10;nodebuff&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmNodeBuffer.java&#10;pmRec&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRectangleNodeShape.java&#10;pmrec&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRectangleNodeShape.java&#10;nodefact&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory&#10;edgefact&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdgeFactory.java&#10;triang&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmTriangleNodeShape.java&#10;Nodefa&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory&#10;pnodebuff&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmNodeBuffer.java&#10;drawNod&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodesDemo.java&#10;pmNode&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory&#10;pmN&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmNodeBuffer.java&#10;solid&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmSolidLine.java&#10;equa&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmEqualDashLine.java&#10;pmedgebu&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmEdgeBuffer.java&#10;pmEdge&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.edge.pmEdge&#10;drawd&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java&#10;arrowfac&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowShapeFactory.java&#10;Demo&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Demo.java&#10;Demo.java&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java&#10;contigu&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmContiguousArrowLine.java&#10;linevisua&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineVisual.java&#10;edgebuff&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmEdgeBuffer.java" />
+    <property name="SearchEverywhereHistoryKey" value="linevisu&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineVisual.java&#10;edgebuffer&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmEdgeBuffer.java&#10;linefac&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java&#10;nodefact&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java&#10;Demo.java&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Demo.java&#10;arrowfac&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowShapeFactory.java&#10;pmDelta&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDeltaArrowShape.java&#10;Tee&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmTeeArrowShape.java&#10;nodefac&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java&#10;nodebuffer&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmNodeBuffer.java&#10;arrowhead&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowheadShape.java&#10;deltaarr&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDeltaArrowShape.java&#10;pmlinef&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java&#10;drawnod&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java&#10;drawedg&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java&#10;pmnodefac&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java&#10;arrowfact&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowShapeFactory.java&#10;drawno&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java&#10;drawlinede&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawLineDemo.java&#10;deltaar&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.arrowshape.pmDeltaArrowShape&#10;Demo.ja&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Demo.java&#10;demo.java&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Demo.java&#10;back&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmBackwardSlashLine.java&#10;pmarrowsh&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmBasicArrowShape.java&#10;pmaf&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowShapeFactory.java&#10;pmsolid&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmSolidLine.java&#10;pmlinevi&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineVisual.java&#10;rounde&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRoundedRectangle.java&#10;rectan&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRectangleNodeShape.java&#10;basicno&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape&#10;circle&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmCircleNodeShape.java&#10;pmnode&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmNodeBuffer.java&#10;pmvee&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmVeeNodeShape.java&#10;pmnodebuff&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.rendering.pmNodeBuffer&#10;pmsth&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmSthForDraw.java&#10;diamondno&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.nodeshape.pmDiamondNodeShape&#10;dia&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.arrowshape.pmDiamondArrow&#10;pmsthf&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmSthForDraw.java&#10;pmnodebu&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.rendering.pmNodeBuffer&#10;linefact&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java&#10;arrowsha&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmBasicArrowShape.java&#10;nodesha&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java&#10;drawnode&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java&#10;pmst&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmSthForDraw.java&#10;nodebuff&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmNodeBuffer.java&#10;pmRec&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRectangleNodeShape.java&#10;pmrec&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRectangleNodeShape.java&#10;edgefact&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdgeFactory.java&#10;triang&#9;FILE&#9;file://F:/GSoC/PokeMeow-Renderer/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmTriangleNodeShape.java&#10;Nodefa&#9;PSI&#9;JAVA://main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -681,32 +682,32 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32854578" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22621185" sideWeight="0.42218798" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23339318" sideWeight="0.4175655" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998455" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24057451" sideWeight="0.7395994" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17235188" sideWeight="0.60708785" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32854578" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32896763" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="7.7041605E-4" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="7.7041605E-4" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32854578" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21263482" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18132855" sideWeight="0.26040062" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17235188" sideWeight="0.39291218" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32896763" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -745,12 +746,30 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="476" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java</url>
+          <line>125</line>
+          <properties />
+          <option name="timeStamp" value="503" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java</url>
+          <line>96</line>
+          <properties />
+          <option name="timeStamp" value="505" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="506" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="nodeList" language="JAVA" />
         <watch expression="NodeEdgeMap" language="JAVA" />
+        <watch expression="arrow.vertices" language="JAVA" />
+        <watch expression="offset[0]" language="JAVA" />
+        <watch expression="_destArrow.bufferByteOffset" language="JAVA" />
+        <watch expression="offsets[0]" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
@@ -759,174 +778,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSineWaveLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/shader/arrow.frag">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/shader/line.frag" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawLineDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="20" column="23" lean-forward="false" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSeparateArrowLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="143" column="0" lean-forward="true" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmParallelLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="106" column="5" lean-forward="true" selection-start-line="106" selection-start-column="5" selection-end-line="106" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/mousePickupDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="141" column="0" lean-forward="false" selection-start-line="141" selection-start-column="0" selection-end-line="142" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/src/main/resources/lib/jogl-all.jar!/com/jogamp/opengl/GL.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="246" column="8" lean-forward="false" selection-start-line="246" selection-start-column="8" selection-end-line="246" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Cube.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4080">
-          <caret line="184" column="0" lean-forward="false" selection-start-line="184" selection-start-column="0" selection-end-line="186" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/renderToTextureDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-97">
-          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/commonUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="12" column="75" lean-forward="false" selection-start-line="12" selection-start-column="75" selection-end-line="12" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmAnchor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/src/main/resources/lib/jogl-all.jar!/jogamp/opengl/GLBufferObjectTracker.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="59" column="8" lean-forward="false" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/src/main/resources/lib/jogl-all.jar!/jogamp/opengl/gl4/GL4bcImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="34800" column="0" lean-forward="false" selection-start-line="34800" selection-start-column="0" selection-end-line="34800" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmEqualDashLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="672">
-          <caret line="28" column="20" lean-forward="false" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmEdgeBuffer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="24" column="14" lean-forward="false" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDiamondArrow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmSthForDraw.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1446">
-          <caret line="74" column="5" lean-forward="false" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmNodeBuffer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="888">
-          <caret line="42" column="18" lean-forward="false" selection-start-line="38" selection-start-column="19" selection-end-line="42" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmBasicNodeShape.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="171" column="53" lean-forward="false" selection-start-line="171" selection-start-column="53" selection-end-line="171" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRectangleNodeShape.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmDiamondNodeShape.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="13" column="16" lean-forward="true" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmParallelogramNodeShape.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="241">
@@ -956,10 +807,10 @@
         <state relative-caret-position="324">
           <caret line="16" column="30" lean-forward="true" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
           <folding>
-            <element signature="e#304#305#0" expanded="true" />
-            <element signature="e#333#334#0" expanded="true" />
-            <element signature="e#366#367#0" expanded="true" />
-            <element signature="e#390#391#0" expanded="true" />
+            <element signature="e#304#305#0" expanded="false" />
+            <element signature="e#333#334#0" expanded="false" />
+            <element signature="e#366#367#0" expanded="false" />
+            <element signature="e#390#391#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -998,20 +849,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="34" column="13" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
-          <folding>
-            <element signature="method#createNode#0;class#pmNodeShapeFactory#0" expanded="false" />
-            <element signature="method#createNode#1;class#pmNodeShapeFactory#0" expanded="false" />
-            <element signature="method#drawNodeWithTexture#0;class#pmNodeShapeFactory#0" expanded="false" />
-            <element signature="method#drawNodeList#0;class#pmNodeShapeFactory#0" expanded="false" />
-            <element signature="method#drawNodeList#1;class#pmNodeShapeFactory#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodesDemo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -1020,166 +857,356 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowShapeFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="103" column="60" lean-forward="false" selection-start-line="103" selection-start-column="56" selection-end-line="103" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmVerticalSlashLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="31" column="9" lean-forward="false" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmZigZagLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="26" column="38" lean-forward="false" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDashDotLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="37" column="41" lean-forward="false" selection-start-line="37" selection-start-column="41" selection-end-line="37" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmContiguousArrowLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="36" column="9" lean-forward="false" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmBackwardSlashLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="16" column="12" lean-forward="true" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmPatternLineBasic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="19" column="11" lean-forward="false" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSolidLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineVisual.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="85" column="24" lean-forward="false" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
-          <folding>
-            <element signature="e#3521#3522#0" expanded="true" />
-            <element signature="e#3552#3553#0" expanded="true" />
-            <marker date="1502076444726" expanded="false" signature="3855:3933" ph="{...}" />
-            <marker date="1502076444726" expanded="false" signature="4589:5145" ph="{...}" />
-            <marker date="1502076444726" expanded="false" signature="5720:6808" ph="{...}" />
-            <marker date="1502076444726" expanded="false" signature="8959:9017" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawEdgeDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="57" column="35" lean-forward="false" selection-start-line="57" selection-start-column="35" selection-end-line="57" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdge.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4">
-          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="214" column="48" lean-forward="false" selection-start-line="214" selection-start-column="48" selection-end-line="214" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdgeFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="43" column="74" lean-forward="true" selection-start-line="43" selection-start-column="74" selection-end-line="43" selection-end-column="74" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/edgeHitDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="39" column="34" lean-forward="false" selection-start-line="39" selection-start-column="34" selection-end-line="39" selection-end-column="34" />
+        <state relative-caret-position="-1037">
+          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawLineDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmRectangleNodeShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="24" column="34" lean-forward="false" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawCurveDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
+        <state relative-caret-position="240">
           <caret line="33" column="25" lean-forward="false" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Demo.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShortArrowheadShape.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="81" column="53" lean-forward="true" selection-start-line="81" selection-start-column="53" selection-end-line="81" selection-end-column="53" />
+        <state relative-caret-position="240">
+          <caret line="17" column="20" lean-forward="true" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShortDeltaArrowShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="15" column="29" lean-forward="false" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShort2DeltaArrowShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="15" column="29" lean-forward="false" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmHalfBottomArrowShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="27" column="18" lean-forward="false" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmHalfTopArrowShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-66">
+          <caret line="25" column="29" lean-forward="false" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawEdgeDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="19" column="4" lean-forward="false" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowheadShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-111">
+          <caret line="34" column="39" lean-forward="false" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmBasicNodeShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="6" column="70" lean-forward="false" selection-start-line="6" selection-start-column="67" selection-end-line="6" selection-end-column="70" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDeltaArrowShape.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        <state relative-caret-position="432">
+          <caret line="18" column="16" lean-forward="false" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShortDiamondArrowShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="31" column="24" lean-forward="false" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmShort2DiamondArrowShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="30" column="24" lean-forward="true" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDiamondArrow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="31" column="24" lean-forward="false" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmTeeArrowShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="36" column="31" lean-forward="true" selection-start-line="36" selection-start-column="31" selection-end-line="36" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/Demo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="83" column="0" lean-forward="true" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmArrowShapeFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="94" column="38" lean-forward="true" selection-start-line="94" selection-start-column="38" selection-end-line="94" selection-end-column="38" />
+          <folding>
+            <element signature="method#drawArrow#0;class#pmArrowShapeFactory#0" expanded="false" />
+            <element signature="method#drawArrowList#0;class#pmArrowShapeFactory#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmNodeBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-192">
+          <caret line="45" column="44" lean-forward="true" selection-start-line="45" selection-start-column="44" selection-end-line="45" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawArrowDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-343">
+          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmDiscArrowShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="11" column="11" lean-forward="false" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSolidLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="19" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/rendering/pmEdgeBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="20" column="30" lean-forward="false" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/nodeshape/pmNodeShapeFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-158">
+          <caret line="149" column="90" lean-forward="true" selection-start-line="149" selection-start-column="90" selection-end-line="149" selection-end-column="90" />
+          <folding>
+            <element signature="method#createNode#0;class#pmNodeShapeFactory#0" expanded="false" />
+            <element signature="method#drawNodeWithTexture#0;class#pmNodeShapeFactory#0" expanded="false" />
+            <element signature="method#drawNodeList#0;class#pmNodeShapeFactory#0" expanded="false" />
+            <element signature="method#drawNodeList#1;class#pmNodeShapeFactory#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmEqualDashLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="14" column="35" lean-forward="false" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdge.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="37">
+          <caret line="271" column="0" lean-forward="false" selection-start-line="271" selection-start-column="0" selection-end-line="271" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDashLongLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="19" column="12" lean-forward="false" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDotLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="18" column="36" lean-forward="true" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmDashDotLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="12" lean-forward="true" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmSineWaveLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="672">
+          <caret line="28" column="12" lean-forward="false" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/edge/pmEdgeFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineVisual.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-617">
+          <caret line="228" column="16" lean-forward="false" selection-start-line="228" selection-start-column="16" selection-end-line="228" selection-end-column="16" />
+          <folding>
+            <element signature="method#setCubicBezierCurveVertices#0;class#pmLineVisual#0" expanded="false" />
+            <element signature="method#setCubicBezierCurveVertices#1;class#pmLineVisual#0" expanded="false" />
+            <element signature="method#setControlPoints#1;class#pmLineVisual#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmZigZagLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="31" column="26" lean-forward="false" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmBackwardSlashLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="11" column="23" lean-forward="false" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmVerticalSlashLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="17" column="119" lean-forward="true" selection-start-line="17" selection-start-column="101" selection-end-line="17" selection-end-column="119" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmForwardSlashLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="8" column="31" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmPatternLineBasic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmContiguousArrowLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="24" column="30" lean-forward="false" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/line/pmLineFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10">
+          <caret line="71" column="30" lean-forward="false" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/arrowshape/pmBasicArrowShape.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="46" column="59" lean-forward="true" selection-start-line="46" selection-start-column="59" selection-end-line="46" selection-end-column="59" />
+        <state relative-caret-position="107">
+          <caret line="56" column="46" lean-forward="false" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/cytoscape/pokemeow/internal/SampleUsage/drawNodeAndEdgeDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="214" column="78" lean-forward="false" selection-start-line="214" selection-start-column="78" selection-end-line="214" selection-end-column="78" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#init#0;class#drawNodeAndEdgeDemo#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

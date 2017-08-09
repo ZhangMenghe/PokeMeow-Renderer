@@ -16,28 +16,34 @@ public class pmTeeArrowShape extends pmBasicArrowShape{
             0,2,3,
             0,1,2
     };
+
+    public pmTeeArrowShape(){
+        super();
+        numOfVertices = 4;
+        //        numOfIndices = 6;
+//        numOfIndices = -1;
+        vertices = _vertices;
+//        elements = _elements;
+        setScale(0.5f);
+    }
+
     public pmTeeArrowShape(GL4 gl4){
         super();
         numOfVertices = 4;
-        numOfIndices = 6;
+//        numOfIndices = 6;
+//        numOfIndices = -1;
         vertices = _vertices;
-        elements = _elements;
-        this.initBuffer(gl4,true);
+//        elements = _elements;
+        //initBuffer(gl4,true);
+        initBuffer(gl4);
         setScale(0.5f);
     }
-    public pmTeeArrowShape(GL4 gl4, boolean skip){
-        super();
-        numOfVertices = 4;
-        numOfIndices = 6;
-        vertices = _vertices;
-        elements = _elements;
-        setScale(0.5f);
-    }
+
     public void setZorder(GL4 gl4, float new_z){
         vertices[2] = new_z;
         vertices[5] = new_z;
         vertices[8] = new_z;
         vertices[11] = new_z;
-        this.initBuffer(gl4, true);
+        dirty = true;
     }
 }

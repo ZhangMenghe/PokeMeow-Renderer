@@ -8,7 +8,7 @@ import com.jogamp.opengl.GL4;
 
 public class pmZigZagLine extends pmPatternLineBasic{
     private float height = 20.0f;
-    public pmZigZagLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
+    public pmZigZagLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
         super(gl4, srcx, srcy, destx, desty, type);
         if(curveType == LINE_STRAIGHT)
             initStraightVertices(srcx, srcy, destx, desty);
@@ -25,21 +25,21 @@ public class pmZigZagLine extends pmPatternLineBasic{
         }
 
         connectMethod = CONNECT_STRIP;
-        initLineVisual(gl4);
+        if(initBuffer)
+            initLineVisual(gl4);
     }
     protected void initStraightVertices(float srcx, float srcy, float destx, float desty){
         lineSegments = 60;
-
         float rlen;
-        if(slope<1)
-            rlen = destx - srcx;
-        else
+        if(slope>1 || slope<-1)
             rlen = desty - srcy;
+        else
+            rlen = destx - srcx;
         numOfVertices = (int)(lineSegments * Math.abs(rlen)) +1;
         int numOfPoints = 3*numOfVertices;
 
         vertices = new float[numOfPoints];
-        float shrink = rlen/(numOfVertices-1);
+        float shrink = 1.0f/(numOfVertices-1);
 
         float []values = {0,0.5f,0,-0.5f};
         for(int i=0, n=0; i<numOfPoints; i+=3, n++){

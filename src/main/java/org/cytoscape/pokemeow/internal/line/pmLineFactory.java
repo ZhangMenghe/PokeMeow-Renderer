@@ -43,32 +43,33 @@ public class pmLineFactory {
         gl4.glEnable( GL4.GL_DEPTH_TEST );
         gl4.glDepthFunc( GL4.GL_LEQUAL );
     }
+
     public pmLineVisual createLine(Byte type, float srcx, float srcy, float destx, float desty, Byte curveType, boolean initBuffer) {
         switch (type) {
             case 0:
                 return new pmSolidLine(gl4, srcx, srcy, destx, desty, curveType, initBuffer);
             case 1:
-                return new pmEqualDashLine(gl4, srcx, srcy, destx, desty, curveType);
+                return new pmEqualDashLine(gl4, srcx, srcy, destx, desty, curveType, initBuffer);
             case 2:
-                return new pmDashLongLine(gl4, srcx, srcy, destx, desty, curveType);
+                return new pmDashLongLine(gl4, srcx, srcy, destx, desty, curveType, initBuffer);
             case 3:
-                return new pmDashDotLine(gl4, srcx, srcy, destx, desty, curveType);
+                return new pmDashDotLine(gl4, srcx, srcy, destx, desty, curveType, initBuffer);
             case 4:
-                return new pmDotLine(gl4, srcx, srcy, destx, desty, curveType);
+                return new pmDotLine(gl4, srcx, srcy, destx, desty, curveType, initBuffer);
             case 5:
-                return new pmSineWaveLine(gl4, srcx, srcy, destx, desty, curveType);
+                return new pmSineWaveLine(gl4, srcx, srcy, destx, desty, curveType, initBuffer);
             case 6:
-                return new pmZigZagLine(gl4, srcx, srcy, destx, desty, curveType);
+                return new pmZigZagLine(gl4, srcx, srcy, destx, desty, curveType, initBuffer);
             case 7:
-                return new pmVerticalSlashLine(gl4, srcx, srcy, destx, desty, curveType);
+                return new pmVerticalSlashLine(gl4, srcx, srcy, destx, desty, curveType, initBuffer);
             case 8:
-                return new pmForwardSlashLine(gl4, srcx, srcy, destx, desty, curveType);
+                return new pmForwardSlashLine(gl4, srcx, srcy, destx, desty, curveType, initBuffer);
             case 9:
-                return new pmBackwardSlashLine(gl4, srcx, srcy, destx, desty, curveType);
+                return new pmBackwardSlashLine(gl4, srcx, srcy, destx, desty, curveType, initBuffer);
             case 10:
-                return new pmContiguousArrowLine(gl4, srcx, srcy, destx, desty, curveType);
+                return new pmContiguousArrowLine(gl4, srcx, srcy, destx, desty, curveType, initBuffer);
             case 11:
-                return createLine(LINE_PARALLEL, LINE_SOLID, srcx, srcy, destx, desty, curveType,initBuffer);
+                return createLine(LINE_PARALLEL, LINE_SOLID, srcx, srcy, destx, desty, curveType, initBuffer);
             case 12:
                 arrowFctory = new pmArrowShapeFactory(gl4);
                 return new pmSeparateArrowLine(gl4, srcx, srcy, destx, desty, curveType);
@@ -79,7 +80,7 @@ public class pmLineFactory {
 
     public pmLineVisual createLine(Byte type, Byte parallType, float srcx, float srcy, float destx, float desty, Byte curveType, boolean initBuffer){
         if(type!=LINE_PARALLEL)
-            return createLine(type, srcx, srcy, destx, desty, curveType,initBuffer);
+            return createLine(type, srcx, srcy, destx, desty, curveType, initBuffer);
         else{
             if(parallType == LINE_PARALLEL)
                 return new pmParallelLine(gl4, createLine(LINE_SOLID, srcx, srcy, destx, desty, curveType,initBuffer));
@@ -93,7 +94,7 @@ public class pmLineFactory {
                 gl4.glDrawArrays(GL4.GL_LINE_STRIP, line.bufferVerticeOffset, line.numOfVertices);
                 break;
             case pmLineVisual.CONNECT_SEGMENTS:
-                gl4.glDrawArrays(GL4.GL_LINES, 0, line.numOfVertices);
+                gl4.glDrawArrays(GL4.GL_LINES, line.bufferVerticeOffset, line.numOfVertices);
                 break;
             case pmLineVisual.CONNECT_DOTS:
                 gl4.glPointSize(3.0f);

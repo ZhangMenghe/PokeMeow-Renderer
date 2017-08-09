@@ -18,6 +18,14 @@ public class pmHalfTopArrowShape extends pmBasicArrowShape{
             2,0,3,
             0,3,4
     };
+    public pmHalfTopArrowShape(){
+        super();
+        numOfVertices = 5;
+        numOfIndices = 9;
+        vertices = _vertices;
+        elements = _elements;
+        setScale(0.5f);
+    }
     public pmHalfTopArrowShape(GL4 gl4){
         super();
         numOfVertices = 5;

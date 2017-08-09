@@ -8,13 +8,13 @@ import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
  */
 public class pmForwardSlashLine extends pmPatternLineBasic{
     float[] _singlePattern = {
-            0.5f, 0.25f, .0f,
-            -0.5f, -0.25f, .0f
+            0.5f, 0.01f, .0f,
+            -0.5f, -0.01f, .0f
 //            .0f, -0.5f, .0f,
 //            1.0f, 0.5f, .0f
     };
 
-    public pmForwardSlashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
+    public pmForwardSlashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
         super(gl4, srcx, srcy, destx, desty, type);
         pointsPerPattern = 2;
         singlePattern = _singlePattern;
@@ -29,7 +29,8 @@ public class pmForwardSlashLine extends pmPatternLineBasic{
             shrink = 1.0f / numOfPatterns;
             setCurveVerticesByPattern(curvePoints);
         }
-        initLineVisual(gl4);
+        if(initBuffer)
+            initLineVisual(gl4);
     }
 
 }

@@ -12,20 +12,18 @@ public class pmDeltaArrowShape extends pmBasicArrowShape {
             -0.5f, -0.25f, .0f
     };
 
-    public pmDeltaArrowShape(GL4 gl4){
+    public pmDeltaArrowShape(){
         super();
         numOfVertices = 3;
-//        xMinOri = -0.5f;xMaxOri = 0.5f;yMinOri = -0.25f;yMaxOri = 0.25f;
-//        xMin= xMinOri;xMax = xMaxOri;yMin = yMinOri;yMax = yMaxOri;
         vertices = _vertices;
-        initBuffer(gl4);
         setScale(0.5f);
     }
 
-    public pmDeltaArrowShape(GL4 gl4, boolean skip){
+    public pmDeltaArrowShape(GL4 gl4){
         super();
         numOfVertices = 3;
         vertices = _vertices;
+        initBuffer(gl4);
         setScale(0.5f);
     }
 
@@ -33,6 +31,6 @@ public class pmDeltaArrowShape extends pmBasicArrowShape {
         vertices[2] = new_z;
         vertices[5] = new_z;
         vertices[8] = new_z;
-        this.initBuffer(gl4);
+        dirty = true;
     }
 }

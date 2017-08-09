@@ -26,6 +26,7 @@ public abstract class pmBasicArrowShape {
     public int numOfIndices = -1;
     public boolean dirty = true;
     public FloatBuffer data_buff;
+    public IntBuffer indice_buff;
     public Vector3 origin = new Vector3(.0f,.0f,.0f);
     public Matrix4 modelMatrix = Matrix4.identity();
     public Matrix4 rotMatrix = Matrix4.identity();

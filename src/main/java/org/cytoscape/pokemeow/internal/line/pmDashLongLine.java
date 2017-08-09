@@ -11,20 +11,20 @@ import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
  */
 
 public class pmDashLongLine extends pmLineVisual{
-    public pmDashLongLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
+    public pmDashLongLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
         super(gl4, srcx, srcy, destx, desty, type);
         connectMethod = CONNECT_SEGMENTS;
         if(curveType == LINE_STRAIGHT){
-            lineSegments=20;
+            lineSegments=15;
             float rlen;
-            if(slope<1)
-                rlen = destx - srcx;
-            else
+            if(slope>1 || slope<-1)
                 rlen = desty - srcy;
+            else
+                rlen = destx - srcx;
             numOfVertices = (int)(lineSegments * Math.abs(rlen)) +1;
             int numOfPoints = 3*numOfVertices;
             vertices = new float[numOfPoints];
-            float shrink = 0.25f*rlen/(numOfVertices-1);
+            float shrink = 0.25f/(numOfVertices-1);
             vertices[0]=-0.5f; vertices[1]=.0f; vertices[2]=zorder;
             for (int i = 3, n = 1; i < numOfPoints; i += 3, n++) {
                 if (n % 2 == 1)
@@ -35,7 +35,8 @@ public class pmDashLongLine extends pmLineVisual{
                 vertices[i + 2] = zorder;
             }
         }
-        initLineVisual(gl4);
+        if(initBuffer)
+            initLineVisual(gl4);
     }
 
     @Override

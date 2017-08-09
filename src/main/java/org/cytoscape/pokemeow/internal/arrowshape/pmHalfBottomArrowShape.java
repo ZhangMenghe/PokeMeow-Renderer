@@ -13,11 +13,22 @@ public class pmHalfBottomArrowShape extends pmBasicArrowShape{
             -0.25f, 0.1f, .0f,
             -0.25f, 0.05f, .0f
     };
+
     public int []_elements = {
             1,2,0,
             2,0,3,
             0,3,4
     };
+
+    public pmHalfBottomArrowShape(){
+        super();
+        numOfVertices = 5;
+        numOfIndices = 9;
+        vertices = _vertices;
+        elements = _elements;
+        setScale(0.5f);
+    }
+
     public pmHalfBottomArrowShape(GL4 gl4){
         super();
         numOfVertices = 5;

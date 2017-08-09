@@ -13,8 +13,9 @@ import org.omg.CORBA.MARSHAL;
 public class pmPatternLineBasic extends pmLineVisual {
     protected int pointsPerPattern;
     protected float shrink;
-    public int arrDensity = 8;
+    protected int arrDensity = 8;
     public float[]singlePattern;
+    protected float lineWidthFactor = 2.0f;
 
     public pmPatternLineBasic(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
         super(gl4, srcx, srcy, destx, desty, type);
@@ -23,36 +24,23 @@ public class pmPatternLineBasic extends pmLineVisual {
     }
 
     protected void initStraightVertices(){
-        double theta = Math.atan(slope);
-        if(slope<0)
-            theta-=3.14f;
-        float cost = (float)Math.cos(theta);
-        float sint = (float)Math.sin(theta);
-
-        shrink = 1.0f/numOfPatterns;
         int base = 3*pointsPerPattern;
-
-//        for(int i=0;i<pointsPerPattern;i++){
-//            float tmpx = singlePattern[3*i]*cost-singlePattern[3*i+1]*sint;
-//            float tmpy = singlePattern[3*i]*sint+singlePattern[3*i+1]*cost;
-//            singlePattern[3*i] = tmpx;
-//            singlePattern[3*i+1] = tmpy;
-//        }
 
         float lastx, lasty;
         float rlen;
-        if(slope<1)
-            rlen = destPos.x - srcPos.x;
-        else
+        if(slope>1 || slope<-1)
             rlen = destPos.y - srcPos.y;
+        else
+            rlen = destPos.x - srcPos.x;
         int absNumOfPatterns = (int)(Math.abs(rlen) * numOfPatterns);
+        shrink = 1.0f/absNumOfPatterns;
         numOfVertices = pointsPerPattern*absNumOfPatterns;
         vertices = new float[3*numOfVertices];
         if(numOfVertices == 0)
             return;
         for(int j=0;j<pointsPerPattern;j++){
             vertices[3*j] = singlePattern[3*j] * shrink-0.5f+ shrink;
-            vertices[3*j+1] = singlePattern[3*j +1] * shrink;
+            vertices[3*j+1] = singlePattern[3*j +1]*lineWidthFactor;
             vertices[3*j+2] = zorder;
         }
         for(int i=1;i<absNumOfPatterns;i++){

@@ -14,43 +14,64 @@ import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 public class pmEdgeFactory {
     private pmEdgeBuffer edgeBuffer;
     private GL4 gl4;
+
     public pmEdgeFactory(GL4 gl){
         gl4 = gl;
         gl4.glEnable(GL4.GL_LINE_SMOOTH);
         gl4.glEnable( GL4.GL_DEPTH_TEST );
         edgeBuffer = new pmEdgeBuffer(gl4);
     }
+
     public pmEdge createEdge(Byte lineType, Byte mcurveType,
                              float srcx, float srcy, float destx, float desty,boolean initBuffer){
         pmEdge edge =  new pmEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty,initBuffer);
-        int[] offsets = edge.setBufferOffset(edgeBuffer.dataOffset, edgeBuffer.indexOffset, edgeBuffer.capacity);
+        setEdgeBufferOff(edge);
+        return edge;
+    }
+
+    public pmEdge createEdge(Byte lineType, Byte mcurveType,Byte destArrowType,
+                             float srcx, float srcy, float destx, float desty,boolean initBuffer){
+        pmEdge edge = new pmEdge(gl4,lineType,mcurveType,destArrowType,srcx,srcy,destx,desty,initBuffer);
+        setEdgeBufferOff(edge);
+        return edge;
+    }
+
+    public pmEdge createEdge(Byte lineType, Byte mcurveType, Byte srcArrowType, Byte destArrowType,
+                             float srcx, float srcy, float destx, float desty,boolean initBuffer){
+        pmEdge edge = new pmEdge(gl4,lineType,mcurveType,srcArrowType,destArrowType,srcx,srcy,destx,desty,initBuffer);
+        setEdgeBufferOff(edge);
+        return edge;
+    }
+
+    public pmEdge createEdge(pmLineVisual line, pmBasicArrowShape srcArrow, pmBasicArrowShape destArrow,boolean initBuffer){
+        pmEdge edge = new pmEdge(gl4,line,srcArrow,destArrow);
+        setEdgeBufferOff(edge);
+        return edge;
+    }
+
+    private void setEdgeBufferOff(pmEdge edge){
+        int[] offsets = edge.setBufferOffset(
+                edgeBuffer.dataOffset,
+                edgeBuffer.indexOffset,
+                edgeBuffer.capacity,
+                edgeBuffer.capacityIdx
+        );
         edgeBuffer.dataOffset = offsets[0];
         edgeBuffer.indexOffset = offsets[1];
 
-        if(offsets[2] != edgeBuffer.capacity){
-            edgeBuffer.capacity = offsets[2];
-            edgeBuffer.shouldBeResize = true;
-        }
+        if(offsets[2] == -1)
+            edgeBuffer.shouldBeResize = 0;
+        if(offsets[3] == -1)
+            edgeBuffer.shouldBeResize = 1;
+    }
 
-
-        return edge;
-    }
-    public pmEdge createEdge(Byte lineType, Byte mcurveType,Byte destArrowType,
-                             float srcx, float srcy, float destx, float desty,boolean initBuffer){
-        return new pmEdge(gl4,lineType,mcurveType,destArrowType,srcx,srcy,destx,desty,initBuffer);
-    }
-    public pmEdge createEdge(Byte lineType, Byte mcurveType, Byte srcArrowType, Byte destArrowType,
-                             float srcx, float srcy, float destx, float desty,boolean initBuffer){
-        return new pmEdge(gl4,lineType,mcurveType,srcArrowType,destArrowType,srcx,srcy,destx,desty,initBuffer);
-    }
-    public pmEdge createEdge(pmLineVisual line, pmBasicArrowShape srcArrow, pmBasicArrowShape destArrow,boolean initBuffer){
-        return new pmEdge(gl4,line,srcArrow,destArrow);
-    }
     public void drawEdge(pmEdge edge, pmShaderParams gshaderParam){
-        if(edgeBuffer.shouldBeResize){
-            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  edgeBuffer.objects[edgeBuffer.VBO]);
-            gl4.glBufferData(GL.GL_ARRAY_BUFFER, edgeBuffer.capacity, null, GL.GL_DYNAMIC_DRAW);
-            edgeBuffer.shouldBeResize  = false;
+        if(edgeBuffer.shouldBeResize!=-1){
+            if(edgeBuffer.shouldBeResize == 0)
+                edgeBuffer.doubleVBOSize(gl4);
+            else
+                edgeBuffer.doubleEBOSize(gl4);
+            edgeBuffer.shouldBeResize  = -1;
         }
         edge.draw(gl4, gshaderParam, edgeBuffer);
 

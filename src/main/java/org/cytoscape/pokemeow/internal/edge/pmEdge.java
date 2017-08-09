@@ -33,15 +33,15 @@ public class pmEdge {
                   float srcx, float srcy, float destx, float desty, boolean initBuffer){
         commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty,initBuffer);
         arrowFactory = new pmArrowShapeFactory(gl4);
-        _destArrow = arrowFactory.createArrow(destArrowType);
+        _destArrow = arrowFactory.createArrow(destArrowType, initBuffer);
         setArrowPosAndRot();
     }
     public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType, Byte srcArrowType, Byte destArrowType,
                   float srcx, float srcy, float destx, float desty, boolean initBuffer){
         commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty,initBuffer);
         arrowFactory = new pmArrowShapeFactory(gl4);
-        _srcArrow = arrowFactory.createArrow(srcArrowType);
-        _destArrow = arrowFactory.createArrow(destArrowType);
+        _srcArrow = arrowFactory.createArrow(srcArrowType, initBuffer);
+        _destArrow = arrowFactory.createArrow(destArrowType, initBuffer);
         setArrowPosAndRot();
     }
 
@@ -268,29 +268,34 @@ public class pmEdge {
         }
     }
 
-    public int[] setBufferOffset(int bufferOffset, int indexOffset, int boundBuffer){
-        int[] offset = {bufferOffset,indexOffset,boundBuffer};
+    public int[] setBufferOffset(int bufferOffset, int indexOffset, int boundBuffer, int boundBufferIdx){
+        int[] offset = {bufferOffset,indexOffset,boundBuffer, boundBufferIdx};
         _line.bufferByteOffset = bufferOffset;
         _line.bufferVerticeOffset  = bufferOffset/12;
         offset[0] += _line.numOfVertices *12;
-        if(offset[0]>boundBuffer)
-            offset[2] *=2;
+
         if(_srcArrow!=null){
             _srcArrow.bufferByteOffset = offset[0];
+            _srcArrow.bufferVerticeOffset  = offset[0]/12;
             offset[0]+=_srcArrow.numOfVertices *12;
             if(_srcArrow.numOfIndices!=-1){
                 _srcArrow.indexByteOffset = offset[1];
-                offset[1] += _srcArrow.numOfIndices *12;
+                offset[1] += _srcArrow.numOfIndices *4;
             }
         }
         if(_destArrow!=null){
-            _srcArrow.bufferByteOffset = offset[0];
+            _destArrow.bufferByteOffset = offset[0];
+            _destArrow.bufferVerticeOffset  = offset[0]/12;
             offset[0]+=_destArrow.numOfVertices *12;
             if(_destArrow.numOfIndices!=-1){
                 _destArrow.indexByteOffset = offset[1];
-                offset[1] += _destArrow.numOfIndices * Integer.BYTES;
+                offset[1] += _destArrow.numOfIndices * 4;
             }
         }
+        if(offset[0]>boundBuffer)
+            offset[2]  = -1;
+        if(offset[1]>boundBufferIdx)
+            offset[3] = -1;
         return offset;
     }
 

@@ -9,7 +9,7 @@ public class pmSineWaveLine extends pmPatternLineBasic{
     private int period = 40;
     private float baseW = 0.174f;//baseW is approximate 2*pi/360
 
-    public pmSineWaveLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
+    public pmSineWaveLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
         super(gl4, srcx, srcy, destx, desty, type);
         if(curveType == LINE_STRAIGHT)
             initStraightVertices(srcx, srcy, destx, desty);
@@ -25,22 +25,23 @@ public class pmSineWaveLine extends pmPatternLineBasic{
             initCurveVertices();
         }
         connectMethod = CONNECT_STRIP;
-        initLineVisual(gl4);
+        if(initBuffer)
+            initLineVisual(gl4);
 
     }
 
     protected void initStraightVertices(float srcx, float srcy, float destx, float desty){
         float rlen;
         lineSegments = 80;
-        if(slope<1)
-            rlen = destx - srcx;
-        else
+        if(slope>1 || slope<-1)
             rlen = desty - srcy;
+        else
+            rlen = destx - srcx;
         numOfVertices = (int)(lineSegments * Math.abs(rlen)) +1;
         int numOfPoints = 3*numOfVertices;
         lineSegments = 100;
         vertices = new float[numOfPoints];
-        float shrink = rlen/(numOfVertices-1);
+        float shrink = 1.0f/(numOfVertices-1);
         float exampleX = period*baseW;
         int i,n;
         for(i=0, n=0; i<numOfPoints; i+=3, n++){
