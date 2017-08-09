@@ -75,7 +75,19 @@ public class pmLineVisual extends pmBasicArrowShape {
         anchor2 = line.anchor2;
         initLineVisual(gl4);
     }
-
+    public pmLineVisual(pmLineVisual line){
+        super();
+        width = line.width;
+        connectMethod = line.connectMethod;
+        patternList = line.patternList;
+        plineList = line.plineList;
+        vertices = new float[3*line.numOfVertices];
+        for(int i=0;i<line.vertices.length;i++)
+            vertices[i] = line.vertices[i];
+        controlPoints = line.controlPoints;
+        anchor = line.anchor;
+        anchor2 = line.anchor2;
+    }
     protected void initLineVisual(GL4 gl4, pmLineVisual line){
         plineList = new pmLineVisual[2];
         plineList[0] = line;

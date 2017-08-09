@@ -270,9 +270,18 @@ public class pmEdge {
 
     public int[] setBufferOffset(int bufferOffset, int indexOffset, int boundBuffer, int boundBufferIdx){
         int[] offset = {bufferOffset,indexOffset,boundBuffer, boundBufferIdx};
-        _line.bufferByteOffset = bufferOffset;
-        _line.bufferVerticeOffset  = bufferOffset/12;
-        offset[0] += _line.numOfVertices *12;
+        if(_line.plineList != null) {//parallal line
+            _line.plineList[0].bufferByteOffset = bufferOffset;
+            _line.plineList[0].bufferVerticeOffset  = bufferOffset/12;
+            _line.plineList[1].bufferByteOffset = bufferOffset +  _line.plineList[0].numOfVertices * 12;
+            _line.plineList[1].bufferVerticeOffset  = _line.plineList[1].bufferByteOffset/12;
+            offset[0] += _line.numOfVertices *24;
+        }
+        else{
+            _line.bufferByteOffset = bufferOffset;
+            _line.bufferVerticeOffset  = bufferOffset/12;
+            offset[0] += _line.numOfVertices *12;
+        }
 
         if(_srcArrow!=null){
             _srcArrow.bufferByteOffset = offset[0];

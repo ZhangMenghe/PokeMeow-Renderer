@@ -126,7 +126,14 @@ public class Matrix4
 						     0,    0, 1, 0,
 						     0,    0, 0, 1);
 	}
-	
+
+	public static Matrix4 getClone(Matrix4 mat)
+	{
+		return new Matrix4(mat.e11, mat.e12, mat.e13, mat.e14,
+				mat.e21, mat.e22, mat.e23, mat.e24,
+				mat.e31, mat.e32, mat.e33, mat.e34,
+				mat.e41, mat.e42, mat.e43, mat.e44);
+	}
 	/**
 	 * Creates a matrix that represents a rotation around a rotated axis.
 	 * Copied from OpenTK.

@@ -212,7 +212,7 @@ public class drawNodeAndEdgeDemo extends Demo {
         float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
         if (e.getButton() == 3) {
             if (e.isShiftDown()) {
-                  edgeList.add(edgeFactory.createEdge(pmLineFactory.LINE_SOLID, pmLineVisual.LINE_STRAIGHT, nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy,false));
+                  edgeList.add(edgeFactory.createEdge(pmLineFactory.LINE_PARALLEL, pmLineVisual.LINE_STRAIGHT, nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy,false));
 //                edgeList.add(edgeFactory.createEdge(pmLineFactory.LINE_DASH_EQUAL, pmLineVisual.LINE_STRAIGHT,.0f,.0f,0.5f,.0f,false));
                 System.out.println(posx);
                   NodeEdgeMap.get(0).add(numOfEdges);

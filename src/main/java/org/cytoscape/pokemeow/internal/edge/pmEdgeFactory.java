@@ -25,31 +25,31 @@ public class pmEdgeFactory {
     public pmEdge createEdge(Byte lineType, Byte mcurveType,
                              float srcx, float srcy, float destx, float desty,boolean initBuffer){
         pmEdge edge =  new pmEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty,initBuffer);
-        setEdgeBufferOff(edge);
+        commonSetEdgeBufferOff(edge);
         return edge;
     }
 
     public pmEdge createEdge(Byte lineType, Byte mcurveType,Byte destArrowType,
                              float srcx, float srcy, float destx, float desty,boolean initBuffer){
         pmEdge edge = new pmEdge(gl4,lineType,mcurveType,destArrowType,srcx,srcy,destx,desty,initBuffer);
-        setEdgeBufferOff(edge);
+        commonSetEdgeBufferOff(edge);
         return edge;
     }
 
     public pmEdge createEdge(Byte lineType, Byte mcurveType, Byte srcArrowType, Byte destArrowType,
                              float srcx, float srcy, float destx, float desty,boolean initBuffer){
         pmEdge edge = new pmEdge(gl4,lineType,mcurveType,srcArrowType,destArrowType,srcx,srcy,destx,desty,initBuffer);
-        setEdgeBufferOff(edge);
+        commonSetEdgeBufferOff(edge);
         return edge;
     }
 
     public pmEdge createEdge(pmLineVisual line, pmBasicArrowShape srcArrow, pmBasicArrowShape destArrow,boolean initBuffer){
         pmEdge edge = new pmEdge(gl4,line,srcArrow,destArrow);
-        setEdgeBufferOff(edge);
+        commonSetEdgeBufferOff(edge);
         return edge;
     }
 
-    private void setEdgeBufferOff(pmEdge edge){
+    private void commonSetEdgeBufferOff(pmEdge edge){
         int[] offsets = edge.setBufferOffset(
                 edgeBuffer.dataOffset,
                 edgeBuffer.indexOffset,
