@@ -64,12 +64,14 @@ public class pmLineVisual extends pmBasicArrowShape {
     public pmLineVisual(GL4 gl4, pmLineVisual line){
         super();
         width = line.width;
+        numOfVertices = line.numOfVertices;
         connectMethod = line.connectMethod;
         patternList = line.patternList;
         plineList = line.plineList;
         vertices = new float[3*line.numOfVertices];
         for(int i=0;i<line.vertices.length;i++)
             vertices[i] = line.vertices[i];
+        modelMatrix = Matrix4.getClone(line.modelMatrix);
         controlPoints = line.controlPoints;
         anchor = line.anchor;
         anchor2 = line.anchor2;
@@ -78,12 +80,14 @@ public class pmLineVisual extends pmBasicArrowShape {
     public pmLineVisual(pmLineVisual line){
         super();
         width = line.width;
+        numOfVertices = line.numOfVertices;
         connectMethod = line.connectMethod;
         patternList = line.patternList;
         plineList = line.plineList;
         vertices = new float[3*line.numOfVertices];
         for(int i=0;i<line.vertices.length;i++)
             vertices[i] = line.vertices[i];
+        modelMatrix = Matrix4.getClone(line.modelMatrix);
         controlPoints = line.controlPoints;
         anchor = line.anchor;
         anchor2 = line.anchor2;

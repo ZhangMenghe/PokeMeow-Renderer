@@ -83,9 +83,9 @@ public class pmLineFactory {
             return createLine(type, srcx, srcy, destx, desty, curveType, initBuffer);
         else{
             if(parallType == LINE_PARALLEL)
-                return new pmParallelLine(gl4, createLine(LINE_SOLID, srcx, srcy, destx, desty, curveType,initBuffer));
+                return new pmParallelLine(gl4, createLine(LINE_SOLID, srcx, srcy, destx, desty, curveType,initBuffer), initBuffer);
             else
-                return new pmParallelLine(gl4, createLine(parallType, srcx, srcy, destx, desty, curveType,initBuffer));
+                return new pmParallelLine(gl4, createLine(parallType, srcx, srcy, destx, desty, curveType,initBuffer), initBuffer);
         }
     }
     private void drawLine_GL(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam){
@@ -104,18 +104,6 @@ public class pmLineFactory {
                 gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(Matrix4.identity().asArrayCM()));
                 arrowFctory.drawArrowList(gl4, line.patternList, gshaderParam);//TODO,EDGEBUFFER
                 break;
-            case pmLineVisual.CONNECT_PARALLEL://TODO,EDGEBUFFER
-                for(int i=0; i<2; i++){
-                    pmLineVisual mline = line.plineList[i];
-                    gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(mline.modelMatrix.asArrayCM()));
-                    gl4.glUniform4f(gshaderParam.vec4_color, mline.color.x, mline.color.y, mline.color.z,mline.color.w);
-                    gl4.glBindVertexArray(mline.objects[mline.VAO]);
-                    gl4.glBindBuffer(GL_ARRAY_BUFFER, mline.objects[mline.VBO]);
-                    drawLine_GL(gl4, mline, gshaderParam);
-                    gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
-                    gl4.glBindVertexArray(0);
-                }
-                break;
             default:
                 gl4.glDrawArrays(GL4.GL_LINE_STRIP, 0, line.numOfVertices);
                 break;
@@ -123,24 +111,21 @@ public class pmLineFactory {
     }
 
     public void drawLine(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam){
+        if(line.connectMethod == pmLineVisual.CONNECT_PARALLEL){
+            for(pmLineVisual sline:line.plineList)
+                drawLine(gl4, sline, gshaderParam);
+            return;
+        }
+
         gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
         gl4.glUniform4f(gshaderParam.vec4_color, line.color.x, line.color.y, line.color.z,line.color.w);
         gl4.glBindVertexArray(line.objects[line.VAO]);
 
         if(line.dirty){
-            if(line.plineList!=null){
-                for(pmLineVisual sline:line.plineList){
-                    sline.data_buff = Buffers.newDirectFloatBuffer(sline.vertices);
-                    gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  sline.objects[sline.VBO]);
-                    gl4.glBufferData(GL.GL_ARRAY_BUFFER, sline.data_buff.capacity() * Float.BYTES, sline.data_buff, GL.GL_STATIC_DRAW);
-                }
-            }
-            else{
-                if(line.connectMethod != pmLineVisual.CONNECT_PATTERN){
-                    line.data_buff = Buffers.newDirectFloatBuffer(line.vertices);
-                    gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  line.objects[line.VBO]);
-                    gl4.glBufferData(GL.GL_ARRAY_BUFFER, line.data_buff.capacity() * Float.BYTES, line.data_buff, GL.GL_STATIC_DRAW);
-                }
+            if(line.connectMethod != pmLineVisual.CONNECT_PATTERN){
+                line.data_buff = Buffers.newDirectFloatBuffer(line.vertices);
+                gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  line.objects[line.VBO]);
+                gl4.glBufferData(GL.GL_ARRAY_BUFFER, line.data_buff.capacity() * Float.BYTES, line.data_buff, GL.GL_STATIC_DRAW);
             }
         }
         drawLine_GL(gl4, line, gshaderParam);
@@ -160,28 +145,26 @@ public class pmLineFactory {
         gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl4.glBindVertexArray(0);
     }
+
     public void drawLine(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam, pmEdgeBuffer edgeBuffer){
+        if(line.connectMethod == pmLineVisual.CONNECT_PARALLEL){
+            for(pmLineVisual sline:line.plineList)
+                drawLine(gl4,sline,gshaderParam,edgeBuffer);
+            return;
+        }
         gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
         gl4.glUniform4f(gshaderParam.vec4_color, line.color.x, line.color.y, line.color.z,line.color.w);
         gl4.glBindVertexArray(edgeBuffer.objects[edgeBuffer.VAO]);
 
         if(line.dirty){
-            if(line.plineList!=null){
-                for(pmLineVisual sline:line.plineList){
-                    sline.data_buff = Buffers.newDirectFloatBuffer(sline.vertices);
-                    gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  sline.objects[sline.VBO]);
-                    gl4.glBufferData(GL.GL_ARRAY_BUFFER, sline.data_buff.capacity() * Float.BYTES, sline.data_buff, GL.GL_STATIC_DRAW);
-                }
-            }
-            else{
-                if(line.connectMethod != pmLineVisual.CONNECT_PATTERN){
-                    line.data_buff = Buffers.newDirectFloatBuffer(line.vertices);
-                    gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  edgeBuffer.objects[edgeBuffer.VBO]);
+            if(line.connectMethod != pmLineVisual.CONNECT_PATTERN){
+                line.data_buff = Buffers.newDirectFloatBuffer(line.vertices);
+                gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  edgeBuffer.objects[edgeBuffer.VBO]);
 //                    gl4.glBufferData(GL.GL_ARRAY_BUFFER, line.data_buff.capacity() * Float.BYTES, line.data_buff, GL.GL_STATIC_DRAW);
-                    gl4.glBufferSubData(GL.GL_ARRAY_BUFFER,line.bufferByteOffset,line.data_buff.capacity() * Float.BYTES,line.data_buff);
+                gl4.glBufferSubData(GL.GL_ARRAY_BUFFER,line.bufferByteOffset,line.data_buff.capacity() * Float.BYTES,line.data_buff);
 //                    gl4.glBufferData(GL.GL_ARRAY_BUFFER, 96, null, GL.GL_DYNAMIC_DRAW);
-                }
             }
+            line.dirty = false;
         }
         drawLine_GL(gl4, line, gshaderParam);
         gl4.glPointSize(10.0f);

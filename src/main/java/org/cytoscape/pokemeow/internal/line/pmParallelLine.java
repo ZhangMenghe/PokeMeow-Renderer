@@ -9,7 +9,7 @@ import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
  * Created by ZhangMenghe on 2017/7/10.
  */
 public class pmParallelLine extends pmLineVisual {
-    public pmParallelLine(GL4 gl4, pmLineVisual line){
+    public pmParallelLine(GL4 gl4, pmLineVisual line, boolean initBuffer){
         super();
         hitThreshold = 3.0f;
         curveType = line.curveType;
@@ -21,16 +21,19 @@ public class pmParallelLine extends pmLineVisual {
         else
             line.setSrcAndDest(srcPos.x - 0.01f, srcPos.y, destPos.x - 0.01f, destPos.y);
         connectMethod = CONNECT_PARALLEL;
-        initLineVisual(gl4, line);
-        dirty = true;
-        if(curveType == LINE_STRAIGHT) {
-            if (Math.abs(slope) <= 1) {
-                plineList[1].setSrcAndDest(srcPos.x, srcPos.y + 0.01f, destPos.x, destPos.y + 0.01f);
-            } else {
-                plineList[1].setSrcAndDest(srcPos.x + 0.01f, srcPos.y, destPos.x + 0.01f, destPos.y);
-            }
-            return;
+        if(initBuffer)
+            initLineVisual(gl4, line);
+        else{
+            plineList = new pmLineVisual[2];
+            plineList[0] = line;
+            plineList[1] = new pmLineVisual(line);
         }
+
+        if(slope>1 || slope<-1)
+            plineList[1].modelMatrix.e14 += 0.02f;
+        else
+            plineList[1].modelMatrix.e24 += 0.02f;
+
         if(curveType == LINE_QUADRIC_CURVE){
             controlPoints = line.controlPoints;
             SynchronizeLine();
