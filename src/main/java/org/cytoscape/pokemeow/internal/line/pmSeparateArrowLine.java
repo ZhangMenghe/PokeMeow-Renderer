@@ -14,25 +14,25 @@ import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
 public class pmSeparateArrowLine extends pmPatternLineBasic {
     public final static int arrDensity = 2;
     private GL4 gl;
-    public pmSeparateArrowLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type) {
+    public pmSeparateArrowLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer) {
         super(gl4, srcx, srcy, destx, desty, type);
         origin.x = (srcx+destx)/2.0f;
         origin.y = (srcy+desty)/2.0f;
         gl = gl4;
         if(curveType == LINE_STRAIGHT){
             numOfPatterns = lineSegments/arrDensity;
-            setPatternOnStraightLine(srcx,srcy,destx,desty);
+            setPatternOnStraightLine(srcx,srcy,destx,desty,initBuffer);
         }
         else{
             numOfPatterns = QuadraticBezier.resolution/arrDensity;
-            setPatternOnCurve();
+            setPatternOnCurve(initBuffer);
         }
 
         connectMethod = CONNECT_PATTERN;
         dirty = true;
     }
 
-    private void setPatternOnCurve(){
+    private void setPatternOnCurve(boolean initBuffer){
         float rlen;
         if(slope<1)
             rlen = destPos.x - srcPos.x;
@@ -45,7 +45,7 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
         patternList = new pmBasicArrowShape[absNumOfPatterns];
         float deltax, deltay;
         for (int i = 0, n=0; i < absNumOfPatterns; i++,n+=step) {
-            patternList[i] = new pmLineSeparateArrowPattern(gl);
+            patternList[i] = new pmLineSeparateArrowPattern(gl, initBuffer);
             patternList[i].setScale(0.05f);
             deltay = vertices[3*(i+1)+1] - vertices[3*i+1];
             deltax = vertices[3*(i+1)] - vertices[3*i];
@@ -55,13 +55,13 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
             patternList[i].setOrigin(new Vector3(vertices[3*n], vertices[3*n+1], zorder));
         }
     }
-    private void setPatternOnStraightLine(float srcx, float srcy, float destx, float desty){
+    private void setPatternOnStraightLine(float srcx, float srcy, float destx, float desty, boolean initBuffer){
         double theta = Math.atan(slope);
         if(slope<0)
             theta -= 3.14f;
 
         float rlen;
-        if(slope<1){
+        if(slope<1 && slope>-1){
             rlen = destx - srcx;
             numOfVertices = (int) (lineSegments * Math.abs(rlen)) + 1;
             int numOfPoints = 3*numOfVertices;
@@ -89,13 +89,13 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
             }
         }
 
-        int absNumOfPatterns = (int)(rlen * numOfPatterns)/2;
+        int absNumOfPatterns = (int)Math.abs((rlen * numOfPatterns)/2);
         if(absNumOfPatterns == 0)
             return;
         int step = numOfVertices / absNumOfPatterns;
         patternList = new pmBasicArrowShape[absNumOfPatterns];
         for (int i = 0, n=0; i < absNumOfPatterns; i++,n+=step) {
-            patternList[i] = new pmLineSeparateArrowPattern(gl);
+            patternList[i] = new pmLineSeparateArrowPattern(gl,initBuffer);
             patternList[i].setScale(0.05f);
             patternList[i].setRotation((float) theta - 3.14f/2);
             patternList[i].setOrigin(new Vector3(vertices[3*n], vertices[3*n+1], zorder));

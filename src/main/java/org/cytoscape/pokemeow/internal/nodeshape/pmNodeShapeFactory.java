@@ -236,7 +236,7 @@ public class pmNodeShapeFactory {
                 gl4.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, nodeBuffer.objects[nodeBuffer.EBO]);
                 gl4.glBufferSubData(GL.GL_ELEMENT_ARRAY_BUFFER, node.indexByteOffset, node.numOfIndices*4, node.gsthForDraw.indice_buff);
             }
-//            node.dirty = false;
+            node.dirty = false;
         }
         if(node instanceof pmRectangleNodeShape){
             gl4.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, nodeBuffer.objects[nodeBuffer.EBO]);

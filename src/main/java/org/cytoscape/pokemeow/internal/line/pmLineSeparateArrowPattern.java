@@ -24,12 +24,14 @@ public class pmLineSeparateArrowPattern extends pmBasicArrowShape {
             2,3,4,
             2,5,4
     };
-    public pmLineSeparateArrowPattern(GL4 gl4){
+
+    public pmLineSeparateArrowPattern(GL4 gl4, boolean initBuffer){
         super();
         numOfVertices = 7;
         numOfIndices = 15;
         vertices = _vertices;
         elements = _elements;
-        this.initBuffer(gl4, true);
+        if(initBuffer)
+            this.initBuffer(gl4, true);
     }
 }
