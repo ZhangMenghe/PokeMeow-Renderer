@@ -60,42 +60,30 @@ public class pmLineVisual extends pmBasicArrowShape {
         }
         setSrcAndDest(srcx,srcy,destx,desty);
     }
+    public static pmLineVisual getCloneLine(pmLineVisual line){
+        pmLineVisual cloned = new pmLineVisual();
+        cloned.width = line.width;
+        cloned.numOfVertices = line.numOfVertices;
+        cloned.connectMethod = line.connectMethod;
+        cloned.patternList = line.patternList;
+        cloned.plineList = line.plineList;
+        cloned.vertices = new float[3*line.numOfVertices];
+        for(int i=0;i<line.vertices.length;i++)
+            cloned.vertices[i] = line.vertices[i];
+        cloned.modelMatrix = Matrix4.getClone(line.modelMatrix);
+        cloned.srcPos = line.srcPos;
+        cloned.destPos = line.destPos;
+        cloned.controlPoints = line.controlPoints;
+        cloned.anchor = line.anchor;
+        cloned.anchor2 = line.anchor2;
+        return cloned;
+    }
 
-    public pmLineVisual(GL4 gl4, pmLineVisual line){
-        super();
-        width = line.width;
-        numOfVertices = line.numOfVertices;
-        connectMethod = line.connectMethod;
-        patternList = line.patternList;
-        plineList = line.plineList;
-        vertices = new float[3*line.numOfVertices];
-        for(int i=0;i<line.vertices.length;i++)
-            vertices[i] = line.vertices[i];
-        modelMatrix = Matrix4.getClone(line.modelMatrix);
-        controlPoints = line.controlPoints;
-        anchor = line.anchor;
-        anchor2 = line.anchor2;
-        initLineVisual(gl4);
-    }
-    public pmLineVisual(pmLineVisual line){
-        super();
-        width = line.width;
-        numOfVertices = line.numOfVertices;
-        connectMethod = line.connectMethod;
-        patternList = line.patternList;
-        plineList = line.plineList;
-        vertices = new float[3*line.numOfVertices];
-        for(int i=0;i<line.vertices.length;i++)
-            vertices[i] = line.vertices[i];
-        modelMatrix = Matrix4.getClone(line.modelMatrix);
-        controlPoints = line.controlPoints;
-        anchor = line.anchor;
-        anchor2 = line.anchor2;
-    }
     protected void initLineVisual(GL4 gl4, pmLineVisual line){
         plineList = new pmLineVisual[2];
         plineList[0] = line;
-        plineList[1] = new pmLineVisual(gl4, line);
+        plineList[1] = getCloneLine(line);
+        plineList[1].initBuffer(gl4);
     }
 
     protected void initLineVisual(GL4 gl4){

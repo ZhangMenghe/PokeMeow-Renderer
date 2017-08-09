@@ -20,9 +20,9 @@ public class pmLineSeparateArrowPattern extends pmBasicArrowShape {
     public int [] _elements = {
             0,6,5,
             0,5,2,
-            0,1,2,
-            2,3,4,
-            2,5,4
+            0,2,1,
+            2,5,4,
+            2,4,3
     };
 
     public pmLineSeparateArrowPattern(GL4 gl4, boolean initBuffer){

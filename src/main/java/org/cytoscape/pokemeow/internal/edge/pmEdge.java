@@ -275,15 +275,15 @@ public class pmEdge {
             _line.plineList[0].bufferVerticeOffset  = bufferOffset/12;
             _line.plineList[1].bufferByteOffset = bufferOffset +  _line.plineList[0].numOfVertices * 12;
             _line.plineList[1].bufferVerticeOffset  = _line.plineList[1].bufferByteOffset/12;
-            offset[0] += _line.numOfVertices *24;
+            offset[0] += _line.plineList[0].numOfVertices *24;
         }
         else if(_line.patternList != null){
             int n=0;
             int bufferVertices = bufferOffset/12;
             for(pmBasicArrowShape arrow: _line.patternList){
-                arrow.bufferByteOffset = bufferOffset + 84 * n;
+                arrow.bufferByteOffset = bufferOffset + 84 * n;//7*12
                 arrow.bufferVerticeOffset = bufferVertices + 7 * n;
-                arrow.indexByteOffset = indexOffset + 60*n;
+                arrow.indexByteOffset = indexOffset + 60*n;//15*4
                 n++;
             }
             offset[0] += 84*n;

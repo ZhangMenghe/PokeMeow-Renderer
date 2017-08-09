@@ -17,7 +17,7 @@ public class pmParallelLine extends pmLineVisual {
         destPos.x = line.destPos.x; destPos.y = line.destPos.y;
         slope = line.slope;
         if (Math.abs(slope) <= 1)
-            line.setSrcAndDest(srcPos.x,srcPos.y-0.01f,destPos.x,destPos.y-0.01f);
+            line.setSrcAndDest(srcPos.x, srcPos.y-0.01f, destPos.x,destPos.y-0.01f);
         else
             line.setSrcAndDest(srcPos.x - 0.01f, srcPos.y, destPos.x - 0.01f, destPos.y);
         connectMethod = CONNECT_PARALLEL;
@@ -26,7 +26,7 @@ public class pmParallelLine extends pmLineVisual {
         else{
             plineList = new pmLineVisual[2];
             plineList[0] = line;
-            plineList[1] = new pmLineVisual(line);
+            plineList[1] = getCloneLine(line);
         }
 
         if(slope>1 || slope<-1)
