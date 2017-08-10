@@ -20,12 +20,22 @@ public class pmAnchor {
     public Vector4 color= new Vector4(1.0f,.0f,.0f,1.0f);//default to red
     public float[] vertices;
     public FloatBuffer data_buff;
+    private float zorder = .0f;
+    public int bufferByteOffset = 0;
+    public int bufferVerticeOffset = 0;
+
+    public pmAnchor(float posx, float posy){
+        vertices = new float[3];
+        vertices[0] = posx;
+        vertices[1] = posy;
+        vertices[2] = zorder;
+    }
 
     public pmAnchor(GL4 gl4, float posx, float posy){
         vertices = new float[3];
         vertices[0] = posx;
         vertices[1] = posy;
-        vertices[2] = -1.0f;
+        vertices[2] = zorder;
 
         data_buff = Buffers.newDirectFloatBuffer(vertices);
         gl4.glGenVertexArrays(1,objects,VAO);

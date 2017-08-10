@@ -11,7 +11,7 @@ import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
 public class pmSolidLine extends pmLineVisual {
     float []_vertices = {-0.5f,.0f,zorder,0.5f,.0f,zorder};
     public pmSolidLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
-        super(gl4, srcx, srcy, destx, desty, type);
+        super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         if(curveType == LINE_STRAIGHT){
             numOfVertices = 2;
             vertices = _vertices;
