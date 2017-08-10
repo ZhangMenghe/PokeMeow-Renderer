@@ -38,6 +38,7 @@ public class drawNodeAndEdgeDemo extends Demo {
     private int numOfEdges = 0;
     private pmShaderParams gshaderParamNode;
     private int programNode;
+    private boolean needFirstCheck = true;
     @Override
     public void init(GLAutoDrawable drawable) {
         super.init(drawable);
@@ -205,8 +206,18 @@ public class drawNodeAndEdgeDemo extends Demo {
         if (e.getButton() == 3) {
             if (e.isShiftDown()) {
                   edgeList.add(edgeFactory.createEdge(pmLineFactory.LINE_SOLID, pmLineVisual.LINE_STRAIGHT, Type[numOfEdges%10], nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy,false));
-//                edgeList.add(edgeFactory.createEdge(pmLineFactory.LINE_DASH_EQUAL, pmLineVisual.LINE_STRAIGHT,.0f,.0f,0.5f,.0f,false));
-                System.out.println(posx);
+//                edgeList.add(edgeFactory.createEdge(Type[numOfEdges%2], pmLineVisual.LINE_STRAIGHT, nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy,false));
+                if(needFirstCheck){
+                    if(edgeList.get(numOfEdges)._destArrow!=null){
+                        needFirstCheck = false;
+                        edgeList.get(numOfEdges)._destArrow.isfirst = true;
+                    }
+                    else if(edgeList.get(numOfEdges)._line.patternList!=null){
+                        needFirstCheck = false;
+                        edgeList.get(numOfEdges)._line.patternList[0].isfirst = true;
+                    }
+
+                }
                   NodeEdgeMap.get(0).add(numOfEdges);
                   times++;
                    numOfEdges ++;

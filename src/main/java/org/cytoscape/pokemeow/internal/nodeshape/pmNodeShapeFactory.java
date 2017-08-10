@@ -158,9 +158,9 @@ public class pmNodeShapeFactory {
             node.dirty = false;
         }
         if(node instanceof pmRectangleNodeShape){
-            gl4.glBindBuffer(GL_ARRAY_BUFFER, node.gsthForDraw.objects[node.gsthForDraw.EBO]);
+            gl4.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, node.gsthForDraw.objects[node.gsthForDraw.EBO]);
             gl4.glDrawElements(GL4.GL_TRIANGLES,node.gsthForDraw.numOfIndices, GL.GL_UNSIGNED_INT,0);
-            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
+            gl4.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER,0);
         }
         else{
             gl4.glDrawArrays(GL4.GL_TRIANGLE_FAN, 0, node.numOfVertices);
@@ -201,6 +201,7 @@ public class pmNodeShapeFactory {
 
         }
     }
+
     public void drawNode(GL4 gl4, pmBasicNodeShape node, pmShaderParams gshaderParam, boolean useUniformBuffer){
         if(nodeBuffer.shouldBeResize!=-1){
             if(nodeBuffer.shouldBeResize == 0)
@@ -211,7 +212,6 @@ public class pmNodeShapeFactory {
         }
         gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(node.modelMatrix.asArrayCM()));
         gl4.glUniformMatrix4fv(gshaderParam.mat4_viewMatrix, 1,false, Buffers.newDirectFloatBuffer(node.viewMatrix.asArrayCM()));
-//        gl4.glBindVertexArray(nodeBuffer.objects[nodeBuffer.VAO]);
         if(node.numOfIndices != -1 && !node.isfirst) {
             gl4.glGenVertexArrays(1, node.objects, 0);
             gl4.glBindVertexArray(node.objects[0]);
@@ -220,7 +220,6 @@ public class pmNodeShapeFactory {
 
             gl4.glEnableVertexAttribArray(1);
             gl4.glVertexAttribPointer(1, 4, GL.GL_FLOAT, false, 7 * Float.BYTES, node.bufferByteOffset + 3 * Float.BYTES);
-            node.isNew = false;
         }
         else
             gl4.glBindVertexArray(nodeBuffer.objects[nodeBuffer.VAO]);

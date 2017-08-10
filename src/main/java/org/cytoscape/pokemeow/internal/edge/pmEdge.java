@@ -40,8 +40,8 @@ public class pmEdge {
                   float srcx, float srcy, float destx, float desty, boolean initBuffer){
         commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty,initBuffer);
         arrowFactory = new pmArrowShapeFactory(gl4);
-        _srcArrow = arrowFactory.createArrow(srcArrowType, initBuffer);
         _destArrow = arrowFactory.createArrow(destArrowType, initBuffer);
+        _srcArrow = arrowFactory.createArrow(srcArrowType, initBuffer);
         setArrowPosAndRot();
     }
 
@@ -205,7 +205,6 @@ public class pmEdge {
                 float length =deltay*deltay + deltax*deltax;
                 if(length <= 0.0002f)
                     return true;
-
             }
         }
         return false;
@@ -295,15 +294,6 @@ public class pmEdge {
             offset[0] += _line.numOfVertices *12;
         }
 
-        if(_srcArrow!=null){
-            _srcArrow.bufferByteOffset = offset[0];
-            _srcArrow.bufferVerticeOffset  = offset[0]/12;
-            offset[0]+=_srcArrow.numOfVertices *12;
-            if(_srcArrow.numOfIndices!=-1){
-                _srcArrow.indexByteOffset = offset[1];
-                offset[1] += _srcArrow.numOfIndices *4;
-            }
-        }
         if(_destArrow!=null){
             _destArrow.bufferByteOffset = offset[0];
             _destArrow.bufferVerticeOffset  = offset[0]/12;
@@ -313,6 +303,17 @@ public class pmEdge {
                 offset[1] += _destArrow.numOfIndices * 4;
             }
         }
+
+        if(_srcArrow!=null){
+            _srcArrow.bufferByteOffset = offset[0];
+            _srcArrow.bufferVerticeOffset  = offset[0]/12;
+            offset[0]+=_srcArrow.numOfVertices *12;
+            if(_srcArrow.numOfIndices!=-1){
+                _srcArrow.indexByteOffset = offset[1];
+                offset[1] += _srcArrow.numOfIndices *4;
+            }
+        }
+
         if(offset[0]>boundBuffer)
             offset[2]  = -1;
         if(offset[1]>boundBufferIdx)

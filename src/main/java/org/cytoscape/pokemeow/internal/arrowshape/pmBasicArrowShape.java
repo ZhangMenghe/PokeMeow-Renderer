@@ -36,6 +36,7 @@ public abstract class pmBasicArrowShape {
     public int bufferByteOffset = 0;
     public int indexByteOffset = 0;
     public int bufferVerticeOffset = 0;
+    public boolean isfirst = false;//TODO:WHY SOOOOOOO UGLY????????????
     protected float xMin, xMax, yMin, yMax;
     protected float xMinOri, xMaxOri, yMinOri, yMaxOri;
 

@@ -178,7 +178,7 @@ public class pmLineFactory {
             drawAnchorPoint(line.anchor2);
         }
         line.dirty = false;
-        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
+//        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl4.glBindVertexArray(0);
     }
     private void drawAnchorPoint(pmAnchor anchor){

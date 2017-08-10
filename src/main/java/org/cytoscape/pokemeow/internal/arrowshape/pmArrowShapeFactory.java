@@ -132,8 +132,16 @@ public class pmArrowShapeFactory {
     public void drawArrow(GL4 gl4, pmBasicArrowShape arrow, pmShaderParams gshaderParam, pmEdgeBuffer edgeBuffer){
         gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(arrow.modelMatrix.asArrayCM()));
         gl4.glUniform4f(gshaderParam.vec4_color, arrow.color.x, arrow.color.y, arrow.color.z,arrow.color.w);
-        gl4.glBindVertexArray(edgeBuffer.objects[edgeBuffer.VAO]);
+        if(arrow.numOfIndices != -1 && !arrow.isfirst) {
+            gl4.glGenVertexArrays(1, arrow.objects, 0);
+            gl4.glBindVertexArray(arrow.objects[0]);
+            gl4.glEnableVertexAttribArray(0);
+            gl4.glVertexAttribPointer(0, 3, GL.GL_FLOAT,false, 3*Float.BYTES, arrow.bufferByteOffset);
+        }
+        else
+            gl4.glBindVertexArray(edgeBuffer.objects[edgeBuffer.VAO]);
 
+        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  edgeBuffer.objects[edgeBuffer.VBO]);
         if(arrow.dirty){
             arrow.data_buff = Buffers.newDirectFloatBuffer(arrow.vertices);
             gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  edgeBuffer.objects[edgeBuffer.VBO]);
@@ -152,8 +160,6 @@ public class pmArrowShapeFactory {
             gl4.glDrawElements(GL4.GL_TRIANGLE_STRIP,arrow.numOfIndices, GL4.GL_UNSIGNED_INT,arrow.indexByteOffset);
             gl4.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER,0);
         }
-
-        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl4.glBindVertexArray(0);
     }
     public void drawArrowList(GL4 gl4, pmBasicArrowShape[] arrowList, pmShaderParams gshaderParam){

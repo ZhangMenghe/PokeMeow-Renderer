@@ -33,8 +33,7 @@ public class pmBasicNodeShape{
     public int bufferByteOffset = 0;
     public int indexByteOffset = 0;
     public int bufferVerticeOffset = 0;
-    public int[] objects= new int[1];
-    public boolean isNew = true;
+    public int[] objects= new int[1];//FOR SEPARATE VAO
     public boolean isfirst = false;//TODO:It's sooo ugly. But I don't know why the Rectangle Node is easy to be earsed....
     public pmBasicNodeShape(){
         origin = new Vector3(.0f,.0f, zorder);
