@@ -247,4 +247,12 @@ public class pmNodeShapeFactory {
         }
         gl4.glBindVertexArray(0);
     }
+
+    public void deleteNode(GL4 gl4, pmBasicNodeShape node){
+        //TODO:Whether or not it is necessary to reuse deleted buffer?
+        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER, nodeBuffer.objects[nodeBuffer.VBO]);
+        gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, node.bufferByteOffset,node.numOfVertices*84, null);
+        if(node.numOfIndices!=-1)
+            gl4.glBufferSubData(GL.GL_ELEMENT_ARRAY_BUFFER, node.indexByteOffset,node.numOfIndices*4, null);
+    }
 }

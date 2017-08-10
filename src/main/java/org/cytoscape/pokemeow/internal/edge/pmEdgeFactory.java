@@ -74,6 +74,8 @@ public class pmEdgeFactory {
             edgeBuffer.shouldBeResize  = -1;
         }
         edge.draw(gl4, gshaderParam, edgeBuffer);
+    }
+    public void deleteEdge(GL4 gl4, pmEdge edge){
 
     }
 }

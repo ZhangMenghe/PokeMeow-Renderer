@@ -38,6 +38,7 @@ public class drawNodeAndEdgeDemo extends Demo {
     private pmShaderParams gshaderParamNode;
     private int programNode;
     private boolean needFirstCheck = true;
+    private int count = 0;
     @Override
     public void init(GLAutoDrawable drawable) {
         super.init(drawable);
@@ -101,16 +102,16 @@ public class drawNodeAndEdgeDemo extends Demo {
         }
         float posx = 2 * (float) lastMousePosition.x / commonUtil.DEMO_VIEWPORT_SIZE.x - 1;
         float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
-        if (reactNodeId != -1) {
-            nodeList.get(reactNodeId).setOrigin(new Vector2(posx, posy));
-            for (Integer index : NodeEdgeMap.get(reactNodeId)) {
-                //change src of edge
-                if (index >= 0)
-                    edgeList.get(index).resetSrcAndDest(posx, posy, 1);
-                else//change dest
-                    edgeList.get(-index).resetSrcAndDest(posx, posy, 0);
-            }
-        }
+//        if (reactNodeId != -1) {
+//            nodeList.get(reactNodeId).setOrigin(new Vector2(posx, posy));
+//            for (Integer index : NodeEdgeMap.get(reactNodeId)) {
+//                //change src of edge
+//                if (index >= 0)
+//                    edgeList.get(index).resetSrcAndDest(posx, posy, 1);
+//                else//change dest
+//                    edgeList.get(-index).resetSrcAndDest(posx, posy, 0);
+//            }
+//        }
 
     }
 
@@ -126,15 +127,39 @@ public class drawNodeAndEdgeDemo extends Demo {
         }
         return -1;
     }
+    private void checkAndDelete(float posx, float posy){
+        for(int i=numOfNodes-1; i>-1; i-- ){
+            pmBasicNodeShape tmp = nodeList.get(i);
+            if(tmp.isHit(posx,posy)){
+                nodeList.remove(i);
+                numOfNodes--;
+//                if(tmp.isfirst && i<numOfNodes-1)
+//                    nodeList.get(i).isfirst = true;
+                nodeFactory.deleteNode(gl4,tmp);
 
+            }
+        }
+//        for(pmEdge edge : edgeList){
+//            if(edge.isHit(posx,posy)){
+//                edgeFactory.deleteEdge(gl4, edge);
+//                edgeList.remove(edge);
+//                numOfEdges--;
+//            }
+//        }
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
         lastMousePosition.x = e.getX();
         lastMousePosition.y = e.getY();
         float posx = 2 * (float) lastMousePosition.x / commonUtil.DEMO_VIEWPORT_SIZE.x - 1;
         float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
-        if(e.getButton() == 1)
+        if(e.getButton() == 1){
             reactNodeId = hitNode(posx, posy);
+            if(e.isShiftDown()){
+                checkAndDelete(posx, posy);
+            }
+        }
+
     }
 
     @Override
@@ -145,7 +170,7 @@ public class drawNodeAndEdgeDemo extends Demo {
         float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
         if (e.getButton() == 3) {
             if (e.isShiftDown()) {
-                  edgeList.add(edgeFactory.createEdge(Type[numOfEdges%13], pmLineVisual.LINE_QUADRIC_CURVE, nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy,false));
+                  edgeList.add(edgeFactory.createEdge(Type[numOfEdges%13], pmLineVisual.LINE_QUADRIC_CURVE, .0f,.0f,posx,posy,false));
 //                edgeList.add(edgeFactory.createEdge(Type[numOfEdges%2], pmLineVisual.LINE_STRAIGHT, nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy,false));
                 if(needFirstCheck){
                     if(edgeList.get(numOfEdges)._destArrow != null){
@@ -163,12 +188,15 @@ public class drawNodeAndEdgeDemo extends Demo {
 
             }
             if(e.isControlDown()){
+                numOfNodes++;
                 pmBasicNodeShape node = nodeFactory.createNode(Type[numOfNodes%10]);
+                if(numOfNodes == 1)
+                    node.isfirst = true;
                 node.setOrigin(new Vector2(posx, posy));
                 node.setColor(gl4, colorList[numOfNodes%2]);
                 node.setScale(0.5f);
                 nodeList.add(node);
-                numOfNodes++;
+
             }
         }
         if(e.getButton() == 1){

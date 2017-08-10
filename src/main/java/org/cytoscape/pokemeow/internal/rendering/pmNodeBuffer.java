@@ -24,9 +24,10 @@ public class pmNodeBuffer {
     //0: should double vbo
     //1: should double ebo
     public int shouldBeResize = -1;
-    public IntBuffer index_buff;
     public int dataOffset;
     public int indexOffset;
+    public int dataOffsetPre = 0; //indicate the head of VBO
+    public int indexOffsetPre = 0; //indicate the head of EBO
     public pmNodeBuffer(GL4 gl4){
         gl4.glGenVertexArrays(1,objects,VAO);
         gl4.glGenBuffers(1,objects,VBO);

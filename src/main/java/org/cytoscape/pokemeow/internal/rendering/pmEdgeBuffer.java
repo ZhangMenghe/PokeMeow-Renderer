@@ -26,6 +26,8 @@ public class pmEdgeBuffer {
     public int shouldBeResize = -1;
     public int dataOffset;
     public int indexOffset;
+    public int dataOffsetPre = 0; //indicate the head of VBO
+    public int indexOffsetPre = 0; //indicate the head of EBO
     public pmEdgeBuffer(GL4 gl4){
         gl4.glGenVertexArrays(1,objects,VAO);
         gl4.glGenBuffers(1,objects,VBO);
