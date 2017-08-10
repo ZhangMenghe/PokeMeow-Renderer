@@ -4,7 +4,6 @@ import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.opengl.GLAutoDrawable;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
-import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
 import main.java.org.cytoscape.pokemeow.internal.commonUtil;
 import main.java.org.cytoscape.pokemeow.internal.edge.pmEdge;
 import main.java.org.cytoscape.pokemeow.internal.edge.pmEdgeFactory;
@@ -112,66 +111,8 @@ public class drawNodeAndEdgeDemo extends Demo {
                     edgeList.get(-index).resetSrcAndDest(posx, posy, 0);
             }
         }
-//        if(mouseState==-1){
-//            return;
-//        }
-//        pmEdge hitEdge;
-//        switch (mouseState){
-//            case 0:
-//                hitEdge =edgeList[0];//= hitEdge(posx,posy);
-////                if(hitEdge!=null){
-//                    float currentAngle =(float) Math.atan(diff.y/diff.x)/20;
-//                    hitEdge.setRotation(currentAngle);
-////                }
-//                break;
-//            case 1:
-//                hitEdge = edgeList[0];//= hitEdge(posx,posy);
-//                hitEdge.setOrigin(new Vector2(posx, posy));
-////                edgeList[0].setOrigin(new Vector2(.0f,.0f));
-//                //System.out.println(posx +"-"+posy);
-//                break;
-//            case 3:
-//                tackleAnchor(posx, posy);
-//                break;
-//            case 2:
-//                edgeList[0].resetSrcAndDest(srcx,srcy,posx,posy);
-//                break;
-//            default:
-//                tackleAnchor(posx, posy);
-//        }
 
     }
-
-    private void tackleAnchor(float posx, float posy) {
-//        for (pmEdge edge : edgeList) {
-//            if (edge.curveType == pmLineVisual.LINE_STRAIGHT)
-//                continue;
-//            else if (edge.isAnchorHit(posx, posy, 1)) {
-////                System.out.println("HIT ANCHOR1 - " + times);
-//                times++;
-//                edge.setControlPoints(posx, posy, 1);
-//                return;
-//            } else if (edge.isAnchorHit(posx, posy, 2)) {
-//                System.out.println("HIT ANCHOR2 - " + times);
-//                times++;
-//                edge.setControlPoints(posx, posy, 2);
-//                return;
-//            }
-//        }
-    }
-
-//    private pmEdge hitEdge(float posx, float posy) {
-//        for (pmEdge edge : edgeList) {
-//            if (edge.isHit(posx, posy)) {
-//                System.out.println("HIT - " + times);
-//                times++;
-//                edge.setColor(colorList[times % 2]);
-//                return edge;
-//            } else
-//                System.out.println("MISS - " + times);
-//        }
-//        return null;
-//    }
 
     private Integer hitNode(float posx, float posy) {
         int idx = 0;
@@ -194,7 +135,6 @@ public class drawNodeAndEdgeDemo extends Demo {
         float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
         if(e.getButton() == 1)
             reactNodeId = hitNode(posx, posy);
-//        hitEdge(posx, posy);
     }
 
     @Override
@@ -239,17 +179,6 @@ public class drawNodeAndEdgeDemo extends Demo {
             return;
         }
     }
-//                mouseState = 3;//try reset
-//            else
-//                mouseState = 2;
-//            return;
-//        }
-//        if(e.getButton()==3){
-//            if(e.isControlDown())
-//                mouseState = 0;//rotate
-//            else
-//                mouseState = 1;
-//        }
 
     @Override
     public void mouseReleased(MouseEvent e){
