@@ -293,7 +293,16 @@ public class pmEdge {
             _line.bufferVerticeOffset  = bufferOffset/12;
             offset[0] += _line.numOfVertices *12;
         }
-
+        if(_line.anchor!=null){
+            _line.anchor.bufferByteOffset = offset[0];
+            _line.anchor.bufferVerticeOffset  = offset[0]/12;
+            offset[0] += 12;
+        }
+        if(_line.anchor2!=null){
+            _line.anchor2.bufferByteOffset = offset[0];
+            _line.anchor2.bufferVerticeOffset  = offset[0]/12;
+            offset[0] += 12;
+        }
         if(_destArrow!=null){
             _destArrow.bufferByteOffset = offset[0];
             _destArrow.bufferVerticeOffset  = offset[0]/12;
