@@ -30,7 +30,7 @@ public class drawNodeAndEdgeDemo extends Demo {
             new Vector4(0.97f, 0.67f, 0.65f, 1.0f),
             new Vector4(0.69f, 0.88f, 0.9f, 1.0f)
     };
-    private Byte[] Type = {0,1,2,3,4,5,6,7,8,9};
+    private Byte[] Type = {0,1,2,3,4,5,6,7,8,9,10,11,12};
     private int mouseState = -1;
     private Integer reactNodeId = -1;
     private int numOfNodes = 0;
@@ -145,10 +145,10 @@ public class drawNodeAndEdgeDemo extends Demo {
         float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
         if (e.getButton() == 3) {
             if (e.isShiftDown()) {
-                  edgeList.add(edgeFactory.createEdge(pmLineFactory.LINE_SOLID, pmLineVisual.LINE_CUBIC_CURVE, nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy,false));
+                  edgeList.add(edgeFactory.createEdge(pmLineFactory.LINE_VERTICAL_SLASH, pmLineVisual.LINE_CUBIC_CURVE, nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy,false));
 //                edgeList.add(edgeFactory.createEdge(Type[numOfEdges%2], pmLineVisual.LINE_STRAIGHT, nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy,false));
                 if(needFirstCheck){
-                    if(edgeList.get(numOfEdges)._destArrow!=null){
+                    if(edgeList.get(numOfEdges)._destArrow != null){
                         needFirstCheck = false;
                         edgeList.get(numOfEdges)._destArrow.isfirst = true;
                     }

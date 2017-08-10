@@ -31,7 +31,7 @@ public class drawCurveDemo extends Demo {
         for(Byte i=0;i<13;i++){
             float cy = -0.9f + 0.1f * n;
             lineList[n++] = factory.createLine(i,-1.0f,cy,
-                    1,cy,
+                   1, cy,
                                                     pmLineVisual.LINE_QUADRIC_CURVE, true);
 //            lineList[n-1].setRotation(3.14f/2);
         }

@@ -15,7 +15,7 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
     public final static int arrDensity = 2;
     private GL4 gl;
     public pmSeparateArrowLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer) {
-        super(gl4, srcx, srcy, destx, desty, type);
+        super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         origin.x = (srcx+destx)/2.0f;
         origin.y = (srcy+desty)/2.0f;
         gl = gl4;
@@ -38,7 +38,7 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
             rlen = destPos.x - srcPos.x;
         else
             rlen = destPos.y - srcPos.y;
-        int absNumOfPatterns = (int)(rlen * numOfPatterns);
+        int absNumOfPatterns = (int)(Math.abs(rlen) * numOfPatterns);
         if(absNumOfPatterns == 0)
             return;
         int step = numOfVertices / absNumOfPatterns;

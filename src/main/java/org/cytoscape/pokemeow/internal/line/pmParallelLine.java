@@ -37,13 +37,22 @@ public class pmParallelLine extends pmLineVisual {
         if(curveType == LINE_QUADRIC_CURVE){
             controlPoints = line.controlPoints;
             SynchronizeLine();
-            anchor = new pmAnchor(gl4, controlPoints[0], controlPoints[1]);
+            if(initBuffer)
+                anchor = new pmAnchor(gl4, controlPoints[0], controlPoints[1]);
+            else
+                anchor = new pmAnchor(controlPoints[0], controlPoints[1]);
         }
         if(curveType == LINE_CUBIC_CURVE){
             controlPoints = line.controlPoints;
             SynchronizeLine();
-            anchor = new pmAnchor(gl4, controlPoints[0], controlPoints[1]);
-            anchor2 = new pmAnchor(gl4, controlPoints[2], controlPoints[3]);
+            if(initBuffer){
+                anchor = new pmAnchor(gl4, controlPoints[0], controlPoints[1]);
+                anchor2 = new pmAnchor(gl4, controlPoints[2], controlPoints[3]);
+            }
+            else{
+                anchor = new pmAnchor(controlPoints[0], controlPoints[1]);
+                anchor2 = new pmAnchor(controlPoints[2], controlPoints[3]);
+            }
         }
     }
     public void setScale(Vector2 new_scale){

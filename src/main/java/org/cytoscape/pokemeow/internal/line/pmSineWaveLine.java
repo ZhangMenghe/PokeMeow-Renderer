@@ -10,10 +10,11 @@ public class pmSineWaveLine extends pmPatternLineBasic{
     private float baseW = 0.174f;//baseW is approximate 2*pi/360
 
     public pmSineWaveLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
-        super(gl4, srcx, srcy, destx, desty, type);
+        super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         if(curveType == LINE_STRAIGHT)
             initStraightVertices(srcx, srcy, destx, desty);
         else{
+            lineWidthFactor = 0.1f;
             singlePattern = new float[60];
             double start = -1.0;
             for(int i=0,n=0;i<60;i+=3,start+=0.1,n++){
@@ -21,6 +22,7 @@ public class pmSineWaveLine extends pmPatternLineBasic{
                 singlePattern[i+1] =(float) Math.sin(start*3.14 - 1.57f)/2;
                 singlePattern[i+2] = zorder;
             }
+
             pointsPerPattern = 20;
             initCurveVertices();
         }

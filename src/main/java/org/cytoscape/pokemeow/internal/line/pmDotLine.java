@@ -8,7 +8,7 @@ import com.jogamp.opengl.GL4;
 
 public class pmDotLine extends pmLineVisual{
     public pmDotLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
-        super(gl4, srcx, srcy, destx, desty, type);
+        super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         if(curveType == LINE_STRAIGHT){
             lineSegments = 20;
             float rlen;

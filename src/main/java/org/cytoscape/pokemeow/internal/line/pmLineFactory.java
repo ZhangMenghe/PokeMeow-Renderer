@@ -97,7 +97,7 @@ public class pmLineFactory {
                 gl4.glDrawArrays(GL4.GL_LINES, line.bufferVerticeOffset, line.numOfVertices);
                 break;
             case pmLineVisual.CONNECT_DOTS:
-                gl4.glPointSize(3.0f);
+                gl4.glPointSize(5.0f);
                 gl4.glDrawArrays(GL4.GL_POINTS, line.bufferVerticeOffset, line.numOfVertices);
                 break;
             default:

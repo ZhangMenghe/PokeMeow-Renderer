@@ -14,7 +14,7 @@ public class pmBackwardSlashLine extends pmPatternLineBasic{
 //            -1.0f, 0.5f, .0f
     };
     public pmBackwardSlashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
-        super(gl4, srcx, srcy, destx, desty, type);
+        super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         pointsPerPattern = 2;
         singlePattern = _singlePattern;
         if (curveType == LINE_STRAIGHT)
@@ -26,6 +26,10 @@ public class pmBackwardSlashLine extends pmPatternLineBasic{
             numOfVertices = pointsPerPattern * numOfPatterns;
             vertices = new float[3*numOfVertices];
             shrink = 1.0f / numOfPatterns;
+            for(int i=0;i<pointsPerPattern;i++) {
+                singlePattern[3 * i] *= shrink;
+                singlePattern[3 * i + 1] *= lineWidthFactor;
+            }
             setCurveVerticesByPattern(curvePoints);
         }
         if(initBuffer)

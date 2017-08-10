@@ -69,24 +69,6 @@ public class pmLineVisual extends pmBasicArrowShape {
         setSrcAndDest(srcx,srcy,destx,desty);
     }
 
-    public pmLineVisual(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
-        curveType = type;
-        if(curveType == LINE_QUADRIC_CURVE){
-            numOfVertices = QuadraticBezier.resolution + 1;
-            vertices = new float[3*numOfVertices];
-            controlPoints = new float[2];
-            anchor = new pmAnchor(gl4,.0f,.0f);
-        }
-        if(curveType == LINE_CUBIC_CURVE){
-            numOfVertices = CubicBezier.resolution + 1;
-            vertices = new float[3*numOfVertices];
-            controlPoints = new float[4];
-            anchor = new pmAnchor(gl4,.0f,.0f);
-            anchor2 = new pmAnchor(gl4,.0f,.0f);
-        }
-        setSrcAndDest(srcx,srcy,destx,desty);
-    }
-
     public static pmLineVisual getCloneLine(pmLineVisual line){
         pmLineVisual cloned = new pmLineVisual();
         cloned.width = line.width;

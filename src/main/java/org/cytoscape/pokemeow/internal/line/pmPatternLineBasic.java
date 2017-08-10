@@ -17,8 +17,8 @@ public class pmPatternLineBasic extends pmLineVisual {
     public float[]singlePattern;
     protected float lineWidthFactor = 2.0f;
 
-    public pmPatternLineBasic(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type){
-        super(gl4, srcx, srcy, destx, desty, type);
+    public pmPatternLineBasic(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
+        super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         connectMethod = CONNECT_SEGMENTS;
         hitThreshold = 2.0f;
     }
@@ -39,8 +39,8 @@ public class pmPatternLineBasic extends pmLineVisual {
         if(numOfVertices == 0)
             return;
         for(int j=0;j<pointsPerPattern;j++){
-            vertices[3*j] = singlePattern[3*j] * shrink-0.5f+ shrink;
-            vertices[3*j+1] = singlePattern[3*j +1]*lineWidthFactor;
+            vertices[3*j] = singlePattern[3*j] * shrink-0.5f + shrink;
+            vertices[3*j+1] = singlePattern[3*j +1] * lineWidthFactor;
             vertices[3*j+2] = zorder;
         }
         for(int i=1;i<absNumOfPatterns;i++){
@@ -62,6 +62,10 @@ public class pmPatternLineBasic extends pmLineVisual {
         numOfVertices = pointsPerPattern * numOfPatterns;
         vertices = new float[3*numOfVertices];
         shrink = 0.5f / numOfPatterns;
+        for(int i=0;i<pointsPerPattern;i++) {
+            singlePattern[3 * i] *= shrink;
+            singlePattern[3 * i + 1] *= lineWidthFactor;
+        }
         setCurveVerticesByPattern(curvePoints);
     }
 
@@ -77,7 +81,6 @@ public class pmPatternLineBasic extends pmLineVisual {
             orix = curvePoints[3 * n];oriy = curvePoints[3 * n + 1];
             float k = (oriy - lastoriy)/(orix-lastorix);
             double theta = Math.atan(k);
-
             float cost = (float)Math.cos(theta);
             float sint = (float)Math.sin(theta);
             for(int ii=0;ii<pointsPerPattern;ii++){
@@ -87,8 +90,8 @@ public class pmPatternLineBasic extends pmLineVisual {
                 tmpSinglePattern[3*ii+1] = tmpy;
             }
             for (int j = 0; j < pointsPerPattern; j++) {
-                vertices[base * i + 3 * j] = orix + tmpSinglePattern[3 * j] * shrink;
-                vertices[base * i + 3 * j + 1] = oriy + tmpSinglePattern[3 * j + 1] * shrink;
+                vertices[base * i + 3 * j] = orix + tmpSinglePattern[3 * j];
+                vertices[base * i + 3 * j + 1] = oriy + tmpSinglePattern[3 * j + 1];
                 vertices[base * i + 3 * j + 2] = zorder;
             }
         }
