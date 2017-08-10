@@ -110,11 +110,15 @@ public class pmLineFactory {
         if(line.connectMethod == pmLineVisual.CONNECT_PARALLEL){
             for(pmLineVisual sline:line.plineList)
                 drawLine(gl4, sline, gshaderParam);
+            if(line.curveType!=pmLineVisual.LINE_STRAIGHT)
+                drawAnchorWithSeparateBuffer(line, gshaderParam);
             return;
         }
         if(line.connectMethod == pmLineVisual.CONNECT_PATTERN){
             for(pmBasicArrowShape arrow: line.patternList)
                 arrowFctory.drawArrow(gl4,arrow,gshaderParam);
+            if(line.curveType!=pmLineVisual.LINE_STRAIGHT)
+                drawAnchorWithSeparateBuffer(line, gshaderParam);
             return;
         }
         gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
@@ -127,6 +131,56 @@ public class pmLineFactory {
             gl4.glBufferData(GL.GL_ARRAY_BUFFER, line.data_buff.capacity() * Float.BYTES, line.data_buff, GL.GL_STATIC_DRAW);
         }
         drawLine_GL(gl4, line, gshaderParam);
+        if(line.curveType!=pmLineVisual.LINE_STRAIGHT)
+            drawAnchorWithSeparateBuffer(line, gshaderParam);
+        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
+        gl4.glBindVertexArray(0);
+    }
+
+    public void drawLine(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam, pmEdgeBuffer edgeBuffer){
+        if(line.connectMethod == pmLineVisual.CONNECT_PARALLEL){
+            for(pmLineVisual sline:line.plineList)
+                drawLine(gl4,sline,gshaderParam,edgeBuffer);
+            if(line.curveType!=pmLineVisual.LINE_STRAIGHT)
+                drawAnchorWithUniformBuffer(line, gshaderParam, edgeBuffer);
+            return;
+        }
+        if(line.connectMethod == pmLineVisual.CONNECT_PATTERN){
+            for(pmBasicArrowShape arrow: line.patternList)
+                arrowFctory.drawArrow(gl4, arrow, gshaderParam, edgeBuffer);
+            if(line.curveType!=pmLineVisual.LINE_STRAIGHT)
+                drawAnchorWithUniformBuffer(line, gshaderParam, edgeBuffer);
+            return;
+        }
+        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
+        gl4.glUniform4f(gshaderParam.vec4_color, line.color.x, line.color.y, line.color.z,line.color.w);
+        gl4.glBindVertexArray(edgeBuffer.objects[edgeBuffer.VAO]);
+        if(line.dirty){
+            line.data_buff = Buffers.newDirectFloatBuffer(line.vertices);
+            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER, edgeBuffer.objects[edgeBuffer.VBO]);
+            gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, line.bufferByteOffset,line.data_buff.capacity() * Float.BYTES, line.data_buff);
+            line.dirty = false;
+        }
+        drawLine_GL(gl4, line, gshaderParam);
+        if(line.curveType!=pmLineVisual.LINE_STRAIGHT)
+            drawAnchorWithUniformBuffer(line, gshaderParam, edgeBuffer);
+        gl4.glBindVertexArray(0);
+    }
+    private void drawAnchorWithUniformBuffer(pmLineVisual line, pmShaderParams gshaderParam, pmEdgeBuffer edgeBuffer){
+        gl4.glPointSize(10.0f);
+        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(Matrix4.identity().asArrayCM()));
+        //Draw anchors for curve
+        if(line.curveType == pmLineVisual.LINE_QUADRIC_CURVE){
+            gl4.glUniform4f(gshaderParam.vec4_color, line.anchor.color.x, line.anchor.color.y, line.anchor.color.z, line.anchor.color.w);
+            drawAnchorPoint(line.anchor, edgeBuffer);
+        }
+        if(line.curveType == pmLineVisual.LINE_CUBIC_CURVE){
+            gl4.glUniform4f(gshaderParam.vec4_color, line.anchor2.color.x, line.anchor2.color.y, line.anchor2.color.z, line.anchor2.color.w);
+            drawAnchorPoint(line.anchor, edgeBuffer);
+            drawAnchorPoint(line.anchor2, edgeBuffer);
+        }
+    }
+    private void drawAnchorWithSeparateBuffer(pmLineVisual line, pmShaderParams gshaderParam){
         gl4.glPointSize(10.0f);
         gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(Matrix4.identity().asArrayCM()));
         //Draw anchors for curve
@@ -140,46 +194,6 @@ public class pmLineFactory {
             drawAnchorPoint(line.anchor2);
         }
         line.dirty = false;
-        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
-        gl4.glBindVertexArray(0);
-    }
-
-    public void drawLine(GL4 gl4, pmLineVisual line, pmShaderParams gshaderParam, pmEdgeBuffer edgeBuffer){
-        if(line.connectMethod == pmLineVisual.CONNECT_PARALLEL){
-            for(pmLineVisual sline:line.plineList)
-                drawLine(gl4,sline,gshaderParam,edgeBuffer);
-            return;
-        }
-        if(line.connectMethod == pmLineVisual.CONNECT_PATTERN){
-            for(pmBasicArrowShape arrow: line.patternList)
-                arrowFctory.drawArrow(gl4, arrow, gshaderParam, edgeBuffer);
-            return;
-        }
-        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
-        gl4.glUniform4f(gshaderParam.vec4_color, line.color.x, line.color.y, line.color.z,line.color.w);
-        gl4.glBindVertexArray(edgeBuffer.objects[edgeBuffer.VAO]);
-        if(line.dirty){
-            line.data_buff = Buffers.newDirectFloatBuffer(line.vertices);
-            gl4.glBindBuffer(GL.GL_ARRAY_BUFFER, edgeBuffer.objects[edgeBuffer.VBO]);
-            gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, line.bufferByteOffset,line.data_buff.capacity() * Float.BYTES, line.data_buff);
-            line.dirty = false;
-        }
-        drawLine_GL(gl4, line, gshaderParam);
-        gl4.glPointSize(10.0f);
-        gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(Matrix4.identity().asArrayCM()));
-        //Draw anchors for curve
-        if(line.curveType == pmLineVisual.LINE_QUADRIC_CURVE){
-            gl4.glUniform4f(gshaderParam.vec4_color, line.anchor.color.x, line.anchor.color.y, line.anchor.color.z, line.anchor.color.w);
-            drawAnchorPoint(line.anchor, edgeBuffer);
-        }
-        if(line.curveType == pmLineVisual.LINE_CUBIC_CURVE){
-            gl4.glUniform4f(gshaderParam.vec4_color, line.anchor2.color.x, line.anchor2.color.y, line.anchor2.color.z, line.anchor2.color.w);
-            drawAnchorPoint(line.anchor, edgeBuffer);
-            drawAnchorPoint(line.anchor2, edgeBuffer);
-        }
-        line.dirty = false;
-//        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
-        gl4.glBindVertexArray(0);
     }
     private void drawAnchorPoint(pmAnchor anchor){
         gl4.glBindVertexArray(anchor.objects[anchor.VAO]);

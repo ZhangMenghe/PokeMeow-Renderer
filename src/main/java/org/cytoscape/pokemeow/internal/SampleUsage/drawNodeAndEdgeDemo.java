@@ -145,7 +145,7 @@ public class drawNodeAndEdgeDemo extends Demo {
         float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
         if (e.getButton() == 3) {
             if (e.isShiftDown()) {
-                  edgeList.add(edgeFactory.createEdge(pmLineFactory.LINE_VERTICAL_SLASH, pmLineVisual.LINE_CUBIC_CURVE, nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy,false));
+                  edgeList.add(edgeFactory.createEdge(Type[numOfEdges%13], pmLineVisual.LINE_QUADRIC_CURVE, nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy,false));
 //                edgeList.add(edgeFactory.createEdge(Type[numOfEdges%2], pmLineVisual.LINE_STRAIGHT, nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy,false));
                 if(needFirstCheck){
                     if(edgeList.get(numOfEdges)._destArrow != null){

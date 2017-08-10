@@ -34,27 +34,40 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
 
     private void setPatternOnCurve(boolean initBuffer){
         float rlen;
-        if(slope<1)
-            rlen = destPos.x - srcPos.x;
-        else
+        if(slope>1 || slope<-1)
             rlen = destPos.y - srcPos.y;
-        int absNumOfPatterns = (int)(Math.abs(rlen) * numOfPatterns);
-        if(absNumOfPatterns == 0)
-            return;
-        int step = numOfVertices / absNumOfPatterns;
+        else
+            rlen = destPos.x - srcPos.x;
+        int absNumOfPatterns = (int)(Math.abs(rlen) * numOfPatterns) + 1;
+        float step = (float)numOfVertices / absNumOfPatterns;
         patternList = new pmBasicArrowShape[absNumOfPatterns];
-        float deltax, deltay;
-        for (int i = 0, n=0; i < absNumOfPatterns; i++,n+=step) {
+        float deltax, deltay, n=0.f;
+        float interpFactor = step - (int)step;
+        double theta = .0f;
+        for (int i = 0; i < absNumOfPatterns-1; i++,n+=step) {
             patternList[i] = new pmLineSeparateArrowPattern(gl, initBuffer);
             patternList[i].setScale(0.05f);
             deltay = vertices[3*(i+1)+1] - vertices[3*i+1];
             deltax = vertices[3*(i+1)] - vertices[3*i];
-            float k = deltay / deltax;
-            double theta = Math.atan(k);
+            theta = Math.atan(deltay / deltax);
+            if(slope<0)
+                theta -= 3.14f;
             patternList[i].setRotation((float) theta - 3.14f/2);
-            patternList[i].setOrigin(new Vector3(vertices[3*n], vertices[3*n+1], zorder));
+            int nn = (int)n;
+            patternList[i].setOrigin(LinearInterp(vertices[3*nn],vertices[3*nn+1],vertices[3*(nn+1)],vertices[3*(nn+1)+1],interpFactor));
         }
+        patternList[absNumOfPatterns-1] = new pmLineSeparateArrowPattern(gl, initBuffer);
+        patternList[absNumOfPatterns-1].setScale(0.05f);
+        patternList[absNumOfPatterns-1].setRotation((float) theta - 3.14f/2);
+        patternList[absNumOfPatterns-1].setOrigin(new Vector2(vertices[3*(numOfVertices-1)], vertices[3*(numOfVertices-1)+1]));
     }
+
+    private Vector2 LinearInterp(float srcx, float srcy, float destx, float desty, float t){
+        srcx *= 1-t; srcy *= 1-t;
+        destx *= t; desty *= t;
+        return new Vector2(srcx+destx, srcy+desty);
+    }
+
     private void setPatternOnStraightLine(float srcx, float srcy, float destx, float desty, boolean initBuffer){
         double theta = Math.atan(slope);
         if(slope<0)
@@ -92,15 +105,24 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
         int absNumOfPatterns = (int)Math.abs((rlen * numOfPatterns)/2);
         if(absNumOfPatterns == 0)
             return;
-        int step = numOfVertices / absNumOfPatterns;
+        float step = numOfVertices / (absNumOfPatterns-1);
+        float interpFactor = step-(int)step;
         patternList = new pmBasicArrowShape[absNumOfPatterns];
-        for (int i = 0, n=0; i < absNumOfPatterns; i++,n+=step) {
-            patternList[i] = new pmLineSeparateArrowPattern(gl,initBuffer);
+
+        for (int i = 0, n=0; i < absNumOfPatterns-1; i++,n+=step) {
+            patternList[i] = new pmLineSeparateArrowPattern(gl, initBuffer);
             patternList[i].setScale(0.05f);
             patternList[i].setRotation((float) theta - 3.14f/2);
-            patternList[i].setOrigin(new Vector3(vertices[3*n], vertices[3*n+1], zorder));
+            int nn = (int)n;
+            patternList[i].setOrigin(LinearInterp(vertices[3*nn],vertices[3*nn+1],vertices[3*(nn+1)],vertices[3*(nn+1)+1],interpFactor));
         }
-        //afterSetCurve = true;
+        patternList[absNumOfPatterns-1] = new pmLineSeparateArrowPattern(gl, initBuffer);
+        patternList[absNumOfPatterns-1].setScale(0.05f);
+        patternList[absNumOfPatterns-1].setRotation((float) theta - 3.14f/2);
+        if(numOfVertices >2)
+            patternList[absNumOfPatterns-1].setOrigin(new Vector2(vertices[3*(numOfVertices-3)], vertices[3*(numOfVertices-3)+1]));
+        else
+            patternList[absNumOfPatterns-1].setOrigin(new Vector2(vertices[3*(numOfVertices-1)], vertices[3*(numOfVertices-1)+1]));
     }
 
     public void setScale(Vector2 new_scale) {
