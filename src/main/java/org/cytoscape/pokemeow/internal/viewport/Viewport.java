@@ -92,7 +92,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 
 		if (container instanceof JInternalFrame) 
 		{
-			container.setSize(300,300);
+			container.setSize(600,600);
 			JInternalFrame JInframe = (JInternalFrame) container;
             JInframe.getContentPane().setLayout(new BorderLayout());
             JInframe.getContentPane().add(panel, BorderLayout.CENTER);

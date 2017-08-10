@@ -66,7 +66,7 @@ public class Demo implements GLEventListener, MouseListener {
         final Animator animator = new Animator(glWindow);
 
         glWindow.setSize(600, 600);
-        glWindow.setTitle("mousePickUp Demo");
+        glWindow.setTitle("Demo");
         glWindow.setFullscreen(false);
         glWindow.setVisible(true);
 
