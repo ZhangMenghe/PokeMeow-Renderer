@@ -199,7 +199,7 @@ public class pmLineFactory {
         gl4.glBindVertexArray(anchor.objects[anchor.VAO]);
             anchor.data_buff = Buffers.newDirectFloatBuffer(anchor.vertices);
             gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,  anchor.objects[anchor.VBO]);
-            gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, 3 * Float.BYTES, anchor.data_buff);
+            gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, 12, anchor.data_buff);
         gl4.glDrawArrays(GL4.GL_POINTS, 0, 1);
     }
     private void drawAnchorPoint(pmAnchor anchor, pmEdgeBuffer edgeBuffer){

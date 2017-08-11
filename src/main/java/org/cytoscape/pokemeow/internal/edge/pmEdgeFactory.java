@@ -76,6 +76,18 @@ public class pmEdgeFactory {
         edge.draw(gl4, gshaderParam, edgeBuffer);
     }
     public void deleteEdge(GL4 gl4, pmEdge edge){
-
+    //TODO:Whether or not it is necessary to reuse deleted buffer?
+        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER, edgeBuffer.objects[edgeBuffer.VBO]);
+        gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, edge._line.bufferByteOffset,edge._line.numOfVertices*12, null);
+        if(edge._destArrow!=null)
+            releaseArrow(edge._destArrow);
+        if(edge._srcArrow != null)
+            releaseArrow(edge._srcArrow);
+    }
+    private void releaseArrow(pmBasicArrowShape arrow){
+        gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, arrow.bufferByteOffset,arrow.numOfVertices*12, null);
+        if(arrow.numOfIndices == -1){
+            gl4.glBufferSubData(GL.GL_ELEMENT_ARRAY_BUFFER, arrow.indexByteOffset,arrow.numOfIndices*4, null);
+        }
     }
 }

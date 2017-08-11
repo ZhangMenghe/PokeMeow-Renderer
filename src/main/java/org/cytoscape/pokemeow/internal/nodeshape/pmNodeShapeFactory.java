@@ -216,10 +216,10 @@ public class pmNodeShapeFactory {
             gl4.glGenVertexArrays(1, node.objects, 0);
             gl4.glBindVertexArray(node.objects[0]);
             gl4.glEnableVertexAttribArray(0);
-            gl4.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 7 * Float.BYTES, node.bufferByteOffset);
+            gl4.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 28, node.bufferByteOffset);
 
             gl4.glEnableVertexAttribArray(1);
-            gl4.glVertexAttribPointer(1, 4, GL.GL_FLOAT, false, 7 * Float.BYTES, node.bufferByteOffset + 3 * Float.BYTES);
+            gl4.glVertexAttribPointer(1, 4, GL.GL_FLOAT, false, 28, node.bufferByteOffset + 12);
         }
         else
             gl4.glBindVertexArray(nodeBuffer.objects[nodeBuffer.VAO]);
@@ -251,7 +251,7 @@ public class pmNodeShapeFactory {
     public void deleteNode(GL4 gl4, pmBasicNodeShape node){
         //TODO:Whether or not it is necessary to reuse deleted buffer?
         gl4.glBindBuffer(GL.GL_ARRAY_BUFFER, nodeBuffer.objects[nodeBuffer.VBO]);
-        gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, node.bufferByteOffset,node.numOfVertices*84, null);
+        gl4.glBufferSubData(GL.GL_ARRAY_BUFFER, node.bufferByteOffset,node.numOfVertices*28, null);
         if(node.numOfIndices!=-1)
             gl4.glBufferSubData(GL.GL_ELEMENT_ARRAY_BUFFER, node.indexByteOffset,node.numOfIndices*4, null);
     }

@@ -119,7 +119,8 @@ public class drawNodeAndEdgeDemo extends Demo {
         int idx = 0;
         for (pmBasicNodeShape node : nodeList) {
             if (node.isHit(posx, posy)) {
-                node.setColor(gl4, colorList[1]);
+                node.setColor(gl4, colorList[count%2]);
+                count++;
                 node.dirty = true;
                 return idx;
             }
@@ -133,19 +134,17 @@ public class drawNodeAndEdgeDemo extends Demo {
             if(tmp.isHit(posx,posy)){
                 nodeList.remove(i);
                 numOfNodes--;
-//                if(tmp.isfirst && i<numOfNodes-1)
-//                    nodeList.get(i).isfirst = true;
-                nodeFactory.deleteNode(gl4,tmp);
-
+                nodeFactory.deleteNode(gl4, tmp);
             }
         }
-//        for(pmEdge edge : edgeList){
-//            if(edge.isHit(posx,posy)){
-//                edgeFactory.deleteEdge(gl4, edge);
-//                edgeList.remove(edge);
-//                numOfEdges--;
-//            }
-//        }
+        for(int i=numOfEdges-1; i>-1; i-- ){
+            pmEdge tmp = edgeList.get(i);
+            if(tmp.isHit(posx,posy)){
+                edgeList.remove(i);
+                numOfEdges--;
+                edgeFactory.deleteEdge(gl4, tmp);
+            }
+        }
     }
     @Override
     public void mouseClicked(MouseEvent e) {
