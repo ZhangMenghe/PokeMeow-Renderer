@@ -56,7 +56,7 @@ public class pmNodeShapeFactory {
         gl4.glDepthFunc( GL4.GL_LEQUAL );
         nodeBuffer = new pmNodeBuffer(gl4);
     }
-    public pmBasicNodeShape createNode(GL4 gl4, Byte type){
+    public pmBasicNodeShape createNode(GL4 gl4, byte type){
         switch (type) {
             case 0:
                 return new pmRectangleNodeShape(gl4);
@@ -82,7 +82,7 @@ public class pmNodeShapeFactory {
                 return new pmRectangleNodeShape(gl4);
         }
     }
-    public pmBasicNodeShape createNode(Byte type){
+    public pmBasicNodeShape createNode(byte type){
         pmBasicNodeShape node;
         switch (type) {
             case 0:

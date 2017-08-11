@@ -44,7 +44,7 @@ public class pmLineFactory {
         gl4.glDepthFunc( GL4.GL_LEQUAL );
     }
 
-    public pmLineVisual createLine(Byte type, float srcx, float srcy, float destx, float desty, Byte curveType, boolean initBuffer) {
+    public pmLineVisual createLine(byte type, float srcx, float srcy, float destx, float desty, byte curveType, boolean initBuffer) {
         switch (type) {
             case 0:
                 return new pmSolidLine(gl4, srcx, srcy, destx, desty, curveType, initBuffer);
@@ -78,7 +78,7 @@ public class pmLineFactory {
         }
     }
 
-    public pmLineVisual createLine(Byte type, Byte parallType, float srcx, float srcy, float destx, float desty, Byte curveType, boolean initBuffer){
+    public pmLineVisual createLine(byte type, byte parallType, float srcx, float srcy, float destx, float desty, byte curveType, boolean initBuffer){
         if(type!=LINE_PARALLEL)
             return createLine(type, srcx, srcy, destx, desty, curveType, initBuffer);
         else{

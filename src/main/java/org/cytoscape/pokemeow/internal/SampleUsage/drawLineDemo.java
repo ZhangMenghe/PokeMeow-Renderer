@@ -30,7 +30,7 @@ public class drawLineDemo extends Demo {
         int n = 0;
 //        for(Byte i=0;i<numOfItems;i++)
 //            lineList[n++] = factory.createLine(i, -1,.0f,1.0f,.0f, pmLineVisual.LINE_QUADRIC_CURVE);
-        for(Byte i=0;i<numOfItems;i++){
+        for(byte i=0;i<numOfItems;i++){
             float cy = -0.9f + 0.1f*n;
             lineList[n++] = factory.createLine(i, -1.0f,cy,1.0f,cy, pmLineVisual.LINE_STRAIGHT,true);
 //            lineList[n-1].resetSrcAndDest(cy,-0.5f,cy,0.5f);

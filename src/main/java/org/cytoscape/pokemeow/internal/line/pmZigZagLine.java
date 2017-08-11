@@ -8,7 +8,7 @@ import com.jogamp.opengl.GL4;
 
 public class pmZigZagLine extends pmPatternLineBasic{
     private float height = 20.0f;
-    public pmZigZagLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
+    public pmZigZagLine(GL4 gl4, float srcx, float srcy, float destx, float desty, byte type, boolean initBuffer){
         super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         if(curveType == LINE_STRAIGHT)
             initStraightVertices(srcx, srcy, destx, desty);

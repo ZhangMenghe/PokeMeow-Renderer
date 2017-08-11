@@ -31,7 +31,7 @@ public class drawArrowDemo extends Demo {
         arrowList = new pmBasicArrowShape[numOfItems];
 
         int n = 0;
-        for(Byte i=0;i<numOfItems;i++)
+        for(byte i=0;i<numOfItems;i++)
             arrowList[n++] = factory.createArrow(i, true);
 //        arrowList[0].setOrigin(new Vector3(1.0f,1.0f,.0f));
         for(int x=0;x<4;x++){

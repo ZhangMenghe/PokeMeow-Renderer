@@ -11,7 +11,7 @@ import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
  */
 
 public class pmDashLongLine extends pmLineVisual{
-    public pmDashLongLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
+    public pmDashLongLine(GL4 gl4, float srcx, float srcy, float destx, float desty, byte type, boolean initBuffer){
         super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         connectMethod = CONNECT_SEGMENTS;
         if(curveType == LINE_STRAIGHT){

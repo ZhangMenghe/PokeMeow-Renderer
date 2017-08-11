@@ -10,7 +10,7 @@ import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
  * Created by ZhangMenghe on 2017/7/10.
  */
 public class pmDashDotLine extends pmLineVisual{
-    public pmDashDotLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
+    public pmDashDotLine(GL4 gl4, float srcx, float srcy, float destx, float desty, byte type, boolean initBuffer){
         super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         if(curveType == LINE_STRAIGHT) {
             float rlen;

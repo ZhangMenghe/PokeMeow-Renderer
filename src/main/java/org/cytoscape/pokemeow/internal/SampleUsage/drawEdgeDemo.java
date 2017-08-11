@@ -49,7 +49,7 @@ public class drawEdgeDemo extends Demo{
 //        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_SOLID, pmLineVisual.LINE_STRAIGHT, pmArrowShapeFactory.SHAPE_ARROWHEAD_SHORT, pmArrowShapeFactory.SHAPE_DELTA,
 //                -0.5f,-0.5f, 0.5f,0.5f);
         int n = 0;
-        for(Byte i=0;i<numOfItems;i++) {
+        for(byte i=0;i<numOfItems;i++) {
             float cy = -0.6f + 0.1f * n;
             edgeList[n++] = new pmEdge(gl4, i, pmLineVisual.LINE_QUADRIC_CURVE, i,i,
                        -0.5f,cy,0.5f,cy, true);

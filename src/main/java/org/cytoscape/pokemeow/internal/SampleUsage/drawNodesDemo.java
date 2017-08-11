@@ -56,7 +56,7 @@ public class drawNodesDemo extends Demo {
         gshaderParam = new pmShaderParams(gl4, programList[0]);
 
         int n=0;
-        for(Byte idx = 0;idx<10;idx++)
+        for(byte idx = 0;idx<10;idx++)
             NodeList[n++] = nodesFactory.createNode(gl4, idx);
 
         for(int x=0;x<3;x++){

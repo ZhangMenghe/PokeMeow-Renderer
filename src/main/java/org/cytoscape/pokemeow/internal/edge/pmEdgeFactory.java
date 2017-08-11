@@ -22,21 +22,21 @@ public class pmEdgeFactory {
         edgeBuffer = new pmEdgeBuffer(gl4);
     }
 
-    public pmEdge createEdge(Byte lineType, Byte mcurveType,
+    public pmEdge createEdge(byte lineType, byte mcurveType,
                              float srcx, float srcy, float destx, float desty,boolean initBuffer){
         pmEdge edge =  new pmEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty,initBuffer);
         commonSetEdgeBufferOff(edge);
         return edge;
     }
 
-    public pmEdge createEdge(Byte lineType, Byte mcurveType,Byte destArrowType,
+    public pmEdge createEdge(byte lineType, byte mcurveType, byte destArrowType,
                              float srcx, float srcy, float destx, float desty,boolean initBuffer){
         pmEdge edge = new pmEdge(gl4,lineType,mcurveType,destArrowType,srcx,srcy,destx,desty,initBuffer);
         commonSetEdgeBufferOff(edge);
         return edge;
     }
 
-    public pmEdge createEdge(Byte lineType, Byte mcurveType, Byte srcArrowType, Byte destArrowType,
+    public pmEdge createEdge(byte lineType, byte mcurveType, byte srcArrowType, byte destArrowType,
                              float srcx, float srcy, float destx, float desty,boolean initBuffer){
         pmEdge edge = new pmEdge(gl4,lineType,mcurveType,srcArrowType,destArrowType,srcx,srcy,destx,desty,initBuffer);
         commonSetEdgeBufferOff(edge);

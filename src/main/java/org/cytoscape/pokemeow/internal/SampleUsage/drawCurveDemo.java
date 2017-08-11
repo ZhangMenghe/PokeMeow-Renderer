@@ -28,7 +28,7 @@ public class drawCurveDemo extends Demo {
         lineList = new pmLineVisual[numOfItems];
 
         int n = 0;
-        for(Byte i=0;i<13;i++){
+        for(byte i=0;i<13;i++){
             float cy = -0.9f + 0.1f * n;
             lineList[n++] = factory.createLine(i,-1.0f,cy,
                    1, cy,

@@ -13,7 +13,7 @@ public class pmBackwardSlashLine extends pmPatternLineBasic{
 //            .0f, -0.5f, .0f,
 //            -1.0f, 0.5f, .0f
     };
-    public pmBackwardSlashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
+    public pmBackwardSlashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, byte type, boolean initBuffer){
         super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         pointsPerPattern = 2;
         singlePattern = _singlePattern;

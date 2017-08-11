@@ -6,7 +6,7 @@ import com.jogamp.opengl.GL4;
  * Created by ZhangMenghe on 2017/7/10.
  */
 public class pmEqualDashLine extends pmLineVisual{
-    public pmEqualDashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
+    public pmEqualDashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, byte type, boolean initBuffer){
         super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         connectMethod = CONNECT_SEGMENTS;
         if(curveType == LINE_STRAIGHT) {

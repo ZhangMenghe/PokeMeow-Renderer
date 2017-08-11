@@ -16,8 +16,8 @@ public class pmLineVisual extends pmBasicArrowShape {
     protected int lineSegments = 40;
     public int numOfPatterns = 15;
     protected float curveFactor = 2.0f;
-    public Byte connectMethod = 0; //default to be connect strip
-    public Byte curveType = 0;     //default to straight line
+    public byte connectMethod = 0; //default to be connect strip
+    public byte curveType = 0;     //default to straight line
     public pmBasicArrowShape[] patternList;//used for arrow shape line
     public pmLineVisual [] plineList = null;//used for parallel
     //public float zorder = .0f;
@@ -43,7 +43,7 @@ public class pmLineVisual extends pmBasicArrowShape {
     protected Vector2 _curveOffset = new Vector2(.0f,.0f);
     public float hitThreshold = 1.0f;
     public pmLineVisual(){super();}
-    public pmLineVisual(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
+    public pmLineVisual(GL4 gl4, float srcx, float srcy, float destx, float desty, byte type, boolean initBuffer){
         curveType = type;
         if(curveType == LINE_QUADRIC_CURVE){
             numOfVertices = QuadraticBezier.resolution + 1;

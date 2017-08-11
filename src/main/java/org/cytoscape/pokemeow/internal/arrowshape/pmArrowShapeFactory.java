@@ -38,14 +38,14 @@ public class pmArrowShapeFactory {
         gl4.glDepthFunc( GL4.GL_LEQUAL );
     }
 
-    public pmBasicArrowShape createArrow(Byte type, boolean initBuffer){
+    public pmBasicArrowShape createArrow(byte type, boolean initBuffer){
         if(initBuffer)
             return createArrowWithBuffer(type);
         else
             return createArrowWithoutBuffer(type);
     }
 
-    private pmBasicArrowShape createArrowWithBuffer(Byte type){
+    private pmBasicArrowShape createArrowWithBuffer(byte type){
         switch (type) {
             case SHAPE_ARROWHEAD:
                 return new pmArrowheadShape(gl4);
@@ -76,7 +76,7 @@ public class pmArrowShapeFactory {
         }
     }
 
-    private pmBasicArrowShape createArrowWithoutBuffer(Byte type){
+    private pmBasicArrowShape createArrowWithoutBuffer(byte type){
         switch (type) {
             case SHAPE_ARROWHEAD:
                 return new pmArrowheadShape();

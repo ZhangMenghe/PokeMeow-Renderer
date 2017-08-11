@@ -9,7 +9,7 @@ public class pmSineWaveLine extends pmPatternLineBasic{
     private int period = 40;
     private float baseW = 0.174f;//baseW is approximate 2*pi/360
 
-    public pmSineWaveLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
+    public pmSineWaveLine(GL4 gl4, float srcx, float srcy, float destx, float desty, byte type, boolean initBuffer){
         super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         if(curveType == LINE_STRAIGHT)
             initStraightVertices(srcx, srcy, destx, desty);

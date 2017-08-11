@@ -20,7 +20,7 @@ public class pmContiguousArrowLine extends pmPatternLineBasic {
 //            -0.5f, .0f,.0f
     };
 
-    public pmContiguousArrowLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
+    public pmContiguousArrowLine(GL4 gl4, float srcx, float srcy, float destx, float desty, byte type, boolean initBuffer){
         super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         pointsPerPattern = 6;
         singlePattern = _singlePattern;

@@ -20,23 +20,23 @@ public class pmEdge {
     public pmBasicArrowShape _destArrow;
     private pmLineFactory lineFactory;
     private pmArrowShapeFactory arrowFactory;
-    public Byte curveType;
+    public byte curveType;
     private float xMin,xMax,yMin,yMax;
 
     //No arrow
-    public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType,
+    public pmEdge(GL4 gl4, byte lineType, byte mcurveType,
                   float srcx, float srcy, float destx, float desty, boolean initBuffer){
         commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty,initBuffer);
 
     }
-    public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType,Byte destArrowType,
+    public pmEdge(GL4 gl4, byte lineType, byte mcurveType, byte destArrowType,
                   float srcx, float srcy, float destx, float desty, boolean initBuffer){
         commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty,initBuffer);
         arrowFactory = new pmArrowShapeFactory(gl4);
         _destArrow = arrowFactory.createArrow(destArrowType, initBuffer);
         setArrowPosAndRot();
     }
-    public pmEdge(GL4 gl4, Byte lineType, Byte mcurveType, Byte srcArrowType, Byte destArrowType,
+    public pmEdge(GL4 gl4, byte lineType, byte mcurveType, byte srcArrowType, byte destArrowType,
                   float srcx, float srcy, float destx, float desty, boolean initBuffer){
         commonInitialForEdge(gl4,lineType,mcurveType,srcx,srcy,destx,desty,initBuffer);
         arrowFactory = new pmArrowShapeFactory(gl4);
@@ -63,7 +63,7 @@ public class pmEdge {
         setArrowPosAndRot();
 
     }
-    private void commonInitialForEdge(GL4 gl4, Byte lineType, Byte mcurveType,
+    private void commonInitialForEdge(GL4 gl4, byte lineType, byte mcurveType,
                                       float srcx, float srcy, float destx, float desty, boolean initBuffer){
         lineFactory = new pmLineFactory(gl4);
         _line = lineFactory.createLine(lineType, srcx, srcy, destx, desty, mcurveType, initBuffer);
@@ -341,9 +341,9 @@ public class pmEdge {
         yMin = Math.min(srcy, desty)-0.01f; yMax = Math.max(srcy, desty)+0.01f;
     }
 
-    public void resetSrcAndDest(float posx, float posy, int srcOrdest){
+    public void resetSrcAndDest(float posx, float posy, boolean resetSource){
         float srcx, srcy, destx, desty;
-        if(srcOrdest == 1){
+        if(resetSource){
             srcx = posx; srcy=posy;destx =_line.destPos.x;desty =_line.destPos.y;
             if(_srcArrow != null)
                 _srcArrow.setOrigin(new Vector3(srcx, srcy, _line.zorder));

@@ -1,5 +1,6 @@
 package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
+import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.opengl.GLAutoDrawable;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
@@ -30,15 +31,23 @@ public class drawNodeAndEdgeDemo extends Demo {
             new Vector4(0.97f, 0.67f, 0.65f, 1.0f),
             new Vector4(0.69f, 0.88f, 0.9f, 1.0f)
     };
-    private Byte[] Type = {0,1,2,3,4,5,6,7,8,9,10,11,12};
-    private int mouseState = -1;
+    private byte[] Type = {0,1,2,3,4,5,6,7,8,9,10,11,12};
+    private byte mouseState =1;
     private Integer reactNodeId = -1;
+    private pmEdge activeEdge;
     private int numOfNodes = 0;
     private int numOfEdges = 0;
     private pmShaderParams gshaderParamNode;
     private int programNode;
     private boolean needFirstCheck = true;
     private int count = 0;
+    private final static byte ADD_NODE = 0;
+    private final static byte ADD_EDGE = 1;
+    private final static byte SELECT_DELETE = 2;
+    private final static byte SELECT_CHANGECOLOR = 3;
+    private final static byte CHANGE_CONTROLPOINT = 4;
+    private final static byte CHANGE_SRCDEST = 5;
+
     @Override
     public void init(GLAutoDrawable drawable) {
         super.init(drawable);
@@ -102,6 +111,9 @@ public class drawNodeAndEdgeDemo extends Demo {
         }
         float posx = 2 * (float) lastMousePosition.x / commonUtil.DEMO_VIEWPORT_SIZE.x - 1;
         float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
+        if(mouseState == ADD_EDGE)
+            activeEdge.resetSrcAndDest(posx,posy,false);
+
 //        if (reactNodeId != -1) {
 //            nodeList.get(reactNodeId).setOrigin(new Vector2(posx, posy));
 //            for (Integer index : NodeEdgeMap.get(reactNodeId)) {
@@ -115,7 +127,7 @@ public class drawNodeAndEdgeDemo extends Demo {
 
     }
 
-    private Integer hitNode(float posx, float posy) {
+    private int hitNode(float posx, float posy) {
         int idx = 0;
         for (pmBasicNodeShape node : nodeList) {
             if (node.isHit(posx, posy)) {
@@ -152,25 +164,14 @@ public class drawNodeAndEdgeDemo extends Demo {
         lastMousePosition.y = e.getY();
         float posx = 2 * (float) lastMousePosition.x / commonUtil.DEMO_VIEWPORT_SIZE.x - 1;
         float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
-        if(e.getButton() == 1){
-            reactNodeId = hitNode(posx, posy);
-            if(e.isShiftDown()){
-                checkAndDelete(posx, posy);
-            }
-        }
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        lastMousePosition.x = e.getX();
-        lastMousePosition.y = e.getY();
-        float posx = 2 * (float) lastMousePosition.x / commonUtil.DEMO_VIEWPORT_SIZE.x - 1;
-        float posy = 1.0f - (2 * (float) lastMousePosition.y / commonUtil.DEMO_VIEWPORT_SIZE.y);
-        if (e.getButton() == 3) {
-            if (e.isShiftDown()) {
-                  edgeList.add(edgeFactory.createEdge(Type[numOfEdges%13], pmLineVisual.LINE_QUADRIC_CURVE, .0f,.0f,posx,posy,false));
-//                edgeList.add(edgeFactory.createEdge(Type[numOfEdges%2], pmLineVisual.LINE_STRAIGHT, nodeList.get(0).origin.x,nodeList.get(0).origin.y,posx,posy,false));
+        switch (mouseState){
+            case -1:
+                System.out.println("No task");
+                break;
+            case ADD_EDGE:
+                System.out.println("Click to add an edge");
+                activeEdge = edgeFactory.createEdge(Type[numOfEdges%13], pmLineVisual.LINE_CUBIC_CURVE, .0f,.0f,posx,posy,false);
+                edgeList.add(activeEdge);
                 if(needFirstCheck){
                     if(edgeList.get(numOfEdges)._destArrow != null){
                         needFirstCheck = false;
@@ -181,12 +182,11 @@ public class drawNodeAndEdgeDemo extends Demo {
                         edgeList.get(numOfEdges)._line.patternList[0].isfirst = true;
                     }
                 }
-                  NodeEdgeMap.get(0).add(numOfEdges);
-                  times++;
-                   numOfEdges ++;
-
-            }
-            if(e.isControlDown()){
+                NodeEdgeMap.get(0).add(numOfEdges);
+                times++;
+                numOfEdges ++;
+                break;
+            case ADD_NODE:
                 numOfNodes++;
                 pmBasicNodeShape node = nodeFactory.createNode(Type[numOfNodes%10]);
                 if(numOfNodes == 1)
@@ -195,21 +195,34 @@ public class drawNodeAndEdgeDemo extends Demo {
                 node.setColor(gl4, colorList[numOfNodes%2]);
                 node.setScale(0.5f);
                 nodeList.add(node);
-
-            }
-        }
-        if(e.getButton() == 1){
-            if(e.isShiftDown())
-                mouseState = 1;
-            if(e.isControlDown())
-                mouseState = 2;
-            return;
+                break;
+            case SELECT_DELETE:
+                checkAndDelete(posx, posy);
+                break;
+            case SELECT_CHANGECOLOR:
+                reactNodeId = hitNode(posx,posy);
+                break;
+            default:
+                break;
         }
     }
-
+    @Override
+    public void keyPressed(KeyEvent e){
+        if(e.getKeyCode() == 'n' || e.getKeyCode() == 'N')
+            mouseState = ADD_NODE;
+        if(e.getKeyCode() == 'e' || e.getKeyCode() == 'E')
+            mouseState = ADD_EDGE;
+        if(e.getKeyCode() == 'd' || e.getKeyCode() == 'D')
+            mouseState = SELECT_DELETE;
+        if(e.getKeyCode() == 'c' || e.getKeyCode() == 'C')
+            mouseState = SELECT_CHANGECOLOR;
+        if(e.getKeyCode() == 'm' || e.getKeyCode() == 'M')
+            mouseState = CHANGE_CONTROLPOINT;
+        if(e.getKeyCode() == 'v' || e.getKeyCode() == 'V')
+            mouseState = CHANGE_SRCDEST;
+    }
     @Override
     public void mouseReleased(MouseEvent e){
-        mouseState = -1;
     }
 
 }

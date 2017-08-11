@@ -2,6 +2,8 @@ package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.newt.event.MouseListener;
+import com.jogamp.newt.event.KeyListener;
+import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.util.Animator;
@@ -15,7 +17,7 @@ import java.io.IOException;
 /**
  * Created by ZhangMenghe on 2017/7/18.
  */
-public class Demo implements GLEventListener, MouseListener {
+public class Demo implements GLEventListener, MouseListener, KeyListener {
     public Matrix4 viewMatrix = Matrix4.identity();
     public Matrix4 zoomMatrix= Matrix4.identity();
     protected GL4 gl4;
@@ -56,6 +58,8 @@ public class Demo implements GLEventListener, MouseListener {
     public void mouseWheelMoved(MouseEvent e){}
     public void mouseDragged(MouseEvent e){}
     public void mouseMoved(MouseEvent e){}
+    public void keyPressed(KeyEvent e){}
+    public void keyReleased(KeyEvent e){}
     public void reSetMatrix(boolean viewChanged){
 
     }
@@ -84,6 +88,7 @@ public class Demo implements GLEventListener, MouseListener {
 
         glWindow.addGLEventListener(demo);
         glWindow.addMouseListener(demo);
+        glWindow.addKeyListener(demo);
         animator.start();
     }
 

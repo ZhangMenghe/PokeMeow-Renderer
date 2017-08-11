@@ -14,7 +14,7 @@ public class pmForwardSlashLine extends pmPatternLineBasic{
 //            1.0f, 0.5f, .0f
     };
 
-    public pmForwardSlashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer){
+    public pmForwardSlashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, byte type, boolean initBuffer){
         super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         pointsPerPattern = 2;
         singlePattern = _singlePattern;

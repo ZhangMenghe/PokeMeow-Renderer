@@ -15,7 +15,7 @@ public class pmVerticalSlashLine extends pmPatternLineBasic{
             0.25f, -0.01f, .0f
     };
 
-    public pmVerticalSlashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, Byte type, boolean initBuffer) {
+    public pmVerticalSlashLine(GL4 gl4, float srcx, float srcy, float destx, float desty, byte type, boolean initBuffer) {
         super(gl4, srcx, srcy, destx, desty, type, initBuffer);
         pointsPerPattern = 4;
         singlePattern = _singlePattern;
