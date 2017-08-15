@@ -33,10 +33,10 @@ public class pmSthForDraw {
         gl.glBufferData(GL.GL_ARRAY_BUFFER, dataCapacity, data_buff, GL.GL_STATIC_DRAW);
 //        gl.glBufferData(GL.GL_ARRAY_BUFFER, dataCapacity, null, GL.GL_STATIC_DRAW);
         gl.glEnableVertexAttribArray(0);
-        gl.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 7*Float.BYTES, 0);
+        gl.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 3*Float.BYTES, 0);
 
-        gl.glEnableVertexAttribArray(1);
-        gl.glVertexAttribPointer(1, 4, GL.GL_FLOAT, false, 7*Float.BYTES, 3*Float.BYTES);
+//        gl.glEnableVertexAttribArray(1);
+//        gl.glVertexAttribPointer(1, 4, GL.GL_FLOAT, false, 7*Float.BYTES, 3*Float.BYTES);
 
         gl.glBindVertexArray(0);
     }
@@ -57,10 +57,10 @@ public class pmSthForDraw {
         gl.glBufferData(GL.GL_ARRAY_BUFFER, data_buff.capacity() * Float.BYTES,data_buff, GL.GL_STATIC_DRAW);
 
         gl.glEnableVertexAttribArray(0);
-        gl.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 7*Float.BYTES, 0);
+        gl.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 3*Float.BYTES, 0);
 
-        gl.glEnableVertexAttribArray(1);
-        gl.glVertexAttribPointer(1, 4, GL.GL_FLOAT, false, 7*Float.BYTES, 3*Float.BYTES);
+//        gl.glEnableVertexAttribArray(1);
+//        gl.glVertexAttribPointer(1, 4, GL.GL_FLOAT, false, 7*Float.BYTES, 3*Float.BYTES);
 
         gl.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER,objects[EBO]);
         gl.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, indice_buff.capacity() * Integer.BYTES, indice_buff, GL.GL_STATIC_DRAW);

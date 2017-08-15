@@ -8,5 +8,5 @@ uniform mat4 viewMatrix;
 
 void main() {
 	 gl_Position = modelMatrix*viewMatrix*vec4(position, 1.0f);
-	 TexCoord = color.xy;
+	 TexCoord = vec2(position.x*2+0.5, position.y*2+0.5);
  }

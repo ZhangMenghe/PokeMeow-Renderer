@@ -50,7 +50,7 @@ public class pmRenderToTexture {
         textureshaderParam = new pmShaderParams(gl4, programTexture);
         factory = new pmNodeShapeFactory(gl4);
         canvas = factory.createNode(gl4, pmNodeShapeFactory.SHAPE_RECTANGLE);
-        canvas.setDefaultTexcoord(gl4);
+//        canvas.setDefaultTexcoord(gl4);
         canvas.setScale(4.0f);
         canvas.setOrigin(new Vector3(0,0,0));
         int[] tmpHandle = new int[1];

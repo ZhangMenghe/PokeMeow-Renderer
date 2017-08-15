@@ -1,17 +1,21 @@
 package main.java.org.cytoscape.pokemeow.internal.nodeshape;
+
+
 import com.jogamp.opengl.GL4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 
 /**
  * Created by ZhangMenghe on 2017/6/22.
  */
-public class pmRectangleNodeShape extends pmBasicNodeShape{
+public class debugRectangle extends pmBasicNodeShape{
     public float[] _vertices = {
             0.25f,  0.25f, zorder,  // Top-left
             0.25f, -0.25f, zorder,  // Top-right
             -0.25f, -0.25f, zorder,  // Bottom-right
             -0.25f,  0.25f, zorder  // Bottom-left
     };
-    public pmRectangleNodeShape(GL4 gl4){
+    public debugRectangle(GL4 gl4){
         super();
         xMinOri = -0.25f;xMaxOri = 0.25f;yMinOri = -0.25f;yMaxOri = 0.25f;
         xMin= xMinOri;xMax = xMaxOri;yMin = yMinOri;yMax = yMaxOri;
@@ -20,8 +24,7 @@ public class pmRectangleNodeShape extends pmBasicNodeShape{
         numOfVertices = 4;
         gsthForDraw.initBuiffer(gl4, numOfVertices, vertices);
     }
-
-    public pmRectangleNodeShape(){
+    public debugRectangle(){
         super();
         xMinOri = -0.25f;xMaxOri = 0.25f;yMinOri = -0.25f;yMaxOri = 0.25f;
         xMin= xMinOri;xMax = xMaxOri;yMin = yMinOri;yMax = yMaxOri;

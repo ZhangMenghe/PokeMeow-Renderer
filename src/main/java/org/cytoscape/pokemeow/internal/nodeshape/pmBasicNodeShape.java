@@ -21,26 +21,34 @@ public class pmBasicNodeShape{
     public Vector3 scale;//scale of node
     public Matrix4 modelMatrix;//translation*scale
     public Matrix4 viewMatrix;
+    public Vector4 color = new Vector4(1.0f,.0f,.0f,1.0f);
+    public Vector4 gradColor;
+    public byte gradColorBorderType = -1;
     public int numOfVertices;
-    public int numOfIndices = -1;
     public float zorder = .0f;
     public boolean useTexture = false;
     public float[] vertices;
-    public int[] indices;
     protected float xMin, xMax, yMin, yMax;
     protected float xMinOri, xMaxOri, yMinOri, yMaxOri;
-    public boolean dirty = true;
+    public boolean dirty = false;
     public int bufferByteOffset = 0;
     public int indexByteOffset = 0;
     public int bufferVerticeOffset = 0;
     public int[] objects= new int[1];//FOR SEPARATE VAO
     public boolean isfirst = false;//TODO:It's sooo ugly. But I don't know why the Rectangle Node is easy to be earsed....
+
+    public byte GRAD_UP_DOWN = 0;
+    public byte GRAD_LEFT_RIGHT = 1;
+    public byte GRAD_DIAGONAL_LEFT = 2;
+    public byte GRAD_DIAGONAL_RIGHT = 3;
+
     public pmBasicNodeShape(){
         origin = new Vector3(.0f,.0f, zorder);
         scale = new Vector3(1.0f,1.0f,1.0f);
         rotMatrix = Matrix4.identity();
         modelMatrix = Matrix4.identity();
         viewMatrix = Matrix4.identity();
+        gradColor = color;
         gsthForDraw = new pmSthForDraw();
     }
 
@@ -93,60 +101,29 @@ public class pmBasicNodeShape{
         viewMatrix = new_viewMatrix;
     }
 
-    public void setColor(GL4 gl4, Vector4 new_color){
-        for(int i=3;i<vertices.length;i+=7){
-            vertices[i] = new_color.x;
-            vertices[i+1] = new_color.y;
-            vertices[i+2] = new_color.z;
-            vertices[i+3] = new_color.w;
-        }
-        dirty = true;
+    public void setColor(Vector4 new_color){
+        color = new_color;
+        gradColor = new_color;
     }
-    public void setColor(GL4 gl4, Vector4 [] colorList){
-        int len = colorList.length;
-        for(int i=3;i<vertices.length;i+=7){
-            int idx = Math.floorDiv(i,7);
-            if(idx >=len)
-                idx = 0;
-            vertices[i] = colorList[idx].x;
-            vertices[i+1] = colorList[idx].y;
-            vertices[i+2] = colorList[idx].z;
-            vertices[i+3] = colorList[idx].w;
-        }
-        dirty = true;
-    }
-
-    public void setDefaultTexcoord(GL4 gl4){
-        useTexture = true;
-        Vector4 [] coordList = {new Vector4(1.0f,1.0f,.0f,-1.0f),
-                new Vector4(1.0f,.0f,.0f,-1.0f),
-                new Vector4(.0f,.0f,.0f,-1.0f),
-                new Vector4(.0f,1.0f,.0f,-1.0f)
-        };
-
-        setColor(gl4,coordList);
+    public void setColor(Vector4 color1, Vector4 color2, byte type){
+        color = color1;
+        gradColor = color2;
+        gradColorBorderType = type;
     }
 
     public void setZorder(float new_z){
         zorder = new_z;
-        for(int i=2;i<vertices.length;i+=7)
+        for(int i=2;i<vertices.length;i+=3)
             vertices[i] = new_z;
         dirty = true;
     }
-    public int[] setBufferOffset(int bufferOffset, int indexOffset, int boundBuffer, int boundBufferIdx){
-        int[] offset = {bufferOffset,indexOffset,boundBuffer, boundBufferIdx};
+    public int[] setBufferOffset(int bufferOffset, int boundBuffer){
+        int[] offset = {bufferOffset, boundBuffer};
         bufferByteOffset = bufferOffset;
-        bufferVerticeOffset = bufferOffset/28;
-        offset[0] += numOfVertices *28;
+        bufferVerticeOffset = bufferOffset/12;
+        offset[0] += numOfVertices *12;
         if(offset[0]>boundBuffer)
-            offset[2]  = -1;
-
-        if(numOfIndices!=-1){
-            indexByteOffset = offset[1];
-            offset[1]+=numOfIndices * 4;
-            if(offset[1]>boundBufferIdx)
-                offset[3] = -1;
-        }
+            offset[1]  = -1;
         return offset;
     }
 

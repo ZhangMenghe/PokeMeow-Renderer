@@ -54,15 +54,15 @@ public class mousePickupDemo extends Demo {
                 int idx = 3*x+y;
                 NodeList[idx].setOrigin(new Vector3(cx, cy, .0f));
                 NodeList[idx].setScale(0.5f);
-                NodeList[idx].setColor(gl4, new Vector4(0.69f, 0.88f, 0.9f,1.0f));
+                NodeList[idx].setColor(new Vector4(0.69f, 0.88f, 0.9f,1.0f));
             }
         }
         NodeList[9].setOrigin(new Vector3(.0f,0.8f,.0f));
         NodeList[9].setScale(0.5f);
         NodeList[9].setRotation(3.14f/8);
-        NodeList[9].setColor(gl4, new Vector4(0.69f, 0.88f, 0.9f,1.0f));
+        NodeList[9].setColor(new Vector4(0.69f, 0.88f, 0.9f,1.0f));
 //        mtriangle = factory.createNode(gl4, pmNodeShapeFactory.SHAPE_RECTANGLE);
-//        mtriangle.setColor(gl4, new Vector4(1.0f, .0f, .0f, 1.0f));
+//        mtriangle.setColor(new Vector4(1.0f, .0f, .0f, 1.0f));
         //mtriangle.setOrigin(new Vector3(-0.5f,.0f,.0f));
         //mtriangle.setRotation(3.14f);
     }
@@ -139,7 +139,7 @@ public class mousePickupDemo extends Demo {
         for(int i=0;i<numOfItems;i++){
             pmBasicNodeShape node = NodeList[i];
             if(node.isHit(posx, posy)){
-                node.setColor(gl4, new Vector4(.0f,1.0f,.0f,1.0f));
+                node.setColor(new Vector4(.0f,1.0f,.0f,1.0f));
                 node.dirty = true;
                 System.out.println("HIT - " + i + " " + times);
                 times++;

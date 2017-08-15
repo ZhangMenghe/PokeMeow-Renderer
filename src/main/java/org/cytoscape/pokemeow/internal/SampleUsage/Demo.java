@@ -75,7 +75,7 @@ public class Demo implements GLEventListener, MouseListener, KeyListener {
         glWindow.setVisible(true);
 
 //        final mousePickupDemo demo = new mousePickupDemo();
-        //final simpleTriangleDemo demo = new simpleTriangleDemo();
+//        final simpleTriangleDemo demo = new simpleTriangleDemo();
 //        final drawNodesDemo demo = new drawNodesDemo();
 //        final drawArrowDemo demo = new drawArrowDemo();
 //        final drawCurveDemo demo = new drawCurveDemo();
