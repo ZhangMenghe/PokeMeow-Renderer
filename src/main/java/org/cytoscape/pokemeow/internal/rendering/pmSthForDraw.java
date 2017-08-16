@@ -70,7 +70,7 @@ public class pmSthForDraw {
     }
 
     public void dispose(GL4 gl4){
-        gl4.glDeleteBuffers(3, objects, 0);
+        gl4.glDeleteBuffers(2, objects, 0);
         gl4.glDeleteVertexArrays(1, objects, VAO);
     }
 

@@ -48,7 +48,6 @@ public class pmNodeShapeFactory {
 
     public static final byte SHAPE_TRIANGLE = 8;
     public static final byte SHAPE_VEE = 9;
-    public static final byte SHAPE_DEBUG_RECTANGLE = 10;
     private GL4 gl4;
     private pmNodeBuffer nodeBuffer;
     public pmNodeShapeFactory(GL4 gl){
@@ -59,8 +58,6 @@ public class pmNodeShapeFactory {
     }
     public pmBasicNodeShape createNode(GL4 gl4, byte type){
         switch (type) {
-            case SHAPE_DEBUG_RECTANGLE:
-                return new debugRectangle(gl4);
             case 0:
                 return new pmRectangleNodeShape(gl4);
             case 1:
@@ -216,6 +213,7 @@ public class pmNodeShapeFactory {
             node.dirty = false;
         }
         gl4.glDrawArrays(GL4.GL_TRIANGLE_FAN, node.bufferVerticeOffset, node.numOfVertices);
+        gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl4.glBindVertexArray(0);
     }
 

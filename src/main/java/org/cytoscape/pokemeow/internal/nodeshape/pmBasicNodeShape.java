@@ -21,21 +21,21 @@ public class pmBasicNodeShape{
     public Vector3 scale;//scale of node
     public Matrix4 modelMatrix;//translation*scale
     public Matrix4 viewMatrix;
-    public Vector4 color = new Vector4(1.0f,.0f,.0f,1.0f);
+
+    public Vector4 color = new Vector4(.0f,.0f,.0f,1.0f);
     public Vector4 gradColor;
     public byte gradColorBorderType = -1;
+
     public int numOfVertices;
     public float zorder = .0f;
     public boolean useTexture = false;
+    public boolean visible = true;
     public float[] vertices;
     protected float xMin, xMax, yMin, yMax;
     protected float xMinOri, xMaxOri, yMinOri, yMaxOri;
     public boolean dirty = false;
     public int bufferByteOffset = 0;
-    public int indexByteOffset = 0;
     public int bufferVerticeOffset = 0;
-    public int[] objects= new int[1];//FOR SEPARATE VAO
-    public boolean isfirst = false;//TODO:It's sooo ugly. But I don't know why the Rectangle Node is easy to be earsed....
 
     public byte GRAD_UP_DOWN = 0;
     public byte GRAD_LEFT_RIGHT = 1;
@@ -126,7 +126,9 @@ public class pmBasicNodeShape{
             offset[1]  = -1;
         return offset;
     }
-
+    public boolean isOutsideBoundingBox(float posx, float posy){
+        return (posx<xMin || posx>xMax || posy<yMin || posy>yMax);
+    }
     public boolean isHit(float posx, float posy){
         int nCross = 0;
         float currPosX, currPosY,lastPosX,lastPosY;
@@ -144,7 +146,7 @@ public class pmBasicNodeShape{
                 currPosY = firstY;
             }
             else{
-                tmp = new Vector4(vertices[7 * i], vertices[7 * i + 1], .0f, 1.0f);
+                tmp = new Vector4(vertices[3 * i], vertices[3 * i + 1], .0f, 1.0f);
                 tmp  = Vector4.matrixMult(modelMatrix, tmp);
                 currPosX = tmp.x;
                 currPosY = tmp.y;
