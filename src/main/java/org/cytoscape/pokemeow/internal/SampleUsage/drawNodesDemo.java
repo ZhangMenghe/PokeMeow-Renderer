@@ -13,6 +13,7 @@ import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 import main.java.org.cytoscape.pokemeow.internal.utils.pmLoadTexture;
 
+import javax.xml.soap.Node;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -66,27 +67,19 @@ public class drawNodesDemo extends Demo {
                 int idx = 3*x+y;
                 NodeList[idx].setOrigin(new Vector3(cx, cy, .0f));
                 NodeList[idx].setScale(0.5f);
+//                NodeList[idx].useTexture = true;
+//                NodeList[idx].setDefaultTexcoord(gl4);
             }
         }
         //test zOrder:the less z value the more front position
-        NodeList[2].setZorder(-0.1f);
-        NodeList[5].setZorder(0.1f);
-        NodeList[8].setZorder(0.2f);
+//        NodeList[2].setZorder(-0.1f);
+//        NodeList[5].setZorder(0.1f);
+//        NodeList[8].setZorder(0.2f);
 
         NodeList[9].setOrigin(new Vector3(.0f,0.8f,.0f));
         NodeList[9].setRotation((float) Math.PI/8);
         NodeList[9].setScale(0.5f);
-        Vector4 [] test = {new Vector4(0.69f, 0.88f, 0.9f,1.0f),new Vector4(0.97f,0.67f,0.65f,1.0f)};
-        NodeList[0].setColor(gl4, test);
-        NodeList[1].setColor(gl4, test);
-        NodeList[2].setColor(gl4, test);
-        NodeList[6].setColor(gl4, new Vector4(0.69f, 0.88f, 0.9f,1.0f));
-        NodeList[7].setColor(gl4, new Vector4(0.69f, 0.88f, 0.9f,1.0f));
-        NodeList[8].setColor(gl4, new Vector4(0.69f, 0.88f, 0.9f,1.0f));
-        NodeList[9].setColor(gl4, new Vector4(0.97f,0.67f,0.65f,1.0f));
-        NodeList[3].setDefaultTexcoord(gl4);
-        NodeList[4].setDefaultTexcoord(gl4);
-        NodeList[5].setDefaultTexcoord(gl4);
+
         for(int i=0;i<numOfItems;i++){
             if(NodeList[i].useTexture)
                 textureNodeIndices.add(i);
@@ -98,16 +91,18 @@ public class drawNodesDemo extends Demo {
         textureIds = new ArrayList<Integer>();
         Random rand  = new Random();
         for(int i=0;i<textureNodeIndices.size();i++)
-            textureIds.add(rand.nextInt(2));
-        renderer_t = new pmRenderToTexture(gl4);
+            textureIds.add(0);
+//        renderer_t = new pmRenderToTexture(gl4);
     }
 
     @Override
     public void display(GLAutoDrawable drawable) {
-        gl4.glUseProgram(programList[0]);
-        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
-        if(changed){
-            renderer_t.RenderToTexturePrepare(gl4);
+        super.display(drawable);
+//        gl4.glUseProgram(programList[0]);
+//        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
+//        if(changed){
+//            renderer_t.RenderToTexturePrepare(gl4);
+
             nodesFactory.drawNodeList(gl4,NodeList,
                     programList,
                     gshaderParam,
@@ -115,9 +110,9 @@ public class drawNodesDemo extends Demo {
                     flatNodeIndices,
                     textureNodeIndices,
                     textureIds);
-            changed = false;
-        }
-        renderer_t.RenderToScreen(gl4);
+//            changed = false;
+//        }
+//        renderer_t.RenderToScreen(gl4);
     }
 
     @Override
@@ -137,7 +132,7 @@ public class drawNodesDemo extends Demo {
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         super.reshape(drawable, x, y, width, height);
-        renderer_t = new pmRenderToTexture(gl4,width,height);//change to Syn?
-        changed = true;
+//        renderer_t = new pmRenderToTexture(gl4,width,height);//change to Syn?
+//        changed = true;
     }
 }

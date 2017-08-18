@@ -35,7 +35,7 @@ public class renderToTextureDemo extends Demo {
         mtriangle = factory.createNode(gl4,pmNodeShapeFactory.SHAPE_TRIANGLE);
 
 
-        mtriangle.setColor(gl4, new Vector4(1.0f,.0f,.0f,1.0f));
+        mtriangle.setColor(new Vector4(1.0f,.0f,.0f,1.0f));
         renderer_t = new pmRenderToTexture(gl4);
     }
 

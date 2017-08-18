@@ -23,8 +23,9 @@ public class simpleTriangleDemo extends Demo{
                 Demo.class.getResource("shader/flat.frag"));
         gshaderParam = new pmShaderParams(gl4, program);
         factory = new pmNodeShapeFactory(gl4);
-        mtriangle = factory.createNode(gl4,pmNodeShapeFactory.SHAPE_TRIANGLE);
-        mtriangle.setColor(gl4, new Vector4(1.0f,.0f,.0f,1.0f));
+        mtriangle = factory.createNode(gl4,pmNodeShapeFactory.SHAPE_RECTANGLE);
+        mtriangle.setColor(new Vector4(1.0f,.0f,.0f,1.0f),
+                            new Vector4(.0f,.0f,1.0f,1.0f),(byte)3);
     }
 
     @Override

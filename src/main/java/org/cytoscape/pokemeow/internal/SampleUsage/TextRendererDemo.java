@@ -39,7 +39,7 @@ public class TextRendererDemo extends Demo{
             gshaderParam = new pmShaderParams(gl4, program);
             factory = new pmNodeShapeFactory(gl4);
             mtriangle = factory.createNode(gl4,pmNodeShapeFactory.SHAPE_TRIANGLE);
-            mtriangle.setColor(gl4, new Vector4(0.69f, 0.88f, 0.9f,1.0f));
+            mtriangle.setColor(new Vector4(0.69f, 0.88f, 0.9f,1.0f));
             //mtriangle.setOrigin(new Vector3(1.0f,1.0f,.0f));
             label = new pmLabel(gl4,fontPath);
             //label.setOrigin(new Vector3(0.2f,.0f,.0f));

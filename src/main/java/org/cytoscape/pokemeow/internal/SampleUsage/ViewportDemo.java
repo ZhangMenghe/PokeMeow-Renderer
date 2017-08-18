@@ -38,7 +38,7 @@ public class ViewportDemo extends JFrame{
         jdpDesktop.putClientProperty("JDesktopPane.dragMode", "outline");
         Viewport view = new Viewport(frame);
         //TODO : tackle!!
-        view.demo = new drawNodesDemo();
+        view.demo = new drawNodeAndEdgeDemo();
 
     }
     protected JMenuBar createMenuBar() {
