@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.nodeshape;
+package org.cytoscape.pokemeow.internal.nodeshape;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
@@ -10,20 +10,20 @@ import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.util.texture.Texture;
 
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmTriangleNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmRectangleNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmDiamondNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmEllipseNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmParallelogramNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmCircleNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmHexagonNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmOctagonNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmVeeNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmRoundedRectangle;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmNodeBuffer;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
+import org.cytoscape.pokemeow.internal.algebra.Vector4;
+import org.cytoscape.pokemeow.internal.nodeshape.pmTriangleNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmRectangleNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmDiamondNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmEllipseNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmParallelogramNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmCircleNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmHexagonNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmOctagonNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmVeeNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmRoundedRectangle;
+import org.cytoscape.pokemeow.internal.rendering.pmNodeBuffer;
+import org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
 

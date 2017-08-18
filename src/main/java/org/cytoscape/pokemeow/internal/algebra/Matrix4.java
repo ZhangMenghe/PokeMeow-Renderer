@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.algebra;
+package org.cytoscape.pokemeow.internal.algebra;
 
 import com.jogamp.opengl.math.FloatUtil;
 import com.jogamp.opengl.math.FovHVHalves;

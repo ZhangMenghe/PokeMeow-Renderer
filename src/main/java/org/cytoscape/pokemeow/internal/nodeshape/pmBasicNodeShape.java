@@ -1,10 +1,10 @@
-package main.java.org.cytoscape.pokemeow.internal.nodeshape;
+package org.cytoscape.pokemeow.internal.nodeshape;
 
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.*;
-import main.java.org.cytoscape.pokemeow.internal.commonUtil;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmSthForDraw;
+import org.cytoscape.pokemeow.internal.algebra.*;
+import org.cytoscape.pokemeow.internal.commonUtil;
+import org.cytoscape.pokemeow.internal.rendering.pmSthForDraw;
 
 import java.util.Arrays;
 

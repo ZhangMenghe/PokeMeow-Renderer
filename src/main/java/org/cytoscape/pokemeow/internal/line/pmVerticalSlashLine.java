@@ -1,8 +1,8 @@
-package main.java.org.cytoscape.pokemeow.internal.line;
+package org.cytoscape.pokemeow.internal.line;
 
 import com.jogamp.opengl.GL4;
-import main.java.org.cytoscape.pokemeow.internal.utils.CubicBezier;
-import main.java.org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
+import org.cytoscape.pokemeow.internal.utils.CubicBezier;
+import org.cytoscape.pokemeow.internal.utils.QuadraticBezier;
 
 /**
  * Created by ZhangMenghe on 2017/7/10.

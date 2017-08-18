@@ -1,17 +1,17 @@
-package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
+package org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.util.texture.Texture;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmRenderToTexture;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape. pmBasicNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
-import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
-import main.java.org.cytoscape.pokemeow.internal.utils.pmLoadTexture;
+import org.cytoscape.pokemeow.internal.algebra.Matrix4;
+import org.cytoscape.pokemeow.internal.algebra.Vector3;
+import org.cytoscape.pokemeow.internal.algebra.Vector4;
+import org.cytoscape.pokemeow.internal.rendering.pmRenderToTexture;
+import org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
+import org.cytoscape.pokemeow.internal.nodeshape. pmBasicNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
+import org.cytoscape.pokemeow.internal.utils.GLSLProgram;
+import org.cytoscape.pokemeow.internal.utils.pmLoadTexture;
 
 import javax.xml.soap.Node;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
+package org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.newt.event.MouseListener;
@@ -7,10 +7,10 @@ import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.util.Animator;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
-import main.java.org.cytoscape.pokemeow.internal.commonUtil;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
+import org.cytoscape.pokemeow.internal.algebra.Matrix4;
+import org.cytoscape.pokemeow.internal.algebra.Vector2;
+import org.cytoscape.pokemeow.internal.commonUtil;
+import org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 
 import java.io.IOException;
 
@@ -26,34 +26,33 @@ public class Demo implements GLEventListener, MouseListener, KeyListener {
     protected int program;
     protected Vector2 lastMousePosition = new Vector2(.0f, .0f);
     protected int times = 0;
-    @Override
     public void init(GLAutoDrawable drawable){
         gl4 = drawable.getGL().getGL4();
     }
-    @Override
+
     public void display(GLAutoDrawable drawable){
         gl4.glUseProgram(program);
         gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
     }
-    @Override
+
     public void dispose(GLAutoDrawable drawable){}
-    @Override
+
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         gl4.glClearColor(0.2f, 0.2f, 0.2f,1.0f);
         gl4.glViewport(x, y, width, height);
     }
-    @Override
+
     public void mouseClicked(MouseEvent e) {}
-    @Override
+
     public void mouseEntered(MouseEvent e) {}
 
-    @Override
+
     public void mouseExited(MouseEvent e) {}
 
-    @Override
+
     public void mousePressed(MouseEvent e) {}
 
-    @Override
+
     public void mouseReleased(MouseEvent e) {}
     public void mouseWheelMoved(MouseEvent e){}
     public void mouseDragged(MouseEvent e){}
@@ -75,7 +74,7 @@ public class Demo implements GLEventListener, MouseListener, KeyListener {
         glWindow.setVisible(true);
 
 //        final mousePickupDemo demo = new mousePickupDemo();
-//        final simpleTriangleDemo demo = new simpleTriangleDemo();
+        final simpleTriangleDemo demo = new simpleTriangleDemo();
 //        final drawNodesDemo demo = new drawNodesDemo();
 //        final drawArrowDemo demo = new drawArrowDemo();
 //        final drawCurveDemo demo = new drawCurveDemo();
@@ -84,7 +83,7 @@ public class Demo implements GLEventListener, MouseListener, KeyListener {
 //        final TextRendererDemo demo = new TextRendererDemo();
 //        final drawEdgeDemo demo = new drawEdgeDemo();
 //        final edgeHitDemo demo = new edgeHitDemo();
-        final drawNodeAndEdgeDemo demo = new drawNodeAndEdgeDemo();
+//        final drawNodeAndEdgeDemo demo = new drawNodeAndEdgeDemo();
 
         glWindow.addGLEventListener(demo);
         glWindow.addMouseListener(demo);

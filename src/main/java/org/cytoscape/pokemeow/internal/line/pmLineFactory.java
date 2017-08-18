@@ -1,15 +1,15 @@
-package main.java.org.cytoscape.pokemeow.internal.line;
+package org.cytoscape.pokemeow.internal.line;
 
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmArrowShapeFactory;
-import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmEdgeBuffer;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
+import org.cytoscape.pokemeow.internal.algebra.Matrix4;
+import org.cytoscape.pokemeow.internal.algebra.Vector2;
+import org.cytoscape.pokemeow.internal.algebra.Vector3;
+import org.cytoscape.pokemeow.internal.arrowshape.pmArrowShapeFactory;
+import org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
+import org.cytoscape.pokemeow.internal.rendering.pmEdgeBuffer;
+import org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 
 import java.nio.FloatBuffer;
 

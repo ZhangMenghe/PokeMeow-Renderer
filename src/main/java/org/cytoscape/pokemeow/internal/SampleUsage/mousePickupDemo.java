@@ -1,18 +1,18 @@
-package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
+package org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.PMVMatrix;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
+import org.cytoscape.pokemeow.internal.algebra.Vector2;
 
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
-import main.java.org.cytoscape.pokemeow.internal.commonUtil;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
-import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
+import org.cytoscape.pokemeow.internal.algebra.Vector3;
+import org.cytoscape.pokemeow.internal.algebra.Vector4;
+import org.cytoscape.pokemeow.internal.commonUtil;
+import org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
+import org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
+import org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 
 import com.jogamp.newt.event.MouseListener;
 import com.jogamp.newt.event.MouseEvent;

@@ -1,21 +1,21 @@
-package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
+package org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
-import main.java.org.cytoscape.pokemeow.internal.commonUtil;
-import main.java.org.cytoscape.pokemeow.internal.edge.pmEdge;
-import main.java.org.cytoscape.pokemeow.internal.edge.pmEdgeFactory;
-import main.java.org.cytoscape.pokemeow.internal.line.pmLineFactory;
-import main.java.org.cytoscape.pokemeow.internal.line.pmLineVisual;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
-import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
+import org.cytoscape.pokemeow.internal.algebra.Vector2;
+import org.cytoscape.pokemeow.internal.algebra.Vector4;
+import org.cytoscape.pokemeow.internal.commonUtil;
+import org.cytoscape.pokemeow.internal.edge.pmEdge;
+import org.cytoscape.pokemeow.internal.edge.pmEdgeFactory;
+import org.cytoscape.pokemeow.internal.line.pmLineFactory;
+import org.cytoscape.pokemeow.internal.line.pmLineVisual;
+import org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
+import org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
+import org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 import org.w3c.dom.NodeList;
 
 import java.nio.IntBuffer;
@@ -79,7 +79,7 @@ public class drawNodeAndEdgeDemo extends Demo {
         nodeList = new ArrayList();
         nodeFactory = new pmNodeShapeFactory(gl4);
         edgeFactory = new pmEdgeFactory(gl4);
-        NodeEdgeMap = new HashMap<>();
+        NodeEdgeMap = new HashMap<Integer, ArrayList<Integer>>();
         random = new Random();
 
         nodeNeedToCheck = new ArrayList();
@@ -104,7 +104,7 @@ public class drawNodeAndEdgeDemo extends Demo {
 //            node.setOrigin(new Vector2(.0f,.0f));
             node.setScale(random.nextFloat() * 0.5f);
             node.setColor(colorList[0]);
-            NodeEdgeMap.put(0,new ArrayList<>());
+//            NodeEdgeMap.put(0,new ArrayList<Object>());
             numOfNodes++;
             nodeNeedToCheck.add(i);
             nodeList.add(node);

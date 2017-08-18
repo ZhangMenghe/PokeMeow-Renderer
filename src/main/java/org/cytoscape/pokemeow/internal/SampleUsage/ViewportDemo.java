@@ -1,8 +1,8 @@
-package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
+package org.cytoscape.pokemeow.internal.SampleUsage;
 
-import main.java.org.cytoscape.pokemeow.internal.viewport.Viewport;
-import main.java.org.cytoscape.pokemeow.internal.viewport.ViewportMouseEvent;
-import main.java.org.cytoscape.pokemeow.internal.viewport.ViewportMouseEventListener;
+import org.cytoscape.pokemeow.internal.viewport.Viewport;
+import org.cytoscape.pokemeow.internal.viewport.ViewportMouseEvent;
+import org.cytoscape.pokemeow.internal.viewport.ViewportMouseEventListener;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,6 @@
-package main.java.org.cytoscape.pokemeow.internal.camera;
+package org.cytoscape.pokemeow.internal.camera;
 
-import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
+import org.cytoscape.pokemeow.internal.algebra.Matrix4;
 
 /**
  * Event raised upon a change in camera parameters (most likely movement).

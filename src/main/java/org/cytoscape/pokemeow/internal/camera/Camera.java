@@ -1,10 +1,10 @@
-package main.java.org.cytoscape.pokemeow.internal.camera;
+package org.cytoscape.pokemeow.internal.camera;
 
 import java.util.HashSet;
 
-import main.java.org.cytoscape.pokemeow.internal.algebra.*;
-import main.java.org.cytoscape.pokemeow.internal.viewport.*;
-import main.java.org.cytoscape.pokemeow.internal.commonUtil;
+import org.cytoscape.pokemeow.internal.algebra.*;
+import org.cytoscape.pokemeow.internal.viewport.*;
+import org.cytoscape.pokemeow.internal.commonUtil;
 
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.math.FloatUtil;
@@ -18,7 +18,7 @@ public class Camera implements ViewportEventListener
 {
 	private Object m_sync = new Object();
 	
-	private HashSet<CameraEventListener> cameraEventListeners = new HashSet<>();
+	private HashSet<CameraEventListener> cameraEventListeners = new HashSet<CameraEventListener>();
 
 	/** Target position **/
 	private Vector3 targetPos = new Vector3();	
@@ -505,7 +505,7 @@ public class Camera implements ViewportEventListener
 	 * @param drawable Viewport's GLJPanel
 	 * @param e Information about the new viewport size
 	 */
-	@Override
+
 	public void viewportReshape(GLAutoDrawable drawable, ViewportResizedEvent e) 
 	{
 		if (!Vector2.equals(viewportSize, e.newRawSize))
@@ -520,18 +520,18 @@ public class Camera implements ViewportEventListener
 	/**
 	 * Viewport initialization. Not needed.
 	 */
-	@Override
+
 	public void viewportInitialize(GLAutoDrawable drawable) { }
 
 	/**
 	 * Viewport display, a.k.a. rendering. Not needed.
 	 */
-	@Override
+
 	public void viewportDisplay(GLAutoDrawable drawable) { }
 
 	/**
 	 * Viewport/OpenGL disposal. Not needed as there are no device resources.
 	 */
-	@Override
+
 	public void viewportDispose(GLAutoDrawable drawable) { }
 }

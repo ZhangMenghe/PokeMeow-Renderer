@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
+package org.cytoscape.pokemeow.internal.SampleUsage;
 
 import java.awt.*;
 
@@ -35,7 +35,7 @@ public class Cube implements GLEventListener {
     //destroy()
     //void addGLEventListener(GLEventListener Listener)
     /**********************************************/
-    @Override
+
     public void display( GLAutoDrawable drawable ) {
         final GLUT glut = new GLUT();
         final GL2 gl = drawable.getGL().getGL2();
@@ -110,12 +110,12 @@ public class Cube implements GLEventListener {
         glut.glutBitmapString(GLUT.BITMAP_TIMES_ROMAN_24,"glut string");
     }
 
-    @Override
+
     public void dispose( GLAutoDrawable drawable ) {
         // TODO Auto-generated method stub
     }
 
-    @Override
+
     public void init( GLAutoDrawable drawable ) {
 
         final GL2 gl = drawable.getGL().getGL2();
@@ -129,7 +129,7 @@ public class Cube implements GLEventListener {
         renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 36));
     }
 
-    @Override
+
     public void reshape( GLAutoDrawable drawable, int x, int y, int width, int height ) {
 
         // TODO Auto-generated method stub

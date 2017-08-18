@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.utils;
+package org.cytoscape.pokemeow.internal.utils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;

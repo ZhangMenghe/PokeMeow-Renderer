@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.line;
+package org.cytoscape.pokemeow.internal.line;
 
 import com.jogamp.opengl.GL4;
 

@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.arrowshape;
+package org.cytoscape.pokemeow.internal.arrowshape;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,8 +8,8 @@ import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.util.texture.Texture;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmEdgeBuffer;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
+import org.cytoscape.pokemeow.internal.rendering.pmEdgeBuffer;
+import org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 
 import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
 

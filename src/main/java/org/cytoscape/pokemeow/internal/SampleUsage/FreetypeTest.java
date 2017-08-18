@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
+package org.cytoscape.pokemeow.internal.SampleUsage;
 
 /**
  * Created by ZhangMenghe on 2017/6/29.

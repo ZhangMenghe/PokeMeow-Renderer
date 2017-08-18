@@ -1,7 +1,7 @@
-package main.java.org.cytoscape.pokemeow.internal.viewport;
+package org.cytoscape.pokemeow.internal.viewport;
 
-import main.java.org.cytoscape.pokemeow.internal.algebra.Ray3;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
+import org.cytoscape.pokemeow.internal.algebra.Ray3;
+import org.cytoscape.pokemeow.internal.algebra.Vector3;
 
 /**
  * Description of an intersection between a pickable object and a ray in 3D space.

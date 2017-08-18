@@ -1,12 +1,12 @@
-package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
+package org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.opengl.GLAutoDrawable;
-import main.java.org.cytoscape.pokemeow.internal.commonUtil;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
-import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
-import main.java.org.cytoscape.pokemeow.internal.line.pmLineVisual;
-import main.java.org.cytoscape.pokemeow.internal.line.pmLineFactory;
+import org.cytoscape.pokemeow.internal.commonUtil;
+import org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
+import org.cytoscape.pokemeow.internal.utils.GLSLProgram;
+import org.cytoscape.pokemeow.internal.line.pmLineVisual;
+import org.cytoscape.pokemeow.internal.line.pmLineFactory;
 /**
  * Created by ZhangMenghe on 2017/7/6.
  */

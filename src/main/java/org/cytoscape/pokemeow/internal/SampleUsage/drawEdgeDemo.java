@@ -1,21 +1,20 @@
-package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
+package org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.opengl.GLAutoDrawable;
-import com.sun.corba.se.impl.logging.POASystemException;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
-import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
-import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmDeltaArrowShape;
-import main.java.org.cytoscape.pokemeow.internal.commonUtil;
-import main.java.org.cytoscape.pokemeow.internal.edge.pmEdge;
-import main.java.org.cytoscape.pokemeow.internal.line.pmLineVisual;
-import main.java.org.cytoscape.pokemeow.internal.line.pmSolidLine;
-import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
-import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
-import main.java.org.cytoscape.pokemeow.internal.arrowshape.pmArrowShapeFactory;
-import main.java.org.cytoscape.pokemeow.internal.line.pmLineFactory;
+import org.cytoscape.pokemeow.internal.algebra.Vector2;
+import org.cytoscape.pokemeow.internal.algebra.Vector3;
+import org.cytoscape.pokemeow.internal.algebra.Vector4;
+import org.cytoscape.pokemeow.internal.arrowshape.pmBasicArrowShape;
+import org.cytoscape.pokemeow.internal.arrowshape.pmDeltaArrowShape;
+import org.cytoscape.pokemeow.internal.commonUtil;
+import org.cytoscape.pokemeow.internal.edge.pmEdge;
+import org.cytoscape.pokemeow.internal.line.pmLineVisual;
+import org.cytoscape.pokemeow.internal.line.pmSolidLine;
+import org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
+import org.cytoscape.pokemeow.internal.utils.GLSLProgram;
+import org.cytoscape.pokemeow.internal.arrowshape.pmArrowShapeFactory;
+import org.cytoscape.pokemeow.internal.line.pmLineFactory;
 /**
  * Created by ZhangMenghe on 2017/7/25.
  */

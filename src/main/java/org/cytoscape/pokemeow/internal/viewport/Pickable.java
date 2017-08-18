@@ -1,6 +1,6 @@
-package main.java.org.cytoscape.pokemeow.internal.viewport;
+package org.cytoscape.pokemeow.internal.viewport;
 
-import main.java.org.cytoscape.pokemeow.internal.algebra.*;
+import org.cytoscape.pokemeow.internal.algebra.*;
 
 /**
  * An object that can be picked with a mouse cursor by intersecting it with a ray in 3D space.

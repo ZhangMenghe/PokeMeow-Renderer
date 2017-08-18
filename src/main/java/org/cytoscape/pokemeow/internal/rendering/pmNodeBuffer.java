@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.rendering;
+package org.cytoscape.pokemeow.internal.rendering;
 
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;

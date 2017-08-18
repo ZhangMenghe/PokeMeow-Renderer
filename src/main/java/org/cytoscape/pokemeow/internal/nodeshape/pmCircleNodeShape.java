@@ -1,9 +1,9 @@
-package main.java.org.cytoscape.pokemeow.internal.nodeshape;
+package org.cytoscape.pokemeow.internal.nodeshape;
 
 import com.jogamp.opengl.GL4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
-import main.java.org.cytoscape.pokemeow.internal.commonUtil;
+import org.cytoscape.pokemeow.internal.algebra.Vector2;
+import org.cytoscape.pokemeow.internal.algebra.Vector4;
+import org.cytoscape.pokemeow.internal.commonUtil;
 
 /**
  * Created by ZhangMenghe on 2017/6/22.

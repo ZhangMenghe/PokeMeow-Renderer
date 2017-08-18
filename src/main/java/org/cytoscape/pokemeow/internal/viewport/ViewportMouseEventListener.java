@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.viewport;
+package org.cytoscape.pokemeow.internal.viewport;
 
 /**
  * Mouse action-related events raised by a viewport.

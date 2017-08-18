@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.camera;
+package org.cytoscape.pokemeow.internal.camera;
 
 
 public interface CameraEventListener 

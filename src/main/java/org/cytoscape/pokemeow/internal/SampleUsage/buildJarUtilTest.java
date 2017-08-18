@@ -1,8 +1,6 @@
-package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
+package org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.common.util.IOUtil;
-import sun.misc.IOUtils;
-import sun.rmi.runtime.Log;
 import java.io.*;
 import java.io.File;
 import java.io.InputStream;

@@ -1,11 +1,11 @@
-package main.java.org.cytoscape.pokemeow.internal.viewport;
+package org.cytoscape.pokemeow.internal.viewport;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
-import main.java.org.cytoscape.pokemeow.internal.algebra.Ray3;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
-import main.java.org.cytoscape.pokemeow.internal.camera.Camera;
+import org.cytoscape.pokemeow.internal.algebra.Ray3;
+import org.cytoscape.pokemeow.internal.algebra.Vector2;
+import org.cytoscape.pokemeow.internal.camera.Camera;
 
 
 /**

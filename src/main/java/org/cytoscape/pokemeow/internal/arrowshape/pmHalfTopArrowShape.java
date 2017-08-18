@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.arrowshape;
+package org.cytoscape.pokemeow.internal.arrowshape;
 
 import com.jogamp.opengl.GL4;
 

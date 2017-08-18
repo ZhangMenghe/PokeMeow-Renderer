@@ -1,10 +1,10 @@
-package main.java.org.cytoscape.pokemeow.internal;
+package org.cytoscape.pokemeow.internal;
 
 /**
  * Created by ZhangMenghe on 2017/6/18.
  */
 
-import main.java.org.cytoscape.pokemeow.internal.algebra.*;
+import org.cytoscape.pokemeow.internal.algebra.*;
 
 public final class commonUtil {
     public static final float CAM_ZOOM_RATE = 1.25F;

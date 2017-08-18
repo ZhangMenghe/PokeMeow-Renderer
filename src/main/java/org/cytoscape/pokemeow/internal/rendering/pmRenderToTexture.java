@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.rendering;
+package org.cytoscape.pokemeow.internal.rendering;
 
 /**
  * Created by ZhangMenghe on 2017/6/28.
@@ -7,12 +7,12 @@ import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 
-import main.java.org.cytoscape.pokemeow.internal.SampleUsage.Demo;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.commonUtil;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
-import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
-import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
+import org.cytoscape.pokemeow.internal.SampleUsage.Demo;
+import org.cytoscape.pokemeow.internal.algebra.Vector3;
+import org.cytoscape.pokemeow.internal.commonUtil;
+import org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
+import org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
+import org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 
 import java.nio.IntBuffer;
 

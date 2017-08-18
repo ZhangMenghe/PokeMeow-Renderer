@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.viewport;
+package org.cytoscape.pokemeow.internal.viewport;
 
 import com.jogamp.opengl.GLAutoDrawable;
 

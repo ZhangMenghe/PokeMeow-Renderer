@@ -1,8 +1,8 @@
-package main.java.org.cytoscape.pokemeow.internal.nodeshape;
+package org.cytoscape.pokemeow.internal.nodeshape;
 
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
+import org.cytoscape.pokemeow.internal.algebra.Vector4;
 
 import java.nio.FloatBuffer;
 

@@ -1,9 +1,9 @@
-package main.java.org.cytoscape.pokemeow.internal.camera;
+package org.cytoscape.pokemeow.internal.camera;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.org.cytoscape.pokemeow.internal.algebra.*;
+import org.cytoscape.pokemeow.internal.algebra.*;
 
 import com.jogamp.opengl.math.FloatUtil;
 

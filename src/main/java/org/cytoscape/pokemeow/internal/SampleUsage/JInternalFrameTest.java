@@ -1,8 +1,8 @@
-package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
+package org.cytoscape.pokemeow.internal.SampleUsage;
 
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLJPanel;
-import main.java.org.cytoscape.pokemeow.internal.viewport.Viewport;
+import org.cytoscape.pokemeow.internal.viewport.Viewport;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JDesktopPane;
@@ -103,19 +103,19 @@ public class JInternalFrameTest extends JFrame implements GLEventListener {
         gl.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
         demo.display(drawable);
     }
-    @Override
+
     public void dispose( GLAutoDrawable drawable ) {
         // TODO Auto-generated method stub
         demo.dispose(drawable);
     }
 
-    @Override
+
     public void init( GLAutoDrawable drawable ) {
         gl = drawable.getGL().getGL4();
         demo = new simpleTriangleDemo();
         demo.init(drawable);
     }
-    @Override
+
     public void reshape( GLAutoDrawable drawable, int x, int y, int width, int height ) {
         gl.glClearColor(0.2f, 0.2f, 0.2f,1.0f);
         demo.reshape(drawable, x, y, width, height);

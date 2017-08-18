@@ -1,7 +1,7 @@
-package main.java.org.cytoscape.pokemeow.internal.arrowshape;
+package org.cytoscape.pokemeow.internal.arrowshape;
 
 import com.jogamp.opengl.GL4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
+import org.cytoscape.pokemeow.internal.algebra.Vector2;
 
 /**
  * Created by ZhangMenghe on 2017/7/5.

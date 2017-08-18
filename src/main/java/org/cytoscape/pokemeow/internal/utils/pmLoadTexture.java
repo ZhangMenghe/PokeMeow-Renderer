@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.utils;
+package org.cytoscape.pokemeow.internal.utils;
 
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.util.texture.Texture;

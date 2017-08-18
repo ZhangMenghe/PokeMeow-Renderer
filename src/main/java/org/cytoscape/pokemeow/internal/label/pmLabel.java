@@ -1,17 +1,17 @@
-package main.java.org.cytoscape.pokemeow.internal.label;
+package org.cytoscape.pokemeow.internal.label;
 
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 
 import com.pvporbit.freetype.*;
-import main.java.org.cytoscape.pokemeow.internal.SampleUsage.Demo;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
-import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
-import main.java.org.cytoscape.pokemeow.internal.commonUtil;
+import org.cytoscape.pokemeow.internal.SampleUsage.Demo;
+import org.cytoscape.pokemeow.internal.algebra.Matrix4;
+import org.cytoscape.pokemeow.internal.algebra.Vector3;
+import org.cytoscape.pokemeow.internal.algebra.Vector4;
+import org.cytoscape.pokemeow.internal.algebra.Vector2;
+import org.cytoscape.pokemeow.internal.utils.GLSLProgram;
+import org.cytoscape.pokemeow.internal.commonUtil;
 import java.nio.FloatBuffer;
 import java.util.HashMap;
 import java.util.Map;

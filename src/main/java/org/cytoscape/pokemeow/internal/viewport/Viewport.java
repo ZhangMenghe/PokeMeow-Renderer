@@ -1,4 +1,4 @@
-package main.java.org.cytoscape.pokemeow.internal.viewport;
+package org.cytoscape.pokemeow.internal.viewport;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -12,12 +12,12 @@ import java.util.HashSet;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 
-import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector2;
-import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
-import main.java.org.cytoscape.pokemeow.internal.camera.Camera;
+import org.cytoscape.pokemeow.internal.algebra.Matrix4;
+import org.cytoscape.pokemeow.internal.algebra.Vector2;
+import org.cytoscape.pokemeow.internal.algebra.Vector3;
+import org.cytoscape.pokemeow.internal.camera.Camera;
 
-import main.java.org.cytoscape.pokemeow.internal.SampleUsage.Demo;
+import org.cytoscape.pokemeow.internal.SampleUsage.Demo;
 
 import com.jogamp.nativewindow.NativeSurface;
 import com.jogamp.opengl.GL;
@@ -32,26 +32,26 @@ import com.jogamp.opengl.math.FloatUtil;
 /**
  * A viewport takes care of initializing OpenGL, creating a visible control,
  * and registering user interactions with it, i. e. mouse/keyboard actions.
- * 
+ *
  */
 public class Viewport implements GLEventListener, MouseListener, MouseMotionListener, MouseWheelListener
 {
 	// Event listeners
-	private HashSet<ViewportEventListener> viewportEventListeners = new HashSet<>();
-	private HashSet<ViewportMouseEventListener> viewportMouseEventListeners = new HashSet<>();
-	
+	private HashSet<ViewportEventListener> viewportEventListeners = new HashSet<ViewportEventListener>();
+	private HashSet<ViewportMouseEventListener> viewportMouseEventListeners = new HashSet<ViewportMouseEventListener>();
+
 	// Current GL context
 	private GL4 gl;
-	
+
 	// Panel that presents GL's frame buffer
 	private GLJPanel panel;
-	
+
 	// Camera object that is controlled by user actions in this viewport
 	// and that determines the viewport's view and projection matrices
 	private Camera camera;
-	
+
 	private float scaleDPI;
-	
+
 	// Mouse handling
 	private Vector2 lastMousePosition;
 
@@ -80,75 +80,75 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		capabilities.setNumSamples(8);
 		capabilities.setHardwareAccelerated(true);
 		capabilities.setDoubleBuffered(true);
-		
+
 		panel = new GLJPanel(capabilities);
 		panel.setIgnoreRepaint(true);
-		panel.addGLEventListener(this);		
+		panel.addGLEventListener(this);
 		panel.addMouseListener(this);
 		panel.addMouseMotionListener(this);
 		panel.addMouseWheelListener(this);
 
 		camera = new Camera(this);
 
-		if (container instanceof JInternalFrame) 
+		if (container instanceof JInternalFrame)
 		{
 			container.setSize(600,600);
 			JInternalFrame JInframe = (JInternalFrame) container;
             JInframe.getContentPane().setLayout(new BorderLayout());
             JInframe.getContentPane().add(panel, BorderLayout.CENTER);
-		} 
-		else 
+		}
+		else
 		{
 			container.setLayout(new BorderLayout());
 			container.add(panel, BorderLayout.CENTER);
 		}
 
 	}
-	
+
 	/**
 	 * Gets current GL context
-	 * 
+	 *
 	 * @return GL context
 	 */
 	public GL4 getContext()
 	{
 		return gl;
 	}
-	
+
 	/**
 	 * Gets the panel that presents the framebuffer
-	 * 
+	 *
 	 * @return Panel control
 	 */
 	public GLJPanel getPanel()
 	{
 		return panel;
 	}
-	
+
 	/**
 	 * Gets the camera managed by this viewport
-	 * 
+	 *
 	 * @return Camera object
 	 */
 	public Camera getCamera()
 	{
 		return camera;
 	}
-	
+
 	// GLEventListener methods:
 
 	/**
 	 * Callback method invoked when the GLJPanel needs to be initialized.
 	 * Sets up permanent GL parameters
-	 * 
+	 *
 	 * @param drawable GLJPanel handle
 	 */
-	@Override
-	public void init(GLAutoDrawable drawable) 
-	{ 
+
+	public void init(GLAutoDrawable drawable)
+	{
 		gl = drawable.getGL().getGL4();
-		
-		gl.glEnable(GL4.GL_DEPTH_TEST);		
+
+		gl.glEnable(GL4.GL_DEPTH_TEST);
 		gl.glDisable(GL4.GL_CULL_FACE);
 		gl.glDepthFunc(GL.GL_LEQUAL);
 		gl.glEnable(GL4.GL_BLEND);
@@ -162,20 +162,20 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		demo.init(drawable);
 		invokeViewportInitializeEvent(drawable);
 	}
-	
+
 	/**
 	 * Callback method invoked when the GLJPanel needs to be redrawn.
 	 * Clears framebuffer and raises the ViewportDisplay event.
-	 * 
+	 *
 	 * @param drawable GLJPanel handle
 	 */
-	@Override
-	public void display(GLAutoDrawable drawable) 
-	{ 
+
+	public void display(GLAutoDrawable drawable)
+	{
 		long timeStart = System.nanoTime();
-		
+
 		gl = drawable.getGL().getGL4();
-		
+
 		gl.glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 		gl.glClearDepthf(1.0f);
 		gl.glClear(GL4.GL_COLOR_BUFFER_BIT | GL4.GL_DEPTH_BUFFER_BIT);
@@ -184,7 +184,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		demo.display(drawable);
 
 		invokeViewportDisplayEvent(drawable);
-		
+
 		long timeFinish = System.nanoTime();
 		float FPS = 1.0f / ((float)(timeFinish - timeStart) * 1e-9f);
 		//System.out.println(FPS + " fps");
@@ -193,25 +193,25 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	/**
 	 * Callback method invoked when the GLJPanel is resized.
 	 * Sets viewport size for GL and raises the ViewportResized event.
-	 * 
+	 *
 	 * @param drawable GLJPanel handle
 	 * @param x Horizontal offset of the left edge
 	 * @param y Vertical offset of the top edge
 	 * @param width New viewport width
 	 * @param height New viewport height
 	 */
-	@Override
-	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) 
+
+	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height)
 	{
 		gl = drawable.getGL().getGL4();
-		
+
 		gl.glViewport(x, y, width, height);
 
 		Vector2 newRawSize = new Vector2(width, height);
 		ViewportResizedEvent e = new ViewportResizedEvent(newRawSize, Vector2.scalarMult(scaleDPI, newRawSize));
 		invokeViewportReshapeEvent(drawable, e);
 	}
-	
+
 	/**
 	 * Forces the viewport to redraw its contents.
 	 */
@@ -223,16 +223,16 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 
 	/**
 	 * Frees all resources associated with this viewport
-	 * and raises the ViewportDispose event. 
+	 * and raises the ViewportDispose event.
 	 */
-	@Override
-	public void dispose(GLAutoDrawable drawable) 
-	{ 
+
+	public void dispose(GLAutoDrawable drawable)
+	{
 		invokeViewportDisposeEvent(drawable);
 	}
-	
+
 	// Handle mouse events from GLJPanel:
-	@Override
+
 	public void mouseClicked(MouseEvent e)
 	{
 		System.out.println("click");
@@ -246,8 +246,8 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 			return;
 	}
 
-	@Override
-	public void mouseEntered(MouseEvent e) 
+
+	public void mouseEntered(MouseEvent e)
 	{
 		lastMousePosition = new Vector2(e.getX(), e.getY());
 		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(), scaleDPI, camera);
@@ -256,8 +256,8 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 			return;
 	}
 
-	@Override
-	public void mouseExited(MouseEvent e) 
+
+	public void mouseExited(MouseEvent e)
 	{
 		lastMousePosition = null;
 		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(), scaleDPI, camera);
@@ -266,14 +266,14 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 			return;
 	}
 
-	@Override
-	public void mousePressed(MouseEvent e) 
+
+	public void mousePressed(MouseEvent e)
 	{
 		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(), scaleDPI, camera);
 		invokeViewportMouseDownEvent(event);
 		if (event.handled)
 			return;
-		
+
 		if (event.m2)
 		{
 			if (event.keyCtrl)
@@ -283,14 +283,14 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		}
 	}
 
-	@Override
-	public void mouseReleased(MouseEvent e) 
+
+	public void mouseReleased(MouseEvent e)
 	{
 		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(), scaleDPI, camera);
 		invokeViewportMouseUpEvent(event);
 		if (event.handled)
 			return;
-		
+
 		if (mouseState == MouseStates.SELECT)
 		{
 			// Selection handling
@@ -304,13 +304,13 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	/**
 	 * Callback method invoked through mouse cursor dragging.
 	 * Unless hijacked by a listener, the camera is rotated around its
-	 * target (with left button), or panned within the focal plane (with middle button). 
+	 * target (with left button), or panned within the focal plane (with middle button).
 	 */
-	@Override
-	public void mouseDragged(MouseEvent e) 
+
+	public void mouseDragged(MouseEvent e)
 	{
 		Vector2 diff = new Vector2();
-		
+
 		if (lastMousePosition == null)
 		{
 			lastMousePosition = new Vector2(e.getX(), e.getY());
@@ -322,12 +322,12 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 			diff.y *= -1.0f;
 			lastMousePosition = newPosition;
 		}
-		
+
 		ViewportMouseEvent event = new ViewportMouseEvent(e, diff, scaleDPI, camera);
 		invokeViewportMouseMoveEvent(event);
 		if (event.handled)
 			return;
-		
+
 		if (mouseState == MouseStates.PAN)
 		{
 			System.out.println("PAN");
@@ -343,11 +343,11 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		}
 	}
 
-	@Override
-	public void mouseMoved(MouseEvent e) 
+
+	public void mouseMoved(MouseEvent e)
 	{
 		Vector2 diff = new Vector2();
-		
+
 		if (lastMousePosition == null)
 		{
 			lastMousePosition = new Vector2(e.getX(), e.getY());
@@ -358,7 +358,7 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 			diff = Vector2.subtract(newPosition, lastMousePosition);
 			lastMousePosition = newPosition;
 		}
-		
+
 		ViewportMouseEvent event = new ViewportMouseEvent(e, diff, scaleDPI, camera);
 		invokeViewportMouseDragEvent(event);
 		if (event.handled)
@@ -367,17 +367,17 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 
 	/**
 	 * Callback method invoked through mouse wheel scrolling.
-	 * Unless hijacked by a listener, the camera's zoom level is changed, 
+	 * Unless hijacked by a listener, the camera's zoom level is changed,
 	 * while keeping the position under the mouse cursor constant.
 	 */
-	@Override
-	public void mouseWheelMoved(MouseWheelEvent e) 
+
+	public void mouseWheelMoved(MouseWheelEvent e)
 	{
 		ViewportMouseEvent event = new ViewportMouseEvent(e, new Vector2(),scaleDPI, camera);
 		invokeViewportMouseScrollEvent(event);
 		if (event.handled)
 			return;
-		
+
 		// Zoom in or out while keeping the same point under the mouse pointer
 		//camera.zoomBy(event.positionRay, panel.getWidth(),panel.getHeight(),event.delta);
 		if(event.delta>0 && zoomFactor<20.0f)
@@ -387,91 +387,91 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 		demo.zoomMatrix = Matrix4.projectionOrthogonal(zoomFactor,zoomFactor,1,-1);
 		redraw(false);
 	}
-	
+
 	// General events:
-	
+
 	public void addViewportEventListener(ViewportEventListener listener)
 	{
 		viewportEventListeners.add(listener);
 	}
-	
+
 	public void removeViewportEventListener(ViewportEventListener listener)
 	{
 		viewportEventListeners.remove(listener);
 	}
-	
+
 	private void invokeViewportInitializeEvent(GLAutoDrawable drawable)
 	{
 		for (ViewportEventListener listener : viewportEventListeners)
 			listener.viewportInitialize(drawable);
 	}
-	
+
 	private void invokeViewportReshapeEvent(GLAutoDrawable drawable, ViewportResizedEvent e)
 	{
 		for (ViewportEventListener listener : viewportEventListeners)
 			listener.viewportReshape(drawable, e);
 	}
-	
+
 	private void invokeViewportDisplayEvent(GLAutoDrawable drawable)
 	{
 		for (ViewportEventListener listener : viewportEventListeners)
 			listener.viewportDisplay(drawable);
 	}
-	
+
 	private void invokeViewportDisposeEvent(GLAutoDrawable drawable)
 	{
 		for (ViewportEventListener listener : viewportEventListeners)
 			listener.viewportDispose(drawable);
 	}
-	
+
 	// Mouse events:
-	
+
 	public void addViewportMouseEventListener(ViewportMouseEventListener listener)
 	{
 		viewportMouseEventListeners.add(listener);
 	}
-	
+
 	public void removeViewportMouseEventListener(ViewportMouseEventListener listener)
 	{
 		viewportMouseEventListeners.remove(listener);
 	}
-	
+
 	private void invokeViewportMouseDownEvent(ViewportMouseEvent e)
 	{
 		for (ViewportMouseEventListener listener : viewportMouseEventListeners)
 			listener.viewportMouseDown(e);
 	}
-	
+
 	private void invokeViewportMouseEnterEvent(ViewportMouseEvent e)
 	{
 		for (ViewportMouseEventListener listener : viewportMouseEventListeners)
 			listener.viewportMouseEnter(e);
 	}
-	
+
 	private void invokeViewportMouseLeaveEvent(ViewportMouseEvent e)
 	{
 		for (ViewportMouseEventListener listener : viewportMouseEventListeners)
 			listener.viewportMouseLeave(e);
 	}
-	
+
 	private void invokeViewportMouseUpEvent(ViewportMouseEvent e)
 	{
 		for (ViewportMouseEventListener listener : viewportMouseEventListeners)
 			listener.viewportMouseUp(e);
 	}
-	
+
 	private void invokeViewportMouseMoveEvent(ViewportMouseEvent e)
 	{
 		for (ViewportMouseEventListener listener : viewportMouseEventListeners)
 			listener.viewportMouseMove(e);
 	}
-	
+
 	private void invokeViewportMouseDragEvent(ViewportMouseEvent e)
 	{
 		for (ViewportMouseEventListener listener : viewportMouseEventListeners)
 			listener.viewportMouseDrag(e);
 	}
-	
+
 	private void invokeViewportMouseScrollEvent(ViewportMouseEvent e)
 	{
 		for (ViewportMouseEventListener listener : viewportMouseEventListeners)
