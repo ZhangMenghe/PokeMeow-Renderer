@@ -89,11 +89,14 @@ public class pmRoundedRectangle extends pmBasicNodeShape  {
         vertices[baseP + 10] = -baseValue;
         controlPoints[6] = -baseValue;
         controlPoints[7] = -baseValue;
+
+        xMinOri = -0.25f;xMaxOri = 0.25f;yMinOri = -0.25f;yMaxOri = 0.25f;
+        xMin= xMinOri;xMax = xMaxOri;yMin = yMinOri;yMax = yMaxOri;
     }
 
     @Override
     public boolean isHit(float posx, float posy) {
-        if(posx<xMin || posx>xMax || posy<yMin || posy>yMax)
+        if(isOutsideBoundingBox(posx,posy))
             return false;
         for(int i=0;i<4;i++){
             if(((posx-controlPoints[2*i]) * (posy-controlPoints[2*i+1]) + (posx-controlPoints[2*i+1]) * (posy-controlPoints[2*i])) < radius*radius*scale.x*scale.y)

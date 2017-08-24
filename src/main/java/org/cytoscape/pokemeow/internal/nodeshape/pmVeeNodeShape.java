@@ -33,7 +33,7 @@ public class pmVeeNodeShape extends pmBasicNodeShape{
 
     @Override
     public boolean isHit(float posx, float posy) {
-        if (posx<xMin || posx>xMax || posy<yMin || posy>yMax)
+        if (isOutsideBoundingBox(posx,posy))
             return false;
         return super.isHit(posx,posy);
     }

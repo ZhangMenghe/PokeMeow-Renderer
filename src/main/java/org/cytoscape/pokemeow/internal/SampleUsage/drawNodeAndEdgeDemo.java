@@ -1,5 +1,6 @@
 package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
+import com.jogamp.common.nio.Buffers;
 import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.opengl.GL4;
@@ -15,7 +16,9 @@ import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
+import org.w3c.dom.NodeList;
 
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -46,12 +49,16 @@ public class drawNodeAndEdgeDemo extends Demo {
     private int nFrame = 0;
     private  long lastTime;
     private Random random;
+    private IntBuffer queryIDs;
+    private ArrayList<Integer> nodeNeedToCheck;
     private final static byte ADD_NODE = 0;
     private final static byte ADD_EDGE = 1;
     private final static byte SELECT_DELETE = 2;
     private final static byte SELECT_CHANGECOLOR = 3;
     private final static byte CHANGE_CONTROLPOINT = 4;
     private final static byte CHANGE_SRCDEST = 5;
+    private boolean afterDrag = false;
+    private int tmp = 0;
 
     @Override
     public void init(GLAutoDrawable drawable) {
@@ -74,6 +81,8 @@ public class drawNodeAndEdgeDemo extends Demo {
         edgeFactory = new pmEdgeFactory(gl4);
         NodeEdgeMap = new HashMap<>();
         random = new Random();
+
+        nodeNeedToCheck = new ArrayList();
         //////////////////////////////////////////////////////////////////
 //        pmBasicNodeShape node = nodeFactory.createNode(Type[1]);
 //        node.setOrigin(new Vector2(.0f, .0f));
@@ -82,52 +91,103 @@ public class drawNodeAndEdgeDemo extends Demo {
 //        NodeEdgeMap.put(0,new ArrayList<>());
 //        numOfNodes++;
 //        nodeList.add(node);
-        for(int i=0;i<50000;i++){
-            pmBasicNodeShape node = nodeFactory.createNode(gl4,Type[numOfNodes%10]);
-//            node.setOrigin(new Vector2(random.nextFloat() * 2-1.0f, random.nextFloat() * 2-1.0f));
-            node.setOrigin(new Vector2(.0f,.0f));
-            node.setScale(0.01f);
+//        pmBasicNodeShape nodem = nodeFactory.createNode(gl4, Type[1]);
+//        nodem.setOrigin(new Vector2(.0f, .0f));
+//        nodem.setColor(new Vector4(1.0f,.0f,.0f,1.0f));
+//        NodeEdgeMap.put(0,new ArrayList<>());
+//        numOfNodes++;
+//        nodeList.add(nodem);
+
+        for(int i=0;i<10;i++){
+            pmBasicNodeShape node = nodeFactory.createNode(Type[numOfNodes%10]);
+            node.setOrigin(new Vector2(random.nextFloat() * 2-1.0f, random.nextFloat() * 2-1.0f));
+//            node.setOrigin(new Vector2(.0f,.0f));
+            node.setScale(random.nextFloat() * 0.5f);
             node.setColor(colorList[0]);
             NodeEdgeMap.put(0,new ArrayList<>());
             numOfNodes++;
-//            if(i>100)
-//                node.setZorder(-1.0f);
+            nodeNeedToCheck.add(i);
             nodeList.add(node);
         }
-        pmBasicNodeShape node = nodeFactory.createNode(gl4, Type[1]);
-        node.setOrigin(new Vector2(.0f, .0f));
-//        node.setScale(0.5f);
-        node.setColor(new Vector4(1.0f,.0f,.0f,1.0f));
-        NodeEdgeMap.put(0,new ArrayList<>());
-        numOfNodes++;
-        node.setZorder(-1.0f);
-        nodeList.add(node);
 
-
+//        gl4.glDepthFunc( GL4.GL_LEQUAL );
         ////////////////////////////////////////////////////////////////////
         lastTime = System.currentTimeMillis();
-        gl4.glEnable(GL4.GL_DEPTH_TEST);
+        DoDepthQuery();
+    }
+
+    private void DoDepthQuery(){
+        gl4.glUseProgram(programNode);
+        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
+        gl4.glColorMask(false,false,false,false);
+        gl4.glDepthMask(false);
+        queryIDs = Buffers.newDirectIntBuffer(new int[numOfNodes]);
+        gl4.glGenQueries(numOfNodes, queryIDs);
+        IntBuffer tmp = Buffers.newDirectIntBuffer(new int[1]);
+        for (int i=0;i<numOfNodes;i++){
+            gl4.glBeginQuery(GL4.GL_SAMPLES_PASSED, queryIDs.get(i));
+
+            nodeFactory.drawNode(gl4, nodeList.get(i), gshaderParamNode, true);
+            gl4.glEndQuery(GL4.GL_SAMPLES_PASSED);
+            gl4.glGetQueryObjectiv(queryIDs.get(i), GL4.GL_QUERY_RESULT, tmp);
+            if (tmp.get(0) == 0)
+                nodeList.get(i).visible = false;
+        }
+        gl4.glColorMask(true,true,true,true);
+        gl4.glDepthMask(true);
+    }
+
+    private void DoDepthQuery(pmBasicNodeShape refNode, int refIdx){
+        gl4.glUseProgram(programNode);
+        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
+        gl4.glColorMask(false,false,false,false);
+        gl4.glDepthMask(false);
+        queryIDs = Buffers.newDirectIntBuffer(new int[numOfNodes]);
+        gl4.glGenQueries(numOfNodes, queryIDs);
+        IntBuffer tmp = Buffers.newDirectIntBuffer(new int[1]);
+        pmBasicNodeShape node;
+        for (int i=0; i<numOfNodes; i++){
+            node = nodeList.get(i);
+            if(i==refIdx)
+                continue;
+            if(refNode.isOutsideBoundingBox(node.origin.x, node.origin.y))
+                continue;
+            gl4.glBeginQuery(GL4.GL_SAMPLES_PASSED, queryIDs.get(i));
+            nodeFactory.drawNode(gl4, node, gshaderParamNode);
+            gl4.glEndQuery(GL4.GL_SAMPLES_PASSED);
+            gl4.glGetQueryObjectiv(queryIDs.get(i), GL4.GL_QUERY_RESULT, tmp);
+            if (tmp.get(0) == 0)
+                nodeList.get(i).visible = false;
+        }
+//        nodeList.get(refIdx).visible = true;
+        gl4.glColorMask(true,true,true,true);
+        gl4.glDepthMask(true);
     }
 
         @Override
     public void display(GLAutoDrawable drawable) {
-//        super.display(drawable);
-//        for (int i=0;i<numOfEdges;i++)
-//            edgeFactory.drawEdge(edgeList.get(i),gshaderParam);
         double currentTime = System.currentTimeMillis();
         nFrame++;
         if ( currentTime - lastTime >= 1000 ) { // If last prinf() was more than 1 sec ago
             // printf and reset timer
-            System.out.println(1000.0 / nFrame + "ms/frame");
+//            System.out.println(1000.0 / nFrame + "ms/frame");
             nFrame = 0;
             lastTime += 1000;
 
         }
-       gl4.glUseProgram(programNode);
-       gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
+        super.display(drawable);
+        for (int i=0;i<numOfEdges;i++)
+            edgeFactory.drawEdge(edgeList.get(i),gshaderParam);
+        gl4.glUseProgram(programNode);
 
-        for (int j=0;j<numOfNodes;j++)
-            nodeFactory.drawNode(gl4, nodeList.get(j), gshaderParamNode);
+        for(pmBasicNodeShape node: nodeList) {
+            if (node.visible){
+                nodeFactory.drawNode(gl4, node, gshaderParamNode, true);
+                tmp++;
+            }
+        }
+//        System.out.println(tmp);
+        tmp = 0;
     }
 
     @Override
@@ -153,8 +213,8 @@ public class drawNodeAndEdgeDemo extends Demo {
         if(mouseState == ADD_EDGE)
             activeEdge.resetSrcAndDest(posx,posy,false);
 
-//        if (reactNodeId != -1) {
-//            nodeList.get(reactNodeId).setOrigin(new Vector2(posx, posy));
+        if (reactNodeId != -1) {
+            nodeList.get(reactNodeId).setOrigin(new Vector2(posx, posy));
 //            for (Integer index : NodeEdgeMap.get(reactNodeId)) {
 //                //change src of edge
 //                if (index >= 0)
@@ -162,8 +222,8 @@ public class drawNodeAndEdgeDemo extends Demo {
 //                else//change dest
 //                    edgeList.get(-index).resetSrcAndDest(posx, posy, 0);
 //            }
-//        }
-
+        }
+        afterDrag = true;
     }
 
     private int hitNode(float posx, float posy) {
@@ -172,7 +232,6 @@ public class drawNodeAndEdgeDemo extends Demo {
             if (node.isHit(posx, posy)) {
                 node.setColor(colorList[count%2]);
                 count++;
-                node.dirty = true;
                 return idx;
             }
             idx++;
@@ -228,12 +287,12 @@ public class drawNodeAndEdgeDemo extends Demo {
             case ADD_NODE:
                 numOfNodes++;
                 pmBasicNodeShape node = nodeFactory.createNode(Type[numOfNodes%10]);
-                if(numOfNodes == 1)
-                    node.isfirst = true;
                 node.setOrigin(new Vector2(posx, posy));
                 node.setColor(colorList[numOfNodes%2]);
                 node.setScale(0.5f);
+                node.visible = true;
                 nodeList.add(node);
+                DoDepthQuery(node, numOfNodes-1);
                 break;
             case SELECT_DELETE:
                 checkAndDelete(posx, posy);
@@ -262,6 +321,14 @@ public class drawNodeAndEdgeDemo extends Demo {
     }
     @Override
     public void mouseReleased(MouseEvent e){
+        if(afterDrag && reactNodeId!=-1){
+            DoDepthQuery(nodeList.get(reactNodeId), reactNodeId);
+            reactNodeId = -1;
+            afterDrag = false;
+            System.out.println("Drag Release Query");
+        }
+
+
     }
 
 }
