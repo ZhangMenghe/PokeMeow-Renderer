@@ -8,6 +8,7 @@ import com.jogamp.opengl.util.texture.Texture;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
+import main.java.org.cytoscape.pokemeow.internal.rendering.pmRenderToTextureAA;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmRenderToTexture;
@@ -21,7 +22,7 @@ public class renderToTextureDemo extends Demo {
     private pmBasicNodeShape mtriangle;
     private pmNodeShapeFactory factory;
     private pmRenderToTexture renderer_t;
-
+    private pmRenderToTextureAA renderer_tAA;
     @Override
     public void init(GLAutoDrawable drawable) {
         super.init(drawable);

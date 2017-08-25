@@ -94,16 +94,16 @@ public class drawNodesDemo extends Demo {
         textureIds = new ArrayList<Integer>();
         for(int i=0;i<textureNodeIndices.size();i++)
             textureIds.add(0);
-//        renderer_t = new pmRenderToTexture(gl4);
+        renderer_t = new pmRenderToTexture(gl4);
     }
 
     @Override
     public void display(GLAutoDrawable drawable) {
         super.display(drawable);
-//        gl4.glUseProgram(programList[0]);
-//        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
-//        if(changed){
-//            renderer_t.RenderToTexturePrepare(gl4);
+        gl4.glUseProgram(programList[0]);
+        gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
+        if(changed){
+            renderer_t.RenderToTexturePrepare(gl4);
 
             nodesFactory.drawNodeList(gl4,NodeList,
                     programList,
@@ -113,9 +113,9 @@ public class drawNodesDemo extends Demo {
                     flatNodeIndices,
                     textureNodeIndices,
                     textureIds);
-//            changed = false;
-//        }
-//        renderer_t.RenderToScreen(gl4);
+            changed = false;
+        }
+        renderer_t.RenderToScreen(gl4);
     }
 
     @Override
@@ -125,11 +125,11 @@ public class drawNodesDemo extends Demo {
     }
 
     public void reSetMatrix(boolean viewChanged){
-//        if(viewChanged){
-//            viewMatrix = Matrix4.mult(lastViewMatrix, viewMatrix);
-//            lastViewMatrix = viewMatrix;
-//        }
-//        renderer_t.canvas.setViewMatrix(Matrix4.mult(lastViewMatrix, zoomMatrix));
+        if(viewChanged){
+            viewMatrix = Matrix4.mult(lastViewMatrix, viewMatrix);
+            lastViewMatrix = viewMatrix;
+        }
+        renderer_t.canvas.setViewMatrix(Matrix4.mult(lastViewMatrix, zoomMatrix));
     }
 
     @Override
