@@ -37,7 +37,7 @@ public class drawNodeAndEdgeDemo extends Demo {
             new Vector4(0.69f, 0.88f, 0.9f, 1.0f)
     };
     private byte[] Type = {0,1,2,3,4,5,6,7,8,9,10,11,12};
-    private byte mouseState = 0;
+    private byte mouseState = 3;
     private Integer reactNodeId = -1;
     private pmEdge activeEdge;
     private int numOfNodes = 0;
@@ -98,11 +98,11 @@ public class drawNodeAndEdgeDemo extends Demo {
 //        numOfNodes++;
 //        nodeList.add(nodem);
 
-        for(int i=0;i<10;i++){
+        for(int i=0;i<1;i++){
             pmBasicNodeShape node = nodeFactory.createNode(Type[numOfNodes%10]);
-            node.setOrigin(new Vector2(random.nextFloat() * 2-1.0f, random.nextFloat() * 2-1.0f));
-//            node.setOrigin(new Vector2(.0f,.0f));
-            node.setScale(random.nextFloat() * 0.5f);
+//            node.setOrigin(new Vector2(random.nextFloat() * 2-1.0f, random.nextFloat() * 2-1.0f));
+            node.setOrigin(new Vector2(.0f,.0f));
+//            node.setScale(random.nextFloat() * 0.5f);
             node.setColor(colorList[0]);
             NodeEdgeMap.put(0,new ArrayList<>());
             numOfNodes++;
@@ -215,13 +215,13 @@ public class drawNodeAndEdgeDemo extends Demo {
 
         if (reactNodeId != -1) {
             nodeList.get(reactNodeId).setOrigin(new Vector2(posx, posy));
-//            for (Integer index : NodeEdgeMap.get(reactNodeId)) {
-//                //change src of edge
-//                if (index >= 0)
-//                    edgeList.get(index).resetSrcAndDest(posx, posy, 1);
-//                else//change dest
-//                    edgeList.get(-index).resetSrcAndDest(posx, posy, 0);
-//            }
+            for (Integer index : NodeEdgeMap.get(reactNodeId)) {
+                //change src of edge, >0 source, <0 dest
+                if (index >= 0)
+                    edgeList.get(index).resetSrcAndDest(posx, posy, true);
+                else//change dest
+                    edgeList.get(-index).resetSrcAndDest(posx, posy, false);
+            }
         }
         afterDrag = true;
     }
@@ -268,7 +268,7 @@ public class drawNodeAndEdgeDemo extends Demo {
                 break;
             case ADD_EDGE:
                 System.out.println("Click to add an edge");
-                activeEdge = edgeFactory.createEdge(Type[numOfEdges%13], pmLineVisual.LINE_CUBIC_CURVE, .0f,.0f,posx,posy,false);
+                activeEdge = edgeFactory.createEdge(Type[numOfEdges%13], pmLineVisual.LINE_STRAIGHT, .0f,.0f,posx,posy,false);
                 edgeList.add(activeEdge);
                 if(needFirstCheck){
                     if(edgeList.get(numOfEdges)._destArrow != null){

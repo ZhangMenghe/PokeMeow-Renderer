@@ -63,7 +63,7 @@ public class pmRenderToTexture {
         textureID = tmpHandle[0];
         gl4.glBindTexture(GL4.GL_TEXTURE_2D, textureID);
         gl4.glTexImage2D(GL4.GL_TEXTURE_2D, 0, GL.GL_RGB,textureWidth,textureHeight,0,GL4.GL_RGB, GL4.GL_UNSIGNED_BYTE,null);
-        gl4.glTexParameteri(GL4.GL_TEXTURE_2D, GL4.GL_TEXTURE_MAG_FILTER,GL4.GL_LINEAR);
+        gl4.glTexParameteri(GL4.GL_TEXTURE_2D, GL4.GL_TEXTURE_MAG_FILTER, GL4.GL_LINEAR);
         gl4.glTexParameteri(GL4.GL_TEXTURE_2D, GL4.GL_TEXTURE_MIN_FILTER, GL4.GL_LINEAR);
 
         gl4.glFramebufferTexture2D(GL4.GL_FRAMEBUFFER, GL4.GL_COLOR_ATTACHMENT0, GL4.GL_TEXTURE_2D, textureID, 0);

@@ -1,9 +1,15 @@
 package main.java.org.cytoscape.pokemeow.internal.SampleUsage;
 
+import com.jogamp.newt.event.MouseEvent;
 import com.jogamp.opengl.GLAutoDrawable;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
+import main.java.org.cytoscape.pokemeow.internal.commonUtil;
+import main.java.org.cytoscape.pokemeow.internal.line.pmAnchor;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
+import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmSimpleNodesFactory;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmShaderParams;
 import main.java.org.cytoscape.pokemeow.internal.utils.GLSLProgram;
 
@@ -23,24 +29,18 @@ public class simpleTriangleDemo extends Demo{
                 Demo.class.getResource("shader/flat.frag"));
         gshaderParam = new pmShaderParams(gl4, program);
         factory = new pmNodeShapeFactory(gl4);
-        mtriangle = factory.createNode(gl4,pmNodeShapeFactory.SHAPE_RECTANGLE);
-        mtriangle.setColor(new Vector4(1.0f,.0f,.0f,1.0f),
-                            new Vector4(.0f,.0f,1.0f,1.0f),(byte)3);
+        mtriangle = factory.createNode(gl4, pmNodeShapeFactory.SHAPE_TRIANGLE);
+        mtriangle.setColor(new Vector4(1.0f,.0f,.0f,1.0f));
     }
 
     @Override
     public void display(GLAutoDrawable drawable) {
         super.display(drawable);
-        factory.drawNode(gl4,mtriangle,gshaderParam);
+        factory.drawNode(gl4, mtriangle, gshaderParam);
     }
 
     @Override
     public void dispose(GLAutoDrawable drawable) {
         mtriangle.gsthForDraw.dispose(gl4);
-    }
-
-    @Override
-    public void reSetMatrix(boolean viewChanged){
-        mtriangle.setViewMatrix(viewMatrix);
     }
 }

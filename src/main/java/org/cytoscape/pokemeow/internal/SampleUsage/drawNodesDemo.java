@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class drawNodesDemo extends Demo {
-    private pmShaderParams gshaderParam;
+    private pmShaderParams flatShaderParam;
+    private pmShaderParams texShaderParam;
     private int[] programList;
     private pmBasicNodeShape[] NodeList;
 
@@ -54,7 +55,9 @@ public class drawNodesDemo extends Demo {
                 null,null,null,
                 Demo.class.getResource("shader/texture.frag"));
 
-        gshaderParam = new pmShaderParams(gl4, programList[0]);
+        flatShaderParam = new pmShaderParams(gl4, programList[0]);
+        texShaderParam = new pmShaderParams(gl4, programList[1]);
+
 
         int n=0;
         for(byte idx = 0;idx<10;idx++)
@@ -67,8 +70,7 @@ public class drawNodesDemo extends Demo {
                 int idx = 3*x+y;
                 NodeList[idx].setOrigin(new Vector3(cx, cy, .0f));
                 NodeList[idx].setScale(0.5f);
-//                NodeList[idx].useTexture = true;
-//                NodeList[idx].setDefaultTexcoord(gl4);
+                NodeList[idx].useTexture = true;
             }
         }
         //test zOrder:the less z value the more front position
@@ -79,8 +81,9 @@ public class drawNodesDemo extends Demo {
         NodeList[9].setOrigin(new Vector3(.0f,0.8f,.0f));
         NodeList[9].setRotation((float) Math.PI/8);
         NodeList[9].setScale(0.5f);
+        NodeList[9].setColor(new Vector4(1.0f,.0f,.0f,1.0f));
 
-        for(int i=0;i<numOfItems;i++){
+        for(int i=0; i<numOfItems; i++){
             if(NodeList[i].useTexture)
                 textureNodeIndices.add(i);
             else
@@ -89,7 +92,6 @@ public class drawNodesDemo extends Demo {
         textureList.add(texture);
         textureList.add(texture2);
         textureIds = new ArrayList<Integer>();
-        Random rand  = new Random();
         for(int i=0;i<textureNodeIndices.size();i++)
             textureIds.add(0);
 //        renderer_t = new pmRenderToTexture(gl4);
@@ -105,7 +107,8 @@ public class drawNodesDemo extends Demo {
 
             nodesFactory.drawNodeList(gl4,NodeList,
                     programList,
-                    gshaderParam,
+                    texShaderParam,
+                    flatShaderParam,
                     textureList,
                     flatNodeIndices,
                     textureNodeIndices,
@@ -122,11 +125,11 @@ public class drawNodesDemo extends Demo {
     }
 
     public void reSetMatrix(boolean viewChanged){
-        if(viewChanged){
-            viewMatrix = Matrix4.mult(lastViewMatrix, viewMatrix);
-            lastViewMatrix = viewMatrix;
-        }
-        renderer_t.canvas.setViewMatrix(Matrix4.mult(lastViewMatrix, zoomMatrix));
+//        if(viewChanged){
+//            viewMatrix = Matrix4.mult(lastViewMatrix, viewMatrix);
+//            lastViewMatrix = viewMatrix;
+//        }
+//        renderer_t.canvas.setViewMatrix(Matrix4.mult(lastViewMatrix, zoomMatrix));
     }
 
     @Override

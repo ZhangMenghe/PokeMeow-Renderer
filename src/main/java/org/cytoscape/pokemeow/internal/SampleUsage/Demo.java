@@ -19,13 +19,15 @@ import java.io.IOException;
  */
 public class Demo implements GLEventListener, MouseListener, KeyListener {
     public Matrix4 viewMatrix = Matrix4.identity();
-    public Matrix4 zoomMatrix= Matrix4.identity();
+    public Matrix4 zoomMatrix = Matrix4.identity();
     protected GL4 gl4;
     protected int numOfItems;
     protected pmShaderParams gshaderParam;
     protected int program;
     protected Vector2 lastMousePosition = new Vector2(.0f, .0f);
     protected int times = 0;
+    protected Vector2 viewportSize = new Vector2(600,600);
+    protected Vector2 lastviewportSize = new Vector2(600,600);
     @Override
     public void init(GLAutoDrawable drawable){
         gl4 = drawable.getGL().getGL4();
@@ -34,11 +36,18 @@ public class Demo implements GLEventListener, MouseListener, KeyListener {
     public void display(GLAutoDrawable drawable){
         gl4.glUseProgram(program);
         gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
+
     }
     @Override
     public void dispose(GLAutoDrawable drawable){}
+
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+        lastviewportSize.x = viewportSize.x;
+        lastviewportSize.y = viewportSize.y;
+        viewportSize.x = width;
+        viewportSize.y = height;
+        reSetMatrix(true);
         gl4.glClearColor(0.2f, 0.2f, 0.2f,1.0f);
         gl4.glViewport(x, y, width, height);
     }
@@ -76,7 +85,7 @@ public class Demo implements GLEventListener, MouseListener, KeyListener {
 
 //        final mousePickupDemo demo = new mousePickupDemo();
 //        final simpleTriangleDemo demo = new simpleTriangleDemo();
-//        final drawNodesDemo demo = new drawNodesDemo();
+        final drawNodesDemo demo = new drawNodesDemo();
 //        final drawArrowDemo demo = new drawArrowDemo();
 //        final drawCurveDemo demo = new drawCurveDemo();
 //        final drawLineDemo demo = new drawLineDemo();
@@ -84,8 +93,8 @@ public class Demo implements GLEventListener, MouseListener, KeyListener {
 //        final TextRendererDemo demo = new TextRendererDemo();
 //        final drawEdgeDemo demo = new drawEdgeDemo();
 //        final edgeHitDemo demo = new edgeHitDemo();
-        final drawNodeAndEdgeDemo demo = new drawNodeAndEdgeDemo();
-
+//        final drawNodeAndEdgeDemo demo = new drawNodeAndEdgeDemo();
+//        final drawSimpleNodesDemo demo = new drawSimpleNodesDemo();
         glWindow.addGLEventListener(demo);
         glWindow.addMouseListener(demo);
         glWindow.addKeyListener(demo);
