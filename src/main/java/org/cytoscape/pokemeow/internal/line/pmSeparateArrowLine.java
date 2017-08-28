@@ -212,8 +212,6 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
         if(curveType == LINE_STRAIGHT) {
             if (destPos.x - srcPos.x < 0)
                 theta -= 3.14f;
-
-
             float shrink = (destPos.x - srcPos.x) / (numOfVertices - 1);
             int numOfPoints = 3 * numOfVertices;
             for (int i = 0, n = 0; i < numOfPoints; i += 3, n++) {
@@ -242,5 +240,15 @@ public class pmSeparateArrowLine extends pmPatternLineBasic {
                 patternList[i].setOrigin(new Vector3(vertices[3 * n], vertices[3 * n + 1], zorder));
             }
         }
+    }
+
+    public void setViewMatrix(Matrix4 new_viewMatrix){
+        viewMatrix = new_viewMatrix;
+        Vector2 tmpsrc = new Vector2(srcPos.x, srcPos.y);
+        Vector2 tmpdest = new Vector2(destPos.x, destPos.y);
+        Vector4 source = Vector4.matrixMult(viewMatrix,new Vector4(srcPos.x, srcPos.y,.0f,1.0f));
+        Vector4 dest = Vector4.matrixMult(viewMatrix,new Vector4(destPos.x, destPos.y,.0f,1.0f));
+        resetSrcAndDest(source.x,source.y,dest.x,dest.y);
+        srcPos = tmpsrc;destPos=tmpdest;
     }
 }

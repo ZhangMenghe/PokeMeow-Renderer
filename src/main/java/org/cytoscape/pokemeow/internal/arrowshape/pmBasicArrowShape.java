@@ -28,6 +28,7 @@ public abstract class pmBasicArrowShape {
     public FloatBuffer data_buff;
     public IntBuffer indice_buff;
     public Vector3 origin = new Vector3(.0f,.0f,.0f);
+    public Matrix4 viewMatrix = Matrix4.identity();
     public Matrix4 modelMatrix = Matrix4.identity();
     public Matrix4 rotMatrix = Matrix4.identity();
     public Vector3 scale = new Vector3(1.0f,1.0f,1.0f);
@@ -147,6 +148,11 @@ public abstract class pmBasicArrowShape {
         gl4.glDeleteBuffers(2, objects,0);
         gl4.glDeleteVertexArrays(1, objects, VAO);
     }
+
+    public void setViewMatrix(Matrix4 new_viewMatrix){
+        viewMatrix = new_viewMatrix;
+    }
+
 //    public boolean isHit(float posx, float posy){
 //        return !(posx<xMin || posx>xMax || posy<yMin || posy>yMax);
 //    }

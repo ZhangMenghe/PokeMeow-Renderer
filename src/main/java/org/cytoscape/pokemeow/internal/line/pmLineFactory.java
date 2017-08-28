@@ -122,6 +122,7 @@ public class pmLineFactory {
             return;
         }
         gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
+        gl4.glUniformMatrix4fv(gshaderParam.mat4_viewMatrix, 1,false, Buffers.newDirectFloatBuffer(line.viewMatrix.asArrayCM()));
         gl4.glUniform4f(gshaderParam.vec4_color, line.color.x, line.color.y, line.color.z,line.color.w);
         gl4.glBindVertexArray(line.objects[line.VAO]);
 
@@ -153,6 +154,7 @@ public class pmLineFactory {
             return;
         }
         gl4.glUniformMatrix4fv(gshaderParam.mat4_modelMatrix, 1,false, Buffers.newDirectFloatBuffer(line.modelMatrix.asArrayCM()));
+        gl4.glUniformMatrix4fv(gshaderParam.mat4_viewMatrix, 1,false, Buffers.newDirectFloatBuffer(line.viewMatrix.asArrayCM()));
         gl4.glUniform4f(gshaderParam.vec4_color, line.color.x, line.color.y, line.color.z,line.color.w);
         gl4.glBindVertexArray(edgeBuffer.objects[edgeBuffer.VAO]);
         if(line.dirty){

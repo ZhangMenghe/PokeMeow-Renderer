@@ -205,4 +205,9 @@ public class pmParallelLine extends pmLineVisual {
             plineList[1]._curveOffset.x = plineList[0]._curveOffset.x;
             plineList[1]._curveOffset.y = plineList[0]._curveOffset.y;
     }
+
+    public void setViewMatrix(Matrix4 new_viewMatrix){
+        plineList[0].viewMatrix = new_viewMatrix;
+        plineList[1].viewMatrix = new_viewMatrix;
+    }
 }

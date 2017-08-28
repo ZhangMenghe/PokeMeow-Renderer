@@ -10,7 +10,7 @@ uniform int gradColorBorder;
 
 out vec4 o_color;
 void main() {
-    gl_Position = modelMatrix*viewMatrix*vec4(position, 1.0f);
+    gl_Position = viewMatrix*modelMatrix*vec4(position, 1.0f);
     switch(gradColorBorder){
         case -1:
             o_color = vcolor;

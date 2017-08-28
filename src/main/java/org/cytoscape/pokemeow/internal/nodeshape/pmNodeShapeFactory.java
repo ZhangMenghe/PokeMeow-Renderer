@@ -159,35 +159,35 @@ public class pmNodeShapeFactory {
         gl4.glBindVertexArray(0);
     }
 
-    public void drawNodeList(GL4 gl4, pmBasicNodeShape[] NodeList, int[]programList, pmShaderParams gshaderParam, Texture texture, ArrayList<Integer>flatindices,ArrayList<Integer>textureindices){
+    public void drawNodeList(GL4 gl4, pmBasicNodeShape[] NodeList, int[]programList, pmShaderParams texShaderParam,pmShaderParams flatShaderParam, Texture texture, ArrayList<Integer>flatindices,ArrayList<Integer>textureindices){
         gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
         if(flatindices!=null) {
             gl4.glUseProgram(programList[0]);
             for (int i : flatindices)
-                drawNode(gl4, NodeList[i], gshaderParam);
+                drawNode(gl4, NodeList[i], flatShaderParam);
         }
         if(textureindices != null){
             gl4.glUseProgram(programList[1]);
             for(int i :textureindices)
-                drawNodeWithTexture(gl4, NodeList[i], gshaderParam, texture);
+                drawNodeWithTexture(gl4, NodeList[i], texShaderParam, texture);
         }
     }
 
-    public void drawNodeList(GL4 gl4, pmBasicNodeShape[] NodeList, int[]programList, pmShaderParams gshaderParam,
+    public void drawNodeList(GL4 gl4, pmBasicNodeShape[] NodeList, int[]programList, pmShaderParams texShaderParam,pmShaderParams flatShaderParam,
                              ArrayList<Texture> textureList, ArrayList<Integer>flatindices,ArrayList<Integer>textureindices,
                              ArrayList<Integer> textureIdx){
         gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
         if(flatindices!=null) {
             gl4.glUseProgram(programList[0]);
             for (int i : flatindices)
-                drawNode(gl4, NodeList[i], gshaderParam);
+                drawNode(gl4, NodeList[i], flatShaderParam);
         }
         if(textureindices != null){
             gl4.glUseProgram(programList[1]);
             for(int i=0;i<textureindices.size();i++){
                 int nodeId = textureindices.get(i);
                 int texId = textureIdx.get(i);
-                drawNodeWithTexture(gl4, NodeList[nodeId], gshaderParam, textureList.get(texId));
+                drawNodeWithTexture(gl4, NodeList[nodeId], texShaderParam, textureList.get(texId));
             }
 
         }

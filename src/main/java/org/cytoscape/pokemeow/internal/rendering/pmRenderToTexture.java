@@ -50,7 +50,7 @@ public class pmRenderToTexture {
         textureshaderParam = new pmShaderParams(gl4, programTexture);
         factory = new pmNodeShapeFactory(gl4);
         canvas = factory.createNode(gl4, pmNodeShapeFactory.SHAPE_RECTANGLE);
-//        canvas.setDefaultTexcoord(gl4);
+        canvas.useTexture = true;
         canvas.setScale(4.0f);
         canvas.setOrigin(new Vector3(0,0,0));
         int[] tmpHandle = new int[1];
@@ -63,7 +63,7 @@ public class pmRenderToTexture {
         textureID = tmpHandle[0];
         gl4.glBindTexture(GL4.GL_TEXTURE_2D, textureID);
         gl4.glTexImage2D(GL4.GL_TEXTURE_2D, 0, GL.GL_RGB,textureWidth,textureHeight,0,GL4.GL_RGB, GL4.GL_UNSIGNED_BYTE,null);
-        gl4.glTexParameteri(GL4.GL_TEXTURE_2D, GL4.GL_TEXTURE_MAG_FILTER,GL4.GL_LINEAR);
+        gl4.glTexParameteri(GL4.GL_TEXTURE_2D, GL4.GL_TEXTURE_MAG_FILTER, GL4.GL_LINEAR);
         gl4.glTexParameteri(GL4.GL_TEXTURE_2D, GL4.GL_TEXTURE_MIN_FILTER, GL4.GL_LINEAR);
 
         gl4.glFramebufferTexture2D(GL4.GL_FRAMEBUFFER, GL4.GL_COLOR_ATTACHMENT0, GL4.GL_TEXTURE_2D, textureID, 0);
@@ -101,9 +101,8 @@ public class pmRenderToTexture {
 
             canvas.dirty = false;
         }
+        gl4.glDrawArrays(GL4.GL_TRIANGLE_FAN, 0, canvas.numOfVertices);
 
-        gl4.glBindBuffer(GL_ARRAY_BUFFER, canvas.gsthForDraw.objects[canvas.gsthForDraw.EBO]);
-        gl4.glDrawElements(GL4.GL_TRIANGLES,canvas.gsthForDraw.numOfIndices, GL.GL_UNSIGNED_INT,0);
         //unbind
         gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl4.glBindVertexArray(0);

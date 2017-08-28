@@ -55,7 +55,7 @@ public class pmRenderToTextureAA {
         textureshaderParam = new pmShaderParams(gl4, programTexture);
         factory = new pmNodeShapeFactory(gl4);
         canvas = factory.createNode(gl4, pmNodeShapeFactory.SHAPE_RECTANGLE);
-//        canvas.setDefaultTexcoord(gl4);
+        canvas.useTexture = true;
         canvas.setScale(8.0f);
         canvas.setOrigin(new Vector3(0,0,0));
         int[] tmpHandle = new int[1];
@@ -118,7 +118,7 @@ public class pmRenderToTextureAA {
     public void RenderToScreen(GL4 gl4){
         gl4.glBindFramebuffer(GL4.GL_FRAMEBUFFER, 0);
         gl4.glUseProgram(programTexture);
-        gl4.glClearColor(1.0f,1.0f,1.0f,1.0f);
+        gl4.glClearColor(0.2f, 0.2f, 0.2f,1.0f);
         gl4.glClear(GL4.GL_DEPTH_BUFFER_BIT | GL4.GL_COLOR_BUFFER_BIT);
         gl4.glDisable(GL4.GL_MULTISAMPLE);
         gl4.glDisable(GL4.GL_DEPTH_TEST);
@@ -132,9 +132,7 @@ public class pmRenderToTextureAA {
         //bind buffer
         gl4.glBindVertexArray(canvas.gsthForDraw.objects[canvas.gsthForDraw.VAO]);
         gl4.glBindBuffer(GL_ARRAY_BUFFER, canvas.gsthForDraw.objects[canvas.gsthForDraw.VBO]);
-        gl4.glBindBuffer(GL_ARRAY_BUFFER, canvas.gsthForDraw.objects[canvas.gsthForDraw.EBO]);
-
-        gl4.glDrawElements(GL4.GL_TRIANGLES,canvas.gsthForDraw.numOfIndices, GL.GL_UNSIGNED_INT,0);
+        gl4.glDrawArrays(GL4.GL_TRIANGLE_FAN, 0, canvas.numOfVertices);
         //unbind
         gl4.glBindBuffer(GL.GL_ARRAY_BUFFER,0);
         gl4.glBindVertexArray(0);

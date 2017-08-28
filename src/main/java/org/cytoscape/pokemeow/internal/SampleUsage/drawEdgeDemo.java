@@ -51,7 +51,7 @@ public class drawEdgeDemo extends Demo{
         int n = 0;
         for(byte i=0;i<numOfItems;i++) {
             float cy = -0.6f + 0.1f * n;
-            edgeList[n++] = new pmEdge(gl4, i, pmLineVisual.LINE_QUADRIC_CURVE, i,i,
+            edgeList[n++] = new pmEdge(gl4, i, pmLineVisual.LINE_STRAIGHT, i,i,
                        -0.5f,cy,0.5f,cy, true);
         }
 //        edgeList[0] = new pmEdge(gl4, pmLineFactory.LINE_FORWARD_SLASH, pmLineVisual.LINE_STRAIGHT, pmArrowShapeFactory.SHAPE_ARROWHEAD,pmArrowShapeFactory.SHAPE_ARROWHEAD,
@@ -183,5 +183,15 @@ public class drawEdgeDemo extends Demo{
     public void mouseReleased(MouseEvent e){
         mouseState = -1;
     }
+    @Override
+    public void setReshapeMatrix(){
+        for(pmEdge edge: edgeList){
+            edge._line.setViewMatrix(viewMatrix);
+            if(edge._srcArrow != null)
+                edge._srcArrow.setViewMatrix(viewMatrix);
+            if(edge._destArrow != null)
+                edge._destArrow.setViewMatrix(viewMatrix);
+        }
 
+    }
 }

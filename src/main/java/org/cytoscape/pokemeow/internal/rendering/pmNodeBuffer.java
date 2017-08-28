@@ -1,11 +1,7 @@
 package main.java.org.cytoscape.pokemeow.internal.rendering;
 
-import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
-
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
 
 /**
  * Created by ZhangMenghe on 2017/8/4.
@@ -26,7 +22,7 @@ public class pmNodeBuffer {
         gl4.glBufferData(GL.GL_ARRAY_BUFFER, capacity, null, GL.GL_DYNAMIC_DRAW);
 
         gl4.glEnableVertexAttribArray(0);
-        gl4.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 3*Float.BYTES, 0);
+        gl4.glVertexAttribPointer(0, 3, GL.GL_FLOAT, false, 12, 0);
 
 //        gl4.glEnableVertexAttribArray(1);
 //        gl4.glVertexAttribPointer(1, 4, GL.GL_FLOAT, false, 7*Float.BYTES, 3*Float.BYTES);

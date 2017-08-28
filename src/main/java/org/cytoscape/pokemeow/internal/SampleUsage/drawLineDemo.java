@@ -14,7 +14,6 @@ import main.java.org.cytoscape.pokemeow.internal.line.pmLineFactory;
 public class drawLineDemo extends Demo {
     private pmLineVisual[] lineList;
     private pmLineFactory factory;
-
     @Override
     public void init(GLAutoDrawable drawable) {
         super.init(drawable);
@@ -44,7 +43,6 @@ public class drawLineDemo extends Demo {
     @Override
     public void display(GLAutoDrawable drawable) {
         super.display(drawable);
-        factory.drawLineList(gl4, lineList, gshaderParam);
     }
 
     public void reSetMatrix(boolean viewChanged){
