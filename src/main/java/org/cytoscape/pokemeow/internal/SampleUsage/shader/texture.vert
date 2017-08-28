@@ -6,6 +6,6 @@ uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 
 void main() {
-	 gl_Position = modelMatrix*viewMatrix*vec4(position, 1.0f);
+	 gl_Position = viewMatrix* modelMatrix*vec4(position, 1.0f);
 	 TexCoord = vec2(position.x*2+0.5, position.y*2+0.5);
  }

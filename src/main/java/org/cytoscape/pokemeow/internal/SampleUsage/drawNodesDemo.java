@@ -32,7 +32,7 @@ public class drawNodesDemo extends Demo {
     private ArrayList<Integer> textureNodeIndices=new ArrayList<Integer>();
     public pmRenderToTexture renderer_t;
     private boolean changed = true;
-    private Matrix4 lastViewMatrix = Matrix4.identity();
+
 
     @Override
     public void init(GLAutoDrawable drawable) {
@@ -94,7 +94,7 @@ public class drawNodesDemo extends Demo {
         textureIds = new ArrayList<Integer>();
         for(int i=0;i<textureNodeIndices.size();i++)
             textureIds.add(0);
-        renderer_t = new pmRenderToTexture(gl4);
+        renderer_t = new pmRenderToTexture(gl4, (int)viewportSize.x, (int)viewportSize.y);
     }
 
     @Override
@@ -124,18 +124,22 @@ public class drawNodesDemo extends Demo {
             NodeList[i].gsthForDraw.dispose(gl4);
     }
 
+    @Override
     public void reSetMatrix(boolean viewChanged){
-        if(viewChanged){
-            viewMatrix = Matrix4.mult(lastViewMatrix, viewMatrix);
-            lastViewMatrix = viewMatrix;
-        }
+        super.reSetMatrix(viewChanged);
         renderer_t.canvas.setViewMatrix(Matrix4.mult(lastViewMatrix, zoomMatrix));
+    }
+
+    @Override
+    public void setReshapeMatrix(){
+        for(pmBasicNodeShape node: NodeList)
+            node.setViewMatrix(viewMatrix);
     }
 
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         super.reshape(drawable, x, y, width, height);
-//        renderer_t = new pmRenderToTexture(gl4,width,height);//change to Syn?
-//        changed = true;
+        renderer_t = new pmRenderToTexture(gl4,width,height);//change to Syn?
+        changed = true;
     }
 }

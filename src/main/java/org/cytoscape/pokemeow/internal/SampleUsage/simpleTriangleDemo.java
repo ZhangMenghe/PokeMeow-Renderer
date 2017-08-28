@@ -40,6 +40,13 @@ public class simpleTriangleDemo extends Demo{
     }
 
     @Override
+    public void reSetMatrix(boolean viewChanged){
+    }
+    @Override
+    public void setReshapeMatrix(){
+        mtriangle.setViewMatrix(viewMatrix);
+    }
+    @Override
     public void dispose(GLAutoDrawable drawable) {
         mtriangle.gsthForDraw.dispose(gl4);
     }

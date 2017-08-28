@@ -28,6 +28,7 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.math.FloatUtil;
+import main.java.org.cytoscape.pokemeow.internal.commonUtil;
 
 /**
  * A viewport takes care of initializing OpenGL, creating a visible control,
@@ -201,17 +202,10 @@ public class Viewport implements GLEventListener, MouseListener, MouseMotionList
 	 * @param height New viewport height
 	 */
 	@Override
-	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) 
-	{
-		gl = drawable.getGL().getGL4();
-		
-		gl.glViewport(x, y, width, height);
-
-		Vector2 newRawSize = new Vector2(width, height);
-		ViewportResizedEvent e = new ViewportResizedEvent(newRawSize, Vector2.scalarMult(scaleDPI, newRawSize));
-		invokeViewportReshapeEvent(drawable, e);
+	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+		demo.reshape(drawable,x,y,width,height);
 	}
-	
+
 	/**
 	 * Forces the viewport to redraw its contents.
 	 */

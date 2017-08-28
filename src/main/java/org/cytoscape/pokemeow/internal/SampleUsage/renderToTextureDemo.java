@@ -5,7 +5,10 @@ import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.util.texture.Texture;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Matrix4;
+import main.java.org.cytoscape.pokemeow.internal.algebra.Vector3;
 import main.java.org.cytoscape.pokemeow.internal.algebra.Vector4;
+import main.java.org.cytoscape.pokemeow.internal.commonUtil;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmBasicNodeShape;
 import main.java.org.cytoscape.pokemeow.internal.nodeshape.pmNodeShapeFactory;
 import main.java.org.cytoscape.pokemeow.internal.rendering.pmRenderToTextureAA;
@@ -23,6 +26,7 @@ public class renderToTextureDemo extends Demo {
     private pmNodeShapeFactory factory;
     private pmRenderToTexture renderer_t;
     private pmRenderToTextureAA renderer_tAA;
+    private boolean changed = true;
     @Override
     public void init(GLAutoDrawable drawable) {
         super.init(drawable);
@@ -43,15 +47,32 @@ public class renderToTextureDemo extends Demo {
     @Override
     public void display(GLAutoDrawable drawable) {
         super.display(drawable);
-        renderer_t.RenderToTexturePrepare(gl4);
 
-        gl4.glUseProgram(program);
-        factory.drawNode(gl4,mtriangle,gshaderParam);
-
+        if(changed){
+            renderer_t.RenderToTexturePrepare(gl4);
+            gl4.glUseProgram(program);
+            factory.drawNode(gl4,mtriangle,gshaderParam);
+            changed = false;
+        }
         renderer_t.RenderToScreen(gl4);
     }
+
+    @Override
     public void reSetMatrix(boolean viewChanged){
+        super.reSetMatrix(viewChanged);
+        renderer_t.canvas.setViewMatrix(Matrix4.mult(lastViewMatrix, zoomMatrix));
+    }
+
+    @Override
+    public void setReshapeMatrix(){
         mtriangle.setViewMatrix(viewMatrix);
+    }
+
+    @Override
+    public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+        super.reshape(drawable, x, y, width, height);
+        renderer_t = new pmRenderToTexture(gl4, width, height);//change to Syn?
+        changed = true;
     }
 
     @Override

@@ -58,9 +58,6 @@ public class drawSimpleNodesDemo extends Demo{
 
     @Override
     public void reSetMatrix(boolean viewChanged){
-//        viewMatrix = Matrix4.mult(viewMatrix, zoomMatrix);
-//        zoomMatrix = Matrix4.scale(new Vector3(lastviewportSize.x/viewportSize.x,lastviewportSize.y/viewportSize.y,1.0f));
-//        mtriangle.setViewMatrix(Matrix4.mult(viewMatrix, zoomMatrix));
     }
 
     public void mouseClicked(MouseEvent e) {
