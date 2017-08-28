@@ -58,6 +58,12 @@ public class drawArrowDemo extends Demo {
     }
 
     @Override
+    public void setReshapeMatrix(){
+        for(pmBasicArrowShape arrow: arrowList)
+            arrow.setViewMatrix(viewMatrix);
+    }
+
+    @Override
     public void dispose(GLAutoDrawable drawable) {
         for(pmBasicArrowShape arrow : arrowList)
             arrow.dispose(gl4);
